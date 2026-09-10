@@ -1,6 +1,4 @@
 # Historias de Usuario y Criterios de Aceptación
-# Proyecto Tienda Bicicletas #
-
 
 ## Historia de usuario HU-1: Registro de cliente
 **Como** Cliente  

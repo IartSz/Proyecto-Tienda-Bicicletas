@@ -60,11 +60,6 @@
           <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por N° de pedido, cliente o correo" aria-label="Buscar pedido">
         </div>
         <select id="fEstado" class="form-select" aria-label="Filtrar por estado"></select>
-        <select id="fEntrega" class="form-select" aria-label="Filtrar por entrega">
-          <option value="">Despacho y retiro</option>
-          <option value="despacho">Despacho</option>
-          <option value="retiro">Retiro en tienda</option>
-        </select>
         <div class="field"><label for="fDesde">Desde</label><input id="fDesde" type="date" class="form-control"></div>
         <div class="field"><label for="fHasta">Hasta</label><input id="fHasta" type="date" class="form-control"></div>
       </div>
@@ -112,7 +107,7 @@
             <div class="d-flex justify-content-end">
               <div style="min-width:220px;">
                 <div class="d-flex justify-content-between"><span>Subtotal</span><span id="mpSubtotal"></span></div>
-                <div class="d-flex justify-content-between"><span>Envío</span><span id="mpEnvio"></span></div>
+                <div class="d-flex justify-content-between" id="filaEnvio"><span>Envío</span><span id="mpEnvio"></span></div>
                 <div class="d-flex justify-content-between fw-bold fs-5 mt-1"><span>Total</span><span id="mpTotal"></span></div>
               </div>
             </div>
@@ -160,6 +155,13 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/datos/base.js"></script>
+<script src="../js/datos/indumentaria.js"></script>
+<script src="../js/datos/accesorios.js"></script>
+<script src="../js/datos/componentes.js"></script>
+<script src="../js/datos/neumaticos.js"></script>
+<script src="../js/datos/suspensiones.js"></script>
+<script src="../js/datos/mantenimiento.js"></script>
 <script src="../js/productos.js"></script>
 <script src="../js/admin.js"></script>
 <script>
@@ -186,14 +188,13 @@
   }
 
   function filtrados() {
-    const q = $("fBuscar").value.trim().toLowerCase(), est = $("fEstado").value, ent = $("fEntrega").value;
+    const q = $("fBuscar").value.trim().toLowerCase(), est = $("fEstado").value;
     const d = $("fDesde").value, h = $("fHasta").value;
     const dia = iso => { const x = new Date(iso); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); };
     return todos().filter(p => {
       const e = estadoPedido(p);
       return (!q || [p.numero, p.cliente.nombre, p.cliente.apellido, p.cliente.email].join(" ").toLowerCase().includes(q)) &&
         (!est || (est === "abiertos" ? !ESTADOS_FINALES.includes(e) : e === est)) &&
-        (!ent || p.entrega === ent) &&
         (!d || (p.fechaISO && dia(p.fechaISO) >= d)) && (!h || (p.fechaISO && dia(p.fechaISO) <= h));
     });
   }
@@ -243,7 +244,7 @@
     const a = e.target.closest("[data-p]"); if (!a) return;
     e.preventDefault(); pagina = +a.dataset.p; mostrarTabla();
   });
-  ["fBuscar", "fEstado", "fEntrega", "fDesde", "fHasta"].forEach(id => $(id).addEventListener("input", () => { pagina = 1; mostrarTabla(); }));
+  ["fBuscar", "fEstado", "fDesde", "fHasta"].forEach(id => $(id).addEventListener("input", () => { pagina = 1; mostrarTabla(); }));
 
   /* ---------- Detalle ---------- */
   window.abrirPedido = numero => {
@@ -258,6 +259,7 @@
       <td class="num">${i.cantidad}</td><td class="num">${fmt(i.precio)}</td><td class="num">${fmt(i.precio * i.cantidad)}</td></tr>`).join("");
     $("mpSubtotal").textContent = fmt(p.subtotal);
     $("mpEnvio").textContent = p.envio ? fmt(p.envio) : "Gratis";
+    $("filaEnvio").classList.toggle("d-none", !p.envio);   // solo pedidos antiguos con despacho
     $("mpTotal").textContent = fmt(p.total);
 
     $("mpCliente").innerHTML = `<strong>${esc(p.cliente.nombre + " " + p.cliente.apellido)}</strong>

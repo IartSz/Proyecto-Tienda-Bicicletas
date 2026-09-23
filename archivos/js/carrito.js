@@ -53,15 +53,10 @@ function vaciarCarrito() {
   guardarCarrito([]);
 }
 
-// Envío: gratis sobre $50.000, si no $3.990. Retiro en tienda siempre gratis.
-const ENVIO_GRATIS_DESDE = 50000;
-const COSTO_ENVIO = 3990;
-
-function calcularTotales(entrega) {
+// Solo hay retiro en tienda (gratis), así que el envío siempre es 0
+function calcularTotales() {
   const subtotal = leerCarrito().reduce((s, i) => s + i.precio * i.cantidad, 0);
-  let envio = 0;
-  if (entrega !== "retiro" && subtotal > 0 && subtotal < ENVIO_GRATIS_DESDE) envio = COSTO_ENVIO;
-  return { subtotal, envio, total: subtotal + envio };
+  return { subtotal, envio: 0, total: subtotal };
 }
 
 function formatoCLP(n) {

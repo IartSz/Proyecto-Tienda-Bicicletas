@@ -17,6 +17,12 @@ a{ text-decoration:none; }
 .navbar-nav .nav-link:hover{ color:#777 !important; }
 .nav-icons a{ color:#111; font-size:1.2rem; margin-left:1rem; }
 .nav-icons a:hover{ color:#555; }
+/* Pantallas medianas: el menú tiene muchas secciones, así que se achica un poco para que quepa */
+@media (min-width:1200px) and (max-width:1399.98px){
+  .navbar-brand{ font-size:1.35rem; }
+  .navbar-nav .nav-link{ font-size:.78rem; padding-left:.45rem !important; padding-right:.45rem !important; }
+  .nav-icons a{ margin-left:.8rem; }
+}
 
 /* ---------- Hero carousel ---------- */
 .hero-slide{

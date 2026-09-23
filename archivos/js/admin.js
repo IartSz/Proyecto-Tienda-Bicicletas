@@ -113,7 +113,7 @@ function aCSV(filas) {
 /* ---------- Restablecer todos los datos ---------- */
 function restablecerDatos() {
   if (!confirm("Esto borrará productos creados, cambios de stock, categorías, movimientos, pedidos, clientes y cuentas registradas, y volverá a los datos iniciales. ¿Continuar?")) return;
-  ["productos", "categorias", "movimientos", "pedidos", "clientesEstado", "clientesLog", "reportesHistorial", "carrito", "usuarios", "usuario"]
+  ["productos", "categorias", "categoriasEliminadas", "movimientos", "pedidos", "clientesEstado", "clientesLog", "reportesHistorial", "carrito", "usuarios", "usuario"]
     .forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
   location.reload();
 }
@@ -166,12 +166,11 @@ function generarVentasEjemplo() {
       items.push({ id: p.id, nombre: p.nombre, opcion: p.opciones ? p.opciones.valores[0].valor : "Única", precio: p.precio, cantidad: 1 + azar(2) });
     }
     const subtotal = items.reduce((s, x) => s + x.precio * x.cantidad, 0);
-    const entrega = azar(3) === 0 ? "retiro" : "despacho";
-    const envio = entrega === "despacho" && subtotal < 50000 ? 3990 : 0;
+    const entrega = "retiro", envio = 0;
     const dias = (hoy - fecha) / 86400000;
     const pago = azar(4) === 0 ? "transferencia" : "tarjeta";
     const estado = dias > 7 ? (azar(15) === 0 ? "Cancelado" : "Entregado")
-      : dias > 3 ? (entrega === "retiro" ? "Listo para retiro" : "Enviado")
+      : dias > 3 ? "Listo para retiro"
       : dias > 1 ? "En preparación" : estadoInicial(pago);
     pedidos.push({
       numero: "RT-D" + String(1000 + i), demo: true, estado,
@@ -179,7 +178,7 @@ function generarVentasEjemplo() {
         .concat(estado !== estadoInicial(pago) ? [{ estado, fecha: new Date(Math.min(+hoy, +fecha + 86400000 * 2)).toISOString(), nota: "" }] : []),
       fecha: fecha.toLocaleString("es-CL"), fechaISO: fecha.toISOString(),
       cliente: { nombre: c[0], apellido: c[1], email: c[2], telefono: c[3] }, tipoCliente: c[4],
-      entrega, direccion: entrega === "retiro" ? "Retiro en tienda (Centro, Concepción)" : "Concepción, Biobío",
+      entrega, direccion: "Retiro en tienda (Centro, Concepción)",
       pago, items, subtotal, envio, total: subtotal + envio
     });
   }

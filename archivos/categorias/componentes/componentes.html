@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Componentes - Rider Tapia</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../../css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar py-1">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="d-none d-md-block">📍 Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
+    <div class="ms-auto">
+      <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-xl bg-white shadow-sm sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="../../index.html">RIDER TAPIA <span>BIKER</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Destacados⚡️</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Indumentaria</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../../categorias/indumentaria/cascos.html">Cascos</a></li>
+            <li><a class="dropdown-item" href="../../categorias/indumentaria/rodilleras.html">Rodilleras</a></li>
+            <li><a class="dropdown-item" href="../../categorias/indumentaria/guantes.html">Guantes</a></li>
+            <li><a class="dropdown-item" href="../../categorias/indumentaria/cortavientos.html">Cortavientos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Accesorios</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../../categorias/accesorios/bombines.html">Bombines</a></li>
+            <li><a class="dropdown-item" href="../../categorias/accesorios/botellas.html">Botellas</a></li>
+            <li><a class="dropdown-item" href="../../categorias/accesorios/luces.html">Luces</a></li>
+            <li><a class="dropdown-item" href="../../categorias/accesorios/punos.html">Puños</a></li>
+            <li><a class="dropdown-item" href="../../categorias/accesorios/sillines.html">Sillines</a></li>
+            <li><a class="dropdown-item" href="../../categorias/accesorios/tapabarros.html">Tapabarros</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Componentes</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../../categorias/componentes/transmision.html">Transmisión</a></li>
+            <li><a class="dropdown-item" href="../../categorias/componentes/frenos.html">Frenos</a></li>
+            <li><a class="dropdown-item" href="../../categorias/componentes/mazas.html">Mazas</a></li>
+            <li><a class="dropdown-item" href="../../categorias/componentes/pedales.html">Pedales</a></li>
+            <li><a class="dropdown-item" href="../../categorias/componentes/manubrios.html">Manubrios</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Neumáticos</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../../categorias/neumaticos/neumaticos.html">Neumáticos</a></li>
+            <li><a class="dropdown-item" href="../../categorias/neumaticos/camaras.html">Cámaras</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="../../categorias/suspensiones/suspensiones.html">Suspensiones</a></li>
+        <li class="nav-item"><a class="nav-link" href="../../categorias/mantenimiento/mantenimiento.html">Mantenimiento</a></li>
+        <li class="nav-item"><a class="nav-link" href="../../politica/informacion-contacto.html">Contacto</a></li>
+      </ul>
+      <div class="d-flex align-items-center mt-3 mt-xl-0">
+        <div class="nav-icons d-flex align-items-center">
+          <a href="../../login/login.html"><i class="bi bi-person"></i></a>
+          <a href="../../carrito/carrito.html" class="position-relative">
+            <i class="bi bi-cart3"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size:.55rem;">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ ENCABEZADO ============ -->
+<section class="store-section py-5">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-2" style="font-size:.85rem;">
+        <li class="breadcrumb-item"><a href="../../index.html" style="color:inherit; opacity:.8;">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page" style="color:inherit;">Componentes</li>
+      </ol>
+    </nav>
+    <h2 class="mb-1">Componentes</h2>
+    <p class="mb-3" style="opacity:.85;">Repuestos para mantener tu bici en marcha.</p>
+    <!-- Botones a cada categoría del grupo (se generan desde js/productos.js) -->
+    <div class="d-flex flex-wrap gap-2" id="subcategorias"></div>
+  </div>
+</section>
+
+<!-- ============ LISTADO DE COMPONENTES ============ -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+      <p class="mb-0 text-muted" id="contador"></p>
+      <select id="orden" class="form-select form-select-sm" style="width:auto;">
+        <option value="">Ordenar por: destacados</option>
+        <option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option>
+      </select>
+    </div>
+
+    <!-- Las tarjetas se generan desde js/productos.js -->
+    <div class="row g-4" id="listaProductos"></div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter py-5">
+  <div class="container text-center">
+    <h3 class="mb-2">¡Suscríbete a Rider Tapia Bici!</h3>
+    <p class="text-muted mb-4">Recibe promociones y novedades directo en tu correo.</p>
+    <form class="row justify-content-center g-2 mb-4" style="max-width:500px; margin:0 auto;">
+      <div class="col-8">
+        <input type="email" class="form-control" placeholder="Correo electrónico" required>
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-brand w-100">Enviar</button>
+      </div>
+    </form>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="text-white fw-bold mb-3">RIDER TAPIA </h5>
+        <p>Tienda y taller de bicicletas en Concepción. Todo lo que necesitas para ti y tu bici.</p>
+        <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>Centro, Concepción</p>
+        <p><i class="bi bi-clock me-2"></i>Lunes a domingo, 10:30 a 19:30 hrs</p>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>Categorías</h6>
+        <ul class="list-unstyled">
+          <li><a href="../../categorias/indumentaria/indumentaria.html">Indumentaria</a></li>
+          <li><a href="../../categorias/accesorios/accesorios.html">Accesorios</a></li>
+          <li><a href="../../categorias/componentes/componentes.html">Componentes</a></li>
+          <li><a href="../../categorias/neumaticos/neumaticos.html">Neumáticos</a></li>
+          <li><a href="../../categorias/suspensiones/suspensiones.html">Suspensiones</a></li>
+          <li><a href="../../categorias/mantenimiento/mantenimiento.html">Mantenimiento</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Políticas</h6>
+        <ul class="list-unstyled">
+          <li><a href="../../politica/politica-privacidad.html">Política de privacidad</a></li>
+          <li><a href="../../politica/terminos-servicio.html">Términos del servicio</a></li>
+          <li><a href="../../politica/politica-reembolso.html">Política de reembolso</a></li>
+          <li><a href="../../politica/politica-retiro.html">Retiro en tienda</a></li>
+          <li><a href="../../politica/informacion-contacto.html">Información de contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Síguenos</h6>
+        <div class="social-icons mb-3">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-tiktok"></i></a>
+        </div>
+        <h6>Formas de pago</h6>
+        <div class="payment-icons">
+          <i class="bi bi-credit-card-2-front"></i>
+          <i class="bi bi-credit-card"></i>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4">
+    <p class="text-center mb-0" style="font-size:.8rem;">© 2026, Rider Tapia </p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../../js/datos/base.js"></script>
+<script src="../../js/datos/indumentaria.js"></script>
+<script src="../../js/datos/accesorios.js"></script>
+<script src="../../js/datos/componentes.js"></script>
+<script src="../../js/datos/neumaticos.js"></script>
+<script src="../../js/datos/suspensiones.js"></script>
+<script src="../../js/datos/mantenimiento.js"></script>
+<script src="../../js/productos.js"></script>
+<script src="../../js/carrito.js"></script>
+<script src="../../js/sesion.js"></script>
+
+<script>renderGrupo("Componentes", "../../");</script>
+</body>
+</html>

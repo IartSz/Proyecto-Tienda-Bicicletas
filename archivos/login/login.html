@@ -98,8 +98,8 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         let volver = params.get("volver") || "";
-        if (volver === "checkout") volver = "checkout.html";
-        // Solo se aceptan páginas del mismo sitio (ej: "cascos.html" o "politica/politica-envio.html")
+        if (volver === "checkout") volver = "carrito/checkout.html";
+        // Solo se aceptan páginas del mismo sitio (ej: "categorias/indumentaria/cascos.html" o "politica/politica-retiro.html")
         if (!/^[\w\-\/]+\.html(\?[\w=&%\-]*)?$/.test(volver) || volver.includes("..") || volver.startsWith("login/")) volver = "index.html";
         const destino = "../" + volver;
 
@@ -107,10 +107,10 @@
         document.querySelectorAll('a[href="register.html"]').forEach(a => a.href = "register.html?volver=" + encodeURIComponent(volver));
 
         // Viene desde el checkout: ofrecer seguir como invitado
-        if (volver.startsWith("checkout.html")) {
+        if (volver.startsWith("carrito/checkout.html")) {
             const aviso = document.createElement("div");
             aviso.className = "alert alert-light border small text-center";
-            aviso.innerHTML = 'Inicia sesión para continuar tu compra, o <a href="../checkout.html">sigue como invitado</a>.';
+            aviso.innerHTML = 'Inicia sesión para continuar tu compra, o <a href="../carrito/checkout.html">sigue como invitado</a>.';
             document.querySelector(".auth-tabs").before(aviso);
         }
         // Recién registrado

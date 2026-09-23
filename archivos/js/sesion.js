@@ -161,19 +161,19 @@ function pintarUsuarioEnMenu() {
     <div class="offcanvas-body p-0 d-flex flex-column">
       <div class="list-group list-group-flush">
         <div class="px-3 pt-3 pb-1 text-uppercase text-muted" style="font-size:.7rem; letter-spacing:1px;">Mi cuenta</div>
-        ${opcion(R + "perfil.html", "bi-person-circle", "Mi perfil")}
-        ${opcion(R + "mis-pedidos.html", "bi-bag-check", "Mis pedidos",
+        ${opcion(R + "perfil/perfil.html", "bi-person-circle", "Mi perfil")}
+        ${opcion(R + "pedido/mis-pedidos.html", "bi-bag-check", "Mis pedidos",
             novedades ? `<span class="badge rounded-pill bg-danger">${novedades} ${novedades === 1 ? "novedad" : "novedades"}</span>`
             : nPedidos ? `<span class="badge rounded-pill bg-dark">${nPedidos}</span>` : "")}
-        ${opcion(R + "carrito.html", "bi-cart3", "Mi carrito", nCarrito ? `<span class="badge rounded-pill bg-dark">${nCarrito}</span>` : "")}
+        ${opcion(R + "carrito/carrito.html", "bi-cart3", "Mi carrito", nCarrito ? `<span class="badge rounded-pill bg-dark">${nCarrito}</span>` : "")}
         <div class="px-3 pt-3 pb-1 text-uppercase text-muted" style="font-size:.7rem; letter-spacing:1px;">Tienda</div>
         ${opcion(R + "index.html", "bi-shop", "Ir al inicio")}
-        ${opcion(R + "cascos.html", "bi-shield", "Cascos")}
-        ${opcion(R + "luces.html", "bi-lightbulb", "Luces")}
-        ${opcion(R + "neumaticos.html", "bi-circle", "Neumáticos")}
+        ${opcion(R + "categorias/indumentaria/cascos.html", "bi-shield", "Cascos")}
+        ${opcion(R + "categorias/accesorios/luces.html", "bi-lightbulb", "Luces")}
+        ${opcion(R + "categorias/neumaticos/neumaticos.html", "bi-circle", "Neumáticos")}
         <div class="px-3 pt-3 pb-1 text-uppercase text-muted" style="font-size:.7rem; letter-spacing:1px;">Ayuda</div>
         ${opcion(R + "politica/informacion-contacto.html", "bi-headset", "Contacto")}
-        ${opcion(R + "politica/politica-envio.html", "bi-truck", "Envíos")}
+        ${opcion(R + "politica/politica-retiro.html", "bi-shop", "Retiro en tienda")}
         ${opcion(R + "politica/politica-reembolso.html", "bi-arrow-repeat", "Cambios y devoluciones")}
       </div>
       <div class="mt-auto p-3 border-top">

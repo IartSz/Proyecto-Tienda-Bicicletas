@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto - Rider Tapia</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar py-1">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="d-none d-md-block">📍 Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
+    <div class="ms-auto">
+      <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">RIDER TAPIA <span>BIKER</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Destacados⚡️</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Indumentaria</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="cascos.html">Cascos</a></li>
+            <li><a class="dropdown-item" href="#">Rodilleras</a></li>
+            <li><a class="dropdown-item" href="#">Guantes</a></li>
+            <li><a class="dropdown-item" href="#">Cortavientos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Accesorios</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Bombines</a></li>
+            <li><a class="dropdown-item" href="#">Botellas</a></li>
+            <li><a class="dropdown-item" href="luces.html">Luces</a></li>
+            <li><a class="dropdown-item" href="#">Puños</a></li>
+            <li><a class="dropdown-item" href="#">Sillines</a></li>
+            <li><a class="dropdown-item" href="#">Tapabarros</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Componentes</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Transmisión</a></li>
+            <li><a class="dropdown-item" href="#">Frenos</a></li>
+            <li><a class="dropdown-item" href="#">Mazas</a></li>
+            <li><a class="dropdown-item" href="#">Pedales</a></li>
+            <li><a class="dropdown-item" href="#">Manubrios</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="neumaticos.html">Neumáticos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Suspensiones</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Mantenimiento</a></li>
+        <li class="nav-item"><a class="nav-link" href="politica/informacion-contacto.html">Contacto</a></li>
+      </ul>
+      <div class="d-flex align-items-center mt-3 mt-lg-0">
+        <div class="nav-icons d-flex align-items-center">
+          <a href="login/login.html"><i class="bi bi-person"></i></a>
+          <a href="carrito.html" class="position-relative">
+            <i class="bi bi-cart3"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size:.55rem;">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ DETALLE DEL PRODUCTO ============ -->
+<section class="py-5">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-4" style="font-size:.85rem;">
+        <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="#" id="migaCategoria"></a></li>
+        <li class="breadcrumb-item active" aria-current="page" id="migaNombre"></li>
+      </ol>
+    </nav>
+
+    <!-- Si el id no existe -->
+    <div id="noEncontrado" class="text-center py-5 d-none">
+      <i class="bi bi-emoji-frown" style="font-size:3rem;"></i>
+      <h3 class="mt-3">Producto no encontrado</h3>
+      <a href="index.html" class="btn btn-brand mt-3">Volver al inicio</a>
+    </div>
+
+    <div class="row g-5" id="detalle">
+      <!-- Imagen -->
+      <div class="col-lg-6">
+        <div class="bg-light rounded position-relative" style="height:420px; padding:20px;" id="imagen"></div>
+      </div>
+
+      <!-- Info y compra -->
+      <div class="col-lg-6">
+        <small class="text-muted text-uppercase" style="letter-spacing:1px;" id="marcaTipo"></small>
+        <h1 class="h3 fw-bold mt-1" id="nombre"></h1>
+        <div class="mb-3" id="precios"></div>
+        <p class="text-muted" id="descripcion"></p>
+
+        <!-- Opciones (talla, medida, color...) -->
+        <div class="mb-3" id="bloqueOpciones">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong><span id="nombreOpcion"></span> <span class="fw-normal text-muted" id="opcionElegida"></span></strong>
+            <a href="#guia" style="font-size:.85rem;" id="linkGuia"></a>
+          </div>
+          <div class="d-flex flex-wrap gap-2" id="opciones"></div>
+          <div class="text-danger mt-2 d-none" id="errorOpcion" style="font-size:.85rem;"></div>
+        </div>
+
+        <!-- Cantidad y botón -->
+        <div class="d-flex gap-2 align-items-center mb-4">
+          <div class="input-group" style="width:130px;">
+            <button class="btn btn-outline-dark" type="button" id="menos">−</button>
+            <input type="text" class="form-control text-center" id="cantidad" value="1" readonly>
+            <button class="btn btn-outline-dark" type="button" id="mas">+</button>
+          </div>
+          <button class="btn btn-brand flex-grow-1" id="btnAgregar"><i class="bi bi-cart-plus me-2"></i>AGREGAR AL CARRITO</button>
+        </div>
+
+        <div class="small mb-3" id="infoStock"></div>
+        <div class="alert alert-success d-none" id="msgAgregado" style="font-size:.9rem;"></div>
+
+        <ul class="list-unstyled text-muted" style="font-size:.85rem;">
+          <li><i class="bi bi-truck me-2"></i>Envíos a todo Chile · <a href="politica/politica-envio.html">ver política</a></li>
+          <li><i class="bi bi-arrow-repeat me-2"></i>Cambios y devoluciones · <a href="politica/politica-reembolso.html">ver política</a></li>
+          <li><i class="bi bi-shop me-2"></i>Retiro en tienda: Centro, Concepción</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Características y guía de tallas -->
+    <div class="row g-5 mt-2" id="tablas">
+      <div class="col-lg-6">
+        <h5 class="fw-bold mb-3">Características</h5>
+        <table class="table">
+          <tbody id="caracteristicas"></tbody>
+        </table>
+      </div>
+      <div class="col-lg-6" id="guia">
+        <h5 class="fw-bold mb-3" id="tituloGuia"></h5>
+        <table class="table">
+          <thead><tr><th id="colOpcion"></th><th id="colDetalle"></th><th>Stock</th></tr></thead>
+          <tbody id="tablaOpciones"></tbody>
+        </table>
+        <p class="text-muted" style="font-size:.8rem;" id="notaGuia"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter py-5">
+  <div class="container text-center">
+    <h3 class="mb-2">¡Suscríbete a Rider Tapia Bici!</h3>
+    <p class="text-muted mb-4">Recibe promociones y novedades directo en tu correo.</p>
+    <form class="row justify-content-center g-2 mb-4" style="max-width:500px; margin:0 auto;">
+      <div class="col-8">
+        <input type="email" class="form-control" placeholder="Correo electrónico" required>
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-brand w-100">Enviar</button>
+      </div>
+    </form>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="text-white fw-bold mb-3">RIDER TAPIA </h5>
+        <p>Tienda y taller de bicicletas en Concepción. Todo lo que necesitas para ti y tu bici.</p>
+        <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>Centro, Concepción</p>
+        <p><i class="bi bi-clock me-2"></i>Lunes a domingo, 10:30 a 19:30 hrs</p>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>Categorías</h6>
+        <ul class="list-unstyled">
+          <li><a href="#">Indumentaria</a></li>
+          <li><a href="#">Accesorios</a></li>
+          <li><a href="#">Componentes</a></li>
+          <li><a href="#">Neumáticos</a></li>
+          <li><a href="#">Mantenimiento</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Políticas</h6>
+        <ul class="list-unstyled">
+          <li><a href="politica/politica-privacidad.html">Política de privacidad</a></li>
+          <li><a href="politica/terminos-servicio.html">Términos del servicio</a></li>
+          <li><a href="politica/politica-reembolso.html">Política de reembolso</a></li>
+          <li><a href="politica/politica-envio.html">Política de envío</a></li>
+          <li><a href="politica/informacion-contacto.html">Información de contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Síguenos</h6>
+        <div class="social-icons mb-3">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-tiktok"></i></a>
+        </div>
+        <h6>Formas de pago</h6>
+        <div class="payment-icons">
+          <i class="bi bi-credit-card-2-front"></i>
+          <i class="bi bi-credit-card"></i>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4">
+    <p class="text-center mb-0" style="font-size:.8rem;">© 2026, Rider Tapia </p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/sesion.js"></script>
+
+<script>
+  // 1) Leer el id desde la URL (producto.html?id=...)
+  const id = new URLSearchParams(window.location.search).get("id");
+  const producto = productosActivos().find(p => p.id === id);
+
+  let opcionSeleccionada = null;
+  let cantidad = 1;
+
+  if (!producto) {
+    document.getElementById("detalle").classList.add("d-none");
+    document.getElementById("tablas").classList.add("d-none");
+    document.getElementById("noEncontrado").classList.remove("d-none");
+  } else {
+    const cat = CATEGORIAS[producto.categoria] || { titulo: "Productos" };
+    const op = producto.opciones;
+
+    // 2) Rellenar la página con los datos del producto
+    document.title = producto.nombre + " - Rider Tapia";
+    const miga = document.getElementById("migaCategoria");
+    miga.textContent = cat.titulo;
+    miga.href = urlCategoria(producto.categoria);
+    document.getElementById("migaNombre").textContent = producto.nombre;
+    document.getElementById("marcaTipo").textContent = producto.marca + " · " + producto.tipo;
+    document.getElementById("nombre").textContent = producto.nombre;
+    document.getElementById("descripcion").textContent = producto.descripcion;
+    document.getElementById("imagen").innerHTML =
+      (producto.precioAnterior ? '<span class="badge badge-offer position-absolute m-2" style="z-index:1;">OFERTA</span>' : '') +
+      htmlImagen(producto, "380px");
+    document.getElementById("precios").innerHTML =
+      (producto.precioAnterior ? `<span class="price-old fs-5 me-2">${formatoPrecio(producto.precioAnterior)}</span>` : "") +
+      `<span class="price-new fs-3 fw-bold">${formatoPrecio(producto.precio)}</span>`;
+
+    // Características
+    document.getElementById("caracteristicas").innerHTML = Object.entries(producto.caracteristicas)
+      .map(([k, v]) => `<tr><th class="fw-semibold" style="width:45%;">${k}</th><td>${v}</td></tr>`).join("");
+
+    if (!op) {
+      // Producto sin tallas/medidas
+      document.getElementById("bloqueOpciones").classList.add("d-none");
+      document.getElementById("guia").classList.add("d-none");
+      opcionSeleccionada = "Única";
+    } else {
+      document.getElementById("nombreOpcion").textContent = op.nombre;
+      document.getElementById("linkGuia").textContent = op.guia;
+      document.getElementById("errorOpcion").textContent = "Selecciona una opción de " + op.nombre.toLowerCase() + ".";
+      document.getElementById("tituloGuia").textContent = op.guia;
+      document.getElementById("colOpcion").textContent = op.nombre;
+      document.getElementById("colDetalle").textContent = op.columna;
+      document.getElementById("notaGuia").textContent = op.nota;
+
+      document.getElementById("tablaOpciones").innerHTML = op.valores.map(v => `
+        <tr><td>${v.valor}</td><td>${v.detalle}</td>
+        <td>${v.disponible ? '<span class="text-success">Disponible</span>' : '<span class="text-muted">Agotado</span>'}</td></tr>`).join("");
+
+      // Botones de opción
+      const cont = document.getElementById("opciones");
+      cont.innerHTML = op.valores.map((v, i) => `
+        <button type="button" class="btn ${v.disponible ? 'btn-outline-dark' : 'btn-outline-secondary text-decoration-line-through'} btn-opcion"
+                data-i="${i}" ${v.disponible ? '' : 'disabled'} style="min-width:60px;">${v.valor}</button>`).join("");
+
+      cont.querySelectorAll(".btn-opcion").forEach(btn => {
+        btn.addEventListener("click", () => {
+          cont.querySelectorAll(".btn-opcion").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const v = op.valores[btn.dataset.i];
+          opcionSeleccionada = v.valor;
+          document.getElementById("opcionElegida").textContent = v.detalle ? `(${v.valor} · ${v.detalle})` : `(${v.valor})`;
+          document.getElementById("errorOpcion").classList.add("d-none");
+        });
+      });
+
+      // Si solo hay una opción disponible, se selecciona sola
+      const disponibles = cont.querySelectorAll(".btn-opcion:not([disabled])");
+      if (disponibles.length === 1) disponibles[0].click();
+    }
+
+    // Stock disponible (se administra desde el panel)
+    const enCarrito = () => leerCarrito().filter(i => i.id === producto.id).reduce((s, i) => s + i.cantidad, 0);
+    const infoStock = document.getElementById("infoStock");
+    const btnAgregar = document.getElementById("btnAgregar");
+    function mostrarStock() {
+      const libre = producto.stock - enCarrito();
+      if (producto.stock <= 0) {
+        infoStock.innerHTML = '<span class="text-danger fw-semibold"><i class="bi bi-x-circle me-1"></i>Producto agotado</span>';
+        btnAgregar.disabled = true;
+        btnAgregar.innerHTML = "AGOTADO";
+      } else if (libre <= 0) {
+        infoStock.innerHTML = '<span class="text-muted">Ya tienes en tu carrito todas las unidades disponibles.</span>';
+        btnAgregar.disabled = true;
+      } else if (producto.stock <= 3) {
+        infoStock.innerHTML = `<span class="text-warning-emphasis fw-semibold"><i class="bi bi-exclamation-circle me-1"></i>¡Últimas ${producto.stock} unidades!</span>`;
+      } else {
+        infoStock.innerHTML = '<span class="text-success"><i class="bi bi-check-circle me-1"></i>Disponible</span>';
+      }
+    }
+    mostrarStock();
+
+    // Cantidad
+    const inputCant = document.getElementById("cantidad");
+    document.getElementById("menos").addEventListener("click", () => { if (cantidad > 1) inputCant.value = --cantidad; });
+    document.getElementById("mas").addEventListener("click", () => {
+      if (cantidad < Math.min(10, producto.stock - enCarrito())) inputCant.value = ++cantidad;
+    });
+
+    // 3) Agregar al carrito (se guarda con js/carrito.js)
+    document.getElementById("btnAgregar").addEventListener("click", () => {
+      if (!opcionSeleccionada) {
+        document.getElementById("errorOpcion").classList.remove("d-none");
+        return;
+      }
+      if (cantidad > producto.stock - enCarrito()) {
+        infoStock.innerHTML = `<span class="text-danger">Solo puedes agregar ${producto.stock - enCarrito()} unidad(es) más.</span>`;
+        return;
+      }
+      agregarAlCarrito({ id: producto.id, nombre: producto.nombre, opcion: opcionSeleccionada, precio: producto.precio, cantidad: cantidad });
+
+      const msg = document.getElementById("msgAgregado");
+      const detalleOp = op ? ` (${op.nombre.toLowerCase()} ${opcionSeleccionada})` : "";
+      msg.innerHTML = `<i class="bi bi-check-circle me-2"></i>Agregaste ${cantidad} × ${producto.nombre}${detalleOp} al carrito. <a href="carrito.html" class="alert-link ms-1">Ver carrito</a>`;
+      msg.classList.remove("d-none");
+      cantidad = 1; inputCant.value = 1;
+      mostrarStock();
+    });
+  }
+</script>
+</body>
+</html>

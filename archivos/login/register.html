@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta · Rider Tapia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <a href="../index.html" class="auth-brand d-block mb-1">RIDER TAPIA <span>BIKER</span></a>
+            <p class="text-center text-muted mb-4" style="font-size:.9rem;">Crea tu cuenta</p>
+
+            <form id="registerForm" novalidate>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre"
+                            required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Tu apellido"
+                            required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" id="email" name="email"
+                            placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                    <div class="form-text text-danger d-none" id="emailError"></div>
+                </div>
+
+                <!-- Esto es para la primera contraseña-->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="password"
+                            placeholder="Mínimo 6 caracteres" required minlength="6">
+                    </div>
+                </div>
+
+                <!-- Para repetir la contraseña-->
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Repetir contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" class="form-control" id="password2"
+                            placeholder="Repite tu contraseña" required minlength="6">
+                    </div>
+                    <div class="form-text text-danger d-none" id="matchError">Las contraseñas no coinciden.</div>
+                </div>
+
+                <div class="form-check mb-4 auth-links">
+                    <input class="form-check-input" type="checkbox" id="terminos" required>
+                    <label class="form-check-label" for="terminos" style="font-size:.85rem;">
+                        Acepto los <a href="../politica/terminos-servicio.html" target="_blank">términos y condiciones</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-brand w-100 mb-3">CREAR CUENTA</button>
+
+                <div class="text-center text-muted mb-2" style="font-size:.8rem;">¿Ya tienes cuenta?</div>
+                <div class="text-center">
+                    <a href="login.html" class="btn btn-dark px-4">INICIAR SESIÓN</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../js/sesion.js"></script>
+    <!-- Validación: las contraseñas deben ser iguales -->
+    <script>
+        const form = document.getElementById('registerForm');
+        const pass1 = document.getElementById('password');
+        const pass2 = document.getElementById('password2');
+        const matchError = document.getElementById('matchError');
+
+        function validarContrasenas() {
+            // Si el segundo campo está vacío, no mostramos error todavía
+            if (pass2.value === '') {
+                pass2.setCustomValidity('');
+                pass2.classList.remove('is-invalid', 'is-valid');
+                matchError.classList.add('d-none');
+                return true;
+            }
+
+            if (pass1.value !== pass2.value) {
+                pass2.setCustomValidity('Las contraseñas no coinciden.');
+                pass2.classList.add('is-invalid');
+                pass2.classList.remove('is-valid');
+                matchError.classList.remove('d-none');
+                return false;
+            }
+
+            pass2.setCustomValidity('');
+            pass2.classList.remove('is-invalid');
+            pass2.classList.add('is-valid');
+            matchError.classList.add('d-none');
+            return true;
+        }
+
+        // Revisa mientras el usuario escribe en cualquiera de los dos campos
+        pass1.addEventListener('input', validarContrasenas);
+        pass2.addEventListener('input', validarContrasenas);
+
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        emailInput.addEventListener('input', () => { emailError.classList.add('d-none'); emailInput.classList.remove('is-invalid'); });
+
+        // Página a la que volver después de registrarse
+        let volver = new URLSearchParams(location.search).get('volver') || 'index.html';
+        if (!/^[\w\-\/]+\.html(\?[\w=&%\-]*)?$/.test(volver) || volver.includes('..') || volver.startsWith('login/')) volver = 'index.html';
+
+        // Al enviar: validar, crear la cuenta e iniciar sesión
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!validarContrasenas() || pass2.value === '') {
+                validarContrasenas();
+                pass2.focus();
+                return;
+            }
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+            const r = registrarUsuario({
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                email: emailInput.value,
+                password: pass1.value
+            });
+            if (!r.ok) {
+                emailError.innerHTML = r.error + ' <a href="login.html">Iniciar sesión</a>';
+                emailError.classList.remove('d-none');
+                emailInput.classList.add('is-invalid');
+                emailInput.focus();
+                return;
+            }
+            // Cuenta creada y sesión iniciada
+            window.location.href = '../' + volver;
+        });
+    </script>
+
+
+</body>
+
+</html>

@@ -111,3 +111,15 @@ footer a{ color:#ccc; }
 footer a:hover{ color:var(--brand-accent); }
 footer hr{ border-color:#333; }
 .payment-icons i{ font-size:1.8rem; margin-right:.6rem; color:#ccc; }
+
+
+/* ---------- Login / registro ---------- */
+.auth-wrapper{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem 1rem; background:var(--brand-dark); }
+.auth-card{ width:100%; max-width:430px; background:#fff; border-radius:8px; padding:2.25rem 2rem; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+.auth-brand{ text-align:center; font-weight:800; font-size:1.8rem; letter-spacing:.5px; color:#111; text-decoration:none; }
+.auth-brand span{ color:var(--brand-accent); -webkit-text-stroke:1px #111; }
+.auth-links a{ color:#111; }
+.auth-tabs{ display:flex; border:1px solid #111; border-radius:6px; overflow:hidden; margin-bottom:1.5rem; }
+.auth-tabs button{ flex:1; background:#fff; border:0; padding:.6rem; font-weight:700; font-size:.9rem; color:#111; }
+.auth-tabs button + button{ border-left:1px solid #111; }
+.auth-tabs button.active{ background:#111; color:var(--brand-accent); }

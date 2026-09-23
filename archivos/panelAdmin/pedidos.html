@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html" class="active" aria-current="page"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Pedidos</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="kpi-strip is-light" id="kpisEstado"></div>
+
+      <div class="toolbar">
+        <div class="input-icon">
+          <i class="bi bi-search"></i>
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por N° de pedido, cliente o correo" aria-label="Buscar pedido">
+        </div>
+        <select id="fEstado" class="form-select" aria-label="Filtrar por estado"></select>
+        <select id="fEntrega" class="form-select" aria-label="Filtrar por entrega">
+          <option value="">Despacho y retiro</option>
+          <option value="despacho">Despacho</option>
+          <option value="retiro">Retiro en tienda</option>
+        </select>
+        <div class="field"><label for="fDesde">Desde</label><input id="fDesde" type="date" class="form-control"></div>
+        <div class="field"><label for="fHasta">Hasta</label><input id="fHasta" type="date" class="form-control"></div>
+      </div>
+
+      <div class="panel panel-flush">
+        <div class="table-responsive">
+          <table class="table adm-table">
+            <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th class="num">Productos</th><th>Entrega</th><th>Pago</th><th>Estado</th><th class="num">Total</th><th class="text-end">Acción</th></tr></thead>
+            <tbody id="tablaPedidos"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between align-items-center mt-2">
+        <p class="table-foot m-0" id="pieTabla"></p>
+        <nav aria-label="Paginación de pedidos"><ul class="pagination pagination-sm m-0" id="paginacion"></ul></nav>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<!-- ===================== Modal: detalle del pedido ===================== -->
+<div class="modal fade" id="modalPedido" tabindex="-1" aria-labelledby="mpTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="mpTitulo"></h2>
+          <span class="sub" id="mpFecha"></span>
+        </div>
+        <div class="ms-3" id="mpEstado"></div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <h3 class="h6 text-uppercase mb-2" style="letter-spacing:1px; opacity:.7;">Productos</h3>
+            <div class="table-responsive">
+              <table class="table adm-table mb-2">
+                <thead><tr><th>Producto</th><th>Opción</th><th class="num">Cant.</th><th class="num">Precio</th><th class="num">Subtotal</th></tr></thead>
+                <tbody id="mpItems"></tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end">
+              <div style="min-width:220px;">
+                <div class="d-flex justify-content-between"><span>Subtotal</span><span id="mpSubtotal"></span></div>
+                <div class="d-flex justify-content-between"><span>Envío</span><span id="mpEnvio"></span></div>
+                <div class="d-flex justify-content-between fw-bold fs-5 mt-1"><span>Total</span><span id="mpTotal"></span></div>
+              </div>
+            </div>
+
+            <div class="row g-3 mt-2">
+              <div class="col-md-6">
+                <h3 class="h6 text-uppercase mb-2" style="letter-spacing:1px; opacity:.7;">Cliente</h3>
+                <div id="mpCliente"></div>
+              </div>
+              <div class="col-md-6">
+                <h3 class="h6 text-uppercase mb-2" style="letter-spacing:1px; opacity:.7;">Entrega y pago</h3>
+                <div id="mpEntrega"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="panel mb-3">
+              <h3 class="h6 text-uppercase mb-3" style="letter-spacing:1px; opacity:.7;">Actualizar estado</h3>
+              <div id="mpFinal" class="small d-none"></div>
+              <form id="formEstado" novalidate>
+                <label class="form-label" for="mpNuevo">Nuevo estado</label>
+                <select id="mpNuevo" class="form-select" required></select>
+                <div class="invalid-feedback">Elige el nuevo estado.</div>
+                <div id="grupoSeguimiento" class="mt-3 d-none">
+                  <label class="form-label" for="mpSeguimiento">N° de seguimiento del envío</label>
+                  <input id="mpSeguimiento" class="form-control" maxlength="40" placeholder="Ej: Starken 123456789">
+                </div>
+                <label class="form-label mt-3" for="mpNota">Mensaje para el cliente <span class="sub d-inline">(opcional)</span></label>
+                <textarea id="mpNota" class="form-control" rows="2" maxlength="200" placeholder="Ej: Tu pedido sale hoy en la tarde."></textarea>
+                <div class="form-text">El cliente verá el nuevo estado y este mensaje en "Mis pedidos".</div>
+                <div class="alert alert-warning small mt-3 mb-0 d-none" id="avisoCancelar">
+                  <i class="bi bi-exclamation-triangle me-1"></i>Al cancelar, las unidades vuelven al stock. Esta acción no se puede deshacer.
+                </div>
+                <button type="submit" class="btn btn-brand w-100 mt-3" id="btnEstado"><i class="bi bi-arrow-repeat me-1"></i>Actualizar estado</button>
+              </form>
+            </div>
+            <h3 class="h6 text-uppercase mb-2" style="letter-spacing:1px; opacity:.7;">Historial</h3>
+            <ul class="log-list" id="mpHistorial"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+  const modal = new bootstrap.Modal("#modalPedido");
+  const POR_PAGINA = 15;
+  let pagina = 1, actual = null;
+
+  // Estados que se pueden elegir según el tipo de entrega
+  function estadosPosibles(p) {
+    return Object.keys(ESTADOS_PEDIDO).filter(e =>
+      e !== estadoPedido(p) &&
+      !(p.pago === "tarjeta" && e === "Pendiente de pago") &&
+      !(p.entrega === "retiro" && e === "Enviado") &&
+      !(p.entrega !== "retiro" && e === "Listo para retiro"));
+  }
+
+  $("fEstado").innerHTML = '<option value="">Todos los estados</option><option value="abiertos">Por atender (no finalizados)</option>' +
+    Object.keys(ESTADOS_PEDIDO).map(e => `<option>${e}</option>`).join("");
+
+  function todos() {
+    return leerPedidos(true).sort((a, b) => (b.fechaISO || "").localeCompare(a.fechaISO || ""));
+  }
+
+  function filtrados() {
+    const q = $("fBuscar").value.trim().toLowerCase(), est = $("fEstado").value, ent = $("fEntrega").value;
+    const d = $("fDesde").value, h = $("fHasta").value;
+    const dia = iso => { const x = new Date(iso); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); };
+    return todos().filter(p => {
+      const e = estadoPedido(p);
+      return (!q || [p.numero, p.cliente.nombre, p.cliente.apellido, p.cliente.email].join(" ").toLowerCase().includes(q)) &&
+        (!est || (est === "abiertos" ? !ESTADOS_FINALES.includes(e) : e === est)) &&
+        (!ent || p.entrega === ent) &&
+        (!d || (p.fechaISO && dia(p.fechaISO) >= d)) && (!h || (p.fechaISO && dia(p.fechaISO) <= h));
+    });
+  }
+
+  function mostrarKpis() {
+    const lista = todos();
+    const cuenta = f => lista.filter(f).length;
+    const kpis = [
+      ["Por pagar", cuenta(p => estadoPedido(p) === "Pendiente de pago"), "Pendiente de pago"],
+      ["Por preparar", cuenta(p => ["Pagado", "En preparación"].includes(estadoPedido(p))), "abiertos"],
+      ["En camino / por retirar", cuenta(p => ["Enviado", "Listo para retiro"].includes(estadoPedido(p))), "abiertos"],
+      ["Entregados", cuenta(p => estadoPedido(p) === "Entregado"), "Entregado"]
+    ];
+    $("kpisEstado").innerHTML = kpis.map(([t, n, filtro]) =>
+      `<div class="kpi" role="button" style="cursor:pointer" onclick="filtrarEstado('${filtro}')"><span class="kpi-label">${t}</span><strong>${n}</strong></div>`).join("");
+  }
+  window.filtrarEstado = f => { $("fEstado").value = f; pagina = 1; mostrarTabla(); };
+
+  function mostrarTabla() {
+    const lista = filtrados();
+    const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
+    if (pagina > paginas) pagina = paginas;
+    const visibles = lista.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
+
+    $("tablaPedidos").innerHTML = visibles.map(p => {
+      const unidades = p.items.reduce((s, i) => s + i.cantidad, 0);
+      return `<tr${estadoPedido(p) === "Cancelado" ? ' class="is-inactive"' : ""}>
+        <td><strong>${esc(p.numero)}</strong>${p.demo ? '<span class="sub">ejemplo</span>' : ""}</td>
+        <td>${p.fechaISO ? fechaCorta(p.fechaISO) : esc(p.fecha)}</td>
+        <td>${esc(p.cliente.nombre + " " + p.cliente.apellido)}<span class="sub">${esc(p.cliente.email)} · ${p.tipoCliente === "invitado" ? "Invitado" : "Registrado"}</span></td>
+        <td class="num">${unidades}</td>
+        <td>${p.entrega === "retiro" ? "Retiro" : "Despacho"}</td>
+        <td>${p.pago === "tarjeta" ? "Tarjeta" : "Transferencia"}</td>
+        <td>${tagEstado(p)}</td>
+        <td class="num">${fmt(p.total)}</td>
+        <td class="text-end"><button class="btn btn-sm btn-outline-light" type="button" onclick="abrirPedido('${esc(p.numero)}')">Ver</button></td>
+      </tr>`;
+    }).join("") || '<tr><td colspan="9" class="text-center text-muted py-4">No hay pedidos con esos filtros. Los pedidos aparecen cuando alguien compra en la tienda (o carga ventas de ejemplo en Resumen).</td></tr>';
+
+    $("pieTabla").textContent = `Mostrando ${visibles.length} de ${lista.length} pedidos`;
+    let pag = `<li class="page-item ${pagina === 1 ? "disabled" : ""}"><a class="page-link" href="#" data-p="${pagina - 1}">Anterior</a></li>`;
+    for (let i = 1; i <= paginas; i++) pag += `<li class="page-item ${i === pagina ? "active" : ""}"><a class="page-link" href="#" data-p="${i}">${i}</a></li>`;
+    pag += `<li class="page-item ${pagina === paginas ? "disabled" : ""}"><a class="page-link" href="#" data-p="${pagina + 1}">Siguiente</a></li>`;
+    $("paginacion").innerHTML = pag;
+  }
+  $("paginacion").addEventListener("click", e => {
+    const a = e.target.closest("[data-p]"); if (!a) return;
+    e.preventDefault(); pagina = +a.dataset.p; mostrarTabla();
+  });
+  ["fBuscar", "fEstado", "fEntrega", "fDesde", "fHasta"].forEach(id => $(id).addEventListener("input", () => { pagina = 1; mostrarTabla(); }));
+
+  /* ---------- Detalle ---------- */
+  window.abrirPedido = numero => {
+    const p = leerPedidos(true).find(x => x.numero === numero);
+    if (!p) return;
+    actual = numero;
+    $("mpTitulo").textContent = "Pedido " + p.numero;
+    $("mpFecha").textContent = (p.fechaISO ? fechaCorta(p.fechaISO) : p.fecha) + (p.demo ? " · pedido de ejemplo" : "");
+    $("mpEstado").innerHTML = tagEstado(p);
+
+    $("mpItems").innerHTML = p.items.map(i => `<tr><td>${esc(i.nombre)}</td><td>${i.opcion && i.opcion !== "Única" ? esc(i.opcion) : "—"}</td>
+      <td class="num">${i.cantidad}</td><td class="num">${fmt(i.precio)}</td><td class="num">${fmt(i.precio * i.cantidad)}</td></tr>`).join("");
+    $("mpSubtotal").textContent = fmt(p.subtotal);
+    $("mpEnvio").textContent = p.envio ? fmt(p.envio) : "Gratis";
+    $("mpTotal").textContent = fmt(p.total);
+
+    $("mpCliente").innerHTML = `<strong>${esc(p.cliente.nombre + " " + p.cliente.apellido)}</strong>
+      <span class="sub">${p.tipoCliente === "invitado" ? "Compró como invitado" : "Cuenta registrada"}</span>
+      <div class="mt-1"><i class="bi bi-envelope me-1"></i>${esc(p.cliente.email)}</div>
+      <div><i class="bi bi-telephone me-1"></i>${esc(p.cliente.telefono)}</div>`;
+    $("mpEntrega").innerHTML = `<div><i class="bi ${p.entrega === "retiro" ? "bi-shop" : "bi-truck"} me-1"></i>${p.entrega === "retiro" ? "Retiro en tienda" : "Despacho a domicilio"}</div>
+      <div class="sub">${esc(p.direccion)}</div>
+      <div class="mt-1"><i class="bi ${p.pago === "tarjeta" ? "bi-credit-card" : "bi-bank"} me-1"></i>${p.pago === "tarjeta" ? "Tarjeta" : "Transferencia"}</div>
+      ${p.seguimiento ? `<div class="mt-1"><i class="bi bi-upc-scan me-1"></i>Seguimiento: <strong>${esc(p.seguimiento)}</strong></div>` : ""}`;
+
+    // Formulario de estado
+    const final = ESTADOS_FINALES.includes(estadoPedido(p));
+    $("formEstado").classList.toggle("d-none", final);
+    $("mpFinal").classList.toggle("d-none", !final);
+    $("mpFinal").innerHTML = final ? `<i class="bi bi-lock me-1"></i>El pedido está <strong>${estadoPedido(p).toLowerCase()}</strong>; ya no se puede cambiar su estado.` : "";
+    $("formEstado").reset();
+    $("formEstado").classList.remove("was-validated");
+    $("mpNuevo").innerHTML = '<option value="">Elige el nuevo estado</option>' +
+      estadosPosibles(p).map(e => `<option>${e}</option>`).join("");
+    $("mpSeguimiento").value = p.seguimiento || "";
+    $("grupoSeguimiento").classList.add("d-none");
+    $("avisoCancelar").classList.add("d-none");
+
+    // Historial (más reciente arriba)
+    $("mpHistorial").innerHTML = historialPedido(p).slice().reverse().map(h => `
+      <li><strong><i class="bi ${(ESTADOS_PEDIDO[h.estado] || {}).icono || "bi-dot"} me-1"></i>${esc(h.estado)}</strong>${h.nota ? " · " + esc(h.nota) : ""}
+      <span class="sub">${fechaCorta(h.fecha)}</span></li>`).join("");
+
+    modal.show();
+  };
+
+  $("mpNuevo").addEventListener("change", () => {
+    const e = $("mpNuevo").value;
+    $("grupoSeguimiento").classList.toggle("d-none", e !== "Enviado");
+    $("avisoCancelar").classList.toggle("d-none", e !== "Cancelado");
+    $("btnEstado").className = "btn w-100 mt-3 " + (e === "Cancelado" ? "btn-danger" : "btn-brand");
+  });
+
+  $("formEstado").addEventListener("submit", e => {
+    e.preventDefault();
+    if (!e.target.checkValidity()) { e.target.classList.add("was-validated"); return; }
+    const nuevo = $("mpNuevo").value;
+    const r = cambiarEstadoPedido(actual, nuevo, $("mpNota").value, nuevo === "Enviado" ? $("mpSeguimiento").value : "");
+    if (!r.ok) { aviso(r.error, "danger"); return; }
+    aviso(`<i class="bi bi-check-circle me-1"></i>Pedido <strong>${esc(actual)}</strong>: ${esc(nuevo)}. El cliente ya lo ve en su cuenta.`);
+    PRODUCTOS = cargarProductos();
+    actualizarBadges();
+    mostrarKpis();
+    mostrarTabla();
+    abrirPedido(actual);   // refrescar el detalle
+  });
+
+  mostrarKpis();
+  mostrarTabla();
+  // pedidos.html?ver=RT-123456 abre ese pedido directamente (desde Resumen)
+  const ver = new URLSearchParams(location.search).get("ver");
+  if (ver) abrirPedido(ver);
+
+</script>
+</body>
+</html>

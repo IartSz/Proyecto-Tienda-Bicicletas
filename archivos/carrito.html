@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cascos - Rider Tapia</title>
+<title>Carrito - Rider Tapia</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
@@ -81,34 +81,50 @@
 </nav>
 
 <!-- ============ ENCABEZADO ============ -->
-<section class="store-section py-5">
+<section class="store-section py-4">
   <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-2" style="font-size:.85rem;">
-        <li class="breadcrumb-item"><a href="index.html" style="color:inherit; opacity:.8;">Inicio</a></li>
-        <li class="breadcrumb-item" style="color:inherit; opacity:.8;" data-cat-grupo>Indumentaria</li>
-        <li class="breadcrumb-item active" aria-current="page" style="color:inherit;" data-cat-titulo>Cascos</li>
-      </ol>
-    </nav>
-    <h2 class="mb-1" data-cat-titulo>Cascos</h2>
-    <p class="mb-0" style="opacity:.85;" data-cat-subtitulo>Protección para ciudad, trail y enduro.</p>
+    <h2 class="mb-0"><i class="bi bi-cart3 me-2"></i>Tu carrito</h2>
   </div>
 </section>
 
-<!-- ============ LISTADO DE CASCOS ============ -->
 <section class="py-5 bg-light">
   <div class="container">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-      <p class="mb-0 text-muted" id="contador"></p>
-      <select id="orden" class="form-select form-select-sm" style="width:auto;">
-        <option value="">Ordenar por: destacados</option>
-        <option value="asc">Precio: menor a mayor</option>
-        <option value="desc">Precio: mayor a menor</option>
-      </select>
+
+    <!-- Carrito vacío -->
+    <div id="vacio" class="text-center py-5 d-none">
+      <i class="bi bi-cart-x" style="font-size:3.5rem; color:#999;"></i>
+      <h4 class="mt-3">Tu carrito está vacío</h4>
+      <p class="text-muted">Agrega productos para comenzar tu compra.</p>
+      <a href="index.html" class="btn btn-brand mt-2">Ir a la tienda</a>
     </div>
 
-    <!-- Las tarjetas se generan desde js/productos.js -->
-    <div class="row g-4" id="listaProductos"></div>
+    <div class="row g-4" id="conProductos">
+      <!-- Lista de productos -->
+      <div class="col-lg-8">
+        <div class="bg-white rounded shadow-sm p-3 p-md-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0" id="tituloLista"></h5>
+            <button class="btn btn-link btn-sm text-danger" id="btnVaciar"><i class="bi bi-trash me-1"></i>Vaciar carrito</button>
+          </div>
+          <div id="items"></div>
+        </div>
+        <a href="index.html" class="d-inline-block mt-3"><i class="bi bi-arrow-left me-1"></i>Seguir comprando</a>
+      </div>
+
+      <!-- Resumen -->
+      <div class="col-lg-4">
+        <div class="bg-white rounded shadow-sm p-4 sticky-lg-top" style="top:100px;">
+          <h5 class="fw-bold mb-3">Resumen</h5>
+          <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span id="subtotal"></span></div>
+          <div class="d-flex justify-content-between mb-2"><span>Envío</span><span id="envio"></span></div>
+          <div class="small text-muted mb-2" id="notaEnvio"></div>
+          <hr>
+          <div class="d-flex justify-content-between fw-bold fs-5 mb-3"><span>Total</span><span id="total"></span></div>
+          <a href="checkout.html" class="btn btn-brand w-100">CONTINUAR COMPRA</a>
+          <p class="text-center text-muted small mt-3 mb-0"><i class="bi bi-person-check me-1"></i>Puedes comprar como invitado, sin crear cuenta.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -187,6 +203,53 @@
 <script src="js/carrito.js"></script>
 <script src="js/sesion.js"></script>
 
-<script>renderCatalogo("cascos");</script>
+<script>
+  function mostrarCarrito() {
+    const carrito = leerCarrito();
+    const vacio = carrito.length === 0;
+    document.getElementById("vacio").classList.toggle("d-none", !vacio);
+    document.getElementById("conProductos").classList.toggle("d-none", vacio);
+    if (vacio) return;
+
+    const unidades = carrito.reduce((s, i) => s + i.cantidad, 0);
+    document.getElementById("tituloLista").textContent = unidades + (unidades === 1 ? " producto" : " productos");
+
+    document.getElementById("items").innerHTML = carrito.map((item, i) => {
+      const p = PRODUCTOS.find(x => x.id === item.id);
+      const img = p ? htmlImagen(p, "80px") : "";
+      const opcion = p && p.opciones ? `${p.opciones.nombre}: ${item.opcion}` : "";
+      return `
+      <div class="d-flex gap-3 align-items-center py-3 border-top">
+        <a href="producto.html?id=${item.id}" class="bg-light rounded flex-shrink-0" style="width:80px; height:80px; padding:5px;">${img}</a>
+        <div class="flex-grow-1">
+          <a href="producto.html?id=${item.id}" class="text-reset text-decoration-none fw-semibold">${item.nombre}</a>
+          <div class="small text-muted">${opcion}</div>
+          <div class="small">${formatoCLP(item.precio)} c/u</div>
+        </div>
+        <div class="input-group input-group-sm" style="width:105px;">
+          <button class="btn btn-outline-dark" onclick="cambiarCantidad(${i}, ${item.cantidad - 1}); mostrarCarrito();">−</button>
+          <input class="form-control text-center" value="${item.cantidad}" readonly>
+          <button class="btn btn-outline-dark" onclick="cambiarCantidad(${i}, ${item.cantidad + 1}); mostrarCarrito();">+</button>
+        </div>
+        <div class="fw-bold text-end" style="min-width:85px;">${formatoCLP(item.precio * item.cantidad)}</div>
+        <button class="btn btn-sm text-danger" title="Eliminar" onclick="eliminarDelCarrito(${i}); mostrarCarrito();"><i class="bi bi-x-lg"></i></button>
+      </div>`;
+    }).join("");
+
+    const t = calcularTotales("despacho");
+    document.getElementById("subtotal").textContent = formatoCLP(t.subtotal);
+    document.getElementById("envio").textContent = t.envio === 0 ? "Gratis" : formatoCLP(t.envio);
+    document.getElementById("total").textContent = formatoCLP(t.total);
+    document.getElementById("notaEnvio").textContent = t.envio === 0
+      ? "¡Tienes envío gratis!"
+      : "Te faltan " + formatoCLP(ENVIO_GRATIS_DESDE - t.subtotal) + " para envío gratis. Retiro en tienda siempre gratis.";
+  }
+
+  document.getElementById("btnVaciar").addEventListener("click", () => {
+    if (confirm("¿Vaciar todo el carrito?")) { vaciarCarrito(); mostrarCarrito(); }
+  });
+  window.addEventListener("pageshow", mostrarCarrito);
+  mostrarCarrito();
+</script>
 </body>
 </html>

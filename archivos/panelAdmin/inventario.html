@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventario · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html" class="active" aria-current="page"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Inventario</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="panel mb-4">
+        <div class="panel-head">
+          <div>
+            <h2>Registrar ingreso de mercancía</h2>
+            <p class="panel-note">Suma las unidades recibidas al stock y deja el movimiento registrado.</p>
+          </div>
+        </div>
+        <form class="row g-3 align-items-end" id="formIngreso" novalidate>
+          <div class="col-md-4">
+            <label class="form-label" for="ingProducto">Producto</label>
+            <select id="ingProducto" class="form-select" required></select>
+            <div class="invalid-feedback">Elige un producto.</div>
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label" for="ingCantidad">Cantidad</label>
+            <input id="ingCantidad" type="number" min="1" step="1" class="form-control" required>
+            <div class="invalid-feedback">1 o más.</div>
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="form-label" for="ingProveedor">Proveedor</label>
+            <input id="ingProveedor" type="text" class="form-control" required>
+            <div class="invalid-feedback">Ingresa el proveedor.</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" for="ingDoc">N° de factura o guía</label>
+            <input id="ingDoc" type="text" class="form-control" placeholder="Opcional">
+          </div>
+          <div class="col-12 d-flex align-items-center gap-3">
+            <button class="btn btn-brand" type="submit"><i class="bi bi-box-arrow-in-down me-1"></i>Registrar ingreso</button>
+            <span class="small text-muted" id="ingInfo"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel-head">
+        <h2 class="h4 m-0" style="font-family:var(--adm-display);font-weight:700;">Movimientos de inventario</h2>
+      </div>
+      <div class="toolbar">
+        <div class="input-icon align-self-end">
+          <i class="bi bi-search"></i>
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar producto" aria-label="Buscar producto en movimientos">
+        </div>
+        <div class="field"><label for="fMovTipo">Tipo</label>
+          <select id="fMovTipo" class="form-select">
+            <option value="">Todos los tipos</option>
+            <option>Ingreso</option><option>Ajuste</option><option>Venta</option><option>Taller</option>
+          </select>
+        </div>
+        <div class="field"><label for="fMovDesde">Desde</label><input id="fMovDesde" type="date" class="form-control"></div>
+        <div class="field"><label for="fMovHasta">Hasta</label><input id="fMovHasta" type="date" class="form-control"></div>
+      </div>
+      <div class="panel panel-flush">
+        <div class="table-responsive">
+          <table class="table adm-table">
+            <thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th class="num">Cantidad</th><th class="num">Stock resultante</th><th>Usuario</th><th>Detalle</th></tr></thead>
+            <tbody id="tablaMovs"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="table-foot" id="pieMovs"></p>
+
+    </div>
+  </main>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+
+  function llenarProductos() {
+    $("ingProducto").innerHTML = '<option value="">Elige el producto recibido</option>' +
+      PRODUCTOS.filter(p => p.activo !== false)
+        .sort((a, b) => a.nombre.localeCompare(b.nombre))
+        .map(p => `<option value="${p.id}">${esc(p.nombre)} (${esc(p.codigo)})</option>`).join("");
+  }
+
+  $("ingProducto").addEventListener("change", () => {
+    const p = PRODUCTOS.find(x => x.id === $("ingProducto").value);
+    $("ingInfo").textContent = p ? `Stock actual: ${p.stock} · mínimo ${p.stockMin}` : "";
+    if (p && !$("ingProveedor").value) $("ingProveedor").value = p.proveedor || "";
+  });
+
+  $("formIngreso").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target;
+    if (!f.checkValidity()) { f.classList.add("was-validated"); return; }
+    const p = PRODUCTOS.find(x => x.id === $("ingProducto").value);
+    const cant = +$("ingCantidad").value;
+    p.stock += cant;
+    guardarProductos();
+    const doc = $("ingDoc").value.trim();
+    registrarMovimiento(p, "Ingreso", cant, "admin", (doc ? doc + " · " : "") + $("ingProveedor").value.trim());
+    aviso(`<i class="bi bi-check-circle me-1"></i>+${cant} unidades de <strong>${esc(p.nombre)}</strong>. Stock: ${p.stock}.`);
+    f.reset(); f.classList.remove("was-validated"); $("ingInfo").textContent = "";
+    mostrarMovimientos();
+    actualizarBadges();
+  });
+
+  function mostrarMovimientos() {
+    const q = $("fBuscar").value.trim().toLowerCase();
+    const tipo = $("fMovTipo").value, desde = $("fMovDesde").value, hasta = $("fMovHasta").value;
+    const lista = leerMovimientos().filter(m => {
+      const dia = m.fecha.slice(0, 10);
+      return (!q || m.nombre.toLowerCase().includes(q)) && (!tipo || m.tipo === tipo) &&
+             (!desde || dia >= desde) && (!hasta || dia <= hasta);
+    });
+    $("tablaMovs").innerHTML = lista.map(m => `
+      <tr><td>${fechaCorta(m.fecha)}</td><td>${esc(m.nombre)}</td>
+      <td><span class="tag tag-${m.tipo.toLowerCase()}">${m.tipo}</span></td>
+      <td class="num ${m.cantidad < 0 ? "qty-neg" : "qty-pos"}">${m.cantidad > 0 ? "+" : "−"}${Math.abs(m.cantidad)}</td>
+      <td class="num">${m.stockResultante}</td><td>${esc(m.usuario)}</td><td>${esc(m.detalle)}</td></tr>`).join("")
+      || '<tr><td colspan="7" class="text-center text-muted py-4">Sin movimientos. Registra un ingreso, ajusta stock en Productos o haz una compra en la tienda.</td></tr>';
+    $("pieMovs").textContent = lista.length + " movimientos";
+  }
+  ["fBuscar", "fMovTipo", "fMovDesde", "fMovHasta"].forEach(id => $(id).addEventListener("input", mostrarMovimientos));
+
+  llenarProductos();
+  // inventario.html?producto=id  -> deja el producto elegido (viene desde Resumen)
+  const pre = new URLSearchParams(location.search).get("producto");
+  if (pre) { $("ingProducto").value = pre; $("ingProducto").dispatchEvent(new Event("change")); $("ingCantidad").focus(); }
+  mostrarMovimientos();
+
+</script>
+</body>
+</html>

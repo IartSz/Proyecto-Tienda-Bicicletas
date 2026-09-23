@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar compra - Rider Tapia</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar py-1">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="d-none d-md-block">📍 Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
+    <div class="ms-auto">
+      <a href="#" class="me-3"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="me-3"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">RIDER TAPIA <span>BIKER</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#">Destacados⚡️</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Indumentaria</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="cascos.html">Cascos</a></li>
+            <li><a class="dropdown-item" href="#">Rodilleras</a></li>
+            <li><a class="dropdown-item" href="#">Guantes</a></li>
+            <li><a class="dropdown-item" href="#">Cortavientos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Accesorios</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Bombines</a></li>
+            <li><a class="dropdown-item" href="#">Botellas</a></li>
+            <li><a class="dropdown-item" href="luces.html">Luces</a></li>
+            <li><a class="dropdown-item" href="#">Puños</a></li>
+            <li><a class="dropdown-item" href="#">Sillines</a></li>
+            <li><a class="dropdown-item" href="#">Tapabarros</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Componentes</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Transmisión</a></li>
+            <li><a class="dropdown-item" href="#">Frenos</a></li>
+            <li><a class="dropdown-item" href="#">Mazas</a></li>
+            <li><a class="dropdown-item" href="#">Pedales</a></li>
+            <li><a class="dropdown-item" href="#">Manubrios</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="neumaticos.html">Neumáticos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Suspensiones</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Mantenimiento</a></li>
+        <li class="nav-item"><a class="nav-link" href="politica/informacion-contacto.html">Contacto</a></li>
+      </ul>
+      <div class="d-flex align-items-center mt-3 mt-lg-0">
+        <div class="nav-icons d-flex align-items-center">
+          <a href="login/login.html"><i class="bi bi-person"></i></a>
+          <a href="carrito.html" class="position-relative">
+            <i class="bi bi-cart3"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size:.55rem;">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ ENCABEZADO ============ -->
+<section class="store-section py-4">
+  <div class="container">
+    <h2 class="mb-0"><i class="bi bi-bag-check me-2"></i>Finalizar compra</h2>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+
+    <!-- ===== CONFIRMACIÓN (se muestra al terminar) ===== -->
+    <div id="confirmacion" class="d-none">
+      <div class="bg-white rounded shadow-sm p-4 p-md-5 mx-auto text-center" style="max-width:640px;">
+        <i class="bi bi-check-circle-fill text-success" style="font-size:4rem;"></i>
+        <h3 class="fw-bold mt-3">¡Gracias por tu compra!</h3>
+        <p class="text-muted mb-1">Tu número de pedido es</p>
+        <p class="fs-4 fw-bold" id="numPedido"></p>
+        <p class="mb-4" id="textoConfirmacion"></p>
+        <div class="text-start border rounded p-3 mb-4" id="resumenPedido"></div>
+        <div class="alert alert-secondary small text-start mb-4">
+          <i class="bi bi-info-circle me-1"></i>Esta es una <strong>compra simulada</strong>: no se realizó ningún cobro ni se envió ningún correo.
+        </div>
+        <a href="mis-pedidos.html" class="btn btn-outline-dark me-2 d-none" id="btnMisPedidos">VER MIS PEDIDOS</a>
+        <a href="index.html" class="btn btn-brand">VOLVER A LA TIENDA</a>
+      </div>
+    </div>
+
+    <form id="formCheckout" class="row g-4" novalidate>
+      <div class="col-lg-7">
+
+        <!-- ===== 1. Cómo comprar ===== -->
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">1</span>¿Cómo quieres comprar?</h5>
+
+          <!-- Si NO ha iniciado sesión -->
+          <div id="modoInvitado">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100 border-dark">
+                  <div class="fw-semibold"><i class="bi bi-person-walking me-1"></i>Como invitado</div>
+                  <p class="small text-muted mb-0 mt-1">Compra rápido sin crear cuenta. Solo necesitamos tus datos de contacto y entrega.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100">
+                  <div class="fw-semibold"><i class="bi bi-person-circle me-1"></i>¿Ya tienes cuenta?</div>
+                  <p class="small text-muted mb-2 mt-1">Inicia sesión para completar tus datos más rápido (opcional).</p>
+                  <a href="login/login.html?volver=checkout" class="btn btn-dark btn-sm">INICIAR SESIÓN</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Si YA inició sesión -->
+          <div id="modoUsuario" class="d-none">
+            <div class="d-flex justify-content-between align-items-center border rounded p-3">
+              <div><i class="bi bi-person-check-fill me-2 text-success"></i>Comprando como <strong id="emailUsuario"></strong></div>
+              <button type="button" class="btn btn-link btn-sm" id="btnCerrarSesion">No soy yo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 2. Datos de contacto ===== -->
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">2</span>Datos de contacto</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label" for="nombre">Nombre</label>
+              <input class="form-control" id="nombre" required>
+              <div class="invalid-feedback">Ingresa tu nombre.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="apellido">Apellido</label>
+              <input class="form-control" id="apellido" required>
+              <div class="invalid-feedback">Ingresa tu apellido.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="email">Correo electrónico</label>
+              <input type="email" class="form-control" id="email" placeholder="tucorreo@ejemplo.com" required>
+              <div class="invalid-feedback">Ingresa un correo válido.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="telefono">Teléfono</label>
+              <input type="tel" class="form-control" id="telefono" placeholder="+56 9 1234 5678" required pattern="^\+?56\s?9\s?\d{4}\s?\d{4}$|^9\s?\d{4}\s?\d{4}$">
+              <div class="invalid-feedback">Formato: +56 9 1234 5678</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 3. Entrega ===== -->
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">3</span>Entrega</h5>
+          <div class="form-check border rounded p-3 ps-5 mb-2">
+            <input class="form-check-input" type="radio" name="entrega" id="despacho" value="despacho" checked>
+            <label class="form-check-label w-100" for="despacho">
+              <strong>Despacho a domicilio</strong>
+              <span class="float-end small" id="precioDespacho"></span>
+              <div class="small text-muted">3 a 5 días hábiles</div>
+            </label>
+          </div>
+          <div class="form-check border rounded p-3 ps-5 mb-3">
+            <input class="form-check-input" type="radio" name="entrega" id="retiro" value="retiro">
+            <label class="form-check-label w-100" for="retiro">
+              <strong>Retiro en tienda</strong><span class="float-end small text-success">Gratis</span>
+              <div class="small text-muted">Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
+            </label>
+          </div>
+
+          <div class="row g-3" id="camposDireccion">
+            <div class="col-12">
+              <label class="form-label" for="direccion">Dirección</label>
+              <input class="form-control campo-despacho" id="direccion" placeholder="Calle, número, depto." required>
+              <div class="invalid-feedback">Ingresa tu dirección.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="comuna">Comuna</label>
+              <input class="form-control campo-despacho" id="comuna" required>
+              <div class="invalid-feedback">Ingresa tu comuna.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="region">Región</label>
+              <select class="form-select campo-despacho" id="region" required>
+                  <option>Arica y Parinacota</option>
+                  <option>Tarapacá</option>
+                  <option>Antofagasta</option>
+                  <option>Atacama</option>
+                  <option>Coquimbo</option>
+                  <option>Valparaíso</option>
+                  <option>Metropolitana</option>
+                  <option>O'Higgins</option>
+                  <option>Maule</option>
+                  <option>Ñuble</option>
+                  <option selected>Biobío</option>
+                  <option>La Araucanía</option>
+                  <option>Los Ríos</option>
+                  <option>Los Lagos</option>
+                  <option>Aysén</option>
+                  <option>Magallanes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== 4. Pago (simulado) ===== -->
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">4</span>Pago</h5>
+          <div class="alert alert-warning small py-2"><i class="bi bi-exclamation-triangle me-1"></i>Pago <strong>simulado</strong>: no ingreses datos reales de tarjeta. Usa por ejemplo 4111 1111 1111 1111.</div>
+
+          <div class="d-flex gap-3 mb-3 flex-wrap">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pago" id="pagoTarjeta" value="tarjeta" checked>
+              <label class="form-check-label" for="pagoTarjeta"><i class="bi bi-credit-card me-1"></i>Tarjeta de débito / crédito</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pago" id="pagoTransferencia" value="transferencia">
+              <label class="form-check-label" for="pagoTransferencia"><i class="bi bi-bank me-1"></i>Transferencia</label>
+            </div>
+          </div>
+
+          <div class="row g-3" id="camposTarjeta">
+            <div class="col-12">
+              <label class="form-label" for="numTarjeta">Número de tarjeta</label>
+              <input class="form-control campo-tarjeta" id="numTarjeta" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" required pattern="^(\d{4} ){3}\d{4}$" autocomplete="off">
+              <div class="invalid-feedback">Ingresa los 16 dígitos.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="vencimiento">Vencimiento</label>
+              <input class="form-control campo-tarjeta" id="vencimiento" placeholder="MM/AA" maxlength="5" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" autocomplete="off">
+              <div class="invalid-feedback">Formato MM/AA.</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="cvv">CVV</label>
+              <input class="form-control campo-tarjeta" id="cvv" inputmode="numeric" placeholder="123" maxlength="3" required pattern="^\d{3}$" autocomplete="off">
+              <div class="invalid-feedback">3 dígitos.</div>
+            </div>
+          </div>
+
+          <div id="infoTransferencia" class="d-none small bg-light rounded p-3">
+            Al confirmar te mostraremos los datos para transferir. El pedido se prepara cuando recibamos el pago.
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== RESUMEN ===== -->
+      <div class="col-lg-5">
+        <div class="bg-white rounded shadow-sm p-4 sticky-lg-top" style="top:100px;">
+          <h5 class="fw-bold mb-3">Tu pedido</h5>
+          <div id="itemsResumen" class="mb-3"></div>
+          <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span id="subtotal"></span></div>
+          <div class="d-flex justify-content-between mb-2"><span>Envío</span><span id="envio"></span></div>
+          <hr>
+          <div class="d-flex justify-content-between fw-bold fs-5 mb-3"><span>Total</span><span id="total"></span></div>
+
+          <div class="form-check mb-3 small">
+            <input class="form-check-input" type="checkbox" id="terminos" required>
+            <label class="form-check-label" for="terminos">Acepto los <a href="politica/terminos-servicio.html" target="_blank">términos del servicio</a></label>
+            <div class="invalid-feedback">Debes aceptar los términos.</div>
+          </div>
+          <button type="submit" class="btn btn-brand w-100"><i class="bi bi-lock me-2"></i>CONFIRMAR COMPRA</button>
+          <a href="carrito.html" class="d-block text-center small mt-3"><i class="bi bi-arrow-left me-1"></i>Volver al carrito</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter py-5">
+  <div class="container text-center">
+    <h3 class="mb-2">¡Suscríbete a Rider Tapia Bici!</h3>
+    <p class="text-muted mb-4">Recibe promociones y novedades directo en tu correo.</p>
+    <form class="row justify-content-center g-2 mb-4" style="max-width:500px; margin:0 auto;">
+      <div class="col-8">
+        <input type="email" class="form-control" placeholder="Correo electrónico" required>
+      </div>
+      <div class="col-4">
+        <button type="submit" class="btn btn-brand w-100">Enviar</button>
+      </div>
+    </form>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-tiktok"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="text-white fw-bold mb-3">RIDER TAPIA </h5>
+        <p>Tienda y taller de bicicletas en Concepción. Todo lo que necesitas para ti y tu bici.</p>
+        <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>Centro, Concepción</p>
+        <p><i class="bi bi-clock me-2"></i>Lunes a domingo, 10:30 a 19:30 hrs</p>
+      </div>
+      <div class="col-6 col-md-2">
+        <h6>Categorías</h6>
+        <ul class="list-unstyled">
+          <li><a href="#">Indumentaria</a></li>
+          <li><a href="#">Accesorios</a></li>
+          <li><a href="#">Componentes</a></li>
+          <li><a href="#">Neumáticos</a></li>
+          <li><a href="#">Mantenimiento</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-3">
+        <h6>Políticas</h6>
+        <ul class="list-unstyled">
+          <li><a href="politica/politica-privacidad.html">Política de privacidad</a></li>
+          <li><a href="politica/terminos-servicio.html">Términos del servicio</a></li>
+          <li><a href="politica/politica-reembolso.html">Política de reembolso</a></li>
+          <li><a href="politica/politica-envio.html">Política de envío</a></li>
+          <li><a href="politica/informacion-contacto.html">Información de contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Síguenos</h6>
+        <div class="social-icons mb-3">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-tiktok"></i></a>
+        </div>
+        <h6>Formas de pago</h6>
+        <div class="payment-icons">
+          <i class="bi bi-credit-card-2-front"></i>
+          <i class="bi bi-credit-card"></i>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4">
+    <p class="text-center mb-0" style="font-size:.8rem;">© 2026, Rider Tapia </p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/sesion.js"></script>
+
+<script>
+  const form = document.getElementById("formCheckout");
+
+  // Si el carrito está vacío, no hay nada que comprar
+  if (leerCarrito().length === 0) {
+    window.location.href = "carrito.html";
+  }
+
+  /* ---------- 1. Invitado o usuario ---------- */
+  function mostrarSesion() {
+    const usuario = obtenerUsuario();
+    document.getElementById("modoInvitado").classList.toggle("d-none", !!usuario);
+    document.getElementById("modoUsuario").classList.toggle("d-none", !usuario);
+    if (usuario) {
+      document.getElementById("emailUsuario").textContent = (usuario.nombre ? usuario.nombre + " " + usuario.apellido + " · " : "") + usuario.email;
+      // Rellenar los datos que ya conocemos de su perfil
+      const rellenar = (id, valor) => { const el = document.getElementById(id); if (valor && !el.value) el.value = valor; };
+      rellenar("email", usuario.email);
+      rellenar("nombre", usuario.nombre);
+      rellenar("apellido", usuario.apellido);
+      rellenar("telefono", usuario.telefono);
+      rellenar("direccion", usuario.direccion);
+      rellenar("comuna", usuario.comuna);
+      if (usuario.region) document.getElementById("region").value = usuario.region;
+    }
+  }
+  document.getElementById("btnCerrarSesion").addEventListener("click", () => { cerrarSesion(); location.reload(); });
+  mostrarSesion();
+
+  /* ---------- Resumen y totales ---------- */
+  function entregaElegida() {
+    return document.querySelector("input[name=entrega]:checked").value;
+  }
+
+  function actualizarResumen() {
+    const carrito = leerCarrito();
+    document.getElementById("itemsResumen").innerHTML = carrito.map(i => `
+      <div class="d-flex justify-content-between small mb-2">
+        <span>${i.cantidad} × ${i.nombre}${i.opcion && i.opcion !== "Única" ? " <span class='text-muted'>(" + i.opcion + ")</span>" : ""}</span>
+        <span class="ms-2 text-nowrap">${formatoCLP(i.precio * i.cantidad)}</span>
+      </div>`).join("");
+
+    const t = calcularTotales(entregaElegida());
+    const tDespacho = calcularTotales("despacho");
+    document.getElementById("subtotal").textContent = formatoCLP(t.subtotal);
+    document.getElementById("envio").textContent = t.envio === 0 ? "Gratis" : formatoCLP(t.envio);
+    document.getElementById("total").textContent = formatoCLP(t.total);
+    document.getElementById("precioDespacho").innerHTML = tDespacho.envio === 0
+      ? '<span class="text-success">Gratis</span>' : formatoCLP(tDespacho.envio);
+  }
+
+  /* ---------- 3. Mostrar/ocultar dirección ---------- */
+  document.querySelectorAll("input[name=entrega]").forEach(r => r.addEventListener("change", () => {
+    const despacho = entregaElegida() === "despacho";
+    document.getElementById("camposDireccion").classList.toggle("d-none", !despacho);
+    document.querySelectorAll(".campo-despacho").forEach(c => c.required = despacho);
+    actualizarResumen();
+  }));
+
+  /* ---------- 4. Tarjeta o transferencia ---------- */
+  document.querySelectorAll("input[name=pago]").forEach(r => r.addEventListener("change", () => {
+    const tarjeta = document.getElementById("pagoTarjeta").checked;
+    document.getElementById("camposTarjeta").classList.toggle("d-none", !tarjeta);
+    document.getElementById("infoTransferencia").classList.toggle("d-none", tarjeta);
+    document.querySelectorAll(".campo-tarjeta").forEach(c => c.required = tarjeta);
+  }));
+
+  // Formato automático: "4111111111111111" -> "4111 1111 1111 1111"
+  document.getElementById("numTarjeta").addEventListener("input", e => {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ");
+  });
+  // "1228" -> "12/28"
+  document.getElementById("vencimiento").addEventListener("input", e => {
+    let v = e.target.value.replace(/\D/g, "").slice(0, 4);
+    if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);
+    e.target.value = v;
+  });
+  document.getElementById("cvv").addEventListener("input", e => {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+  });
+
+  /* ---------- Confirmar compra ---------- */
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      const primero = form.querySelector(":invalid");
+      if (primero) primero.focus();
+      return;
+    }
+
+    const carrito = leerCarrito();
+
+    // Revisar que todavía haya stock (el admin puede haberlo cambiado)
+    PRODUCTOS = cargarProductos();
+    const errorStock = validarStockCarrito(carrito);
+    if (errorStock) {
+      alert(errorStock + " Revisa tu carrito.");
+      window.location.href = "carrito.html";
+      return;
+    }
+    // Clientes desactivados desde el panel de administración no pueden comprar
+    const emailCliente = document.getElementById("email").value.trim().toLowerCase();
+    if (leerLS("clientesEstado", {})[emailCliente] === "inactivo") {
+      alert("La cuenta asociada a " + emailCliente + " está desactivada. Contáctanos para más información.");
+      document.getElementById("email").focus();
+      return;
+    }
+    const entrega = entregaElegida();
+    const pago = document.getElementById("pagoTarjeta").checked ? "tarjeta" : "transferencia";
+    const totales = calcularTotales(entrega);
+    const usuario = obtenerUsuario();
+    const numero = "RT-" + Date.now().toString().slice(-6);
+
+    // Pedido (los datos de tarjeta NO se guardan)
+    const pedido = {
+      numero,
+      fecha: new Date().toLocaleString("es-CL"),
+      fechaISO: new Date().toISOString(),
+      cliente: {
+        nombre: document.getElementById("nombre").value.trim(),
+        apellido: document.getElementById("apellido").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        telefono: document.getElementById("telefono").value.trim()
+      },
+      tipoCliente: usuario ? "registrado" : "invitado",
+      entrega,
+      direccion: entrega === "despacho"
+        ? `${document.getElementById("direccion").value.trim()}, ${document.getElementById("comuna").value.trim()}, ${document.getElementById("region").value}`
+        : "Retiro en tienda (Centro, Concepción)",
+      pago,
+      estado: estadoInicial(pago),
+      historial: [{ estado: estadoInicial(pago), fecha: new Date().toISOString(), nota: "Pedido recibido." }],
+      items: carrito,
+      ...totales
+    };
+
+    // Historial de pedidos simulado
+    try {
+      const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+      pedidos.push(pedido);
+      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    } catch (err) {}
+
+    registrarVenta(pedido);   // descuenta stock y lo registra en el inventario del panel
+
+    // Guardar teléfono y dirección en el perfil para la próxima compra
+    if (usuario && typeof actualizarUsuario === "function") {
+      const cambios = { telefono: pedido.cliente.telefono };
+      if (entrega === "despacho") {
+        cambios.direccion = document.getElementById("direccion").value.trim();
+        cambios.comuna = document.getElementById("comuna").value.trim();
+        cambios.region = document.getElementById("region").value;
+      }
+      actualizarUsuario(usuario.email, cambios);
+    }
+    vaciarCarrito();
+    mostrarConfirmacion(pedido);
+  });
+
+  function mostrarConfirmacion(p) {
+    form.classList.add("d-none");
+    document.getElementById("confirmacion").classList.remove("d-none");
+    document.getElementById("numPedido").textContent = p.numero;
+
+    let texto = `${p.cliente.nombre}, te enviaremos la confirmación a <strong>${p.cliente.email}</strong>.`;
+    if (p.pago === "transferencia") {
+      texto += `<br><br><span class="small">Transfiere <strong>${formatoCLP(p.total)}</strong> a: Rider Tapia SpA · Banco Ejemplo · Cta. Cte. 00-000-00000-0 · pagos@ridertapia.cl, indicando el pedido ${p.numero}.</span>`;
+    }
+    document.getElementById("textoConfirmacion").innerHTML = texto;
+
+    document.getElementById("resumenPedido").innerHTML = `
+      ${p.items.map(i => `<div class="d-flex justify-content-between small mb-1"><span>${i.cantidad} × ${i.nombre}${i.opcion && i.opcion !== "Única" ? " (" + i.opcion + ")" : ""}</span><span>${formatoCLP(i.precio * i.cantidad)}</span></div>`).join("")}
+      <hr class="my-2">
+      <div class="d-flex justify-content-between small"><span>Envío</span><span>${p.envio === 0 ? "Gratis" : formatoCLP(p.envio)}</span></div>
+      <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>${formatoCLP(p.total)}</span></div>
+      <hr class="my-2">
+      <div class="small"><strong>Entrega:</strong> ${p.direccion}</div>
+      <div class="small"><strong>Pago:</strong> ${p.pago === "tarjeta" ? "Tarjeta" : "Transferencia (pendiente)"}</div>
+      <div class="small"><strong>Cliente:</strong> ${p.tipoCliente === "invitado" ? "Invitado" : "Cuenta registrada"}</div>`;
+    if (obtenerUsuario()) document.getElementById("btnMisPedidos").classList.remove("d-none");
+    if (typeof pintarUsuarioEnMenu === "function") pintarUsuarioEnMenu();
+    window.scrollTo(0, 0);
+  }
+
+  actualizarResumen();
+</script>
+</body>
+</html>

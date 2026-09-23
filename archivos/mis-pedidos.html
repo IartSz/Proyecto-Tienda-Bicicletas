@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cascos - Rider Tapia</title>
+<title>Mis pedidos - Rider Tapia</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="css/styles.css" rel="stylesheet">
@@ -80,35 +80,28 @@
   </div>
 </nav>
 
-<!-- ============ ENCABEZADO ============ -->
-<section class="store-section py-5">
+<section class="store-section py-4">
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb mb-2" style="font-size:.85rem;">
         <li class="breadcrumb-item"><a href="index.html" style="color:inherit; opacity:.8;">Inicio</a></li>
-        <li class="breadcrumb-item" style="color:inherit; opacity:.8;" data-cat-grupo>Indumentaria</li>
-        <li class="breadcrumb-item active" aria-current="page" style="color:inherit;" data-cat-titulo>Cascos</li>
+        <li class="breadcrumb-item active" aria-current="page" style="color:inherit;">Mis pedidos</li>
       </ol>
     </nav>
-    <h2 class="mb-1" data-cat-titulo>Cascos</h2>
-    <p class="mb-0" style="opacity:.85;" data-cat-subtitulo>Protección para ciudad, trail y enduro.</p>
+    <h2 class="mb-0"><i class="bi bi-bag-check me-2"></i>Mis pedidos</h2>
+    <p class="mb-0 mt-1" style="opacity:.85;" id="subtitulo"></p>
   </div>
 </section>
 
-<!-- ============ LISTADO DE CASCOS ============ -->
 <section class="py-5 bg-light">
-  <div class="container">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-      <p class="mb-0 text-muted" id="contador"></p>
-      <select id="orden" class="form-select form-select-sm" style="width:auto;">
-        <option value="">Ordenar por: destacados</option>
-        <option value="asc">Precio: menor a mayor</option>
-        <option value="desc">Precio: mayor a menor</option>
-      </select>
+  <div class="container" style="max-width:900px;">
+    <div id="sinPedidos" class="text-center py-5 d-none">
+      <i class="bi bi-bag" style="font-size:3.5rem; color:#999;"></i>
+      <h4 class="mt-3">Aún no tienes pedidos</h4>
+      <p class="text-muted">Cuando compres con tu cuenta, tus pedidos aparecerán aquí.</p>
+      <a href="index.html" class="btn btn-brand mt-2">Ir a la tienda</a>
     </div>
-
-    <!-- Las tarjetas se generan desde js/productos.js -->
-    <div class="row g-4" id="listaProductos"></div>
+    <div class="accordion" id="listaPedidos"></div>
   </div>
 </section>
 
@@ -187,6 +180,108 @@
 <script src="js/carrito.js"></script>
 <script src="js/sesion.js"></script>
 
-<script>renderCatalogo("cascos");</script>
+<script>
+  // Página solo para usuarios con sesión iniciada
+  const usuario = obtenerUsuario();
+  if (!usuario) location.href = "login/login.html?volver=" + encodeURIComponent(paginaActual());
+
+  // El estado lo actualiza la tienda desde el Panel de Administración > Pedidos
+  function badgeEstado(p) {
+    const e = estadoPedido(p), cfg = ESTADOS_PEDIDO[e] || {};
+    return `<span class="badge ${cfg.badge || "bg-secondary"}"><i class="bi ${cfg.icono || ""} me-1"></i>${e}</span>`;
+  }
+
+  // Barra de avance: Pagado → En preparación → Enviado/Listo → Entregado
+  function avance(p) {
+    const e = estadoPedido(p);
+    if (e === "Cancelado") return '<div class="alert alert-danger small mb-3"><i class="bi bi-x-circle me-1"></i>Este pedido fue cancelado.</div>';
+    const pasos = pasosPedido(p);
+    const idx = pasos.indexOf(e);
+    return `<div class="d-flex justify-content-between position-relative mb-4 mt-2 px-2">
+      <div class="position-absolute bg-secondary-subtle" style="height:3px; left:30px; right:30px; top:15px;"></div>
+      <div class="position-absolute bg-dark" style="height:3px; left:30px; top:15px; width:calc((100% - 60px) * ${idx / (pasos.length - 1)});"></div>
+      ${pasos.map((paso, i) => `
+        <div class="text-center position-relative" style="width:${100 / pasos.length}%;">
+          <span class="d-inline-flex align-items-center justify-content-center rounded-circle ${i <= idx ? "bg-dark text-white" : "bg-white border text-muted"}"
+                style="width:32px; height:32px;"><i class="bi ${i < idx ? "bi-check-lg" : ESTADOS_PEDIDO[paso].icono}"></i></span>
+          <div class="small mt-1 ${i === idx ? "fw-bold" : "text-muted"}" style="font-size:.75rem;">${paso}</div>
+        </div>`).join("")}
+    </div>`;
+  }
+
+  function historialHTML(p) {
+    return historialPedido(p).slice().reverse().map(h => `
+      <li class="mb-2">
+        <span class="fw-semibold"><i class="bi ${(ESTADOS_PEDIDO[h.estado] || {}).icono || "bi-dot"} me-1"></i>${escaparHTML(h.estado)}</span>
+        <span class="text-muted small ms-1">${new Date(h.fecha).toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" })}</span>
+        ${h.nota ? `<div class="small bg-light rounded px-2 py-1 mt-1"><i class="bi bi-chat-left-text me-1"></i>${escaparHTML(h.nota)}</div>` : ""}
+      </li>`).join("");
+  }
+
+  if (usuario) {
+    document.getElementById("subtitulo").textContent = "Hola, " + usuario.nombre + ". Aquí puedes seguir el estado de tus compras.";
+    const todos = leerLS("pedidos", []);
+    const pedidos = todos
+      .filter(p => (p.cliente.email || "").toLowerCase() === usuario.email)
+      .sort((a, b) => (b.fechaISO || "").localeCompare(a.fechaISO || ""));
+
+    if (pedidos.length === 0) document.getElementById("sinPedidos").classList.remove("d-none");
+
+    // Abrir primero el pedido con novedades (o el más reciente)
+    let abierto = pedidos.findIndex(p => p.novedad);
+    if (abierto < 0) abierto = 0;
+
+    document.getElementById("listaPedidos").innerHTML = pedidos.map((p, i) => `
+      <div class="accordion-item mb-3 border rounded shadow-sm overflow-hidden">
+        <h2 class="accordion-header">
+          <button class="accordion-button ${i === abierto ? "" : "collapsed"}" type="button" data-bs-toggle="collapse" data-bs-target="#ped${i}">
+            <div class="d-flex flex-wrap w-100 align-items-center gap-3 me-3">
+              <div><div class="fw-bold">${escaparHTML(p.numero)}
+                ${p.novedad ? '<span class="badge bg-danger ms-1" style="font-size:.65rem;">ACTUALIZADO</span>' : ""}</div>
+                <div class="small text-muted">${escaparHTML(p.fecha)}</div></div>
+              <div class="ms-md-auto">${badgeEstado(p)}</div>
+              <div class="fw-bold">${formatoCLP(p.total)}</div>
+            </div>
+          </button>
+        </h2>
+        <div id="ped${i}" class="accordion-collapse collapse ${i === abierto ? "show" : ""}" data-bs-parent="#listaPedidos">
+          <div class="accordion-body">
+            ${avance(p)}
+            <p class="small mb-3"><i class="bi ${(ESTADOS_PEDIDO[estadoPedido(p)] || {}).icono || ""} me-1"></i>${(ESTADOS_PEDIDO[estadoPedido(p)] || {}).texto || ""}
+              ${p.seguimiento ? `<br><i class="bi bi-upc-scan me-1"></i>N° de seguimiento: <strong>${escaparHTML(p.seguimiento)}</strong>` : ""}</p>
+            ${p.items.map(it => {
+              const prod = PRODUCTOS.find(x => x.id === it.id);
+              return `<div class="d-flex align-items-center gap-3 py-2 border-bottom">
+                <div class="bg-light rounded flex-shrink-0" style="width:56px; height:56px; padding:4px;">${prod ? htmlImagen(prod, "48px") : ""}</div>
+                <div class="flex-grow-1">
+                  ${prod && prod.activo !== false ? `<a href="producto.html?id=${it.id}" class="text-reset fw-semibold text-decoration-none">${escaparHTML(it.nombre)}</a>` : `<span class="fw-semibold">${escaparHTML(it.nombre)}</span>`}
+                  <div class="small text-muted">${it.opcion && it.opcion !== "Única" ? escaparHTML(it.opcion) + " · " : ""}${it.cantidad} × ${formatoCLP(it.precio)}</div>
+                </div>
+                <div class="fw-semibold">${formatoCLP(it.precio * it.cantidad)}</div>
+              </div>`;
+            }).join("")}
+            <div class="row mt-3 small">
+              <div class="col-md-6 mb-2">
+                <div><strong>Entrega:</strong> ${escaparHTML(p.direccion)}</div>
+                <div><strong>Pago:</strong> ${p.pago === "tarjeta" ? "Tarjeta" : "Transferencia"}</div>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <div>Subtotal: ${formatoCLP(p.subtotal)}</div>
+                <div>Envío: ${p.envio ? formatoCLP(p.envio) : "Gratis"}</div>
+                <div class="fw-bold fs-6">Total: ${formatoCLP(p.total)}</div>
+              </div>
+            </div>
+            <h6 class="fw-bold mt-3 mb-2">Historial del pedido</h6>
+            <ul class="list-unstyled mb-0">${historialHTML(p)}</ul>
+          </div>
+        </div>
+      </div>`).join("");
+
+    // El cliente ya vio las novedades: quitar el aviso (se muestran en esta visita)
+    let cambio = false;
+    todos.forEach(p => { if (p.novedad && (p.cliente.email || "").toLowerCase() === usuario.email) { p.novedad = false; cambio = true; } });
+    if (cambio) { guardarLS("pedidos", todos); pintarUsuarioEnMenu(); }
+  }
+</script>
 </body>
 </html>

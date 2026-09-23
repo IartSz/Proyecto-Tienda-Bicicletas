@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión · Rider Tapia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <a href="../index.html" class="auth-brand d-block mb-1">RIDER TAPIA <span>BIKER</span></a>
+            <p class="text-center text-muted mb-4" style="font-size:.9rem;">Ingresa a tu cuenta</p>
+
+            <div class="auth-tabs" role="tablist">
+                <button type="button" role="tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-cliente"
+                    aria-controls="tab-cliente" aria-selected="true"><i class="bi bi-person me-1"></i>Cliente</button>
+                <button type="button" role="tab" data-bs-toggle="tab" data-bs-target="#tab-admin"
+                    aria-controls="tab-admin" aria-selected="false"><i class="bi bi-shield-lock me-1"></i>Administrador</button>
+            </div>
+
+            <div class="tab-content">
+
+                <!-- ============ Cliente ============ -->
+                <div class="tab-pane fade show active" id="tab-cliente" role="tabpanel">
+                    <form id="formCliente" action="../index.html" method="get">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" placeholder="tucorreo@ejemplo.com" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="password" placeholder="••••••••" required minlength="6">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4 auth-links">
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" type="checkbox" id="remember">
+                                <label class="form-check-label" for="remember" style="font-size:.85rem;">Recordarme</label>
+                            </div>
+                            <a href="forgot-password.html" style="font-size:.85rem;">¿Olvidaste tu contraseña?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-brand w-100 mb-3">INICIAR SESIÓN</button>
+
+                        <div class="text-center text-muted mb-2" style="font-size:.8rem;">¿No tienes cuenta?</div>
+                        <div class="text-center">
+                            <a href="register.html" class="btn btn-dark px-4">CREAR CUENTA</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ============ Administrador ============ -->
+                <div class="tab-pane fade" id="tab-admin" role="tabpanel">
+                    <form action="../panelAdmin/admin.html" method="get">
+                        <div class="mb-3">
+                            <label for="adminEmail" class="form-label">Correo de administrador</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="adminEmail" placeholder="admin@ridertapia.cl" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="adminPassword" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                <input type="password" class="form-control" id="adminPassword" placeholder="••••••••" required minlength="6">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">INGRESAR AL PANEL</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../js/sesion.js"></script>
+    <!-- Inicio de sesión simulado: valida contra las cuentas creadas en "Crear cuenta" -->
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        let volver = params.get("volver") || "";
+        if (volver === "checkout") volver = "checkout.html";
+        // Solo se aceptan páginas del mismo sitio (ej: "cascos.html" o "politica/politica-envio.html")
+        if (!/^[\w\-\/]+\.html(\?[\w=&%\-]*)?$/.test(volver) || volver.includes("..") || volver.startsWith("login/")) volver = "index.html";
+        const destino = "../" + volver;
+
+        // Mantener el "volver" al ir a crear cuenta
+        document.querySelectorAll('a[href="register.html"]').forEach(a => a.href = "register.html?volver=" + encodeURIComponent(volver));
+
+        // Viene desde el checkout: ofrecer seguir como invitado
+        if (volver.startsWith("checkout.html")) {
+            const aviso = document.createElement("div");
+            aviso.className = "alert alert-light border small text-center";
+            aviso.innerHTML = 'Inicia sesión para continuar tu compra, o <a href="../checkout.html">sigue como invitado</a>.';
+            document.querySelector(".auth-tabs").before(aviso);
+        }
+        // Recién registrado
+        if (params.get("registrado")) {
+            const aviso = document.createElement("div");
+            aviso.className = "alert alert-success small text-center";
+            aviso.textContent = "¡Cuenta creada! Ya puedes iniciar sesión.";
+            document.querySelector(".auth-tabs").before(aviso);
+        }
+
+        // Si ya tiene sesión iniciada
+        const actual = obtenerUsuario();
+        if (actual) {
+            const aviso = document.createElement("div");
+            aviso.className = "alert alert-light border small text-center";
+            aviso.innerHTML = `Ya iniciaste sesión como <strong>${escaparHTML(actual.nombre + " " + actual.apellido)}</strong>. <a href="${destino}">Continuar</a>`;
+            document.querySelector(".auth-tabs").before(aviso);
+        }
+
+        const form = document.getElementById("formCliente");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+
+        // Mensajes de error bajo cada campo
+        function mostrarError(input, texto) {
+            let div = input.closest(".mb-3").querySelector(".error-login");
+            if (!div) {
+                div = document.createElement("div");
+                div.className = "error-login text-danger mt-1";
+                div.style.fontSize = ".85rem";
+                input.closest(".mb-3").appendChild(div);
+            }
+            div.innerHTML = texto;
+            input.classList.toggle("is-invalid", !!texto);
+        }
+        [email, password].forEach(i => i.addEventListener("input", () => mostrarError(i, "")));
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const r = iniciarSesion(email.value, password.value);
+            if (!r.ok) {
+                const texto = r.campo === "email" && r.error.startsWith("No existe")
+                    ? r.error + ' <a href="register.html?volver=' + encodeURIComponent(volver) + '">Crear cuenta</a>'
+                    : r.error;
+                mostrarError(r.campo === "password" ? password : email, texto);
+                return;
+            }
+            window.location.href = destino;
+        });
+    </script>
+</body>
+
+</html>

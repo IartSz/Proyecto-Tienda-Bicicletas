@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Categorías · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html" class="active" aria-current="page"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Categorías</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="panel">
+            <h2 class="mb-3">Nueva categoría</h2>
+            <form id="formCategoria" novalidate>
+              <label class="form-label" for="catNombre">Nombre</label>
+              <input id="catNombre" type="text" class="form-control" maxlength="40" required>
+              <div class="invalid-feedback" id="errCat">Ingresa un nombre.</div>
+              <label class="form-label mt-3" for="catIcono">Ícono</label>
+              <select id="catIcono" class="form-select">
+                <option value="bi-tag">Etiqueta</option>
+                <option value="bi-bicycle">Bicicleta</option>
+                <option value="bi-gear">Engranaje</option>
+                <option value="bi-tools">Herramientas</option>
+                <option value="bi-person-arms-up">Ropa</option>
+                <option value="bi-cup-straw">Botella</option>
+                <option value="bi-backpack2">Mochila</option>
+                <option value="bi-lightning">Rayo</option>
+              </select>
+              <button class="btn btn-brand mt-3" type="submit"><i class="bi bi-plus-lg me-1"></i>Crear categoría</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="panel panel-flush">
+            <div class="table-responsive">
+              <table class="table adm-table">
+                <thead><tr><th>Categoría</th><th class="num">Productos</th><th>Página en la tienda</th><th class="text-end">Acciones</th></tr></thead>
+                <tbody id="tablaCategorias"></tbody>
+              </table>
+            </div>
+          </div>
+          <p class="table-foot">Una categoría con productos no se puede eliminar hasta reasignarlos a otra. Las categorías nuevas tienen su página en la tienda, pero para que aparezcan en el menú superior debes agregar el enlace en el HTML.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<!-- ===================== Modal: renombrar categoría ===================== -->
+<div class="modal fade" id="modalCategoria" tabindex="-1" aria-labelledby="modalCategoriaTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formRenombrar" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalCategoriaTitulo">Renombrar categoría</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label" for="ecNombre">Nombre</label>
+        <input id="ecNombre" class="form-control" maxlength="40" required>
+        <div class="invalid-feedback">Ingresa un nombre.</div>
+        <label class="form-label mt-3" for="ecSub">Frase de la página</label>
+        <input id="ecSub" class="form-control" maxlength="80" placeholder="Ej: Protección para ciudad, trail y enduro.">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-brand">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== Modal: reasignar y eliminar ===================== -->
+<div class="modal fade" id="modalReasignar" tabindex="-1" aria-labelledby="modalReasignarTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formReasignar" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalReasignarTitulo">Eliminar categoría</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong id="raNombre"></strong> tiene <span id="raCantidad"></span> productos. Elige a qué categoría moverlos antes de eliminarla.</p>
+        <label class="form-label" for="raDestino">Mover los productos a</label>
+        <select id="raDestino" class="form-select" required></select>
+        <div class="invalid-feedback">Elige la categoría de destino.</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-danger">Reasignar y eliminar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== Modal: eliminar categoría vacía ===================== -->
+<div class="modal fade" id="modalEliminarCat" tabindex="-1" aria-labelledby="modalEliminarCatTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalEliminarCatTitulo">Eliminar categoría</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body"><p class="m-0">¿Eliminar la categoría <strong id="elNombre"></strong>? No tiene productos asociados.</p></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnEliminarCat">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+  const mRenombrar = new bootstrap.Modal("#modalCategoria");
+  const mReasignar = new bootstrap.Modal("#modalReasignar");
+  const mEliminar = new bootstrap.Modal("#modalEliminarCat");
+  let actual = null;
+
+  const cantidad = slug => PRODUCTOS.filter(p => p.categoria === slug).length;
+
+  function mostrar() {
+    $("tablaCategorias").innerHTML = Object.entries(CATEGORIAS).map(([slug, c]) => `
+      <tr><td><i class="bi ${c.icono} me-2"></i><strong>${esc(c.titulo)}</strong></td>
+      <td class="num"><a href="productos.html?cat=${slug}">${cantidad(slug)}</a></td>
+      <td><a href="../${urlCategoria(slug)}" target="_blank" class="small">${urlCategoria(slug)} <i class="bi bi-box-arrow-up-right"></i></a></td>
+      <td><div class="actions">
+        <button class="btn-icon" type="button" title="Renombrar" aria-label="Renombrar" onclick="renombrar('${slug}')"><i class="bi bi-pencil"></i></button>
+        <button class="btn-icon danger" type="button" title="Eliminar" aria-label="Eliminar" onclick="eliminar('${slug}')"><i class="bi bi-trash"></i></button>
+      </div></td></tr>`).join("");
+  }
+
+  const nombreRepetido = (nombre, excepto) => Object.entries(CATEGORIAS)
+    .some(([s, c]) => s !== excepto && c.titulo.toLowerCase() === nombre.toLowerCase());
+
+  $("formCategoria").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = $("catNombre").value.trim();
+    $("catNombre").setCustomValidity(nombre && nombreRepetido(nombre) ? "repetida" : "");
+    $("errCat").textContent = $("catNombre").validity.customError ? "Ya existe esa categoría." : "Ingresa un nombre.";
+    if (!e.target.checkValidity()) { e.target.classList.add("was-validated"); return; }
+    let slug = slugify(nombre), n = 2;
+    while (CATEGORIAS[slug]) slug = slugify(nombre) + "-" + n++;
+    CATEGORIAS[slug] = { titulo: nombre, grupo: nombre, icono: $("catIcono").value, subtitulo: "" };
+    guardarCategorias();
+    e.target.reset(); e.target.classList.remove("was-validated");
+    aviso(`Categoría <strong>${esc(nombre)}</strong> creada. Ya puedes asignarle productos.`);
+    mostrar();
+  });
+
+  window.renombrar = slug => {
+    actual = slug;
+    $("ecNombre").value = CATEGORIAS[slug].titulo;
+    $("ecSub").value = CATEGORIAS[slug].subtitulo || "";
+    $("formRenombrar").classList.remove("was-validated");
+    mRenombrar.show();
+  };
+  $("formRenombrar").addEventListener("submit", e => {
+    e.preventDefault();
+    const nombre = $("ecNombre").value.trim();
+    $("ecNombre").setCustomValidity(nombre && nombreRepetido(nombre, actual) ? "repetida" : "");
+    if (!e.target.checkValidity()) { e.target.classList.add("was-validated"); return; }
+    CATEGORIAS[actual].titulo = nombre;
+    CATEGORIAS[actual].subtitulo = $("ecSub").value.trim();
+    guardarCategorias();
+    mRenombrar.hide();
+    aviso("Categoría actualizada. El nuevo nombre ya se ve en la tienda.");
+    mostrar();
+  });
+
+  window.eliminar = slug => {
+    actual = slug;
+    const n = cantidad(slug);
+    if (n === 0) {
+      $("elNombre").textContent = CATEGORIAS[slug].titulo;
+      mEliminar.show();
+    } else {
+      $("raNombre").textContent = CATEGORIAS[slug].titulo;
+      $("raCantidad").textContent = n;
+      $("raDestino").innerHTML = '<option value="">Elige la categoría de destino</option>' +
+        Object.entries(CATEGORIAS).filter(([s]) => s !== slug).map(([s, c]) => `<option value="${s}">${esc(c.titulo)}</option>`).join("");
+      $("formReasignar").classList.remove("was-validated");
+      mReasignar.show();
+    }
+  };
+  $("btnEliminarCat").addEventListener("click", () => {
+    const nombre = CATEGORIAS[actual].titulo;
+    delete CATEGORIAS[actual];
+    guardarCategorias();
+    mEliminar.hide();
+    aviso(`Categoría <strong>${esc(nombre)}</strong> eliminada.`, "warning");
+    mostrar();
+  });
+  $("formReasignar").addEventListener("submit", e => {
+    e.preventDefault();
+    if (!e.target.checkValidity()) { e.target.classList.add("was-validated"); return; }
+    const destino = $("raDestino").value;
+    PRODUCTOS.forEach(p => { if (p.categoria === actual) p.categoria = destino; });
+    guardarProductos();
+    const nombre = CATEGORIAS[actual].titulo;
+    delete CATEGORIAS[actual];
+    guardarCategorias();
+    mReasignar.hide();
+    aviso(`Productos movidos a <strong>${esc(CATEGORIAS[destino].titulo)}</strong> y categoría ${esc(nombre)} eliminada.`, "warning");
+    mostrar();
+  });
+
+  mostrar();
+
+</script>
+</body>
+</html>

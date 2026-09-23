@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html" class="active" aria-current="page"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Resumen</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="d-flex flex-wrap gap-2 justify-content-end mb-3" id="barraDemo"></div>
+
+      <div class="kpi-strip">
+        <div class="kpi"><span class="kpi-label">Ventas del mes</span><strong id="kVentas"></strong><small id="kVentasVar"></small></div>
+        <div class="kpi"><span class="kpi-label">Pedidos del mes</span><strong id="kPedidos"></strong><small id="kPedidosVar"></small></div>
+        <div class="kpi"><span class="kpi-label">Ticket promedio</span><strong id="kTicket"></strong><small>Mes en curso</small></div>
+        <div class="kpi" id="kpiAlerta"><span class="kpi-label">Productos bajo el mínimo</span><strong id="kBajo"></strong><small id="kSinStock"></small></div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-xl-7">
+          <div class="panel h-100">
+            <div class="panel-head">
+              <div>
+                <h2>Stock bajo el mínimo</h2>
+                <p class="panel-note">Reponer con el proveedor indicado antes de quedar sin unidades.</p>
+              </div>
+            </div>
+            <div id="listaAlertas"></div>
+          </div>
+        </div>
+        <div class="col-xl-5">
+          <div class="panel h-100">
+            <div class="panel-head">
+              <h2>Últimos movimientos</h2>
+              <a class="btn btn-sm btn-outline-light" href="inventario.html">Ver todos</a>
+            </div>
+            <ul class="move-list" id="listaMovs"></ul>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="panel panel-flush">
+            <div class="panel-head px-3 pt-3">
+              <h2>Últimos pedidos de la tienda</h2>
+              <a class="btn btn-sm btn-outline-light" href="pedidos.html">Ver todos</a>
+            </div>
+            <div class="table-responsive">
+              <table class="table adm-table">
+                <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Entrega</th><th>Estado</th><th class="num">Total</th></tr></thead>
+                <tbody id="tablaPedidos"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+
+  function fechaRelativa(iso) {
+    const d = new Date(iso), hoy = new Date(), ayer = new Date(); ayer.setDate(hoy.getDate() - 1);
+    const hora = d.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" });
+    if (d.toDateString() === hoy.toDateString()) return "Hoy, " + hora;
+    if (d.toDateString() === ayer.toDateString()) return "Ayer, " + hora;
+    return d.toLocaleDateString("es-CL", { day: "2-digit", month: "2-digit" });
+  }
+
+  function variacion(actual, anterior, formato) {
+    if (!anterior) return actual ? "Primer mes con ventas" : "Sin ventas aún";
+    const pct = Math.round((actual - anterior) / anterior * 100);
+    return (pct >= 0 ? "+" : "") + pct + "% vs. mes anterior";
+  }
+
+  function mostrar() {
+    PRODUCTOS = cargarProductos();
+    const pedidos = leerPedidos().filter(p => p.fechaISO);
+    const hoy = new Date();
+    const mes = (d, off) => { const x = new Date(hoy.getFullYear(), hoy.getMonth() - off, 1); return d.getFullYear() === x.getFullYear() && d.getMonth() === x.getMonth(); };
+    const delMes = pedidos.filter(p => mes(new Date(p.fechaISO), 0));
+    const mesAnt = pedidos.filter(p => mes(new Date(p.fechaISO), 1));
+    const suma = l => l.reduce((s, p) => s + p.total, 0);
+
+    $("kVentas").textContent = fmt(suma(delMes));
+    $("kVentasVar").textContent = variacion(suma(delMes), suma(mesAnt));
+    $("kPedidos").textContent = delMes.length;
+    const dif = delMes.length - mesAnt.length;
+    $("kPedidosVar").textContent = mesAnt.length ? (dif >= 0 ? "+" : "") + dif + " vs. mes anterior" : "";
+    $("kTicket").textContent = delMes.length ? fmt(suma(delMes) / delMes.length) : "$0";
+
+    const bajos = productosBajoMinimo().sort((a, b) => a.stock / Math.max(1, a.stockMin) - b.stock / Math.max(1, b.stockMin));
+    $("kBajo").textContent = bajos.length;
+    const cero = bajos.filter(p => p.stock <= 0).length;
+    $("kSinStock").textContent = cero ? cero + " sin stock" : "Ninguno sin stock";
+    $("kpiAlerta").classList.toggle("is-alert", bajos.length > 0);
+
+    $("listaAlertas").innerHTML = bajos.slice(0, 6).map(p => `
+      <div class="alert-row">
+        <div><strong>${esc(p.nombre)}</strong><span class="sub">Proveedor: ${esc(p.proveedor || "—")}</span></div>
+        <span class="tag ${p.stock <= 0 ? "tag-cero" : "tag-bajo"}">${p.stock} de ${p.stockMin} mín.</span>
+        <a class="btn btn-sm btn-outline-light" href="inventario.html?producto=${p.id}">Registrar ingreso</a>
+      </div>`).join("") || '<p class="text-muted m-0"><i class="bi bi-check-circle me-1"></i>Todos los productos están sobre el stock mínimo.</p>';
+
+    $("listaMovs").innerHTML = leerMovimientos().slice(0, 6).map(m => `
+      <li><span>${esc(m.nombre)} <span class="sub">${fechaRelativa(m.fecha)} · ${m.tipo}</span></span>
+      <span class="${m.cantidad < 0 ? "qty-neg" : "qty-pos"}">${m.cantidad > 0 ? "+" : "−"}${Math.abs(m.cantidad)}</span></li>`).join("")
+      || '<li class="text-muted">Aún no hay movimientos.</li>';
+
+    const ultimos = [...pedidos].sort((a, b) => b.fechaISO.localeCompare(a.fechaISO)).slice(0, 8);
+    $("tablaPedidos").innerHTML = ultimos.map(p => `
+      <tr style="cursor:pointer" onclick="location.href='pedidos.html?ver=${encodeURIComponent(p.numero)}'"><td><strong>${esc(p.numero)}</strong>${p.demo ? ' <span class="sub">ejemplo</span>' : ""}</td>
+      <td>${fechaCorta(p.fechaISO)}</td>
+      <td>${esc(p.cliente.nombre + " " + p.cliente.apellido)}<span class="sub">${esc(p.cliente.email)}</span></td>
+      <td>${p.tipoCliente === "invitado" ? '<span class="tag tag-off">Invitado</span>' : '<span class="tag tag-ok">Registrado</span>'}</td>
+      <td>${p.entrega === "retiro" ? "Retiro en tienda" : "Despacho"}</td>
+      <td>${tagEstado(p)}</td>
+      <td class="num">${fmt(p.total)}</td></tr>`).join("")
+      || '<tr><td colspan="7" class="text-center text-muted py-4">Aún no hay pedidos. Haz una compra en la tienda o carga ventas de ejemplo.</td></tr>';
+
+    $("barraDemo").innerHTML = hayVentasEjemplo()
+      ? '<button class="btn btn-sm btn-outline-light" onclick="quitarVentasEjemplo(); mostrar(); actualizarBadges();"><i class="bi bi-x-circle me-1"></i>Quitar ventas de ejemplo</button>'
+      : '<button class="btn btn-sm btn-outline-light" onclick="generarVentasEjemplo(); mostrar(); actualizarBadges();"><i class="bi bi-magic me-1"></i>Cargar ventas de ejemplo</button>';
+  }
+  mostrar();
+
+</script>
+</body>
+</html>

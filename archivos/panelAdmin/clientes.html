@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clientes · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html" class="active" aria-current="page"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Clientes</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="toolbar">
+        <div class="input-icon">
+          <i class="bi bi-search"></i>
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por nombre, correo o teléfono" aria-label="Buscar cliente">
+        </div>
+        <select id="fTipo" class="form-select" aria-label="Tipo de cliente">
+          <option value="">Registrados e invitados</option>
+          <option value="registrado">Registrados</option>
+          <option value="invitado">Invitados</option>
+        </select>
+        <select id="fEstado" class="form-select" aria-label="Estado de la cuenta">
+          <option value="">Todas las cuentas</option>
+          <option value="activo">Activas</option>
+          <option value="inactivo">Desactivadas</option>
+        </select>
+      </div>
+      <div class="row g-4">
+        <div class="col-xl-8">
+          <div class="panel panel-flush">
+            <div class="table-responsive">
+              <table class="table adm-table">
+                <thead><tr><th>Cliente</th><th>Correo</th><th>Teléfono</th><th class="num">Pedidos</th><th class="num">Total comprado</th><th>Cuenta</th><th class="text-end">Acción</th></tr></thead>
+                <tbody id="tablaClientes"></tbody>
+              </table>
+            </div>
+          </div>
+          <p class="table-foot">Aparecen las cuentas creadas en la tienda y quienes compraron como invitado. Un cliente desactivado no puede iniciar sesión ni finalizar compras con ese correo.</p>
+        </div>
+        <div class="col-xl-4">
+          <div class="panel">
+            <h2 class="mb-3">Registro de acciones</h2>
+            <ul class="log-list" id="listaLog"></ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<!-- ===================== Modal: activar / desactivar ===================== -->
+<div class="modal fade" id="modalCuenta" tabindex="-1" aria-labelledby="modalCuentaTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalCuentaTitulo"></h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body"><p class="m-0" id="modalCuentaTexto"></p></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn" id="btnCuenta"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+  const modal = new bootstrap.Modal("#modalCuenta");
+  let emailActual = null;
+
+  function obtenerClientes() {
+    const estados = leerLS("clientesEstado", {});
+    const mapa = {};
+    leerPedidos().forEach(p => {
+      const email = (p.cliente.email || "").toLowerCase();
+      if (!email) return;
+      const c = mapa[email] || (mapa[email] = { email, nombre: "", telefono: "", pedidos: 0, total: 0, tipo: "invitado", ultima: "" });
+      c.nombre = p.cliente.nombre + " " + p.cliente.apellido;
+      c.telefono = p.cliente.telefono;
+      c.pedidos++;
+      c.total += p.total;
+      if (p.tipoCliente === "registrado") c.tipo = "registrado";
+      if ((p.fechaISO || "") > c.ultima) c.ultima = p.fechaISO || "";
+    });
+    // Cuentas registradas en la tienda (aunque aún no hayan comprado)
+    leerLS("usuarios", []).forEach(u => {
+      const c = mapa[u.email] || (mapa[u.email] = { email: u.email, telefono: "", pedidos: 0, total: 0, ultima: u.creado || "" });
+      c.nombre = u.nombre + " " + u.apellido;
+      if (u.telefono) c.telefono = u.telefono;
+      c.tipo = "registrado";
+    });
+    return Object.values(mapa).map(c => ({ ...c, estado: estados[c.email] || "activo" }))
+      .sort((a, b) => b.ultima.localeCompare(a.ultima));
+  }
+
+  function mostrar() {
+    const q = $("fBuscar").value.trim().toLowerCase(), tipo = $("fTipo").value, est = $("fEstado").value;
+    const lista = obtenerClientes().filter(c =>
+      (!q || [c.nombre, c.email, c.telefono].join(" ").toLowerCase().includes(q)) &&
+      (!tipo || c.tipo === tipo) && (!est || c.estado === est));
+
+    $("tablaClientes").innerHTML = lista.map(c => {
+      const activo = c.estado === "activo";
+      return `<tr${activo ? "" : ' class="is-inactive"'}>
+        <td><strong>${esc(c.nombre)}</strong><span class="sub">${c.tipo === "registrado" ? "Cuenta registrada" : "Invitado"}</span></td>
+        <td>${esc(c.email)}</td><td>${esc(c.telefono)}</td>
+        <td class="num">${c.pedidos}</td><td class="num">${fmt(c.total)}</td>
+        <td>${activo ? '<span class="tag tag-ok">Activa</span>' : '<span class="tag tag-off">Desactivada</span>'}</td>
+        <td class="text-end">${activo
+          ? `<button class="btn btn-sm btn-outline-danger" type="button" onclick="abrir('${esc(c.email)}', false)">Desactivar</button>`
+          : `<button class="btn btn-sm btn-outline-light" type="button" onclick="abrir('${esc(c.email)}', true)">Activar</button>`}</td></tr>`;
+    }).join("") || '<tr><td colspan="7" class="text-center text-muted py-4">Aún no hay clientes. Aparecen aquí cuando alguien compra en la tienda (o carga ventas de ejemplo en Resumen).</td></tr>';
+
+    $("listaLog").innerHTML = leerLS("clientesLog", []).slice(0, 12).map(l =>
+      `<li><strong>${esc(l.accion)}</strong> · ${esc(l.nombre)}<span class="sub">${fechaCorta(l.fecha)} · admin</span></li>`).join("")
+      || '<li class="text-muted">Sin acciones registradas.</li>';
+  }
+
+  window.abrir = (email, activar) => {
+    emailActual = email;
+    const c = obtenerClientes().find(x => x.email === email);
+    $("modalCuentaTitulo").textContent = activar ? "Activar cuenta" : "Desactivar cuenta";
+    $("modalCuentaTexto").innerHTML = activar
+      ? `<strong>${esc(c.nombre)}</strong> podrá volver a comprar en la tienda.`
+      : `<strong>${esc(c.nombre)}</strong> no podrá finalizar compras con ${esc(email)} hasta que vuelvas a activar su cuenta. La acción quedará en el registro.`;
+    const btn = $("btnCuenta");
+    btn.className = "btn " + (activar ? "btn-brand" : "btn-danger");
+    btn.textContent = activar ? "Activar cuenta" : "Desactivar cuenta";
+    btn.dataset.activar = activar ? "1" : "";
+    modal.show();
+  };
+
+  $("btnCuenta").addEventListener("click", () => {
+    const activar = !!$("btnCuenta").dataset.activar;
+    const estados = leerLS("clientesEstado", {});
+    if (activar) delete estados[emailActual]; else estados[emailActual] = "inactivo";
+    guardarLS("clientesEstado", estados);
+    const c = obtenerClientes().find(x => x.email === emailActual);
+    const log = leerLS("clientesLog", []);
+    log.unshift({ accion: activar ? "Cuenta activada" : "Cuenta desactivada", nombre: c.nombre, fecha: new Date().toISOString() });
+    guardarLS("clientesLog", log.slice(0, 100));
+    modal.hide();
+    mostrar();
+  });
+
+  ["fBuscar", "fTipo", "fEstado"].forEach(id => $(id).addEventListener("input", mostrar));
+  mostrar();
+
+</script>
+</body>
+</html>

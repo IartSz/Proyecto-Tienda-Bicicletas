@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reportes · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html" class="active" aria-current="page"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Reportes</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="d-flex flex-wrap gap-2 justify-content-end mb-3" id="barraDemo"></div>
+
+      <div class="adm-tabs" role="tablist">
+        <button type="button" role="tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-ventas" aria-controls="tab-ventas" aria-selected="true">Ventas por período</button>
+        <button type="button" role="tab" data-bs-toggle="tab" data-bs-target="#tab-top" aria-controls="tab-top" aria-selected="false">Más vendidos</button>
+        <button type="button" role="tab" data-bs-toggle="tab" data-bs-target="#tab-inv" aria-controls="tab-inv" aria-selected="false">Inventario</button>
+        <button type="button" role="tab" data-bs-toggle="tab" data-bs-target="#tab-historial" aria-controls="tab-historial" aria-selected="false">Historial</button>
+      </div>
+
+      <div class="tab-content">
+
+        <!-- Ventas -->
+        <div class="tab-pane fade show active" id="tab-ventas" role="tabpanel">
+          <div class="toolbar">
+            <div class="field"><label for="rvDesde">Desde</label><input id="rvDesde" type="date" class="form-control"></div>
+            <div class="field"><label for="rvHasta">Hasta</label><input id="rvHasta" type="date" class="form-control"></div>
+            <div class="field"><label for="rvAgrupar">Agrupar por</label>
+              <select id="rvAgrupar" class="form-select"><option value="dia">Día</option><option value="semana">Semana</option><option value="mes" selected>Mes</option></select>
+            </div>
+            <div class="ms-auto d-flex gap-2 align-self-end">
+              <button class="btn btn-outline-light" type="button" onclick="exportar('ventas','excel')"><i class="bi bi-file-earmark-excel me-1"></i>Excel</button>
+              <button class="btn btn-outline-light" type="button" onclick="exportar('ventas','pdf')"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+            </div>
+          </div>
+          <div class="kpi-strip is-light">
+            <div class="kpi"><span class="kpi-label">Ventas totales</span><strong id="rvTotal"></strong></div>
+            <div class="kpi"><span class="kpi-label">Número de pedidos</span><strong id="rvPedidos"></strong></div>
+            <div class="kpi"><span class="kpi-label">Ticket promedio</span><strong id="rvTicket"></strong></div>
+          </div>
+          <div class="panel mb-4">
+            <div class="bar-chart" role="img" id="rvGrafico"></div>
+          </div>
+          <div class="panel panel-flush"><div class="table-responsive">
+            <table class="table adm-table">
+              <thead><tr><th>Período</th><th class="num">Pedidos</th><th class="num">Ventas</th><th class="num">Ticket promedio</th></tr></thead>
+              <tbody id="rvTabla"></tbody>
+            </table>
+          </div></div>
+        </div>
+
+        <!-- Más vendidos -->
+        <div class="tab-pane fade" id="tab-top" role="tabpanel">
+          <div class="toolbar">
+            <div class="field"><label for="rtDesde">Desde</label><input id="rtDesde" type="date" class="form-control"></div>
+            <div class="field"><label for="rtHasta">Hasta</label><input id="rtHasta" type="date" class="form-control"></div>
+            <div class="field"><label for="rtCat">Categoría</label><select id="rtCat" class="form-select sel-cat"></select></div>
+            <div class="field"><label for="rtOrden">Ordenar por</label>
+              <select id="rtOrden" class="form-select"><option value="unidades">Unidades vendidas</option><option value="ingresos">Ingresos</option></select>
+            </div>
+            <div class="ms-auto d-flex gap-2 align-self-end">
+              <button class="btn btn-outline-light" type="button" onclick="exportar('top','excel')"><i class="bi bi-file-earmark-excel me-1"></i>Excel</button>
+              <button class="btn btn-outline-light" type="button" onclick="exportar('top','pdf')"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+            </div>
+          </div>
+          <div class="panel panel-flush"><div class="table-responsive">
+            <table class="table adm-table">
+              <thead><tr><th>#</th><th>Producto</th><th>Categoría</th><th class="num">Unidades</th><th class="num">Ingresos</th></tr></thead>
+              <tbody id="rtTabla"></tbody>
+            </table>
+          </div></div>
+        </div>
+
+        <!-- Inventario -->
+        <div class="tab-pane fade" id="tab-inv" role="tabpanel">
+          <div class="toolbar">
+            <div class="field"><label for="riCat">Categoría</label><select id="riCat" class="form-select sel-cat"></select></div>
+            <div class="field"><label for="riEstado">Estado de stock</label>
+              <select id="riEstado" class="form-select"><option value="">Todos</option><option value="ok">Disponible</option><option value="bajo">Stock bajo</option><option value="cero">Sin stock</option></select>
+            </div>
+            <div class="ms-auto d-flex gap-2 align-self-end">
+              <button class="btn btn-outline-light" type="button" onclick="exportar('inv','excel')"><i class="bi bi-file-earmark-excel me-1"></i>Excel</button>
+              <button class="btn btn-outline-light" type="button" onclick="exportar('inv','pdf')"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+            </div>
+          </div>
+          <div class="panel panel-flush"><div class="table-responsive">
+            <table class="table adm-table">
+              <thead><tr><th>Código</th><th>Producto</th><th>Categoría</th><th class="num">Stock</th><th class="num">Mínimo</th><th>Estado</th><th class="num">Valorizado</th></tr></thead>
+              <tbody id="riTabla"></tbody>
+            </table>
+          </div></div>
+          <p class="table-foot" id="riPie"></p>
+        </div>
+
+        <!-- Historial -->
+        <div class="tab-pane fade" id="tab-historial" role="tabpanel">
+          <div class="toolbar">
+            <div class="input-icon align-self-end">
+              <i class="bi bi-search"></i>
+              <input id="rhBuscar" type="search" class="form-control" placeholder="Buscar por nombre del reporte" aria-label="Buscar reporte">
+            </div>
+            <div class="field"><label for="rhDesde">Generado desde</label><input id="rhDesde" type="date" class="form-control"></div>
+            <div class="field"><label for="rhHasta">Generado hasta</label><input id="rhHasta" type="date" class="form-control"></div>
+          </div>
+          <div class="panel panel-flush">
+            <div class="table-responsive">
+              <table class="table adm-table">
+                <thead><tr><th>Reporte</th><th>Tipo</th><th>Categoría</th><th>Generado</th><th>Formato</th><th class="text-end">Descargar</th></tr></thead>
+                <tbody id="rhTabla"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const $ = id => document.getElementById(id);
+  const MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+  const MESES_L = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const diaLocal = s => iso(new Date(s));   // fecha del pedido en hora local (YYYY-MM-DD)
+
+  // Fechas por defecto: últimos 6 meses
+  const hoy = new Date();
+  const inicio = new Date(hoy.getFullYear(), hoy.getMonth() - 5, 1);
+  $("rvDesde").value = iso(inicio); $("rvHasta").value = iso(hoy);
+  $("rtDesde").value = iso(new Date(hoy.getFullYear(), hoy.getMonth(), 1)); $("rtHasta").value = iso(hoy);
+
+  document.querySelectorAll(".sel-cat").forEach(s => s.innerHTML = '<option value="">Todas</option>' +
+    Object.entries(CATEGORIAS).map(([k, c]) => `<option value="${k}">${esc(c.titulo)}</option>`).join(""));
+
+  const ultimo = {};   // datos del último reporte generado de cada tipo (para exportar)
+
+  function pedidosEntre(desde, hasta) {
+    return leerPedidos().filter(p => p.fechaISO && (!desde || diaLocal(p.fechaISO) >= desde) && (!hasta || diaLocal(p.fechaISO) <= hasta));
+  }
+
+  /* ---------- Ventas por período ---------- */
+  function claveGrupo(d, modo) {
+    if (modo === "dia") return { k: iso(d), label: d.toLocaleDateString("es-CL", { day: "2-digit", month: "2-digit" }), largo: d.toLocaleDateString("es-CL") };
+    if (modo === "semana") {
+      const lunes = new Date(d); lunes.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+      return { k: iso(lunes), label: lunes.toLocaleDateString("es-CL", { day: "2-digit", month: "2-digit" }), largo: "Semana del " + lunes.toLocaleDateString("es-CL") };
+    }
+    return { k: d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"), label: MESES[d.getMonth()], largo: MESES_L[d.getMonth()] + " " + d.getFullYear() };
+  }
+
+  function reporteVentas() {
+    const modo = $("rvAgrupar").value;
+    const lista = pedidosEntre($("rvDesde").value, $("rvHasta").value);
+    const grupos = {};
+    lista.forEach(p => {
+      const g = claveGrupo(new Date(p.fechaISO), modo);
+      (grupos[g.k] = grupos[g.k] || { ...g, pedidos: 0, ventas: 0 });
+      grupos[g.k].pedidos++; grupos[g.k].ventas += p.total;
+    });
+    const filas = Object.values(grupos).sort((a, b) => a.k.localeCompare(b.k));
+    const total = lista.reduce((s, p) => s + p.total, 0);
+
+    $("rvTotal").textContent = fmt(total);
+    $("rvPedidos").textContent = lista.length;
+    $("rvTicket").textContent = lista.length ? fmt(total / lista.length) : "$0";
+
+    const max = Math.max(1, ...filas.map(f => f.ventas));
+    const barras = filas.slice(-12);
+    const corto = v => v >= 1e6 ? "$" + (v / 1e6).toFixed(1).replace(".", ",") + "M" : "$" + Math.round(v / 1000) + "k";
+    $("rvGrafico").innerHTML = barras.map((f, i) => `
+      <div class="bar"><span class="bar-val">${corto(f.ventas)}</span><span class="bar-fill${i === barras.length - 1 ? " is-current" : ""}" style="height:${Math.max(2, Math.round(f.ventas / max * 100))}%"></span><span class="bar-label">${f.label}</span></div>`).join("")
+      || '<p class="text-muted m-0 align-self-center w-100 text-center">Sin ventas en este período.</p>';
+    $("rvGrafico").setAttribute("aria-label", "Ventas: " + barras.map(f => f.largo + " " + fmt(f.ventas)).join(", "));
+
+    $("rvTabla").innerHTML = filas.map(f => `<tr><td>${f.largo}</td><td class="num">${f.pedidos}</td><td class="num">${fmt(f.ventas)}</td><td class="num">${fmt(f.ventas / f.pedidos)}</td></tr>`).join("")
+      || '<tr><td colspan="4" class="text-center text-muted py-4">Sin ventas en este período.</td></tr>';
+
+    ultimo.ventas = {
+      nombre: `Ventas ${$("rvDesde").value} a ${$("rvHasta").value}`, tipo: "Ventas por período", categoria: "Todas",
+      filas: [["Período", "Pedidos", "Ventas", "Ticket promedio"], ...filas.map(f => [f.largo, f.pedidos, Math.round(f.ventas), Math.round(f.ventas / f.pedidos)]),
+              ["TOTAL", lista.length, Math.round(total), lista.length ? Math.round(total / lista.length) : 0]]
+    };
+  }
+
+  /* ---------- Más vendidos ---------- */
+  function reporteTop() {
+    const cat = $("rtCat").value;
+    const acum = {};
+    pedidosEntre($("rtDesde").value, $("rtHasta").value).forEach(p => p.items.forEach(i => {
+      const prod = PRODUCTOS.find(x => x.id === i.id);
+      const categoria = prod ? prod.categoria : "";
+      if (cat && categoria !== cat) return;
+      (acum[i.id] = acum[i.id] || { nombre: i.nombre, categoria, unidades: 0, ingresos: 0 });
+      acum[i.id].unidades += i.cantidad; acum[i.id].ingresos += i.precio * i.cantidad;
+    }));
+    const campo = $("rtOrden").value;
+    const filas = Object.values(acum).sort((a, b) => b[campo] - a[campo]);
+    $("rtTabla").innerHTML = filas.map((f, i) => `<tr><td>${i + 1}</td><td>${esc(f.nombre)}</td><td>${esc(nombreCategoria(f.categoria))}</td><td class="num">${f.unidades}</td><td class="num">${fmt(f.ingresos)}</td></tr>`).join("")
+      || '<tr><td colspan="5" class="text-center text-muted py-4">Sin ventas en este período.</td></tr>';
+    ultimo.top = {
+      nombre: `Más vendidos ${$("rtDesde").value} a ${$("rtHasta").value}`, tipo: "Más vendidos", categoria: cat ? nombreCategoria(cat) : "Todas",
+      filas: [["#", "Producto", "Categoría", "Unidades", "Ingresos"], ...filas.map((f, i) => [i + 1, f.nombre, nombreCategoria(f.categoria), f.unidades, Math.round(f.ingresos)])]
+    };
+  }
+
+  /* ---------- Inventario ---------- */
+  function reporteInv() {
+    const cat = $("riCat").value, est = $("riEstado").value;
+    const filas = PRODUCTOS.filter(p => p.activo !== false && (!cat || p.categoria === cat) && (!est || estadoStock(p) === est))
+      .sort((a, b) => a.codigo.localeCompare(b.codigo));
+    const valor = filas.reduce((s, p) => s + p.stock * p.precio, 0);
+    $("riTabla").innerHTML = filas.map(p => `<tr><td>${esc(p.codigo)}</td><td>${esc(p.nombre)}</td><td>${esc(nombreCategoria(p.categoria))}</td><td class="num">${p.stock}</td><td class="num">${p.stockMin}</td><td>${tagStock(p)}</td><td class="num">${fmt(p.stock * p.precio)}</td></tr>`).join("")
+      || '<tr><td colspan="7" class="text-center text-muted py-4">No hay productos con esos filtros.</td></tr>';
+    $("riPie").textContent = `${filas.length} productos · Valor total del inventario: ${fmt(valor)}`;
+    ultimo.inv = {
+      nombre: "Inventario" + (est ? " · " + $("riEstado").selectedOptions[0].text : ""), tipo: "Inventario", categoria: cat ? nombreCategoria(cat) : "Todas",
+      filas: [["Código", "Producto", "Categoría", "Stock", "Mínimo", "Estado", "Valorizado"],
+              ...filas.map(p => [p.codigo, p.nombre, nombreCategoria(p.categoria), p.stock, p.stockMin, { ok: "Disponible", bajo: "Stock bajo", cero: "Sin stock" }[estadoStock(p)], p.stock * p.precio])]
+    };
+  }
+
+  /* ---------- Exportar ---------- */
+  function htmlImprimible(r) {
+    const [cab, ...cuerpo] = r.filas;
+    return `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>${esc(r.nombre)}</title>
+      <style>body{font-family:Arial,sans-serif;padding:24px;color:#222}h1{font-size:20px;margin:0}p{color:#666;font-size:12px}
+      table{border-collapse:collapse;width:100%;font-size:12px;margin-top:12px}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left}th{background:#eee}</style></head>
+      <body><h1>Rider Tapia · ${esc(r.nombre)}</h1><p>${esc(r.tipo)} · Categoría: ${esc(r.categoria)} · Generado ${new Date().toLocaleString("es-CL")}</p>
+      <table><thead><tr>${cab.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead>
+      <tbody>${cuerpo.map(f => `<tr>${f.map(c => `<td>${esc(typeof c === "number" && c > 999 ? fmt(c) : c)}</td>`).join("")}</tr>`).join("")}</tbody></table>
+      <script>window.onload=()=>window.print()<\/script></body></html>`;
+  }
+
+  function descargar(r, formato) {
+    const archivo = r.nombre.replace(/[^\w\-áéíóúñ ]/gi, "").replace(/\s+/g, "_");
+    if (formato === "excel") {
+      descargarArchivo(archivo + ".csv", aCSV(r.filas));
+    } else {
+      const v = window.open("", "_blank");
+      if (!v) { aviso("Permite las ventanas emergentes para generar el PDF.", "warning"); return; }
+      v.document.write(htmlImprimible(r));
+      v.document.close();
+    }
+  }
+
+  window.exportar = (tipo, formato) => {
+    const r = ultimo[tipo];
+    if (r.filas.length <= 1) { aviso("No hay datos para exportar.", "warning"); return; }
+    descargar(r, formato);
+    const hist = leerLS("reportesHistorial", []);
+    hist.unshift({ ...r, formato, fecha: new Date().toISOString() });
+    guardarLS("reportesHistorial", hist.slice(0, 30));
+    mostrarHistorial();
+    aviso(formato === "excel" ? "Reporte descargado (se abre con Excel)." : "Se abrió el reporte: elige \"Guardar como PDF\" al imprimir.");
+  };
+
+  function mostrarHistorial() {
+    const q = $("rhBuscar").value.trim().toLowerCase(), d = $("rhDesde").value, h = $("rhHasta").value;
+    const hist = leerLS("reportesHistorial", []);
+    $("rhTabla").innerHTML = hist.map((r, i) => ({ r, i })).filter(({ r }) =>
+      (!q || r.nombre.toLowerCase().includes(q)) && (!d || diaLocal(r.fecha) >= d) && (!h || diaLocal(r.fecha) <= h))
+      .map(({ r, i }) => `<tr><td>${esc(r.nombre)}</td><td>${esc(r.tipo)}</td><td>${esc(r.categoria)}</td><td>${fechaCorta(r.fecha)}</td>
+        <td><span class="tag ${r.formato === "excel" ? "tag-ok" : "tag-cero"}">${r.formato === "excel" ? "Excel" : "PDF"}</span></td>
+        <td class="text-end"><button class="btn-icon" type="button" title="Descargar" aria-label="Descargar" onclick="redescargar(${i})"><i class="bi bi-download"></i></button></td></tr>`).join("")
+      || '<tr><td colspan="6" class="text-center text-muted py-4">Aún no has exportado reportes.</td></tr>';
+  }
+  window.redescargar = i => { const r = leerLS("reportesHistorial", [])[i]; if (r) descargar(r, r.formato); };
+
+  function todo() {
+    PRODUCTOS = cargarProductos();
+    reporteVentas(); reporteTop(); reporteInv(); mostrarHistorial();
+    $("barraDemo").innerHTML = hayVentasEjemplo()
+      ? '<button class="btn btn-sm btn-outline-light" onclick="quitarVentasEjemplo(); todo();"><i class="bi bi-x-circle me-1"></i>Quitar ventas de ejemplo</button>'
+      : '<button class="btn btn-sm btn-outline-light" onclick="generarVentasEjemplo(); todo();"><i class="bi bi-magic me-1"></i>Cargar ventas de ejemplo</button>';
+  }
+
+  ["rvDesde", "rvHasta", "rvAgrupar"].forEach(id => $(id).addEventListener("input", reporteVentas));
+  ["rtDesde", "rtHasta", "rtCat", "rtOrden"].forEach(id => $(id).addEventListener("input", reporteTop));
+  ["riCat", "riEstado"].forEach(id => $(id).addEventListener("input", reporteInv));
+  ["rhBuscar", "rhDesde", "rhHasta"].forEach(id => $(id).addEventListener("input", mostrarHistorial));
+  todo();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productos · Panel Rider Tapia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/styles.css" rel="stylesheet">
+<link href="../css/admin.css" rel="stylesheet">
+</head>
+<body class="adm">
+
+<div class="adm-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="offcanvas-lg offcanvas-start adm-sidebar" tabindex="-1" id="sidebar" aria-label="Menú del panel">
+    <div class="d-flex align-items-start justify-content-between">
+      <div class="adm-brand">RIDER TAPIA <span>BIKER</span><small>Panel de administración</small></div>
+      <button type="button" class="btn-close btn-close-white d-lg-none m-3" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Cerrar menú"></button>
+    </div>
+    <nav class="adm-nav">
+      <a href="admin.html"><i class="bi bi-speedometer2"></i>Resumen</a>
+      <a href="pedidos.html"><i class="bi bi-receipt"></i>Pedidos<span class="adm-badge badge-pedidos" title="Pedidos por atender"></span></a>
+      <a href="productos.html" class="active" aria-current="page"><i class="bi bi-box-seam"></i>Productos</a>
+      <a href="inventario.html"><i class="bi bi-arrow-left-right"></i>Inventario<span class="adm-badge" title="Productos bajo el stock mínimo">3</span></a>
+      <a href="categorias.html"><i class="bi bi-tags"></i>Categorías</a>
+      <a href="clientes.html"><i class="bi bi-people"></i>Clientes</a>
+      <a href="reportes.html"><i class="bi bi-graph-up"></i>Reportes</a>
+    </nav>
+    <div class="adm-sidebar-foot">
+      <a href="../index.html"><i class="bi bi-shop"></i>Ver tienda</a>
+      <a href="../login/login.html"><i class="bi bi-box-arrow-left"></i>Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="adm-main">
+    <header class="adm-top">
+      <button class="btn btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-label="Abrir menú">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1>Productos</h1>
+      <div class="adm-user">
+        <div class="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
+        <span class="adm-avatar" aria-hidden="true">AD</span>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="toolbar">
+        <div class="input-icon">
+          <i class="bi bi-search"></i>
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por nombre, código o marca" aria-label="Buscar producto">
+        </div>
+        <select id="fCat" class="form-select" aria-label="Filtrar por categoría"></select>
+        <select id="fStock" class="form-select" aria-label="Filtrar por stock">
+          <option value="">Todo el stock</option>
+          <option value="ok">Disponible</option>
+          <option value="bajo">Stock bajo</option>
+          <option value="cero">Sin stock</option>
+        </select>
+        <select id="fEstado" class="form-select" aria-label="Filtrar por estado">
+          <option value="activo">Activos</option>
+          <option value="baja">Dados de baja</option>
+          <option value="">Todos</option>
+        </select>
+        <button class="btn btn-brand ms-auto" type="button" id="btnNuevo"><i class="bi bi-plus-lg me-1"></i>Nuevo producto</button>
+      </div>
+
+      <div class="panel panel-flush">
+        <div class="table-responsive">
+          <table class="table adm-table">
+            <thead><tr><th>Producto</th><th>Categoría</th><th class="num">Precio</th><th>Stock</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead>
+            <tbody id="tablaProductos"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between align-items-center mt-2">
+        <p class="table-foot m-0" id="pieTabla"></p>
+        <nav aria-label="Paginación de productos">
+          <ul class="pagination pagination-sm m-0" id="paginacion"></ul>
+        </nav>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<!-- ===================== Modal: producto (crear / editar) ===================== -->
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalProductoTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <form class="modal-content" id="formProducto" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalProductoTitulo">Nuevo producto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label" for="pNombre">Nombre</label>
+            <input id="pNombre" class="form-control" maxlength="80" required>
+            <div class="invalid-feedback">Ingresa el nombre.</div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="pCodigo">Código</label>
+            <input id="pCodigo" class="form-control" maxlength="20" placeholder="Ej: CAS-0007" required>
+            <div class="invalid-feedback" id="errCodigo">Ingresa un código.</div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="pCategoria">Categoría</label>
+            <select id="pCategoria" class="form-select" required></select>
+            <div class="invalid-feedback">Elige una categoría.</div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="pMarca">Marca</label>
+            <input id="pMarca" class="form-control" maxlength="40" required>
+            <div class="invalid-feedback">Ingresa la marca.</div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="pTipo">Tipo / uso</label>
+            <input id="pTipo" class="form-control" maxlength="40" placeholder="Ej: Trail / MTB">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="pProveedor">Proveedor</label>
+            <input id="pProveedor" class="form-control" maxlength="60" required>
+            <div class="invalid-feedback">Ingresa el proveedor.</div>
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="form-label" for="pPrecio">Precio (CLP)</label>
+            <input id="pPrecio" type="number" min="1" step="1" class="form-control" required>
+            <div class="invalid-feedback">Precio mayor a 0.</div>
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="form-label" for="pOferta">Precio oferta</label>
+            <input id="pOferta" type="number" min="1" step="1" class="form-control" placeholder="Opcional">
+            <div class="invalid-feedback">Debe ser menor al precio.</div>
+          </div>
+          <div class="col-6 col-md-3" id="grupoStock">
+            <label class="form-label" for="pStock">Stock inicial</label>
+            <input id="pStock" type="number" min="0" step="1" class="form-control" required>
+            <div class="invalid-feedback">0 o más.</div>
+          </div>
+          <div class="col-6 col-md-3">
+            <label class="form-label" for="pMin">Stock mínimo</label>
+            <input id="pMin" type="number" min="0" step="1" class="form-control" required>
+            <div class="invalid-feedback">0 o más.</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="pDesc">Descripción</label>
+            <textarea id="pDesc" class="form-control" rows="3" maxlength="600"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="pCaract">Características</label>
+            <textarea id="pCaract" class="form-control" rows="4" placeholder="Una por línea, con el formato  Nombre: valor&#10;Peso aprox.: 350 g&#10;Certificación: EN 1078"></textarea>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" for="pOpcion">El cliente elige</label>
+            <select id="pOpcion" class="form-select">
+              <option value="">Nada (sin opciones)</option>
+              <option>Talla</option>
+              <option>Medida</option>
+              <option>Color</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="pValores">Opciones disponibles</label>
+            <input id="pValores" class="form-control" placeholder="Separadas por coma. Ej: S, M, L" disabled>
+            <div class="form-text">Puedes marcar una opción como agotada escribiendo * al final. Ej: S, M, L*</div>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="pImagen">Imagen</label>
+            <input id="pImagen" type="file" class="form-control" accept="image/png,image/jpeg,image/webp">
+            <div class="form-text">JPG, PNG o WEBP. Se reduce automáticamente y se guarda en el navegador. También puedes escribir una ruta:</div>
+            <input id="pRuta" class="form-control form-control-sm mt-1" placeholder="img/categorias/mi-producto.jpg">
+          </div>
+          <div class="col-md-4 d-flex align-items-end">
+            <div class="border rounded w-100 d-flex align-items-center justify-content-center" style="height:120px; overflow:hidden;" id="pPreview">
+              <span class="text-muted small">Sin imagen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light me-auto d-none" id="btnQuitarImagen">Quitar imagen</button>
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-brand">Guardar producto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== Modal: ajustar stock ===================== -->
+<div class="modal fade" id="modalStock" tabindex="-1" aria-labelledby="modalStockTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" id="formStock" novalidate>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalStockTitulo">Ajustar stock</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3"><strong id="sNombre"></strong><span class="sub" id="sActual"></span></p>
+        <div class="row g-3">
+          <div class="col-5">
+            <label class="form-label" for="sNuevo">Stock nuevo</label>
+            <input id="sNuevo" type="number" min="0" step="1" class="form-control" required>
+            <div class="invalid-feedback">0 o más.</div>
+          </div>
+          <div class="col-7">
+            <label class="form-label" for="sMotivo">Motivo</label>
+            <select id="sMotivo" class="form-select" required>
+              <option value="">Elige un motivo</option>
+              <option>Conteo físico</option><option>Merma o daño</option><option>Corrección de error</option><option>Otro</option>
+            </select>
+            <div class="invalid-feedback">Elige un motivo.</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="sDetalle">Detalle</label>
+            <input id="sDetalle" class="form-control" maxlength="120" placeholder="Opcional">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-brand">Guardar ajuste</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== Modal: dar de baja ===================== -->
+<div class="modal fade" id="modalBaja" tabindex="-1" aria-labelledby="modalBajaTitulo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalBajaTitulo">Dar de baja el producto</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body"><p class="m-0"><strong id="bNombre"></strong> dejará de mostrarse en la tienda. Su historial de ventas y movimientos se conserva y puedes reactivarlo cuando quieras.</p></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmarBaja">Dar de baja</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="../js/productos.js"></script>
+<script src="../js/admin.js"></script>
+<script>
+
+  const POR_PAGINA = 10;
+  let pagina = 1;
+  let editandoId = null;     // null = creando
+  let imagenNueva = null;    // imagen elegida en el formulario (data URL o ruta)
+  let stockId = null, bajaId = null;
+
+  const modalProducto = new bootstrap.Modal("#modalProducto");
+  const modalStock = new bootstrap.Modal("#modalStock");
+  const modalBaja = new bootstrap.Modal("#modalBaja");
+  const $ = id => document.getElementById(id);
+
+  /* ---------- Selects de categoría ---------- */
+  function llenarCategorias() {
+    const opts = Object.entries(CATEGORIAS).map(([slug, c]) => `<option value="${slug}">${esc(c.titulo)}</option>`).join("");
+    $("fCat").innerHTML = '<option value="">Todas las categorías</option>' + opts;
+    $("pCategoria").innerHTML = '<option value="">Elige una categoría</option>' + opts;
+  }
+
+  /* ---------- Tabla ---------- */
+  function filtrados() {
+    const q = $("fBuscar").value.trim().toLowerCase();
+    const cat = $("fCat").value, st = $("fStock").value, estado = $("fEstado").value;
+    return PRODUCTOS.filter(p =>
+      (!q || [p.nombre, p.codigo, p.marca].join(" ").toLowerCase().includes(q)) &&
+      (!cat || p.categoria === cat) &&
+      (!st || estadoStock(p) === st) &&
+      (estado === "" || (estado === "activo" ? p.activo !== false : p.activo === false)));
+  }
+
+  function mostrarTabla() {
+    const lista = filtrados();
+    const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
+    if (pagina > paginas) pagina = paginas;
+    const visibles = lista.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
+
+    $("tablaProductos").innerHTML = visibles.map(p => {
+      const est = estadoStock(p);
+      const ancho = Math.min(100, Math.round(p.stock / Math.max(1, p.stockMin * 2) * 100));
+      const gauge = est === "ok" ? "gauge" : "gauge gauge-" + est;
+      const inactivo = p.activo === false;
+      const acciones = inactivo
+        ? `<button class="btn-icon" type="button" title="Reactivar" aria-label="Reactivar" onclick="reactivar('${p.id}')"><i class="bi bi-arrow-counterclockwise"></i></button>`
+        : `<a class="btn-icon" href="../producto.html?id=${p.id}" target="_blank" title="Ver en tienda" aria-label="Ver en tienda"><i class="bi bi-eye"></i></a>
+           <button class="btn-icon" type="button" title="Editar" aria-label="Editar" onclick="abrirEditar('${p.id}')"><i class="bi bi-pencil"></i></button>
+           <button class="btn-icon" type="button" title="Ajustar stock" aria-label="Ajustar stock" onclick="abrirStock('${p.id}')"><i class="bi bi-sliders"></i></button>
+           <button class="btn-icon danger" type="button" title="Dar de baja" aria-label="Dar de baja" onclick="abrirBaja('${p.id}')"><i class="bi bi-archive"></i></button>`;
+      return `
+      <tr${inactivo ? ' class="is-inactive"' : ''}>
+        <td><div class="prod-cell">${thumbProducto(p)}<div><strong>${esc(p.nombre)}</strong><small>${esc(p.codigo)} · ${esc(p.marca)}</small></div></div></td>
+        <td>${esc(nombreCategoria(p.categoria))}</td>
+        <td class="num">${p.precioAnterior ? `<span class="price-before">${fmt(p.precioAnterior)}</span>` : ""}<span class="price-now">${fmt(p.precio)}</span></td>
+        <td><div class="stock"><span class="${gauge}"><span style="width:${ancho}%"></span></span><span class="stock-num">${p.stock}</span></div></td>
+        <td>${tagStock(p)}</td>
+        <td><div class="actions">${acciones}</div></td>
+      </tr>`;
+    }).join("") || '<tr><td colspan="6" class="text-center text-muted py-4">No hay productos con esos filtros.</td></tr>';
+
+    $("pieTabla").textContent = `Mostrando ${visibles.length} de ${lista.length} productos`;
+
+    let pag = `<li class="page-item ${pagina === 1 ? "disabled" : ""}"><a class="page-link" href="#" data-p="${pagina - 1}">Anterior</a></li>`;
+    for (let i = 1; i <= paginas; i++) pag += `<li class="page-item ${i === pagina ? "active" : ""}"><a class="page-link" href="#" data-p="${i}">${i}</a></li>`;
+    pag += `<li class="page-item ${pagina === paginas ? "disabled" : ""}"><a class="page-link" href="#" data-p="${pagina + 1}">Siguiente</a></li>`;
+    $("paginacion").innerHTML = pag;
+  }
+
+  $("paginacion").addEventListener("click", e => {
+    const a = e.target.closest("[data-p]");
+    if (!a) return;
+    e.preventDefault();
+    pagina = +a.dataset.p;
+    mostrarTabla();
+  });
+  ["fBuscar", "fCat", "fStock", "fEstado"].forEach(id => $(id).addEventListener("input", () => { pagina = 1; mostrarTabla(); }));
+
+  /* ---------- Crear / editar ---------- */
+  function siguienteCodigo(cat) {
+    const pref = PREFIJOS[cat] || (CATEGORIAS[cat] ? CATEGORIAS[cat].titulo.normalize("NFD").replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase() : "PRD");
+    let max = 0;
+    PRODUCTOS.forEach(p => { const m = (p.codigo || "").match(new RegExp("^" + pref + "-(\\d+)$")); if (m) max = Math.max(max, +m[1]); });
+    return pref + "-" + String(max + 1).padStart(4, "0");
+  }
+
+  function mostrarPreview(src) {
+    $("pPreview").innerHTML = src
+      ? `<img src="${esc(src.startsWith("data:") || src.startsWith("http") ? src : "../" + src)}" style="max-width:100%; max-height:100%; object-fit:contain;" onerror="this.outerHTML='<span class=&quot;text-muted small&quot;>No se encontró la imagen</span>'">`
+      : '<span class="text-muted small">Sin imagen</span>';
+    $("btnQuitarImagen").classList.toggle("d-none", !src);
+  }
+
+  function limpiarFormulario() {
+    const f = $("formProducto");
+    f.reset();
+    f.classList.remove("was-validated");
+    $("pValores").disabled = true;
+    $("pCodigo").setCustomValidity("");
+    $("pOferta").setCustomValidity("");
+    imagenNueva = null;
+    mostrarPreview(null);
+  }
+
+  $("btnNuevo").addEventListener("click", () => {
+    editandoId = null;
+    limpiarFormulario();
+    $("modalProductoTitulo").textContent = "Nuevo producto";
+    $("grupoStock").classList.remove("d-none");
+    $("pStock").required = true;
+    $("pMin").value = 3;
+    modalProducto.show();
+  });
+
+  // Sugerir código al elegir categoría (solo al crear)
+  $("pCategoria").addEventListener("change", () => {
+    if (!editandoId && $("pCategoria").value) $("pCodigo").value = siguienteCodigo($("pCategoria").value);
+  });
+  $("pOpcion").addEventListener("change", () => {
+    $("pValores").disabled = !$("pOpcion").value;
+    $("pValores").required = !!$("pOpcion").value;
+  });
+
+  window.abrirEditar = function (id) {
+    const p = PRODUCTOS.find(x => x.id === id);
+    editandoId = id;
+    limpiarFormulario();
+    $("modalProductoTitulo").textContent = "Editar producto";
+    $("grupoStock").classList.add("d-none");   // el stock se cambia con "Ajustar stock"
+    $("pStock").required = false;
+    $("pNombre").value = p.nombre;
+    $("pCodigo").value = p.codigo;
+    $("pCategoria").value = p.categoria;
+    $("pMarca").value = p.marca;
+    $("pTipo").value = p.tipo || "";
+    $("pProveedor").value = p.proveedor || "";
+    $("pPrecio").value = p.precioAnterior || p.precio;
+    $("pOferta").value = p.precioAnterior ? p.precio : "";
+    $("pMin").value = p.stockMin;
+    $("pDesc").value = p.descripcion || "";
+    $("pCaract").value = Object.entries(p.caracteristicas || {}).map(([k, v]) => k + ": " + v).join("\n");
+    if (p.opciones) {
+      $("pOpcion").value = ["Talla", "Medida", "Color"].includes(p.opciones.nombre) ? p.opciones.nombre : "Medida";
+      $("pValores").disabled = false;
+      $("pValores").required = true;
+      $("pValores").value = p.opciones.valores.map(v => v.valor + (v.disponible ? "" : "*")).join(", ");
+    }
+    imagenNueva = p.imagen || null;
+    $("pRuta").value = p.imagen && !p.imagen.startsWith("data:") ? p.imagen : "";
+    mostrarPreview(imagenNueva);
+    modalProducto.show();
+  };
+
+  // Imagen: se reduce a máx. 600 px y se guarda como texto (data URL)
+  $("pImagen").addEventListener("change", e => {
+    const archivo = e.target.files[0];
+    if (!archivo) return;
+    if (archivo.size > 5 * 1024 * 1024) { aviso("La imagen pesa más de 5 MB.", "danger"); e.target.value = ""; return; }
+    const lector = new FileReader();
+    lector.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const escala = Math.min(1, 600 / Math.max(img.width, img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * escala);
+        canvas.height = Math.round(img.height * escala);
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        imagenNueva = canvas.toDataURL("image/jpeg", 0.8);
+        $("pRuta").value = "";
+        mostrarPreview(imagenNueva);
+      };
+      img.src = lector.result;
+    };
+    lector.readAsDataURL(archivo);
+  });
+  $("pRuta").addEventListener("change", () => {
+    const r = $("pRuta").value.trim();
+    imagenNueva = r || null;
+    $("pImagen").value = "";
+    mostrarPreview(imagenNueva);
+  });
+  $("btnQuitarImagen").addEventListener("click", () => {
+    imagenNueva = null; $("pImagen").value = ""; $("pRuta").value = ""; mostrarPreview(null);
+  });
+
+  // Textos "Nombre: valor" -> objeto
+  function leerCaracteristicas() {
+    const obj = {};
+    $("pCaract").value.split("\n").forEach(linea => {
+      const i = linea.indexOf(":");
+      if (i > 0) {
+        const k = linea.slice(0, i).trim(), v = linea.slice(i + 1).trim();
+        if (k && v) obj[k] = v;
+      }
+    });
+    return obj;
+  }
+
+  function leerOpciones(anteriores) {
+    const nombre = $("pOpcion").value;
+    if (!nombre) return null;
+    const previos = anteriores && anteriores.valores ? anteriores.valores : [];
+    const valores = $("pValores").value.split(",").map(v => v.trim()).filter(Boolean).map(v => {
+      const agotado = v.endsWith("*");
+      const valor = agotado ? v.slice(0, -1).trim() : v;
+      const antes = previos.find(x => x.valor === valor);
+      return { valor, detalle: antes ? antes.detalle : "", disponible: !agotado };
+    });
+    if (valores.length === 0) return null;
+    const base = anteriores && anteriores.nombre === nombre ? anteriores : {};
+    return {
+      nombre,
+      columna: base.columna || (nombre === "Talla" ? "Circunferencia de cabeza" : "Detalle"),
+      guia: base.guia || (nombre === "Talla" ? "Guía de tallas" : nombre === "Color" ? "Colores disponibles" : "Medidas disponibles"),
+      nota: base.nota || "",
+      valores
+    };
+  }
+
+  $("formProducto").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target;
+    const codigo = $("pCodigo").value.trim().toUpperCase();
+    const precio = +$("pPrecio").value, oferta = +$("pOferta").value;
+
+    $("pCodigo").setCustomValidity(PRODUCTOS.some(p => p.codigo === codigo && p.id !== editandoId) ? "repetido" : "");
+    $("errCodigo").textContent = $("pCodigo").validity.customError ? "Ese código ya existe." : "Ingresa un código.";
+    $("pOferta").setCustomValidity(oferta && oferta >= precio ? "mayor" : "");
+
+    if (!f.checkValidity()) { f.classList.add("was-validated"); return; }
+
+    const datos = {
+      nombre: $("pNombre").value.trim(),
+      codigo,
+      categoria: $("pCategoria").value,
+      marca: $("pMarca").value.trim(),
+      tipo: $("pTipo").value.trim() || nombreCategoria($("pCategoria").value),
+      proveedor: $("pProveedor").value.trim(),
+      precio: oferta ? oferta : precio,
+      precioAnterior: oferta ? precio : null,
+      stockMin: +$("pMin").value,
+      descripcion: $("pDesc").value.trim(),
+      caracteristicas: leerCaracteristicas(),
+      imagen: imagenNueva || ""
+    };
+
+    if (editandoId) {
+      const p = PRODUCTOS.find(x => x.id === editandoId);
+      datos.opciones = leerOpciones(p.opciones);
+      Object.assign(p, datos);
+      if (!guardarProductos()) return;
+      aviso(`<i class="bi bi-check-circle me-1"></i>Cambios guardados en <strong>${esc(p.nombre)}</strong>.`);
+    } else {
+      let id = slugify(datos.nombre), n = 2;
+      while (PRODUCTOS.some(p => p.id === id)) id = slugify(datos.nombre) + "-" + n++;
+      const nuevo = { id, ...datos, opciones: leerOpciones(null), stock: +$("pStock").value, activo: true };
+      PRODUCTOS.unshift(nuevo);
+      if (!guardarProductos()) { PRODUCTOS.shift(); return; }
+      if (nuevo.stock > 0) {
+        registrarMovimiento(nuevo, "Ingreso", nuevo.stock, "admin", "Stock inicial · " + nuevo.proveedor);
+      }
+      aviso(`<i class="bi bi-check-circle me-1"></i>Producto creado. Ya aparece en la tienda: <a href="../producto.html?id=${id}" target="_blank" class="alert-link">verlo</a>`);
+      $("fEstado").value = "activo"; $("fBuscar").value = ""; $("fCat").value = ""; $("fStock").value = ""; pagina = 1;
+    }
+    modalProducto.hide();
+    mostrarTabla();
+  });
+
+  /* ---------- Ajustar stock ---------- */
+  window.abrirStock = function (id) {
+    const p = PRODUCTOS.find(x => x.id === id);
+    stockId = id;
+    const f = $("formStock"); f.reset(); f.classList.remove("was-validated");
+    $("sNombre").textContent = p.nombre;
+    $("sActual").textContent = `Stock actual: ${p.stock} unidades · mínimo ${p.stockMin}`;
+    $("sNuevo").value = p.stock;
+    modalStock.show();
+  };
+  $("formStock").addEventListener("submit", e => {
+    e.preventDefault();
+    if (!e.target.checkValidity()) { e.target.classList.add("was-validated"); return; }
+    const p = PRODUCTOS.find(x => x.id === stockId);
+    const nuevo = +$("sNuevo").value, diferencia = nuevo - p.stock;
+    if (diferencia === 0) { modalStock.hide(); return; }
+    p.stock = nuevo;
+    guardarProductos();
+    const detalle = $("sMotivo").value + ($("sDetalle").value.trim() ? " · " + $("sDetalle").value.trim() : "");
+    registrarMovimiento(p, "Ajuste", diferencia, "admin", detalle);
+    modalStock.hide();
+    aviso(`Stock de <strong>${esc(p.nombre)}</strong>: ${nuevo} unidades.`);
+    mostrarTabla();
+    actualizarBadges();
+  });
+
+  /* ---------- Dar de baja / reactivar ---------- */
+  window.abrirBaja = function (id) {
+    bajaId = id;
+    $("bNombre").textContent = PRODUCTOS.find(x => x.id === id).nombre;
+    modalBaja.show();
+  };
+  $("btnConfirmarBaja").addEventListener("click", () => {
+    const p = PRODUCTOS.find(x => x.id === bajaId);
+    p.activo = false;
+    guardarProductos();
+    modalBaja.hide();
+    aviso(`<strong>${esc(p.nombre)}</strong> dado de baja. Ya no se muestra en la tienda.`, "warning");
+    mostrarTabla();
+  });
+  window.reactivar = function (id) {
+    const p = PRODUCTOS.find(x => x.id === id);
+    p.activo = true;
+    guardarProductos();
+    aviso(`<strong>${esc(p.nombre)}</strong> reactivado.`);
+    mostrarTabla();
+  };
+
+  llenarCategorias();
+  // Permite abrir filtrado desde otras páginas: productos.html?cat=cascos
+  const catURL = new URLSearchParams(location.search).get("cat");
+  if (catURL && CATEGORIAS[catURL]) $("fCat").value = catURL;
+  mostrarTabla();
+
+</script>
+</body>
+</html>

@@ -1,21 +1,3 @@
-/* =========================================================
-   CATÁLOGO DE PRODUCTOS - Rider Tapia
-
-   IMPORTANTE: los productos de abajo son los datos INICIALES.
-   La primera vez que se abre la tienda se copian al navegador
-   (localStorage) y desde ahí se leen y modifican, tanto en la
-   tienda como en el Panel de Administración.
-   Si cambias algo aquí y no lo ves, usa "Restablecer datos" en el panel.
-
-   Para agregar un producto, copia un bloque { ... } y cambia los datos:
-   - id: único, sin espacios ni tildes (se usa en producto.html?id=...)
-   - categoria: "cascos", "luces", "neumaticos" o "camaras"
-   - imagen: ruta desde la carpeta "archivos". Si queda "" se muestra un ícono.
-   - precioAnterior: número si está en oferta, o null si no.
-   - opciones: tallas/medidas a elegir. disponible: false = agotado.
-     Si el producto no tiene opciones, pon: opciones: null
-   ========================================================= */
-
 const CATEGORIAS_BASE = {
   cascos:     { titulo: "Cascos",     grupo: "Indumentaria", icono: "bi-shield",        subtitulo: "Protección para ciudad, trail y enduro." },
   luces:      { titulo: "Luces",      grupo: "Accesorios",   icono: "bi-lightbulb",     subtitulo: "Que la noche no pare la ruta." },

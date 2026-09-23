@@ -1,7 +1,3 @@
-/* =========================================================
-   PANEL DE ADMINISTRACIÓN - funciones compartidas
-   Requiere cargar antes: ../js/productos.js
-   ========================================================= */
 
 const fmt = n => "$" + Math.round(n).toLocaleString("es-CL");
 

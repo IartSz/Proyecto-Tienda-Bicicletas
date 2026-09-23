@@ -1,12 +1,3 @@
-/* =========================================================
-   CUENTAS Y SESIÓN (simuladas) - Rider Tapia
-   - Las cuentas se guardan en el navegador (localStorage "usuarios").
-   - La sesión activa se guarda en localStorage "usuario".
-   - En las páginas de la tienda reemplaza el ícono de usuario por el
-     nombre y apellido, y abre un menú lateral con opciones.
-   Nota: es una simulación para el proyecto; un sitio real debe validar
-   las cuentas en un servidor.
-   ========================================================= */
 
 // Carpeta "archivos/" calculada desde la ubicación de este script
 const RAIZ_SITIO = (document.currentScript && document.currentScript.src || "").replace(/js\/sesion\.js.*$/, "");

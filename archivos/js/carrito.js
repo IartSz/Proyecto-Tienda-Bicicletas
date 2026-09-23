@@ -1,9 +1,3 @@
-/* =========================================================
-   CARRITO - Rider Tapia
-   Guarda el carrito en el navegador (localStorage) para que
-   el número se mantenga al cambiar de página.
-   Incluir este script en TODAS las páginas que muestran el carrito.
-   ========================================================= */
 
 function leerCarrito() {
   try { return JSON.parse(localStorage.getItem("carrito")) || []; }

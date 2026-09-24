@@ -54,7 +54,7 @@ function leerPedidos(incluirCancelados) {
   leerLS("usuarios", []).forEach(u => cuentas[u.email] = u);
   return leerLS("pedidos", []).map(p => {
     const u = cuentas[(p.cliente.email || "").toLowerCase()];
-    const cliente = u ? { ...p.cliente, nombre: u.nombre, apellido: u.apellido } : p.cliente;
+    const cliente = u ? { ...p.cliente, nombre: u.nombre, apellido: u.apellido, rut: u.rut || p.cliente.rut || "" } : p.cliente;
     return { ...p, cliente, fechaISO: p.fechaISO || null };
   })
     .filter(p => incluirCancelados || estadoPedido(p) !== "Cancelado");
@@ -138,14 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---------- Ventas de ejemplo (para que Resumen y Reportes tengan datos) ---------- */
 function generarVentasEjemplo() {
   const clientes = [
-    ["Camila", "Rojas", "camila.rojas@correo.cl", "+56 9 8123 4567", "registrado"],
-    ["Matías", "González", "mgonzalez@correo.cl", "+56 9 7654 3210", "registrado"],
-    ["Valentina", "Muñoz", "vale.munoz@correo.cl", "+56 9 9988 7766", "invitado"],
-    ["Sebastián", "Díaz", "sdiaz@correo.cl", "+56 9 6543 2109", "registrado"],
-    ["Francisca", "Soto", "fran.soto@correo.cl", "+56 9 5432 1098", "invitado"],
-    ["Diego", "Pérez", "dperez@correo.cl", "+56 9 4321 0987", "invitado"],
-    ["Javiera", "Contreras", "jcontreras@correo.cl", "+56 9 3210 9876", "registrado"],
-    ["Tomás", "Silva", "tsilva@correo.cl", "+56 9 2109 8765", "invitado"]
+    ["Camila", "Rojas", "camila.rojas@correo.cl", "+56 9 8123 4567", "registrado", "18.234.567-9"],
+    ["Matías", "González", "mgonzalez@correo.cl", "+56 9 7654 3210", "registrado", "17.845.210-K"],
+    ["Valentina", "Muñoz", "vale.munoz@correo.cl", "+56 9 9988 7766", "invitado", "19.102.334-K"],
+    ["Sebastián", "Díaz", "sdiaz@correo.cl", "+56 9 6543 2109", "registrado", "16.543.876-0"],
+    ["Francisca", "Soto", "fran.soto@correo.cl", "+56 9 5432 1098", "invitado", "20.011.456-6"],
+    ["Diego", "Pérez", "dperez@correo.cl", "+56 9 4321 0987", "invitado", "15.987.321-8"],
+    ["Javiera", "Contreras", "jcontreras@correo.cl", "+56 9 3210 9876", "registrado", "21.456.789-K"],
+    ["Tomás", "Silva", "tsilva@correo.cl", "+56 9 2109 8765", "invitado", "14.765.432-4"]
   ];
   const activos = PRODUCTOS.filter(p => p.activo !== false);
   const pedidos = leerLS("pedidos", []).filter(p => !p.demo);
@@ -177,7 +177,7 @@ function generarVentasEjemplo() {
       historial: [{ estado: estadoInicial(pago), fecha: fecha.toISOString(), nota: "Pedido recibido." }]
         .concat(estado !== estadoInicial(pago) ? [{ estado, fecha: new Date(Math.min(+hoy, +fecha + 86400000 * 2)).toISOString(), nota: "" }] : []),
       fecha: fecha.toLocaleString("es-CL"), fechaISO: fecha.toISOString(),
-      cliente: { nombre: c[0], apellido: c[1], email: c[2], telefono: c[3] }, tipoCliente: c[4],
+      cliente: { nombre: c[0], apellido: c[1], rut: c[5], email: c[2], telefono: c[3] }, tipoCliente: c[4],
       entrega, direccion: "Retiro en tienda (Centro, Concepción)",
       pago, items, subtotal, envio, total: subtotal + envio
     });

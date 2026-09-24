@@ -55,7 +55,7 @@
       <div class="toolbar">
         <div class="input-icon">
           <i class="bi bi-search"></i>
-          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por nombre, correo o teléfono" aria-label="Buscar cliente">
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por nombre, RUT, correo o teléfono" aria-label="Buscar cliente">
         </div>
         <select id="fTipo" class="form-select" aria-label="Tipo de cliente">
           <option value="">Registrados e invitados</option>
@@ -132,8 +132,9 @@
     leerPedidos().forEach(p => {
       const email = (p.cliente.email || "").toLowerCase();
       if (!email) return;
-      const c = mapa[email] || (mapa[email] = { email, nombre: "", telefono: "", pedidos: 0, total: 0, tipo: "invitado", ultima: "" });
+      const c = mapa[email] || (mapa[email] = { email, nombre: "", rut: "", telefono: "", pedidos: 0, total: 0, tipo: "invitado", ultima: "" });
       c.nombre = p.cliente.nombre + " " + p.cliente.apellido;
+      if (p.cliente.rut) c.rut = p.cliente.rut;
       c.telefono = p.cliente.telefono;
       c.pedidos++;
       c.total += p.total;
@@ -142,8 +143,9 @@
     });
     // Cuentas registradas en la tienda (aunque aún no hayan comprado)
     leerLS("usuarios", []).forEach(u => {
-      const c = mapa[u.email] || (mapa[u.email] = { email: u.email, telefono: "", pedidos: 0, total: 0, ultima: u.creado || "" });
+      const c = mapa[u.email] || (mapa[u.email] = { email: u.email, rut: "", telefono: "", pedidos: 0, total: 0, ultima: u.creado || "" });
       c.nombre = u.nombre + " " + u.apellido;
+      if (u.rut) c.rut = u.rut;
       if (u.telefono) c.telefono = u.telefono;
       c.tipo = "registrado";
     });
@@ -154,13 +156,14 @@
   function mostrar() {
     const q = $("fBuscar").value.trim().toLowerCase(), tipo = $("fTipo").value, est = $("fEstado").value;
     const lista = obtenerClientes().filter(c =>
-      (!q || [c.nombre, c.email, c.telefono].join(" ").toLowerCase().includes(q)) &&
+      (!q || [c.nombre, c.email, c.telefono].join(" ").toLowerCase().includes(q) ||
+             (c.rut && q.replace(/[^0-9k]/g, "") && c.rut.toLowerCase().replace(/[^0-9k]/g, "").includes(q.replace(/[^0-9k]/g, "")))) &&
       (!tipo || c.tipo === tipo) && (!est || c.estado === est));
 
     $("tablaClientes").innerHTML = lista.map(c => {
       const activo = c.estado === "activo";
       return `<tr${activo ? "" : ' class="is-inactive"'}>
-        <td><strong>${esc(c.nombre)}</strong><span class="sub">${c.tipo === "registrado" ? "Cuenta registrada" : "Invitado"}</span></td>
+        <td><strong>${esc(c.nombre)}</strong><span class="sub">${c.rut ? esc(c.rut) + " · " : ""}${c.tipo === "registrado" ? "Cuenta registrada" : "Invitado"}</span></td>
         <td>${esc(c.email)}</td><td>${esc(c.telefono)}</td>
         <td class="num">${c.pedidos}</td><td class="num">${fmt(c.total)}</td>
         <td>${activo ? '<span class="tag tag-ok">Activa</span>' : '<span class="tag tag-off">Desactivada</span>'}</td>

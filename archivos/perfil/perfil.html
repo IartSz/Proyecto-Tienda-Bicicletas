@@ -109,12 +109,14 @@
             <div class="col-md-6">
               <label class="form-label" for="nombre">Nombre</label>
               <input class="form-control" id="nombre" required maxlength="40">
-              <div class="invalid-feedback">Ingresa tu nombre.</div>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="apellido">Apellido</label>
               <input class="form-control" id="apellido" required maxlength="40">
-              <div class="invalid-feedback">Ingresa tu apellido.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="rut">RUT</label>
+              <input class="form-control" id="rut" required placeholder="12.345.678-5">
             </div>
             <div class="col-md-6">
               <label class="form-label" for="email">Correo electrónico</label>
@@ -259,6 +261,7 @@
 <script src="../js/productos.js"></script>
 <script src="../js/carrito.js"></script>
 <script src="../js/sesion.js"></script>
+<script src="../js/validaciones.js"></script>
 
 <script>
   // Página solo para usuarios con sesión iniciada
@@ -272,6 +275,7 @@
     const u = buscarUsuario(usuario.email) || usuario;
     $("nombre").value = u.nombre || "";
     $("apellido").value = u.apellido || "";
+    $("rut").value = u.rut || "";
     $("email").value = u.email;
     $("telefono").value = u.telefono || "";
     $("avatarGrande").textContent = iniciales(u);
@@ -286,9 +290,14 @@
   $("formPerfil").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
-    if (!f.checkValidity()) { f.classList.add("was-validated"); return; }
+    if (!f.checkValidity()) {
+      f.classList.add("was-validated");
+      const primero = f.querySelector(":invalid"); if (primero) primero.focus();
+      return;
+    }
     actualizarUsuario(usuario.email, {
-      nombre: $("nombre").value.trim(), apellido: $("apellido").value.trim(), telefono: $("telefono").value.trim()
+      nombre: $("nombre").value.trim(), apellido: $("apellido").value.trim(),
+      rut: formatearRut($("rut").value), telefono: $("telefono").value.trim()
     });
     f.classList.remove("was-validated");
     pintar();
@@ -314,7 +323,16 @@
 
   $("btnSalir").addEventListener("click", () => { cerrarSesion(); location.href = "../index.html"; });
 
-  if (usuario) pintar();
+  if (usuario) {
+    pintar();
+    // Nombre y apellido solo letras; RUT con formato, dígito verificador y que no sea de otra cuenta
+    activarCampoNombre($("nombre"), "nombre");
+    activarCampoNombre($("apellido"), "apellido");
+    activarCampoRut($("rut"), rut => {
+      const otro = buscarUsuarioPorRut(rut);
+      return otro && otro.email !== usuario.email ? "Ese RUT pertenece a otra cuenta." : "";
+    });
+  }
 </script>
 </body>
 </html>

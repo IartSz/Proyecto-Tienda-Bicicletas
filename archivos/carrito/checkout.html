@@ -155,19 +155,21 @@
             <div class="col-md-6">
               <label class="form-label" for="nombre">Nombre</label>
               <input class="form-control" id="nombre" required>
-              <div class="invalid-feedback">Ingresa tu nombre.</div>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="apellido">Apellido</label>
               <input class="form-control" id="apellido" required>
-              <div class="invalid-feedback">Ingresa tu apellido.</div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+              <label class="form-label" for="rut">RUT</label>
+              <input class="form-control" id="rut" required placeholder="12.345.678-5">
+            </div>
+            <div class="col-md-4">
               <label class="form-label" for="email">Correo electrónico</label>
               <input type="email" class="form-control" id="email" placeholder="tucorreo@ejemplo.com" required>
               <div class="invalid-feedback">Ingresa un correo válido.</div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label class="form-label" for="telefono">Teléfono</label>
               <input type="tel" class="form-control" id="telefono" placeholder="+56 9 1234 5678" required pattern="^\+?56\s?9\s?\d{4}\s?\d{4}$|^9\s?\d{4}\s?\d{4}$">
               <div class="invalid-feedback">Formato: +56 9 1234 5678</div>
@@ -330,6 +332,7 @@
 <script src="../js/productos.js"></script>
 <script src="../js/carrito.js"></script>
 <script src="../js/sesion.js"></script>
+<script src="../js/validaciones.js"></script>
 
 <script>
   const form = document.getElementById("formCheckout");
@@ -351,9 +354,20 @@
       rellenar("email", usuario.email);
       rellenar("nombre", usuario.nombre);
       rellenar("apellido", usuario.apellido);
+      rellenar("rut", usuario.rut);
+      // El RUT de una cuenta se cambia en "Mi perfil"
+      if (usuario.rut) document.getElementById("rut").readOnly = true;
       rellenar("telefono", usuario.telefono);
     }
   }
+  // Nombre y apellido solo letras; RUT con formato y dígito verificador
+  activarCampoNombre(document.getElementById("nombre"), "nombre");
+  activarCampoNombre(document.getElementById("apellido"), "apellido");
+  activarCampoRut(document.getElementById("rut"), rut => {
+    const u = obtenerUsuario(), otro = buscarUsuarioPorRut(rut);
+    return u && otro && otro.email !== u.email ? "Ese RUT pertenece a otra cuenta." : "";
+  });
+
   document.getElementById("btnCerrarSesion").addEventListener("click", () => { cerrarSesion(); location.reload(); });
   mostrarSesion();
 
@@ -433,6 +447,7 @@
       cliente: {
         nombre: document.getElementById("nombre").value.trim(),
         apellido: document.getElementById("apellido").value.trim(),
+        rut: formatearRut(document.getElementById("rut").value),
         email: document.getElementById("email").value.trim(),
         telefono: document.getElementById("telefono").value.trim()
       },
@@ -455,9 +470,11 @@
 
     registrarVenta(pedido);   // descuenta stock y lo registra en el inventario del panel
 
-    // Guardar el teléfono en el perfil para la próxima compra
+    // Guardar el teléfono (y el RUT, si la cuenta no lo tenía) en el perfil para la próxima compra
     if (usuario && typeof actualizarUsuario === "function") {
-      actualizarUsuario(usuario.email, { telefono: pedido.cliente.telefono });
+      const cambios = { telefono: pedido.cliente.telefono };
+      if (!usuario.rut) cambios.rut = pedido.cliente.rut;
+      actualizarUsuario(usuario.email, cambios);
     }
     vaciarCarrito();
     mostrarConfirmacion(pedido);

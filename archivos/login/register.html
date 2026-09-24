@@ -38,6 +38,15 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="rut" class="form-label">RUT</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-vcard"></i></span>
+                        <input type="text" class="form-control" id="rut" name="rut" placeholder="12.345.678-5" required>
+                    </div>
+                    <div class="form-text">Sin puntos ni guion también sirve: se ordena solo.</div>
+                </div>
+
+                <div class="mb-3">
                     <label for="email" class="form-label">Correo electrónico</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
@@ -88,6 +97,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 
     <script src="../js/sesion.js"></script>
+    <script src="../js/validaciones.js"></script>
     <!-- Validación: las contraseñas deben ser iguales -->
     <script>
         const form = document.getElementById('registerForm');
@@ -123,6 +133,12 @@
         pass1.addEventListener('input', validarContrasenas);
         pass2.addEventListener('input', validarContrasenas);
 
+        // Nombre y apellido solo letras; RUT con formato y dígito verificador
+        activarCampoNombre(document.getElementById('nombre'), 'nombre');
+        activarCampoNombre(document.getElementById('apellido'), 'apellido');
+        const rutInput = document.getElementById('rut');
+        activarCampoRut(rutInput, rut => buscarUsuarioPorRut(rut) ? 'Ya existe una cuenta con ese RUT.' : '');
+
         const emailInput = document.getElementById('email');
         const emailError = document.getElementById('emailError');
         emailInput.addEventListener('input', () => { emailError.classList.add('d-none'); emailInput.classList.remove('is-invalid'); });
@@ -141,14 +157,22 @@
             }
             if (!form.checkValidity()) {
                 form.classList.add('was-validated');
+                const primero = form.querySelector(':invalid');
+                if (primero) primero.focus();
                 return;
             }
             const r = registrarUsuario({
                 nombre: document.getElementById('nombre').value,
                 apellido: document.getElementById('apellido').value,
+                rut: formatearRut(rutInput.value),
                 email: emailInput.value,
                 password: pass1.value
             });
+            if (!r.ok && r.campo === 'rut') {
+                marcarCampo(rutInput, r.error, true);
+                rutInput.focus();
+                return;
+            }
             if (!r.ok) {
                 emailError.innerHTML = r.error + ' <a href="login.html">Iniciar sesión</a>';
                 emailError.classList.remove('d-none');

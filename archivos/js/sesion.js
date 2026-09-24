@@ -14,7 +14,7 @@ function obtenerUsuario() {
 }
 function guardarSesion(u) {
   // En la sesión NO se guarda la contraseña
-  const sesion = { email: u.email, nombre: u.nombre, apellido: u.apellido, telefono: u.telefono || "",
+  const sesion = { email: u.email, nombre: u.nombre, apellido: u.apellido, rut: u.rut || "", telefono: u.telefono || "",
                    direccion: u.direccion || "", comuna: u.comuna || "", region: u.region || "" };
   try { localStorage.setItem("usuario", JSON.stringify(sesion)); } catch (e) {}
 }
@@ -33,12 +33,22 @@ function buscarUsuario(email) {
   return leerUsuarios().find(u => u.email === email.trim().toLowerCase());
 }
 
+// Compara RUT sin puntos ni guion (ej: "12.345.678-5" = "123456785")
+function normalizarRut(rut) {
+  return String(rut || "").toUpperCase().replace(/[^0-9K]/g, "");
+}
+function buscarUsuarioPorRut(rut) {
+  const r = normalizarRut(rut);
+  return r ? leerUsuarios().find(u => normalizarRut(u.rut) === r) : undefined;
+}
+
 // Devuelve { ok: true } o { ok: false, error: "..." }
 function registrarUsuario(datos) {
   const email = datos.email.trim().toLowerCase();
-  if (buscarUsuario(email)) return { ok: false, error: "Ya existe una cuenta con ese correo." };
+  if (buscarUsuario(email)) return { ok: false, error: "Ya existe una cuenta con ese correo.", campo: "email" };
+  if (datos.rut && buscarUsuarioPorRut(datos.rut)) return { ok: false, error: "Ya existe una cuenta con ese RUT.", campo: "rut" };
   const usuarios = leerUsuarios();
-  const nuevo = { nombre: datos.nombre.trim(), apellido: datos.apellido.trim(), email,
+  const nuevo = { nombre: datos.nombre.trim(), apellido: datos.apellido.trim(), rut: datos.rut || "", email,
                   clave: hashClave(datos.password), creado: new Date().toISOString() };
   usuarios.push(nuevo);
   guardarUsuarios(usuarios);
@@ -66,12 +76,15 @@ function actualizarUsuario(email, cambios) {
   guardarUsuarios(usuarios);
   guardarSesion(u);
 
-  // Si cambió el nombre, actualizarlo también en sus pedidos (los ve el panel de administración)
-  if (cambios.nombre || cambios.apellido) {
+  // Si cambió el nombre o el RUT, actualizarlo también en sus pedidos (los ve el panel de administración)
+  if (cambios.nombre || cambios.apellido || cambios.rut) {
     try {
       const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
       pedidos.forEach(p => {
-        if ((p.cliente.email || "").toLowerCase() === email) { p.cliente.nombre = u.nombre; p.cliente.apellido = u.apellido; }
+        if ((p.cliente.email || "").toLowerCase() === email) {
+          p.cliente.nombre = u.nombre; p.cliente.apellido = u.apellido;
+          if (u.rut) p.cliente.rut = u.rut;
+        }
       });
       localStorage.setItem("pedidos", JSON.stringify(pedidos));
     } catch (e) {}

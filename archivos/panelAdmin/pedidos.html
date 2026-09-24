@@ -57,7 +57,7 @@
       <div class="toolbar">
         <div class="input-icon">
           <i class="bi bi-search"></i>
-          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por N° de pedido, cliente o correo" aria-label="Buscar pedido">
+          <input id="fBuscar" type="search" class="form-control" placeholder="Buscar por N° de pedido, cliente, RUT o correo" aria-label="Buscar pedido">
         </div>
         <select id="fEstado" class="form-select" aria-label="Filtrar por estado"></select>
         <div class="field"><label for="fDesde">Desde</label><input id="fDesde" type="date" class="form-control"></div>
@@ -193,7 +193,9 @@
     const dia = iso => { const x = new Date(iso); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); };
     return todos().filter(p => {
       const e = estadoPedido(p);
-      return (!q || [p.numero, p.cliente.nombre, p.cliente.apellido, p.cliente.email].join(" ").toLowerCase().includes(q)) &&
+      const qRut = q.replace(/[^0-9k]/g, "");
+      return (!q || [p.numero, p.cliente.nombre, p.cliente.apellido, p.cliente.email].join(" ").toLowerCase().includes(q) ||
+                    (qRut.length >= 3 && (p.cliente.rut || "").toLowerCase().replace(/[^0-9k]/g, "").includes(qRut))) &&
         (!est || (est === "abiertos" ? !ESTADOS_FINALES.includes(e) : e === est)) &&
         (!d || (p.fechaISO && dia(p.fechaISO) >= d)) && (!h || (p.fechaISO && dia(p.fechaISO) <= h));
     });
@@ -264,6 +266,7 @@
 
     $("mpCliente").innerHTML = `<strong>${esc(p.cliente.nombre + " " + p.cliente.apellido)}</strong>
       <span class="sub">${p.tipoCliente === "invitado" ? "Compró como invitado" : "Cuenta registrada"}</span>
+      ${p.cliente.rut ? `<div class="mt-1"><i class="bi bi-person-vcard me-1"></i>RUT ${esc(p.cliente.rut)}</div>` : ""}
       <div class="mt-1"><i class="bi bi-envelope me-1"></i>${esc(p.cliente.email)}</div>
       <div><i class="bi bi-telephone me-1"></i>${esc(p.cliente.telefono)}</div>`;
     $("mpEntrega").innerHTML = `<div><i class="bi ${p.entrega === "retiro" ? "bi-shop" : "bi-truck"} me-1"></i>${p.entrega === "retiro" ? "Retiro en tienda" : "Despacho a domicilio"}</div>

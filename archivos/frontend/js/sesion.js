@@ -1,5 +1,5 @@
 
-// Carpeta "archivos/" calculada desde la ubicación de este script
+// Carpeta "frontend/" calculada desde la ubicación de este script
 const RAIZ_SITIO = (document.currentScript && document.currentScript.src || "").replace(/js\/sesion\.js.*$/, "");
 
 /* ---------- Datos ---------- */
@@ -92,7 +92,7 @@ function actualizarUsuario(email, cambios) {
   return true;
 }
 
-// Página actual relativa a "archivos/" (para volver después del login)
+// Página actual relativa a "frontend/" (para volver después del login)
 function paginaActual() {
   return location.href.startsWith(RAIZ_SITIO) ? location.href.slice(RAIZ_SITIO.length).split("#")[0] : "index.html";
 }

@@ -38,7 +38,7 @@ function productosBajoMinimo() {
   return PRODUCTOS.filter(p => p.activo !== false && p.stock < p.stockMin);
 }
 
-// Miniatura para tablas (las rutas de imagen se escriben desde la carpeta archivos/)
+// Miniatura para tablas (las rutas de imagen se escriben desde la carpeta frontend/)
 function thumbProducto(p) {
   const icono = (CATEGORIAS[p.categoria] && CATEGORIAS[p.categoria].icono) || "bi-box-seam";
   return p.imagen

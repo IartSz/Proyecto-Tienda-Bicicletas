@@ -167,7 +167,7 @@ function htmlImagen(p, alto, prefijo) {
 }
 
 // Tarjeta de un producto (la usan las páginas de categoría y los destacados del inicio)
-// raiz: lo que hay que subir para llegar a archivos/ (ej: "../../")
+// raiz: lo que hay que subir para llegar a frontend/ (ej: "../../")
 function htmlTarjeta(p, raiz) {
   raiz = raiz || "";
   return `

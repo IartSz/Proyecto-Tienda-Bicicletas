@@ -1,0 +1,55 @@
+package cl.ridertapia.soporteservice.service;
+
+import cl.ridertapia.soporteservice.dto.UsuarioDto;
+import cl.ridertapia.soporteservice.exception.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
+
+@Service
+public class UsuarioRemotoService {
+
+    public static final String RUTA_USUARIO = "/api/v1/usuarios/{rut}";
+
+    private final RestClient restClient;
+
+    @Autowired
+    public UsuarioRemotoService(@Value("${usuario.service.url}") String baseUrl) {
+        // Timeouts cortos para no dejar colgada la petición si usuario-service no responde
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(3000);
+        this.restClient = RestClient.builder().baseUrl(baseUrl).requestFactory(factory).build();
+    }
+
+    UsuarioRemotoService(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
+    /**
+     * Comprueba que el RUT tenga una cuenta y la devuelve.
+     *
+     * @throws ApiException 404 si no existe la cuenta, 503 si usuario-service no está disponible
+     */
+    public UsuarioDto obtenerPorRut(String rut) {
+        try {
+            UsuarioDto usuario = restClient.get()
+                    .uri(RUTA_USUARIO, rut)
+                    .retrieve()
+                    .body(UsuarioDto.class);
+            if (usuario == null) {
+                throw ApiException.noEncontrado("No existe una cuenta de usuario con el RUT " + rut);
+            }
+            return usuario;
+        } catch (HttpClientErrorException.NotFound e) {
+            throw ApiException.noEncontrado("No existe una cuenta de usuario con el RUT " + rut);
+        } catch (RestClientException e) {
+            throw ApiException.servicioNoDisponible(
+                    "No se pudo validar el RUT: el servicio de usuarios no está disponible");
+        }
+    }
+}

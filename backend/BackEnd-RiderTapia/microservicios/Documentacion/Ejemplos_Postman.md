@@ -1,12 +1,12 @@
 # Ejemplos para Postman
 
-Base URL: `http://localhost:8080` (o `http://localhost:8090`). Body: **raw → JSON**.
+Base URL: `http://localhost:9000` (o `http://localhost:9090`). Body: **raw → JSON**.
 
 - Fechas: `"2026-10-07T10:00:00"` o `"2026-10-07"`.
 - Relaciones: se envía el id del recurso relacionado, por ejemplo `"producto": { "idProducto": 1 }`.
 - Los ids de ejemplo (`1`) corresponden al id devuelto por el POST.
 
-## ms-usuario (8081)
+## ms-usuario (9001)
 
 ### Usuarios
 
@@ -55,7 +55,7 @@ Sin cuerpo:
 - `GET /api/v1/usuarios/12345678-5` — Buscar por RUT
 - `GET /api/v1/usuarios/buscar?email=cliente123456@correo.cl` — Buscar por email
 
-## ms-cliente (8082)
+## ms-cliente (9002)
 
 ### Clientes
 
@@ -90,7 +90,7 @@ Sin cuerpo:
 - `GET /api/v1/clientes/12345678-5` — Buscar por RUT
 - `GET /api/v1/clientes/buscar?nombre=matias` — Buscar por nombre
 
-## ms-productos (8085)
+## ms-productos (9005)
 
 ### Marcas
 
@@ -494,7 +494,7 @@ Sin cuerpo:
 - `GET /api/v1/cupones/1` — Buscar por id
 - `GET /api/v1/cupones/codigo/RIDER123456` — Buscar por código
 
-## ms-inventario (8088)
+## ms-inventario (9008)
 
 ### Ítems de inventario
 
@@ -856,7 +856,7 @@ Sin cuerpo:
 - `GET /api/v1/errores-carga/1` — Buscar por id
 - `GET /api/v1/errores-carga/cargaMasiva/1` — Por carga
 
-## ms-pedidos (8086)
+## ms-pedidos (9006)
 
 ### Datos de visitante
 
@@ -1166,7 +1166,7 @@ Sin cuerpo:
 }
 ```
 
-## ms-pagos (8087)
+## ms-pagos (9007)
 
 ### Pagos WebPay
 
@@ -1310,7 +1310,7 @@ Sin cuerpo:
 - `GET /api/v1/cierres-caja/1` — Buscar por id
 - `GET /api/v1/cierres-caja/idEmpleado/1` — Por empleado
 
-## ms-carrito (8089)
+## ms-carrito (9009)
 
 ### Carritos
 
@@ -1391,7 +1391,602 @@ Sin cuerpo:
 - `GET /api/v1/items-carrito/1` — Buscar por id
 - `GET /api/v1/items-carrito/carrito/1` — Por carrito
 
-## ms-soporte (8083)
+## ms-servicio-tecnico (9015)
+
+### Tipos de servicio
+
+**POST** `/api/v1/tipos-servicio` — Crear
+
+```json
+{
+  "nombre": "Mantención básica 123456",
+  "nivel": "BASICO",
+  "descripcion": "Ajuste general y lubricación",
+  "incluye": "Ajuste de frenos y cambios, lubricación de cadena y revisión de presión",
+  "precio": 25000,
+  "diasEstimados": 1,
+  "activo": true
+}
+```
+
+**PUT** `/api/v1/tipos-servicio/1` — Actualizar
+
+```json
+{
+  "nombre": "Mantención básica 123456",
+  "nivel": "BASICO",
+  "descripcion": "Ajuste general y lubricación",
+  "incluye": "Ajuste de frenos y cambios, lubricación de cadena y revisión de presión",
+  "precio": 27000,
+  "diasEstimados": 1,
+  "activo": true
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/tipos-servicio` — Listar
+- `GET /api/v1/tipos-servicio/1` — Buscar por id
+- `GET /api/v1/tipos-servicio/nivel/BASICO` — Por nivel
+
+### Bicicletas
+
+**POST** `/api/v1/bicicletas` — Crear
+
+```json
+{
+  "marca": "Trek",
+  "modelo": "Marlin 7",
+  "tipo": "MTB",
+  "aro": "29",
+  "color": "Rojo",
+  "numeroSerie": "WTU123456",
+  "rutCliente": "12345678-5"
+}
+```
+
+**PUT** `/api/v1/bicicletas/1` — Actualizar
+
+```json
+{
+  "marca": "Trek",
+  "modelo": "Marlin 7",
+  "tipo": "MTB",
+  "aro": "29",
+  "color": "Azul",
+  "numeroSerie": "WTU123456",
+  "rutCliente": "12345678-5"
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/bicicletas` — Listar
+- `GET /api/v1/bicicletas/1` — Buscar por id
+- `GET /api/v1/bicicletas/rutCliente/12345678-5` — Por RUT de cliente
+
+### Solicitudes de servicio
+
+**POST** `/api/v1/solicitudes-servicio` — Crear (el RUT debe existir en ms-cliente)
+
+```json
+{
+  "nombreContacto": "Matias Dominguez",
+  "telefonoContacto": "912123456",
+  "emailContacto": "cliente123456@correo.cl",
+  "rutCliente": "12345678-5",
+  "descripcionFalla": "Los frenos traseros no frenan bien",
+  "fechaSolicitud": "2026-10-07T10:00:00",
+  "fechaPreferida": "2026-10-09",
+  "estado": "PENDIENTE",
+  "tipoServicio": {
+    "idTipoServicio": 1
+  }
+}
+```
+
+**PUT** `/api/v1/solicitudes-servicio/1` — Actualizar
+
+```json
+{
+  "nombreContacto": "Matias Dominguez",
+  "telefonoContacto": "912123456",
+  "emailContacto": "cliente123456@correo.cl",
+  "rutCliente": "12345678-5",
+  "descripcionFalla": "Los frenos traseros no frenan bien",
+  "fechaSolicitud": "2026-10-07T10:00:00",
+  "fechaPreferida": "2026-10-09",
+  "estado": "AGENDADA",
+  "tipoServicio": {
+    "idTipoServicio": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/solicitudes-servicio` — Listar
+- `GET /api/v1/solicitudes-servicio/1` — Buscar por id
+- `GET /api/v1/solicitudes-servicio/telefonoContacto/912123456` — Por teléfono
+
+### Fotos de solicitud
+
+**POST** `/api/v1/fotos-solicitud` — Crear
+
+```json
+{
+  "url": "https://ridertapia.cl/fotos/solicitud-123456.jpg",
+  "formato": "jpg",
+  "tamanoKb": 850,
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  }
+}
+```
+
+**POST** `/api/v1/fotos-solicitud` — Crear con formato no permitido
+
+```json
+{
+  "url": "https://ridertapia.cl/fotos/solicitud-123456.jpg",
+  "formato": "gif",
+  "tamanoKb": 850,
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  }
+}
+```
+
+**PUT** `/api/v1/fotos-solicitud/1` — Actualizar
+
+```json
+{
+  "url": "https://ridertapia.cl/fotos/solicitud-123456.jpg",
+  "formato": "jpg",
+  "tamanoKb": 640,
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/fotos-solicitud` — Listar
+- `GET /api/v1/fotos-solicitud/1` — Buscar por id
+- `GET /api/v1/fotos-solicitud/solicitudServicio/1` — Por solicitud
+
+### Órdenes de trabajo
+
+**POST** `/api/v1/ordenes-trabajo` — Crear (sin código ni estado: se generan)
+
+```json
+{
+  "fechaIngreso": "2026-10-07T11:00:00",
+  "fechaEstimadaEntrega": "2026-10-09",
+  "nombreCliente": "Matias Dominguez",
+  "telefonoCliente": "912123456",
+  "emailCliente": "cliente123456@correo.cl",
+  "rutCliente": "12345678-5",
+  "diagnostico": "Pastillas traseras gastadas",
+  "costoManoObra": 25000,
+  "idEmpleado": 1,
+  "bicicleta": {
+    "idBicicleta": 1
+  },
+  "tipoServicio": {
+    "idTipoServicio": 1
+  },
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  }
+}
+```
+
+**PUT** `/api/v1/ordenes-trabajo/1` — Actualizar a LISTA (avisa al cliente)
+
+```json
+{
+  "fechaIngreso": "2026-10-07T11:00:00",
+  "fechaEstimadaEntrega": "2026-10-09",
+  "nombreCliente": "Matias Dominguez",
+  "telefonoCliente": "912123456",
+  "emailCliente": "cliente123456@correo.cl",
+  "rutCliente": "12345678-5",
+  "diagnostico": "Pastillas traseras gastadas",
+  "costoManoObra": 30000,
+  "idEmpleado": 1,
+  "bicicleta": {
+    "idBicicleta": 1
+  },
+  "tipoServicio": {
+    "idTipoServicio": 1
+  },
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  },
+  "estado": "LISTA"
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/ordenes-trabajo` — Listar
+- `GET /api/v1/ordenes-trabajo/1` — Buscar por id
+- `GET /api/v1/ordenes-trabajo/telefonoCliente/912123456` — Consultar por teléfono (sin cuenta)
+
+### Repuestos utilizados
+
+**POST** `/api/v1/repuestos-utilizados` — Crear (descuenta stock en ms-inventario)
+
+```json
+{
+  "idVariante": 1,
+  "cantidad": 1,
+  "precioUnitario": 15990,
+  "fechaRegistro": "2026-10-08T10:00:00",
+  "ordenTrabajo": {
+    "idOrdenTrabajo": 1
+  }
+}
+```
+
+**PUT** `/api/v1/repuestos-utilizados/1` — Actualizar
+
+```json
+{
+  "idVariante": 1,
+  "cantidad": 1,
+  "precioUnitario": 14990,
+  "fechaRegistro": "2026-10-08T10:00:00",
+  "ordenTrabajo": {
+    "idOrdenTrabajo": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/repuestos-utilizados` — Listar
+- `GET /api/v1/repuestos-utilizados/1` — Buscar por id
+- `GET /api/v1/repuestos-utilizados/ordenTrabajo/1` — Por orden
+
+### Historial de estados de orden
+
+Sin cuerpo:
+
+- `GET /api/v1/historial-estados-orden` — Listar
+- `GET /api/v1/historial-estados-orden/ordenTrabajo/1` — Por orden
+
+### Notificaciones de taller
+
+Sin cuerpo:
+
+- `GET /api/v1/notificaciones-taller` — Listar
+- `GET /api/v1/notificaciones-taller/ordenTrabajo/1` — Por orden
+
+### Calificaciones de servicio
+
+**PUT** `/api/v1/ordenes-trabajo/1` — Entregar la bicicleta (orden ENTREGADA)
+
+```json
+{
+  "fechaIngreso": "2026-10-07T11:00:00",
+  "fechaEstimadaEntrega": "2026-10-09",
+  "nombreCliente": "Matias Dominguez",
+  "telefonoCliente": "912123456",
+  "emailCliente": "cliente123456@correo.cl",
+  "rutCliente": "12345678-5",
+  "diagnostico": "Pastillas traseras gastadas",
+  "costoManoObra": 30000,
+  "idEmpleado": 1,
+  "bicicleta": {
+    "idBicicleta": 1
+  },
+  "tipoServicio": {
+    "idTipoServicio": 1
+  },
+  "solicitudServicio": {
+    "idSolicitudServicio": 1
+  },
+  "estado": "ENTREGADA"
+}
+```
+
+**POST** `/api/v1/calificaciones-servicio` — Crear
+
+```json
+{
+  "puntuacion": 5,
+  "comentario": "Excelente atención",
+  "fechaCalificacion": "2026-10-10T12:00:00",
+  "ordenTrabajo": {
+    "idOrdenTrabajo": 1
+  }
+}
+```
+
+**POST** `/api/v1/calificaciones-servicio` — Calificar otra vez (no se permite)
+
+```json
+{
+  "puntuacion": 4,
+  "comentario": "Muy buena atención",
+  "fechaCalificacion": "2026-10-10T12:00:00",
+  "ordenTrabajo": {
+    "idOrdenTrabajo": 1
+  }
+}
+```
+
+**PUT** `/api/v1/calificaciones-servicio/1` — Actualizar
+
+```json
+{
+  "puntuacion": 4,
+  "comentario": "Muy buena atención",
+  "fechaCalificacion": "2026-10-10T12:00:00",
+  "ordenTrabajo": {
+    "idOrdenTrabajo": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/calificaciones-servicio` — Listar
+- `GET /api/v1/calificaciones-servicio/1` — Buscar por id
+- `GET /api/v1/calificaciones-servicio/ordenTrabajo/1` — Por orden
+
+## ms-proveedores (9011)
+
+### Proveedores
+
+**POST** `/api/v1/proveedores` — Crear
+
+```json
+{
+  "rut": "76123456-K",
+  "razonSocial": "Distribuidora Andes Bike SpA",
+  "nombreFantasia": "Andes Bike",
+  "giro": "Venta al por mayor de bicicletas y repuestos",
+  "email": "ventas123456@andesbike.cl",
+  "telefono": "223456789",
+  "direccion": "Av. Vicuña Mackenna 1234",
+  "comuna": "Santiago",
+  "nombreContacto": "Carolina Muñoz",
+  "activo": true
+}
+```
+
+**PUT** `/api/v1/proveedores/1` — Actualizar
+
+```json
+{
+  "rut": "76123456-K",
+  "razonSocial": "Distribuidora Andes Bike SpA",
+  "nombreFantasia": "Andes Bike",
+  "giro": "Venta al por mayor de bicicletas y repuestos",
+  "email": "ventas123456@andesbike.cl",
+  "telefono": "229998877",
+  "direccion": "Av. Vicuña Mackenna 1234",
+  "comuna": "Santiago",
+  "nombreContacto": "Carolina Muñoz",
+  "activo": true
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/proveedores` — Listar
+- `GET /api/v1/proveedores/1` — Buscar por id
+- `GET /api/v1/proveedores/rut/76123456-K` — Buscar por RUT
+
+### Productos por proveedor
+
+**POST** `/api/v1/productos-proveedor` — Crear (la variante debe existir en ms-productos)
+
+```json
+{
+  "idVariante": 1,
+  "codigoProveedor": "AB-123456",
+  "costoUnitario": 520000,
+  "plazoEntregaDias": 7,
+  "preferido": true,
+  "proveedor": {
+    "idProveedor": 1
+  }
+}
+```
+
+**PUT** `/api/v1/productos-proveedor/1` — Actualizar
+
+```json
+{
+  "idVariante": 1,
+  "codigoProveedor": "AB-123456",
+  "costoUnitario": 505000,
+  "plazoEntregaDias": 7,
+  "preferido": true,
+  "proveedor": {
+    "idProveedor": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/productos-proveedor` — Listar
+- `GET /api/v1/productos-proveedor/1` — Buscar por id
+- `GET /api/v1/productos-proveedor/idVariante/1` — A quién comprarle una variante
+- `GET /api/v1/productos-proveedor/proveedor/1` — Por proveedor
+
+### Órdenes de compra
+
+**POST** `/api/v1/ordenes-compra` — Crear (número e IVA se calculan)
+
+```json
+{
+  "fechaEmision": "2026-10-08T09:00:00",
+  "fechaEntregaEsperada": "2026-10-15",
+  "estado": "ENVIADA",
+  "montoNeto": 1040000,
+  "observacion": "Reposición de bicicletas Marlin 7",
+  "idEmpleado": 1,
+  "proveedor": {
+    "idProveedor": 1
+  }
+}
+```
+
+**PUT** `/api/v1/ordenes-compra/1` — Actualizar
+
+```json
+{
+  "fechaEmision": "2026-10-08T09:00:00",
+  "fechaEntregaEsperada": "2026-10-15",
+  "estado": "ENVIADA",
+  "montoNeto": 1040000,
+  "observacion": "Reposición con fecha confirmada",
+  "idEmpleado": 1,
+  "proveedor": {
+    "idProveedor": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/ordenes-compra` — Listar
+- `GET /api/v1/ordenes-compra/1` — Buscar por id
+- `GET /api/v1/ordenes-compra/proveedor/1` — Por proveedor
+- `GET /api/v1/ordenes-compra/estado/ENVIADA` — Por estado
+
+### Detalles de orden de compra
+
+**POST** `/api/v1/detalles-orden-compra` — Crear
+
+```json
+{
+  "idVariante": 1,
+  "cantidadSolicitada": 2,
+  "cantidadRecibida": 0,
+  "costoUnitario": 520000,
+  "ordenCompra": {
+    "idOrdenCompra": 1
+  }
+}
+```
+
+**PUT** `/api/v1/detalles-orden-compra/1` — Actualizar
+
+```json
+{
+  "idVariante": 1,
+  "cantidadSolicitada": 2,
+  "cantidadRecibida": 0,
+  "costoUnitario": 505000,
+  "ordenCompra": {
+    "idOrdenCompra": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/detalles-orden-compra` — Listar
+- `GET /api/v1/detalles-orden-compra/1` — Buscar por id
+- `GET /api/v1/detalles-orden-compra/ordenCompra/1` — Por orden
+
+### Recepciones de compra
+
+**POST** `/api/v1/recepciones-compra` — Crear
+
+```json
+{
+  "fechaRecepcion": "2026-10-15T11:00:00",
+  "tipoDocumento": "FACTURA",
+  "numeroDocumento": "FAC-123456",
+  "observacion": "Llegó en buen estado",
+  "idEmpleado": 1,
+  "ordenCompra": {
+    "idOrdenCompra": 1
+  }
+}
+```
+
+**PUT** `/api/v1/recepciones-compra/1` — Actualizar
+
+```json
+{
+  "fechaRecepcion": "2026-10-15T11:00:00",
+  "tipoDocumento": "FACTURA",
+  "numeroDocumento": "FAC-123456",
+  "observacion": "Factura revisada",
+  "idEmpleado": 1,
+  "ordenCompra": {
+    "idOrdenCompra": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/recepciones-compra` — Listar
+- `GET /api/v1/recepciones-compra/1` — Buscar por id
+- `GET /api/v1/recepciones-compra/ordenCompra/1` — Por orden
+
+### Detalles de recepción
+
+**POST** `/api/v1/detalles-recepcion` — Crear (suma stock en ms-inventario)
+
+```json
+{
+  "cantidadRecibida": 1,
+  "recepcionCompra": {
+    "idRecepcionCompra": 1
+  },
+  "detalleOrdenCompra": {
+    "idDetalleOrdenCompra": 1
+  }
+}
+```
+
+**POST** `/api/v1/detalles-recepcion` — Recibir más de lo pendiente
+
+```json
+{
+  "cantidadRecibida": 5,
+  "recepcionCompra": {
+    "idRecepcionCompra": 1
+  },
+  "detalleOrdenCompra": {
+    "idDetalleOrdenCompra": 1
+  }
+}
+```
+
+**PUT** `/api/v1/detalles-recepcion/1` — Actualizar
+
+```json
+{
+  "cantidadRecibida": 1,
+  "recepcionCompra": {
+    "idRecepcionCompra": 1
+  },
+  "detalleOrdenCompra": {
+    "idDetalleOrdenCompra": 1
+  }
+}
+```
+
+Sin cuerpo:
+
+- `GET /api/v1/detalles-recepcion` — Listar
+- `GET /api/v1/detalles-recepcion/1` — Buscar por id
+- `GET /api/v1/detalles-recepcion/recepcionCompra/1` — Por recepción
+
+## ms-soporte (9003)
 
 ### Contactos
 
@@ -1518,7 +2113,7 @@ Sin cuerpo:
 - `GET /api/v1/seguimientos/1` — Buscar por id
 - `GET /api/v1/seguimientos/pedido/1` — Por pedido
 
-## ms-reportes (8084)
+## ms-reportes (9004)
 
 ### Documentos de venta
 
@@ -1565,6 +2160,21 @@ Sin cuerpo:
 
 `DELETE /api/v1/<recurso>/{id}` responde 204. Orden para eliminar sin conflictos:
 
+- `DELETE /api/v1/detalles-recepcion/1`
+- `DELETE /api/v1/recepciones-compra/1`
+- `DELETE /api/v1/detalles-orden-compra/1`
+- `DELETE /api/v1/ordenes-compra/1`
+- `DELETE /api/v1/productos-proveedor/1`
+- `DELETE /api/v1/proveedores/1`
+- `DELETE /api/v1/calificaciones-servicio/1`
+- `DELETE /api/v1/repuestos-utilizados/1`
+- `DELETE /api/v1/historial-estados-orden/1`
+- `DELETE /api/v1/notificaciones-taller/1`
+- `DELETE /api/v1/ordenes-trabajo/1`
+- `DELETE /api/v1/fotos-solicitud/1`
+- `DELETE /api/v1/solicitudes-servicio/1`
+- `DELETE /api/v1/bicicletas/1`
+- `DELETE /api/v1/tipos-servicio/1`
 - `DELETE /api/v1/items-carrito/1`
 - `DELETE /api/v1/carritos/1`
 - `DELETE /api/v1/cierres-caja/1`
@@ -1588,6 +2198,7 @@ Sin cuerpo:
 - `DELETE /api/v1/tomas-inventario/1`
 - `DELETE /api/v1/ingresos/1`
 - `DELETE /api/v1/movimientos/1`
+- `DELETE /api/v1/movimientos/{id}` de los movimientos `USO_TALLER` e ingresos que crearon ms-servicio-tecnico y ms-proveedores (se ven en `GET /api/v1/movimientos/itemInventario/1`)
 - `DELETE /api/v1/items-inventario/1`
 - `DELETE /api/v1/cupones/1`
 - `DELETE /api/v1/avisos-stock/1`

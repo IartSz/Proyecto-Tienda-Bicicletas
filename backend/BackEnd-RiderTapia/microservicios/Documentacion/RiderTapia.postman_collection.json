@@ -7,7 +7,7 @@
   "variable": [
     {
       "key": "gateway",
-      "value": "http://localhost:8090"
+      "value": "http://localhost:9000"
     },
     {
       "key": "rut",
@@ -30,7 +30,15 @@
       "value": "1"
     },
     {
+      "key": "id_bicicletas",
+      "value": "1"
+    },
+    {
       "key": "id_boletas",
+      "value": "1"
+    },
+    {
+      "key": "id_calificaciones_servicio",
       "value": "1"
     },
     {
@@ -70,6 +78,14 @@
       "value": "1"
     },
     {
+      "key": "id_detalles_orden_compra",
+      "value": "1"
+    },
+    {
+      "key": "id_detalles_recepcion",
+      "value": "1"
+    },
+    {
       "key": "id_devoluciones",
       "value": "1"
     },
@@ -87,6 +103,10 @@
     },
     {
       "key": "id_facturas",
+      "value": "1"
+    },
+    {
+      "key": "id_fotos_solicitud",
       "value": "1"
     },
     {
@@ -130,6 +150,14 @@
       "value": "1"
     },
     {
+      "key": "id_ordenes_compra",
+      "value": "1"
+    },
+    {
+      "key": "id_ordenes_trabajo",
+      "value": "1"
+    },
+    {
       "key": "id_pagos_presenciales",
       "value": "1"
     },
@@ -154,7 +182,23 @@
       "value": "1"
     },
     {
+      "key": "id_productos_proveedor",
+      "value": "1"
+    },
+    {
+      "key": "id_proveedores",
+      "value": "1"
+    },
+    {
+      "key": "id_recepciones_compra",
+      "value": "1"
+    },
+    {
       "key": "id_reportes",
+      "value": "1"
+    },
+    {
+      "key": "id_repuestos_utilizados",
       "value": "1"
     },
     {
@@ -166,7 +210,15 @@
       "value": "1"
     },
     {
+      "key": "id_solicitudes_servicio",
+      "value": "1"
+    },
+    {
       "key": "id_soporte_resenas",
+      "value": "1"
+    },
+    {
+      "key": "id_tipos_servicio",
       "value": "1"
     },
     {
@@ -239,7 +291,7 @@
       }
     },
     {
-      "name": "ms-usuario (8081)",
+      "name": "ms-usuario (9001)",
       "item": [
         {
           "name": "Usuarios",
@@ -280,7 +332,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"emailCliente\": \"cliente{{sufijo}}@correo.cl\",\n  \"password\": \"clave12345\",\n  \"rol\": \"CLIENTE\"\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"password\": \"Pedal2026x\",\n  \"rol\": \"CLIENTE\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -326,7 +378,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"emailCliente\": \"cliente{{sufijo}}@correo.cl\",\n  \"password\": \"clave12345\"\n}",
+                  "raw": "{\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"password\": \"Pedal2026x\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -372,7 +424,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"emailCliente\": \"cliente{{sufijo}}@correo.cl\",\n  \"nuevaPassword\": \"nuevaClave123\"\n}",
+                  "raw": "{\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"nuevaPassword\": \"Cadena2026y\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -463,7 +515,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/usuarios/buscar?email=cliente{{sufijo}}@correo.cl",
+                  "raw": "{{gateway}}/api/v1/usuarios/buscar?email=ciclista{{sufijo}}@ridermail.cl",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -476,7 +528,7 @@
                   "query": [
                     {
                       "key": "email",
-                      "value": "cliente{{sufijo}}@correo.cl"
+                      "value": "ciclista{{sufijo}}@ridermail.cl"
                     }
                   ]
                 }
@@ -519,7 +571,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"emailCliente\": \"cliente{{sufijo}}@correo.cl\",\n  \"password\": \"nuevaClave123\",\n  \"rol\": \"CLIENTE\"\n}",
+                  "raw": "{\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"password\": \"Cadena2026y\",\n  \"rol\": \"CLIENTE\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -533,7 +585,7 @@
       ]
     },
     {
-      "name": "ms-cliente (8082)",
+      "name": "ms-cliente (9002)",
       "item": [
         {
           "name": "Clientes",
@@ -574,7 +626,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"nombre\": \"Matias\",\n  \"apellido\": \"Dominguez\",\n  \"telefono\": \"+56912345678\",\n  \"direccion\": \"Calle Falsa 123\",\n  \"comuna\": \"Concepcion\"\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"nombre\": \"Fernanda\",\n  \"apellido\": \"Riquelme\",\n  \"telefono\": \"+56934567812\",\n  \"direccion\": \"Los Aromos 845\",\n  \"comuna\": \"Temuco\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -665,7 +717,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/clientes/buscar?nombre=matias",
+                  "raw": "{{gateway}}/api/v1/clientes/buscar?nombre=fernanda",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -678,7 +730,7 @@
                   "query": [
                     {
                       "key": "nombre",
-                      "value": "matias"
+                      "value": "fernanda"
                     }
                   ]
                 }
@@ -721,7 +773,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Matias\",\n  \"apellido\": \"Dominguez\",\n  \"telefono\": \"+56987654321\",\n  \"direccion\": \"Av. Colon 456\",\n  \"comuna\": \"Talcahuano\"\n}",
+                  "raw": "{\n  \"nombre\": \"Fernanda\",\n  \"apellido\": \"Riquelme\",\n  \"telefono\": \"+56976543218\",\n  \"direccion\": \"Av. Alemania 1520\",\n  \"comuna\": \"Padre Las Casas\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -735,7 +787,7 @@
       ]
     },
     {
-      "name": "ms-productos (8085)",
+      "name": "ms-productos (9005)",
       "item": [
         {
           "name": "Marcas",
@@ -781,7 +833,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Trek {{sufijo}}\",\n  \"activa\": true\n}",
+                  "raw": "{\n  \"nombre\": \"Specialized {{sufijo}}\",\n  \"activa\": true\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -872,7 +924,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/marcas/nombre/Trek {{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/marcas/nombre/Specialized {{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -881,7 +933,7 @@
                     "v1",
                     "marcas",
                     "nombre",
-                    "Trek {{sufijo}}"
+                    "Specialized {{sufijo}}"
                   ]
                 }
               }
@@ -923,7 +975,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Trek {{sufijo}}\",\n  \"activa\": true\n}",
+                  "raw": "{\n  \"nombre\": \"Specialized {{sufijo}}\",\n  \"activa\": true\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -978,7 +1030,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"MTB {{sufijo}}\",\n  \"descripcion\": \"Bicicletas de montaña\",\n  \"activa\": true,\n  \"categoriaPadre\": null\n}",
+                  "raw": "{\n  \"nombre\": \"Gravel {{sufijo}}\",\n  \"descripcion\": \"Bicicletas para caminos mixtos\",\n  \"activa\": true,\n  \"categoriaPadre\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1069,7 +1121,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/categorias/nombre/MTB {{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/categorias/nombre/Gravel {{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -1078,7 +1130,7 @@
                     "v1",
                     "categorias",
                     "nombre",
-                    "MTB {{sufijo}}"
+                    "Gravel {{sufijo}}"
                   ]
                 }
               }
@@ -1120,7 +1172,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"MTB {{sufijo}}\",\n  \"descripcion\": \"Bicicletas de montaña aro 27.5 y 29\",\n  \"activa\": true,\n  \"categoriaPadre\": null\n}",
+                  "raw": "{\n  \"nombre\": \"Gravel {{sufijo}}\",\n  \"descripcion\": \"Bicicletas gravel para ripio y asfalto\",\n  \"activa\": true,\n  \"categoriaPadre\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1175,7 +1227,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipoBicicleta\": \"MTB\",\n  \"aro\": \"29\",\n  \"velocidades\": \"12\"\n}",
+                  "raw": "{\n  \"tipoBicicleta\": \"GRAVEL\",\n  \"aro\": \"700c\",\n  \"velocidades\": \"11\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1266,7 +1318,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/compatibilidades/tipoBicicleta/MTB",
+                  "raw": "{{gateway}}/api/v1/compatibilidades/tipoBicicleta/GRAVEL",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -1275,7 +1327,7 @@
                     "v1",
                     "compatibilidades",
                     "tipoBicicleta",
-                    "MTB"
+                    "GRAVEL"
                   ]
                 }
               }
@@ -1317,7 +1369,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipoBicicleta\": \"MTB\",\n  \"aro\": \"29\",\n  \"velocidades\": \"12\"\n}",
+                  "raw": "{\n  \"tipoBicicleta\": \"GRAVEL\",\n  \"aro\": \"700c\",\n  \"velocidades\": \"11\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1372,7 +1424,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Trek Marlin 7\",\n  \"descripcion\": \"Bicicleta MTB aro 29, 12 velocidades\",\n  \"precioNormal\": 899990,\n  \"estado\": \"PUBLICADO\",\n  \"destacado\": true,\n  \"ordenDestacado\": 1,\n  \"limitePorCompra\": 2,\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"categoria\": {\n    \"idCategoria\": {{id_categorias}}\n  },\n  \"marca\": {\n    \"idMarca\": {{id_marcas}}\n  },\n  \"compatibilidades\": [\n    {\n      \"idCompatibilidad\": {{id_compatibilidades}}\n    }\n  ]\n}",
+                  "raw": "{\n  \"nombre\": \"Specialized Diverge E5\",\n  \"descripcion\": \"Bicicleta gravel aro 700c, 11 velocidades\",\n  \"precioNormal\": 749990,\n  \"estado\": \"PUBLICADO\",\n  \"destacado\": true,\n  \"ordenDestacado\": 3,\n  \"limitePorCompra\": 1,\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"categoria\": {\n    \"idCategoria\": {{id_categorias}}\n  },\n  \"marca\": {\n    \"idMarca\": {{id_marcas}}\n  },\n  \"compatibilidades\": [\n    {\n      \"idCompatibilidad\": {{id_compatibilidades}}\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1514,7 +1566,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Trek Marlin 7\",\n  \"descripcion\": \"Bicicleta MTB aro 29, 12 velocidades\",\n  \"precioNormal\": 849990,\n  \"estado\": \"PUBLICADO\",\n  \"destacado\": true,\n  \"ordenDestacado\": 1,\n  \"limitePorCompra\": 2,\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"categoria\": {\n    \"idCategoria\": {{id_categorias}}\n  },\n  \"marca\": {\n    \"idMarca\": {{id_marcas}}\n  },\n  \"compatibilidades\": [\n    {\n      \"idCompatibilidad\": {{id_compatibilidades}}\n    }\n  ]\n}",
+                  "raw": "{\n  \"nombre\": \"Specialized Diverge E5\",\n  \"descripcion\": \"Bicicleta gravel aro 700c, 11 velocidades\",\n  \"precioNormal\": 729990,\n  \"estado\": \"PUBLICADO\",\n  \"destacado\": true,\n  \"ordenDestacado\": 3,\n  \"limitePorCompra\": 1,\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"categoria\": {\n    \"idCategoria\": {{id_categorias}}\n  },\n  \"marca\": {\n    \"idMarca\": {{id_marcas}}\n  },\n  \"compatibilidades\": [\n    {\n      \"idCompatibilidad\": {{id_compatibilidades}}\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1569,7 +1621,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"sku\": \"TRK-M7-{{sufijo}}\",\n  \"talla\": \"M\",\n  \"color\": \"Negro\",\n  \"aro\": \"29\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"sku\": \"SPZ-DE5-{{sufijo}}\",\n  \"talla\": \"L\",\n  \"color\": \"Verde Oliva\",\n  \"aro\": \"700c\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1660,7 +1712,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/variantes/sku/TRK-M7-{{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/variantes/sku/SPZ-DE5-{{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -1669,7 +1721,7 @@
                     "v1",
                     "variantes",
                     "sku",
-                    "TRK-M7-{{sufijo}}"
+                    "SPZ-DE5-{{sufijo}}"
                   ]
                 }
               }
@@ -1711,7 +1763,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"sku\": \"TRK-M7-{{sufijo}}\",\n  \"talla\": \"M\",\n  \"color\": \"Azul\",\n  \"aro\": \"29\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"sku\": \"SPZ-DE5-{{sufijo}}\",\n  \"talla\": \"L\",\n  \"color\": \"Gris Grafito\",\n  \"aro\": \"700c\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1766,7 +1818,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"url\": \"https://ridertapia.cl/img/marlin7-1.jpg\",\n  \"orden\": 1,\n  \"esPrincipal\": true,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"url\": \"https://ridertapia.cl/img/diverge-e5-1.jpg\",\n  \"orden\": 1,\n  \"esPrincipal\": true,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1908,7 +1960,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"url\": \"https://ridertapia.cl/img/marlin7-1.jpg\",\n  \"orden\": 1,\n  \"esPrincipal\": true,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"url\": \"https://ridertapia.cl/img/diverge-e5-1.jpg\",\n  \"orden\": 1,\n  \"esPrincipal\": true,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1963,7 +2015,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Cuadro\",\n  \"valor\": \"Aluminio Alpha Silver\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"nombre\": \"Transmisión\",\n  \"valor\": \"Shimano GRX 1x11\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2105,7 +2157,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Cuadro\",\n  \"valor\": \"Aluminio Alpha Silver\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"nombre\": \"Transmisión\",\n  \"valor\": \"Shimano GRX 1x11\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2160,7 +2212,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"precioOferta\": 799990,\n  \"fechaInicio\": \"2026-10-07\",\n  \"fechaTermino\": \"2026-10-31\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"precioOferta\": 689990,\n  \"fechaInicio\": \"2026-10-14\",\n  \"fechaTermino\": \"2026-11-07\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2302,7 +2354,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"precioOferta\": 799990,\n  \"fechaInicio\": \"2026-10-07\",\n  \"fechaTermino\": \"2026-10-31\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"precioOferta\": 689990,\n  \"fechaInicio\": \"2026-10-14\",\n  \"fechaTermino\": \"2026-11-07\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2357,7 +2409,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idCliente\": 1,\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente bicicleta\",\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"visible\": true,\n  \"respuestaTienda\": null,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"idCliente\": 7,\n  \"calificacion\": 4,\n  \"comentario\": \"Muy cómoda en ripio y liviana\",\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"visible\": true,\n  \"respuestaTienda\": null,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2499,7 +2551,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idCliente\": 1,\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente bicicleta\",\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"visible\": true,\n  \"respuestaTienda\": \"¡Gracias por tu compra!\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"idCliente\": 7,\n  \"calificacion\": 4,\n  \"comentario\": \"Muy cómoda en ripio y liviana\",\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"visible\": true,\n  \"respuestaTienda\": \"¡Gracias, Fernanda! Nos alegra que la disfrutes\",\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2554,7 +2606,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"correo\": \"cliente{{sufijo}}@correo.cl\",\n  \"fechaSolicitud\": \"2026-10-07T10:00:00\",\n  \"notificado\": false,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"correo\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"fechaSolicitud\": \"2026-10-14T09:30:00\",\n  \"notificado\": false,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2696,7 +2748,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"correo\": \"cliente{{sufijo}}@correo.cl\",\n  \"fechaSolicitud\": \"2026-10-07T10:00:00\",\n  \"notificado\": false,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
+                  "raw": "{\n  \"correo\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"fechaSolicitud\": \"2026-10-14T09:30:00\",\n  \"notificado\": false,\n  \"producto\": {\n    \"idProducto\": {{id_productos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2751,7 +2803,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"codigo\": \"RIDER{{sufijo}}\",\n  \"tipoDescuento\": \"PORCENTAJE\",\n  \"valor\": 10,\n  \"fechaInicio\": \"2026-10-01\",\n  \"fechaTermino\": \"2026-12-31\",\n  \"limiteUsos\": 100,\n  \"usosActuales\": 0,\n  \"activo\": true,\n  \"categorias\": [\n    {\n      \"idCategoria\": {{id_categorias}}\n    }\n  ]\n}",
+                  "raw": "{\n  \"codigo\": \"PEDALEA{{sufijo}}\",\n  \"tipoDescuento\": \"PORCENTAJE\",\n  \"valor\": 15,\n  \"fechaInicio\": \"2026-10-08\",\n  \"fechaTermino\": \"2027-01-07\",\n  \"limiteUsos\": 50,\n  \"usosActuales\": 0,\n  \"activo\": true,\n  \"categorias\": [\n    {\n      \"idCategoria\": {{id_categorias}}\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2842,7 +2894,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/cupones/codigo/RIDER{{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/cupones/codigo/PEDALEA{{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -2851,7 +2903,7 @@
                     "v1",
                     "cupones",
                     "codigo",
-                    "RIDER{{sufijo}}"
+                    "PEDALEA{{sufijo}}"
                   ]
                 }
               }
@@ -2893,7 +2945,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"codigo\": \"RIDER{{sufijo}}\",\n  \"tipoDescuento\": \"PORCENTAJE\",\n  \"valor\": 10,\n  \"fechaInicio\": \"2026-10-01\",\n  \"fechaTermino\": \"2026-12-31\",\n  \"limiteUsos\": 100,\n  \"usosActuales\": 0,\n  \"activo\": true,\n  \"categorias\": [\n    {\n      \"idCategoria\": {{id_categorias}}\n    }\n  ]\n}",
+                  "raw": "{\n  \"codigo\": \"PEDALEA{{sufijo}}\",\n  \"tipoDescuento\": \"PORCENTAJE\",\n  \"valor\": 15,\n  \"fechaInicio\": \"2026-10-08\",\n  \"fechaTermino\": \"2027-01-07\",\n  \"limiteUsos\": 50,\n  \"usosActuales\": 0,\n  \"activo\": true,\n  \"categorias\": [\n    {\n      \"idCategoria\": {{id_categorias}}\n    }\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2907,7 +2959,7 @@
       ]
     },
     {
-      "name": "ms-inventario (8088)",
+      "name": "ms-inventario (9008)",
       "item": [
         {
           "name": "Ítems de inventario",
@@ -2953,7 +3005,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"stockDisponible\": 10,\n  \"stockReservado\": 0,\n  \"stockMinimo\": 2,\n  \"costoPromedio\": 600000,\n  \"fechaActualizacion\": \"2026-10-07T10:00:00\",\n  \"idProveedores\": [\n    1\n  ]\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"stockDisponible\": 15,\n  \"stockReservado\": 0,\n  \"stockMinimo\": 3,\n  \"costoPromedio\": 455000,\n  \"fechaActualizacion\": \"2026-10-14T09:30:00\",\n  \"idProveedores\": [\n    1\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3095,7 +3147,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"stockDisponible\": 12,\n  \"stockReservado\": 0,\n  \"stockMinimo\": 2,\n  \"costoPromedio\": 600000,\n  \"fechaActualizacion\": \"2026-10-07T10:00:00\",\n  \"idProveedores\": [\n    1\n  ]\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"stockDisponible\": 18,\n  \"stockReservado\": 0,\n  \"stockMinimo\": 3,\n  \"costoPromedio\": 455000,\n  \"fechaActualizacion\": \"2026-10-14T09:30:00\",\n  \"idProveedores\": [\n    1\n  ]\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3150,7 +3202,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"VENTA_TIENDA\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 10,\n  \"stockResultante\": 9,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Venta en tienda\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"VENTA_TIENDA\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 15,\n  \"stockResultante\": 14,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Venta mostrador sucursal centro\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3292,7 +3344,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"VENTA_TIENDA\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 10,\n  \"stockResultante\": 9,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Venta en tienda\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"VENTA_TIENDA\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 15,\n  \"stockResultante\": 14,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Venta mostrador sucursal centro\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3347,7 +3399,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"INGRESO\",\n  \"cantidad\": 5,\n  \"stockAnterior\": 9,\n  \"stockResultante\": 14,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Ingreso de proveedor\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"costoUnitario\": 600000,\n  \"numeroDocumento\": \"FAC-12345\",\n  \"idProveedor\": 1\n}",
+                  "raw": "{\n  \"tipo\": \"INGRESO\",\n  \"cantidad\": 5,\n  \"stockAnterior\": 14,\n  \"stockResultante\": 19,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Reposición desde bodega del proveedor\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"costoUnitario\": 455000,\n  \"numeroDocumento\": \"GD-58210\",\n  \"idProveedor\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3489,7 +3541,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"INGRESO\",\n  \"cantidad\": 5,\n  \"stockAnterior\": 9,\n  \"stockResultante\": 14,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Ingreso de proveedor\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"costoUnitario\": 600000,\n  \"numeroDocumento\": \"FAC-12345\",\n  \"idProveedor\": 1\n}",
+                  "raw": "{\n  \"tipo\": \"INGRESO\",\n  \"cantidad\": 5,\n  \"stockAnterior\": 14,\n  \"stockResultante\": 19,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Reposición desde bodega del proveedor\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"costoUnitario\": 455000,\n  \"numeroDocumento\": \"GD-58210\",\n  \"idProveedor\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3544,7 +3596,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fechaInicio\": \"2026-10-07T10:00:00\",\n  \"fechaCierre\": null,\n  \"estado\": \"EN_CURSO\",\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"fechaInicio\": \"2026-10-14T09:30:00\",\n  \"fechaCierre\": null,\n  \"estado\": \"EN_CURSO\",\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3686,7 +3738,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fechaInicio\": \"2026-10-07T10:00:00\",\n  \"fechaCierre\": \"2026-10-07T18:00:00\",\n  \"estado\": \"CONFIRMADA\",\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"fechaInicio\": \"2026-10-14T09:30:00\",\n  \"fechaCierre\": \"2026-10-14T19:15:00\",\n  \"estado\": \"CONFIRMADA\",\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3741,7 +3793,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"AJUSTE\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 14,\n  \"stockResultante\": 13,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Diferencia en conteo físico\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"motivo\": \"CONTEO_FISICO\",\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"AJUSTE\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 19,\n  \"stockResultante\": 18,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Unidad faltante en conteo de bodega\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"motivo\": \"CONTEO_FISICO\",\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3883,7 +3935,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"AJUSTE\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 14,\n  \"stockResultante\": 13,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"observacion\": \"Diferencia en conteo físico\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"motivo\": \"CONTEO_FISICO\",\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"AJUSTE\",\n  \"cantidad\": 1,\n  \"stockAnterior\": 19,\n  \"stockResultante\": 18,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"observacion\": \"Unidad faltante en conteo de bodega\",\n  \"idEmpleado\": 1,\n  \"idPedido\": null,\n  \"idOrdenTrabajo\": null,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  },\n  \"motivo\": \"CONTEO_FISICO\",\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -3938,7 +3990,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"cantidadSistema\": 14,\n  \"cantidadContada\": 13,\n  \"diferencia\": -1,\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  },\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"cantidadSistema\": 19,\n  \"cantidadContada\": 18,\n  \"diferencia\": -1,\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  },\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4080,7 +4132,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"cantidadSistema\": 14,\n  \"cantidadContada\": 13,\n  \"diferencia\": -1,\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  },\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"cantidadSistema\": 19,\n  \"cantidadContada\": 18,\n  \"diferencia\": -1,\n  \"tomaInventario\": {\n    \"idTomaInventario\": {{id_tomas_inventario}}\n  },\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4135,7 +4187,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fechaGeneracion\": \"2026-10-07T10:00:00\",\n  \"stockAlMomento\": 1,\n  \"atendida\": false,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"fechaGeneracion\": \"2026-10-14T09:30:00\",\n  \"stockAlMomento\": 2,\n  \"atendida\": false,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4277,7 +4329,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fechaGeneracion\": \"2026-10-07T10:00:00\",\n  \"stockAlMomento\": 1,\n  \"atendida\": true,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
+                  "raw": "{\n  \"fechaGeneracion\": \"2026-10-14T09:30:00\",\n  \"stockAlMomento\": 2,\n  \"atendida\": true,\n  \"itemInventario\": {\n    \"idItemInventario\": {{id_items_inventario}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4332,7 +4384,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombreArchivo\": \"productos_octubre.csv\",\n  \"fechaCarga\": \"2026-10-07T10:00:00\",\n  \"filasProcesadas\": 120,\n  \"filasConError\": 2,\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"nombreArchivo\": \"catalogo_gravel_noviembre.csv\",\n  \"fechaCarga\": \"2026-10-14T09:30:00\",\n  \"filasProcesadas\": 85,\n  \"filasConError\": 3,\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4474,7 +4526,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombreArchivo\": \"productos_octubre.csv\",\n  \"fechaCarga\": \"2026-10-07T10:00:00\",\n  \"filasProcesadas\": 120,\n  \"filasConError\": 2,\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"nombreArchivo\": \"catalogo_gravel_noviembre.csv\",\n  \"fechaCarga\": \"2026-10-14T09:30:00\",\n  \"filasProcesadas\": 85,\n  \"filasConError\": 3,\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4529,7 +4581,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fila\": 15,\n  \"mensaje\": \"SKU duplicado\",\n  \"cargaMasiva\": {\n    \"idCargaMasiva\": {{id_cargas_masivas}}\n  }\n}",
+                  "raw": "{\n  \"fila\": 42,\n  \"mensaje\": \"Precio con formato inválido\",\n  \"cargaMasiva\": {\n    \"idCargaMasiva\": {{id_cargas_masivas}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4671,7 +4723,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fila\": 15,\n  \"mensaje\": \"SKU duplicado\",\n  \"cargaMasiva\": {\n    \"idCargaMasiva\": {{id_cargas_masivas}}\n  }\n}",
+                  "raw": "{\n  \"fila\": 42,\n  \"mensaje\": \"Precio con formato inválido\",\n  \"cargaMasiva\": {\n    \"idCargaMasiva\": {{id_cargas_masivas}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4685,7 +4737,7 @@
       ]
     },
     {
-      "name": "ms-pedidos (8086)",
+      "name": "ms-pedidos (9006)",
       "item": [
         {
           "name": "Datos de visitante",
@@ -4731,7 +4783,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Ana Soto\",\n  \"correo\": \"ana{{sufijo}}@correo.cl\",\n  \"telefono\": \"+56911112222\"\n}",
+                  "raw": "{\n  \"nombre\": \"Valentina Ortiz\",\n  \"correo\": \"valentina{{sufijo}}@ridermail.cl\",\n  \"telefono\": \"+56945671234\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4822,7 +4874,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/visitantes/correo/ana{{sufijo}}@correo.cl",
+                  "raw": "{{gateway}}/api/v1/visitantes/correo/valentina{{sufijo}}@ridermail.cl",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -4831,7 +4883,7 @@
                     "v1",
                     "visitantes",
                     "correo",
-                    "ana{{sufijo}}@correo.cl"
+                    "valentina{{sufijo}}@ridermail.cl"
                   ]
                 }
               }
@@ -4873,7 +4925,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Ana Soto\",\n  \"correo\": \"ana{{sufijo}}@correo.cl\",\n  \"telefono\": \"+56911112222\"\n}",
+                  "raw": "{\n  \"nombre\": \"Valentina Ortiz\",\n  \"correo\": \"valentina{{sufijo}}@ridermail.cl\",\n  \"telefono\": \"+56945671234\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4928,7 +4980,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"numero\": \"PED-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"fechaExpiracion\": \"2026-10-08T10:00:00\",\n  \"estado\": \"PENDIENTE_PAGO\",\n  \"canal\": \"WEB\",\n  \"subtotal\": 899990,\n  \"descuento\": 0,\n  \"total\": 899990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": null,\n  \"datosVisitante\": null\n}",
+                  "raw": "{\n  \"numero\": \"ORD-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"fechaExpiracion\": \"2026-10-15T09:30:00\",\n  \"estado\": \"PENDIENTE_PAGO\",\n  \"canal\": \"WEB\",\n  \"subtotal\": 749990,\n  \"descuento\": 0,\n  \"total\": 749990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": null,\n  \"datosVisitante\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5019,7 +5071,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/pedidos/numero/PED-{{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/pedidos/numero/ORD-{{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -5028,7 +5080,7 @@
                     "v1",
                     "pedidos",
                     "numero",
-                    "PED-{{sufijo}}"
+                    "ORD-{{sufijo}}"
                   ]
                 }
               }
@@ -5070,7 +5122,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"numero\": \"PED-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"fechaExpiracion\": \"2026-10-08T10:00:00\",\n  \"estado\": \"PAGADO\",\n  \"canal\": \"WEB\",\n  \"subtotal\": 899990,\n  \"descuento\": 0,\n  \"total\": 899990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": null,\n  \"datosVisitante\": null\n}",
+                  "raw": "{\n  \"numero\": \"ORD-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"fechaExpiracion\": \"2026-10-15T09:30:00\",\n  \"estado\": \"PAGADO\",\n  \"canal\": \"WEB\",\n  \"subtotal\": 749990,\n  \"descuento\": 0,\n  \"total\": 749990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": null,\n  \"datosVisitante\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5125,7 +5177,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 899990,\n  \"subtotal\": 899990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 749990,\n  \"subtotal\": 749990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5267,7 +5319,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 899990,\n  \"subtotal\": 899990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 749990,\n  \"subtotal\": 749990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5322,7 +5374,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"estadoAnterior\": \"PENDIENTE_PAGO\",\n  \"estadoNuevo\": \"PAGADO\",\n  \"fechaCambio\": \"2026-10-07T10:00:00\",\n  \"idEmpleado\": 1,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"estadoAnterior\": \"PENDIENTE_PAGO\",\n  \"estadoNuevo\": \"PAGADO\",\n  \"fechaCambio\": \"2026-10-14T09:30:00\",\n  \"idEmpleado\": 1,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5464,7 +5516,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"estadoAnterior\": \"PENDIENTE_PAGO\",\n  \"estadoNuevo\": \"PAGADO\",\n  \"fechaCambio\": \"2026-10-07T10:00:00\",\n  \"idEmpleado\": 1,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"estadoAnterior\": \"PENDIENTE_PAGO\",\n  \"estadoNuevo\": \"PAGADO\",\n  \"fechaCambio\": \"2026-10-14T09:30:00\",\n  \"idEmpleado\": 1,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5519,7 +5571,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"CONFIRMACION_COMPRA\",\n  \"destinatario\": \"cliente{{sufijo}}@correo.cl\",\n  \"fechaEnvio\": \"2026-10-07T10:00:00\",\n  \"enviada\": true,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"CONFIRMACION_COMPRA\",\n  \"destinatario\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"fechaEnvio\": \"2026-10-14T09:30:00\",\n  \"enviada\": true,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5661,7 +5713,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"tipo\": \"CONFIRMACION_COMPRA\",\n  \"destinatario\": \"cliente{{sufijo}}@correo.cl\",\n  \"fechaEnvio\": \"2026-10-07T10:00:00\",\n  \"enviada\": true,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"tipo\": \"CONFIRMACION_COMPRA\",\n  \"destinatario\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"fechaEnvio\": \"2026-10-14T09:30:00\",\n  \"enviada\": true,\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5716,7 +5768,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"folio\": 1001,\n  \"fechaEmision\": \"2026-10-07\",\n  \"montoNeto\": 756294,\n  \"iva\": 143696,\n  \"total\": 899990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/1001.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"folio\": 3105,\n  \"fechaEmision\": \"2026-10-14\",\n  \"montoNeto\": 630244,\n  \"iva\": 119746,\n  \"total\": 749990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/3105.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5858,7 +5910,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"folio\": 1001,\n  \"fechaEmision\": \"2026-10-07\",\n  \"montoNeto\": 756294,\n  \"iva\": 143696,\n  \"total\": 899990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/1001.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
+                  "raw": "{\n  \"folio\": 3105,\n  \"fechaEmision\": \"2026-10-14\",\n  \"montoNeto\": 630244,\n  \"iva\": 119746,\n  \"total\": 749990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/3105.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -5913,7 +5965,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"folio\": 2001,\n  \"fechaEmision\": \"2026-10-07\",\n  \"montoNeto\": 756294,\n  \"iva\": 143696,\n  \"total\": 899990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/2001.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  },\n  \"rutEmpresa\": \"76123456-7\",\n  \"razonSocial\": \"Ciclismo Sur SpA\",\n  \"giro\": \"Venta de artículos deportivos\",\n  \"direccionEmpresa\": \"Barros Arana 123, Concepción\"\n}",
+                  "raw": "{\n  \"folio\": 4208,\n  \"fechaEmision\": \"2026-10-14\",\n  \"montoNeto\": 630244,\n  \"iva\": 119746,\n  \"total\": 749990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/4208.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  },\n  \"rutEmpresa\": \"77654321-7\",\n  \"razonSocial\": \"Rutas del Bío Bío Ltda.\",\n  \"giro\": \"Comercio de equipamiento outdoor\",\n  \"direccionEmpresa\": \"O'Higgins 980, Chillán\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6055,7 +6107,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"folio\": 2001,\n  \"fechaEmision\": \"2026-10-07\",\n  \"montoNeto\": 756294,\n  \"iva\": 143696,\n  \"total\": 899990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/2001.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  },\n  \"rutEmpresa\": \"76123456-7\",\n  \"razonSocial\": \"Ciclismo Sur SpA\",\n  \"giro\": \"Venta de artículos deportivos\",\n  \"direccionEmpresa\": \"Barros Arana 123, Concepción\"\n}",
+                  "raw": "{\n  \"folio\": 4208,\n  \"fechaEmision\": \"2026-10-14\",\n  \"montoNeto\": 630244,\n  \"iva\": 119746,\n  \"total\": 749990,\n  \"pdfUrl\": \"https://docs.ridertapia.cl/4208.pdf\",\n  \"pedido\": {\n    \"idPedido\": {{id_pedidos}}\n  },\n  \"rutEmpresa\": \"77654321-7\",\n  \"razonSocial\": \"Rutas del Bío Bío Ltda.\",\n  \"giro\": \"Comercio de equipamiento outdoor\",\n  \"direccionEmpresa\": \"O'Higgins 980, Chillán\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6110,7 +6162,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"numero\": \"PED-F-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"fechaExpiracion\": \"2026-10-08T10:00:00\",\n  \"estado\": \"PAGADO\",\n  \"canal\": \"TIENDA\",\n  \"subtotal\": 79990,\n  \"descuento\": 0,\n  \"total\": 79990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": 1,\n  \"datosVisitante\": null\n}",
+                  "raw": "{\n  \"numero\": \"ORD-F-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"fechaExpiracion\": \"2026-10-15T09:30:00\",\n  \"estado\": \"PAGADO\",\n  \"canal\": \"TIENDA\",\n  \"subtotal\": 64990,\n  \"descuento\": 0,\n  \"total\": 64990,\n  \"motivoAnulacion\": null,\n  \"rutCliente\": \"{{rut}}\",\n  \"idCupon\": null,\n  \"idEmpleado\": 1,\n  \"datosVisitante\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6160,7 +6212,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 79990,\n  \"subtotal\": 79990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedido_factura}}\n  }\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 64990,\n  \"subtotal\": 64990,\n  \"pedido\": {\n    \"idPedido\": {{id_pedido_factura}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6174,7 +6226,7 @@
       ]
     },
     {
-      "name": "ms-pagos (8087)",
+      "name": "ms-pagos (9007)",
       "item": [
         {
           "name": "Pagos WebPay",
@@ -6220,7 +6272,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"APROBADO\",\n  \"token\": \"01ab23cd45ef67\",\n  \"codigoAutorizacion\": \"123456\",\n  \"ultimosDigitosTarjeta\": \"4321\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"APROBADO\",\n  \"token\": \"9f8e7d6c5b4a32\",\n  \"codigoAutorizacion\": \"784512\",\n  \"ultimosDigitosTarjeta\": \"8876\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6362,7 +6414,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"APROBADO\",\n  \"token\": \"01ab23cd45ef67\",\n  \"codigoAutorizacion\": \"123456\",\n  \"ultimosDigitosTarjeta\": \"4321\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"APROBADO\",\n  \"token\": \"9f8e7d6c5b4a32\",\n  \"codigoAutorizacion\": \"784512\",\n  \"ultimosDigitosTarjeta\": \"8876\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6417,7 +6469,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"PENDIENTE\",\n  \"comprobanteUrl\": \"https://ridertapia.cl/comprobantes/1.jpg\",\n  \"fechaLimite\": \"2026-10-08T10:00:00\",\n  \"observacion\": \"Transferencia BancoEstado\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"PENDIENTE\",\n  \"comprobanteUrl\": \"https://ridertapia.cl/comprobantes/transf-{{sufijo}}.jpg\",\n  \"fechaLimite\": \"2026-10-15T09:30:00\",\n  \"observacion\": \"Transferencia Banco de Chile\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6559,7 +6611,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"APROBADO\",\n  \"comprobanteUrl\": \"https://ridertapia.cl/comprobantes/1.jpg\",\n  \"fechaLimite\": \"2026-10-08T10:00:00\",\n  \"observacion\": \"Transferencia BancoEstado\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"APROBADO\",\n  \"comprobanteUrl\": \"https://ridertapia.cl/comprobantes/transf-{{sufijo}}.jpg\",\n  \"fechaLimite\": \"2026-10-15T09:30:00\",\n  \"observacion\": \"Transferencia Banco de Chile\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6614,7 +6666,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"APROBADO\",\n  \"medioPago\": \"DEBITO\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"APROBADO\",\n  \"medioPago\": \"DEBITO\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6756,7 +6808,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 899990,\n  \"fecha\": \"2026-10-07T10:00:00\",\n  \"estado\": \"APROBADO\",\n  \"medioPago\": \"DEBITO\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"monto\": 749990,\n  \"fecha\": \"2026-10-14T09:30:00\",\n  \"estado\": \"APROBADO\",\n  \"medioPago\": \"DEBITO\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6811,7 +6863,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fecha\": \"2026-10-07\",\n  \"totalEfectivo\": 150000,\n  \"totalDebito\": 899990,\n  \"totalCredito\": 0,\n  \"totalTransferencia\": 0,\n  \"efectivoContado\": 150000,\n  \"diferencia\": 0,\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"fecha\": \"2026-10-14\",\n  \"totalEfectivo\": 98000,\n  \"totalDebito\": 749990,\n  \"totalCredito\": 0,\n  \"totalTransferencia\": 0,\n  \"efectivoContado\": 98000,\n  \"diferencia\": 0,\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6953,7 +7005,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"fecha\": \"2026-10-07\",\n  \"totalEfectivo\": 150000,\n  \"totalDebito\": 899990,\n  \"totalCredito\": 0,\n  \"totalTransferencia\": 0,\n  \"efectivoContado\": 150000,\n  \"diferencia\": 0,\n  \"idEmpleado\": 1\n}",
+                  "raw": "{\n  \"fecha\": \"2026-10-14\",\n  \"totalEfectivo\": 98000,\n  \"totalDebito\": 749990,\n  \"totalCredito\": 0,\n  \"totalTransferencia\": 0,\n  \"efectivoContado\": 98000,\n  \"diferencia\": 0,\n  \"idEmpleado\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -6967,7 +7019,7 @@
       ]
     },
     {
-      "name": "ms-carrito (8089)",
+      "name": "ms-carrito (9009)",
       "item": [
         {
           "name": "Carritos",
@@ -7013,7 +7065,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutCliente\": \"{{rut}}\",\n  \"tokenSesion\": \"tok-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"fechaActualizacion\": \"2026-10-07T10:00:00\",\n  \"estado\": \"ACTIVO\",\n  \"subtotal\": 0,\n  \"descuento\": 0,\n  \"total\": 0,\n  \"idCupon\": null\n}",
+                  "raw": "{\n  \"rutCliente\": \"{{rut}}\",\n  \"tokenSesion\": \"ses-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"fechaActualizacion\": \"2026-10-14T09:30:00\",\n  \"estado\": \"ACTIVO\",\n  \"subtotal\": 0,\n  \"descuento\": 0,\n  \"total\": 0,\n  \"idCupon\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7203,7 +7255,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/carritos/{{id_carritos}}/cupon/RIDER{{sufijo}}",
+                  "raw": "{{gateway}}/api/v1/carritos/{{id_carritos}}/cupon/PEDALEA{{sufijo}}",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -7213,7 +7265,7 @@
                     "carritos",
                     "{{id_carritos}}",
                     "cupon",
-                    "RIDER{{sufijo}}"
+                    "PEDALEA{{sufijo}}"
                   ]
                 }
               }
@@ -7255,7 +7307,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutCliente\": \"{{rut}}\",\n  \"tokenSesion\": \"tok-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-07T10:00:00\",\n  \"fechaActualizacion\": \"2026-10-07T10:00:00\",\n  \"estado\": \"ACTIVO\",\n  \"subtotal\": 0,\n  \"descuento\": 0,\n  \"total\": 0,\n  \"idCupon\": null\n}",
+                  "raw": "{\n  \"rutCliente\": \"{{rut}}\",\n  \"tokenSesion\": \"ses-{{sufijo}}\",\n  \"fechaCreacion\": \"2026-10-14T09:30:00\",\n  \"fechaActualizacion\": \"2026-10-14T09:30:00\",\n  \"estado\": \"ACTIVO\",\n  \"subtotal\": 0,\n  \"descuento\": 0,\n  \"total\": 0,\n  \"idCupon\": null\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7310,7 +7362,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 899990,\n  \"fechaAgregado\": \"2026-10-07T10:00:00\",\n  \"carrito\": {\n    \"idCarrito\": {{id_carritos}}\n  }\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 749990,\n  \"fechaAgregado\": \"2026-10-14T09:30:00\",\n  \"carrito\": {\n    \"idCarrito\": {{id_carritos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7452,7 +7504,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 2,\n  \"precioUnitario\": 899990,\n  \"fechaAgregado\": \"2026-10-07T10:00:00\",\n  \"carrito\": {\n    \"idCarrito\": {{id_carritos}}\n  }\n}",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 2,\n  \"precioUnitario\": 749990,\n  \"fechaAgregado\": \"2026-10-14T09:30:00\",\n  \"carrito\": {\n    \"idCarrito\": {{id_carritos}}\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7466,7 +7518,2967 @@
       ]
     },
     {
-      "name": "ms-soporte (8083)",
+      "name": "ms-servicio-tecnico (9015)",
+      "item": [
+        {
+          "name": "Tipos de servicio",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_tipos_servicio\", pm.response.json().idTipoServicio);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/tipos-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "tipos-servicio"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Puesta a punto {{sufijo}}\",\n  \"nivel\": \"BASICO\",\n  \"descripcion\": \"Revisión completa antes de temporada\",\n  \"incluye\": \"Centrado de ruedas, ajuste de dirección y limpieza de transmisión\",\n  \"precio\": 32000,\n  \"diasEstimados\": 2,\n  \"activo\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/tipos-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "tipos-servicio"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/tipos-servicio/{{id_tipos_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "tipos-servicio",
+                    "{{id_tipos_servicio}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por nivel",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/tipos-servicio/nivel/BASICO",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "tipos-servicio",
+                    "nivel",
+                    "BASICO"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/tipos-servicio/{{id_tipos_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "tipos-servicio",
+                    "{{id_tipos_servicio}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Puesta a punto {{sufijo}}\",\n  \"nivel\": \"BASICO\",\n  \"descripcion\": \"Revisión completa antes de temporada\",\n  \"incluye\": \"Centrado de ruedas, ajuste de dirección y limpieza de transmisión\",\n  \"precio\": 34000,\n  \"diasEstimados\": 2,\n  \"activo\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Bicicletas",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_bicicletas\", pm.response.json().idBicicleta);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/bicicletas",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "bicicletas"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"marca\": \"Specialized\",\n  \"modelo\": \"Diverge E5\",\n  \"tipo\": \"GRAVEL\",\n  \"aro\": \"700c\",\n  \"color\": \"Arena\",\n  \"numeroSerie\": \"WSBC{{sufijo}}\",\n  \"rutCliente\": \"{{rut}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/bicicletas",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "bicicletas"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/bicicletas/{{id_bicicletas}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "bicicletas",
+                    "{{id_bicicletas}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por RUT de cliente",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/bicicletas/rutCliente/{{rut}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "bicicletas",
+                    "rutCliente",
+                    "{{rut}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/bicicletas/{{id_bicicletas}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "bicicletas",
+                    "{{id_bicicletas}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"marca\": \"Specialized\",\n  \"modelo\": \"Diverge E5\",\n  \"tipo\": \"GRAVEL\",\n  \"aro\": \"700c\",\n  \"color\": \"Gris Grafito\",\n  \"numeroSerie\": \"WSBC{{sufijo}}\",\n  \"rutCliente\": \"{{rut}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Solicitudes de servicio",
+          "item": [
+            {
+              "name": "Crear (el RUT debe existir en ms-cliente)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_solicitudes_servicio\", pm.response.json().idSolicitudServicio);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/solicitudes-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "solicitudes-servicio"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombreContacto\": \"Fernanda Riquelme\",\n  \"telefonoContacto\": \"934{{sufijo}}\",\n  \"emailContacto\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"rutCliente\": \"{{rut}}\",\n  \"descripcionFalla\": \"Los cambios saltan al subir piñones\",\n  \"fechaSolicitud\": \"2026-10-14T09:30:00\",\n  \"fechaPreferida\": \"2026-10-16\",\n  \"estado\": \"PENDIENTE\",\n  \"tipoServicio\": {\n    \"idTipoServicio\": {{id_tipos_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/solicitudes-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "solicitudes-servicio"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/solicitudes-servicio/{{id_solicitudes_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "solicitudes-servicio",
+                    "{{id_solicitudes_servicio}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por teléfono",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/solicitudes-servicio/telefonoContacto/934{{sufijo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "solicitudes-servicio",
+                    "telefonoContacto",
+                    "934{{sufijo}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/solicitudes-servicio/{{id_solicitudes_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "solicitudes-servicio",
+                    "{{id_solicitudes_servicio}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombreContacto\": \"Fernanda Riquelme\",\n  \"telefonoContacto\": \"934{{sufijo}}\",\n  \"emailContacto\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"rutCliente\": \"{{rut}}\",\n  \"descripcionFalla\": \"Los cambios saltan al subir piñones\",\n  \"fechaSolicitud\": \"2026-10-14T09:30:00\",\n  \"fechaPreferida\": \"2026-10-16\",\n  \"estado\": \"AGENDADA\",\n  \"tipoServicio\": {\n    \"idTipoServicio\": {{id_tipos_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Fotos de solicitud",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_fotos_solicitud\", pm.response.json().idFotoSolicitud);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://ridertapia.cl/fotos/falla-{{sufijo}}.jpg\",\n  \"formato\": \"jpg\",\n  \"tamanoKb\": 1200,\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Crear con formato no permitido",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 400\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://ridertapia.cl/fotos/falla-{{sufijo}}.jpg\",\n  \"formato\": \"gif\",\n  \"tamanoKb\": 1200,\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud/{{id_fotos_solicitud}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud",
+                    "{{id_fotos_solicitud}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por solicitud",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud/solicitudServicio/{{id_solicitudes_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud",
+                    "solicitudServicio",
+                    "{{id_solicitudes_servicio}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/fotos-solicitud/{{id_fotos_solicitud}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "fotos-solicitud",
+                    "{{id_fotos_solicitud}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://ridertapia.cl/fotos/falla-{{sufijo}}.jpg\",\n  \"formato\": \"jpg\",\n  \"tamanoKb\": 980,\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Órdenes de trabajo",
+          "item": [
+            {
+              "name": "Crear (sin código ni estado: se generan)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_ordenes_trabajo\", pm.response.json().idOrdenTrabajo);",
+                      "}",
+                      "",
+                      "pm.test(\"Parte en estado RECIBIDA\", function () {",
+                      "    pm.expect(pm.response.json().estado).to.eql(\"RECIBIDA\");",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaIngreso\": \"2026-10-14T10:45:00\",\n  \"fechaEstimadaEntrega\": \"2026-10-16\",\n  \"nombreCliente\": \"Fernanda Riquelme\",\n  \"telefonoCliente\": \"934{{sufijo}}\",\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"rutCliente\": \"{{rut}}\",\n  \"diagnostico\": \"Cable de cambio estirado y patilla desalineada\",\n  \"costoManoObra\": 32000,\n  \"idEmpleado\": 1,\n  \"bicicleta\": {\n    \"idBicicleta\": {{id_bicicletas}}\n  },\n  \"tipoServicio\": {\n    \"idTipoServicio\": {{id_tipos_servicio}}\n  },\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Consultar por teléfono (sin cuenta)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo/telefonoCliente/934{{sufijo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo",
+                    "telefonoCliente",
+                    "934{{sufijo}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar a LISTA (avisa al cliente)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaIngreso\": \"2026-10-14T10:45:00\",\n  \"fechaEstimadaEntrega\": \"2026-10-16\",\n  \"nombreCliente\": \"Fernanda Riquelme\",\n  \"telefonoCliente\": \"934{{sufijo}}\",\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"rutCliente\": \"{{rut}}\",\n  \"diagnostico\": \"Cable de cambio estirado y patilla desalineada\",\n  \"costoManoObra\": 36000,\n  \"idEmpleado\": 1,\n  \"bicicleta\": {\n    \"idBicicleta\": {{id_bicicletas}}\n  },\n  \"tipoServicio\": {\n    \"idTipoServicio\": {{id_tipos_servicio}}\n  },\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  },\n  \"estado\": \"LISTA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Repuestos utilizados",
+          "item": [
+            {
+              "name": "Crear (descuenta stock en ms-inventario)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_repuestos_utilizados\", pm.response.json().idRepuestoUtilizado);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/repuestos-utilizados",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "repuestos-utilizados"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 18990,\n  \"fechaRegistro\": \"2026-10-15T09:30:00\",\n  \"ordenTrabajo\": {\n    \"idOrdenTrabajo\": {{id_ordenes_trabajo}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/repuestos-utilizados",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "repuestos-utilizados"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/repuestos-utilizados/{{id_repuestos_utilizados}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "repuestos-utilizados",
+                    "{{id_repuestos_utilizados}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/repuestos-utilizados/ordenTrabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "repuestos-utilizados",
+                    "ordenTrabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/repuestos-utilizados/{{id_repuestos_utilizados}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "repuestos-utilizados",
+                    "{{id_repuestos_utilizados}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidad\": 1,\n  \"precioUnitario\": 17990,\n  \"fechaRegistro\": \"2026-10-15T09:30:00\",\n  \"ordenTrabajo\": {\n    \"idOrdenTrabajo\": {{id_ordenes_trabajo}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Historial de estados de orden",
+          "item": [
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/historial-estados-orden",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "historial-estados-orden"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/historial-estados-orden/ordenTrabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "historial-estados-orden",
+                    "ordenTrabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Notificaciones de taller",
+          "item": [
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/notificaciones-taller",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "notificaciones-taller"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/notificaciones-taller/ordenTrabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "notificaciones-taller",
+                    "ordenTrabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Calificaciones de servicio",
+          "item": [
+            {
+              "name": "Entregar la bicicleta (orden ENTREGADA)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-trabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-trabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaIngreso\": \"2026-10-14T10:45:00\",\n  \"fechaEstimadaEntrega\": \"2026-10-16\",\n  \"nombreCliente\": \"Fernanda Riquelme\",\n  \"telefonoCliente\": \"934{{sufijo}}\",\n  \"emailCliente\": \"ciclista{{sufijo}}@ridermail.cl\",\n  \"rutCliente\": \"{{rut}}\",\n  \"diagnostico\": \"Cable de cambio estirado y patilla desalineada\",\n  \"costoManoObra\": 36000,\n  \"idEmpleado\": 1,\n  \"bicicleta\": {\n    \"idBicicleta\": {{id_bicicletas}}\n  },\n  \"tipoServicio\": {\n    \"idTipoServicio\": {{id_tipos_servicio}}\n  },\n  \"solicitudServicio\": {\n    \"idSolicitudServicio\": {{id_solicitudes_servicio}}\n  },\n  \"estado\": \"ENTREGADA\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_calificaciones_servicio\", pm.response.json().idCalificacionServicio);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"puntuacion\": 5,\n  \"comentario\": \"Atención rápida y muy clara\",\n  \"fechaCalificacion\": \"2026-10-17T16:20:00\",\n  \"ordenTrabajo\": {\n    \"idOrdenTrabajo\": {{id_ordenes_trabajo}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Calificar otra vez (no se permite)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 409\", function () {",
+                      "    pm.response.to.have.status(409);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"puntuacion\": 4,\n  \"comentario\": \"Buen trabajo, volvería a ir\",\n  \"fechaCalificacion\": \"2026-10-17T16:20:00\",\n  \"ordenTrabajo\": {\n    \"idOrdenTrabajo\": {{id_ordenes_trabajo}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio/{{id_calificaciones_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio",
+                    "{{id_calificaciones_servicio}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio/ordenTrabajo/{{id_ordenes_trabajo}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio",
+                    "ordenTrabajo",
+                    "{{id_ordenes_trabajo}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/calificaciones-servicio/{{id_calificaciones_servicio}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "calificaciones-servicio",
+                    "{{id_calificaciones_servicio}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"puntuacion\": 4,\n  \"comentario\": \"Buen trabajo, volvería a ir\",\n  \"fechaCalificacion\": \"2026-10-17T16:20:00\",\n  \"ordenTrabajo\": {\n    \"idOrdenTrabajo\": {{id_ordenes_trabajo}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ms-proveedores (9011)",
+      "item": [
+        {
+          "name": "Proveedores",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_proveedores\", pm.response.json().idProveedor);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/proveedores",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "proveedores"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rut\": \"77{{sufijo}}-K\",\n  \"razonSocial\": \"Importadora Pedales del Sur SpA\",\n  \"nombreFantasia\": \"Pedales del Sur\",\n  \"giro\": \"Importación de componentes y bicicletas gravel\",\n  \"email\": \"contacto{{sufijo}}@pedalesdelsur.cl\",\n  \"telefono\": \"452987654\",\n  \"direccion\": \"Av. Pedro de Valdivia 2050\",\n  \"comuna\": \"Providencia\",\n  \"nombreContacto\": \"Ignacio Sepúlveda\",\n  \"activo\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/proveedores",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "proveedores"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/proveedores/{{id_proveedores}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "proveedores",
+                    "{{id_proveedores}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por RUT",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/proveedores/rut/77{{sufijo}}-K",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "proveedores",
+                    "rut",
+                    "77{{sufijo}}-K"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/proveedores/{{id_proveedores}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "proveedores",
+                    "{{id_proveedores}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rut\": \"77{{sufijo}}-K\",\n  \"razonSocial\": \"Importadora Pedales del Sur SpA\",\n  \"nombreFantasia\": \"Pedales del Sur\",\n  \"giro\": \"Importación de componentes y bicicletas gravel\",\n  \"email\": \"contacto{{sufijo}}@pedalesdelsur.cl\",\n  \"telefono\": \"452112233\",\n  \"direccion\": \"Av. Pedro de Valdivia 2050\",\n  \"comuna\": \"Providencia\",\n  \"nombreContacto\": \"Ignacio Sepúlveda\",\n  \"activo\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Productos por proveedor",
+          "item": [
+            {
+              "name": "Crear (la variante debe existir en ms-productos)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_productos_proveedor\", pm.response.json().idProductoProveedor);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"codigoProveedor\": \"PDS-{{sufijo}}\",\n  \"costoUnitario\": 430000,\n  \"plazoEntregaDias\": 10,\n  \"preferido\": true,\n  \"proveedor\": {\n    \"idProveedor\": {{id_proveedores}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor/{{id_productos_proveedor}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor",
+                    "{{id_productos_proveedor}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "A quién comprarle una variante",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor/idVariante/{{id_variantes}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor",
+                    "idVariante",
+                    "{{id_variantes}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por proveedor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor/proveedor/{{id_proveedores}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor",
+                    "proveedor",
+                    "{{id_proveedores}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/productos-proveedor/{{id_productos_proveedor}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos-proveedor",
+                    "{{id_productos_proveedor}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"codigoProveedor\": \"PDS-{{sufijo}}\",\n  \"costoUnitario\": 418000,\n  \"plazoEntregaDias\": 10,\n  \"preferido\": true,\n  \"proveedor\": {\n    \"idProveedor\": {{id_proveedores}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Órdenes de compra",
+          "item": [
+            {
+              "name": "Crear (número e IVA se calculan)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_ordenes_compra\", pm.response.json().idOrdenCompra);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaEmision\": \"2026-10-15T08:40:00\",\n  \"fechaEntregaEsperada\": \"2026-10-22\",\n  \"estado\": \"ENVIADA\",\n  \"montoNeto\": 860000,\n  \"observacion\": \"Reposición de bicicletas Diverge E5\",\n  \"idEmpleado\": 1,\n  \"proveedor\": {\n    \"idProveedor\": {{id_proveedores}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra/{{id_ordenes_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra",
+                    "{{id_ordenes_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por proveedor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra/proveedor/{{id_proveedores}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra",
+                    "proveedor",
+                    "{{id_proveedores}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por estado",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra/estado/ENVIADA",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra",
+                    "estado",
+                    "ENVIADA"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/ordenes-compra/{{id_ordenes_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "ordenes-compra",
+                    "{{id_ordenes_compra}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaEmision\": \"2026-10-15T08:40:00\",\n  \"fechaEntregaEsperada\": \"2026-10-22\",\n  \"estado\": \"ENVIADA\",\n  \"montoNeto\": 860000,\n  \"observacion\": \"Plazo de entrega confirmado por el proveedor\",\n  \"idEmpleado\": 1,\n  \"proveedor\": {\n    \"idProveedor\": {{id_proveedores}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Detalles de orden de compra",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_detalles_orden_compra\", pm.response.json().idDetalleOrdenCompra);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-orden-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-orden-compra"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidadSolicitada\": 2,\n  \"cantidadRecibida\": 0,\n  \"costoUnitario\": 430000,\n  \"ordenCompra\": {\n    \"idOrdenCompra\": {{id_ordenes_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-orden-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-orden-compra"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-orden-compra/{{id_detalles_orden_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-orden-compra",
+                    "{{id_detalles_orden_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-orden-compra/ordenCompra/{{id_ordenes_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-orden-compra",
+                    "ordenCompra",
+                    "{{id_ordenes_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-orden-compra/{{id_detalles_orden_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-orden-compra",
+                    "{{id_detalles_orden_compra}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idVariante\": {{id_variantes}},\n  \"cantidadSolicitada\": 2,\n  \"cantidadRecibida\": 0,\n  \"costoUnitario\": 418000,\n  \"ordenCompra\": {\n    \"idOrdenCompra\": {{id_ordenes_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Recepciones de compra",
+          "item": [
+            {
+              "name": "Crear",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_recepciones_compra\", pm.response.json().idRecepcionCompra);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/recepciones-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "recepciones-compra"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaRecepcion\": \"2026-10-22T10:45:00\",\n  \"tipoDocumento\": \"FACTURA\",\n  \"numeroDocumento\": \"FE-{{sufijo}}\",\n  \"observacion\": \"Cajas selladas y sin daños\",\n  \"idEmpleado\": 1,\n  \"ordenCompra\": {\n    \"idOrdenCompra\": {{id_ordenes_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/recepciones-compra",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "recepciones-compra"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/recepciones-compra/{{id_recepciones_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "recepciones-compra",
+                    "{{id_recepciones_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por orden",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/recepciones-compra/ordenCompra/{{id_ordenes_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "recepciones-compra",
+                    "ordenCompra",
+                    "{{id_ordenes_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/recepciones-compra/{{id_recepciones_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "recepciones-compra",
+                    "{{id_recepciones_compra}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaRecepcion\": \"2026-10-22T10:45:00\",\n  \"tipoDocumento\": \"FACTURA\",\n  \"numeroDocumento\": \"FE-{{sufijo}}\",\n  \"observacion\": \"Documento cuadrado con la orden\",\n  \"idEmpleado\": 1,\n  \"ordenCompra\": {\n    \"idOrdenCompra\": {{id_ordenes_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Detalles de recepción",
+          "item": [
+            {
+              "name": "Crear (suma stock en ms-inventario)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "// Guarda el id creado",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"id_detalles_recepcion\", pm.response.json().idDetalleRecepcion);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cantidadRecibida\": 1,\n  \"recepcionCompra\": {\n    \"idRecepcionCompra\": {{id_recepciones_compra}}\n  },\n  \"detalleOrdenCompra\": {\n    \"idDetalleOrdenCompra\": {{id_detalles_orden_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Recibir más de lo pendiente",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 409\", function () {",
+                      "    pm.response.to.have.status(409);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cantidadRecibida\": 5,\n  \"recepcionCompra\": {\n    \"idRecepcionCompra\": {{id_recepciones_compra}}\n  },\n  \"detalleOrdenCompra\": {\n    \"idDetalleOrdenCompra\": {{id_detalles_orden_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Listar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar por id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion/{{id_detalles_recepcion}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion",
+                    "{{id_detalles_recepcion}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Por recepción",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion/recepcionCompra/{{id_recepciones_compra}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion",
+                    "recepcionCompra",
+                    "{{id_recepciones_compra}}"
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Actualizar",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Responde 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{gateway}}/api/v1/detalles-recepcion/{{id_detalles_recepcion}}",
+                  "host": [
+                    "{{gateway}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "detalles-recepcion",
+                    "{{id_detalles_recepcion}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cantidadRecibida\": 1,\n  \"recepcionCompra\": {\n    \"idRecepcionCompra\": {{id_recepciones_compra}}\n  },\n  \"detalleOrdenCompra\": {\n    \"idDetalleOrdenCompra\": {{id_detalles_orden_compra}}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ms-soporte (9003)",
       "item": [
         {
           "name": "Contactos",
@@ -7512,7 +10524,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"nombre\": \"Pedro Suárez\",\n  \"emailContacto\": \"pedro@correo.cl\",\n  \"asunto\": \"Consulta por mi pedido\",\n  \"mensaje\": \"Hola, quiero saber el estado de mi pedido\"\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"nombre\": \"Rodrigo Pizarro\",\n  \"emailContacto\": \"rodrigo.pizarro@ridermail.cl\",\n  \"asunto\": \"Cambio de dirección de despacho\",\n  \"mensaje\": \"Necesito cambiar la dirección de entrega de mi compra\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7622,7 +10634,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"respuesta\": \"Tu pedido ya está listo para retiro en tienda\"\n}",
+                  "raw": "{\n  \"respuesta\": \"Actualizamos la dirección, el despacho sale mañana\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7677,7 +10689,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idPedido\": {{id_pedidos}},\n  \"idProducto\": {{id_productos}},\n  \"motivo\": \"El producto llegó con la llanta dañada\"\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idPedido\": {{id_pedidos}},\n  \"idProducto\": {{id_productos}},\n  \"motivo\": \"La horquilla venía con un rayón profundo\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7820,7 +10832,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"estado\": \"APROBADA\",\n  \"respuesta\": \"Puedes traer el producto a la tienda\"\n}",
+                  "raw": "{\n  \"estado\": \"APROBADA\",\n  \"respuesta\": \"Coordinamos el retiro en tu domicilio\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -7875,7 +10887,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idPedido\": {{id_pedidos}},\n  \"idProducto\": {{id_productos}},\n  \"mesesCobertura\": 12\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idPedido\": {{id_pedidos}},\n  \"idProducto\": {{id_productos}},\n  \"mesesCobertura\": 24\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -8060,7 +11072,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idProducto\": {{id_productos}},\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente atención\"\n}",
+                  "raw": "{\n  \"rutUsuario\": \"{{rut}}\",\n  \"idProducto\": {{id_productos}},\n  \"calificacion\": 4,\n  \"comentario\": \"Atención rápida y muy clara\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -8317,7 +11329,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"rutUsuario\": \"{{rut}}\",\n  \"tipo\": \"LLAMADA\",\n  \"observacion\": \"Llamar en horario de la tarde\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedidos}},\n  \"rutUsuario\": \"{{rut}}\",\n  \"tipo\": \"LLAMADA\",\n  \"observacion\": \"Contactar después de las 18:00\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -8460,7 +11472,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"estado\": \"REALIZADO\",\n  \"observacion\": \"Cliente conforme\"\n}",
+                  "raw": "{\n  \"estado\": \"REALIZADO\",\n  \"observacion\": \"Cliente confirma la recepción\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -8474,7 +11486,7 @@
       ]
     },
     {
-      "name": "ms-reportes (8084)",
+      "name": "ms-reportes (9004)",
       "item": [
         {
           "name": "Documentos de venta",
@@ -8572,7 +11584,7 @@
                 },
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idPedido\": {{id_pedido_factura}},\n  \"rutEmpresa\": \"76543210-3\",\n  \"razonSocial\": \"Ciclos del Sur SpA\",\n  \"giro\": \"Venta de bicicletas y accesorios\",\n  \"direccionEmpresa\": \"Av. Colón 1234, Talcahuano\"\n}",
+                  "raw": "{\n  \"idPedido\": {{id_pedido_factura}},\n  \"rutEmpresa\": \"76987654-5\",\n  \"razonSocial\": \"Pedal Austral SpA\",\n  \"giro\": \"Distribución de bicicletas urbanas\",\n  \"direccionEmpresa\": \"Calle Prat 640, Valdivia\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -8781,7 +11793,7 @@
                 "method": "POST",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/reportes/diario?fecha=2026-10-07&top=10&generadoPor=admin",
+                  "raw": "{{gateway}}/api/v1/reportes/diario?fecha=2026-10-14&top=10&generadoPor=supervisor",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -8794,7 +11806,7 @@
                   "query": [
                     {
                       "key": "fecha",
-                      "value": "2026-10-07"
+                      "value": "2026-10-14"
                     },
                     {
                       "key": "top",
@@ -8802,7 +11814,7 @@
                     },
                     {
                       "key": "generadoPor",
-                      "value": "admin"
+                      "value": "supervisor"
                     }
                   ]
                 }
@@ -8827,7 +11839,7 @@
                 "method": "POST",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/reportes/semanal?fecha=2026-10-07",
+                  "raw": "{{gateway}}/api/v1/reportes/semanal?fecha=2026-10-14",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -8840,7 +11852,7 @@
                   "query": [
                     {
                       "key": "fecha",
-                      "value": "2026-10-07"
+                      "value": "2026-10-14"
                     }
                   ]
                 }
@@ -8865,7 +11877,7 @@
                 "method": "POST",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/reportes/mensual?fecha=2026-10-07",
+                  "raw": "{{gateway}}/api/v1/reportes/mensual?fecha=2026-10-14",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -8878,7 +11890,7 @@
                   "query": [
                     {
                       "key": "fecha",
-                      "value": "2026-10-07"
+                      "value": "2026-10-14"
                     }
                   ]
                 }
@@ -8987,6 +11999,508 @@
     {
       "name": "Z. Limpieza (borra lo creado)",
       "item": [
+        {
+          "name": "Eliminar detalles-recepcion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/detalles-recepcion/{{id_detalles_recepcion}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "detalles-recepcion",
+                "{{id_detalles_recepcion}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar recepciones-compra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/recepciones-compra/{{id_recepciones_compra}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "recepciones-compra",
+                "{{id_recepciones_compra}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar detalles-orden-compra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/detalles-orden-compra/{{id_detalles_orden_compra}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "detalles-orden-compra",
+                "{{id_detalles_orden_compra}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar ordenes-compra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/ordenes-compra/{{id_ordenes_compra}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ordenes-compra",
+                "{{id_ordenes_compra}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar productos-proveedor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/productos-proveedor/{{id_productos_proveedor}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos-proveedor",
+                "{{id_productos_proveedor}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar proveedores",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/proveedores/{{id_proveedores}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "proveedores",
+                "{{id_proveedores}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar calificaciones-servicio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/calificaciones-servicio/{{id_calificaciones_servicio}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "calificaciones-servicio",
+                "{{id_calificaciones_servicio}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar repuestos-utilizados",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/repuestos-utilizados/{{id_repuestos_utilizados}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "repuestos-utilizados",
+                "{{id_repuestos_utilizados}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar historial de la orden de trabajo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Borra los registros que el microservicio creó solo",
+                  "// En HAL cada tipo viene en su propia lista dentro de _embedded",
+                  "const embebidos = pm.response.json()._embedded || {};",
+                  "const lista = [].concat(...Object.values(embebidos));",
+                  "lista.forEach(function (x) {",
+                  "    if (x.idHistorialEstadoOrden) {",
+                  "        pm.sendRequest({ url: pm.collectionVariables.get(\"gateway\") + \"/api/v1/historial-estados-orden/\" + x.idHistorialEstadoOrden, method: \"DELETE\" });",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/historial-estados-orden/ordenTrabajo/{{id_ordenes_trabajo}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "historial-estados-orden",
+                "ordenTrabajo",
+                "{{id_ordenes_trabajo}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar avisos de la orden de trabajo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Borra los registros que el microservicio creó solo",
+                  "// En HAL cada tipo viene en su propia lista dentro de _embedded",
+                  "const embebidos = pm.response.json()._embedded || {};",
+                  "const lista = [].concat(...Object.values(embebidos));",
+                  "lista.forEach(function (x) {",
+                  "    if (x.idNotificacionTaller) {",
+                  "        pm.sendRequest({ url: pm.collectionVariables.get(\"gateway\") + \"/api/v1/notificaciones-taller/\" + x.idNotificacionTaller, method: \"DELETE\" });",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/notificaciones-taller/ordenTrabajo/{{id_ordenes_trabajo}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notificaciones-taller",
+                "ordenTrabajo",
+                "{{id_ordenes_trabajo}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar ordenes-trabajo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/ordenes-trabajo/{{id_ordenes_trabajo}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ordenes-trabajo",
+                "{{id_ordenes_trabajo}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar fotos-solicitud",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/fotos-solicitud/{{id_fotos_solicitud}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "fotos-solicitud",
+                "{{id_fotos_solicitud}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar solicitudes-servicio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/solicitudes-servicio/{{id_solicitudes_servicio}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "solicitudes-servicio",
+                "{{id_solicitudes_servicio}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar bicicletas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/bicicletas/{{id_bicicletas}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bicicletas",
+                "{{id_bicicletas}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar tipos-servicio",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/tipos-servicio/{{id_tipos_servicio}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tipos-servicio",
+                "{{id_tipos_servicio}}"
+              ]
+            }
+          }
+        },
         {
           "name": "Eliminar items-carrito",
           "event": [
@@ -9719,6 +13233,49 @@
                 "v1",
                 "movimientos",
                 "{{id_movimientos}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar movimientos creados por taller y compras",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Borra los registros que el microservicio creó solo",
+                  "// En HAL cada tipo viene en su propia lista dentro de _embedded",
+                  "const embebidos = pm.response.json()._embedded || {};",
+                  "const lista = [].concat(...Object.values(embebidos));",
+                  "lista.forEach(function (x) {",
+                  "    if (x.idMovimientoInventario && (String(x.observacion).startsWith(\"Repuesto usado en la orden\") || String(x.observacion).startsWith(\"Recepción de la orden de compra\"))) {",
+                  "        pm.sendRequest({ url: pm.collectionVariables.get(\"gateway\") + \"/api/v1/movimientos/\" + x.idMovimientoInventario, method: \"DELETE\" });",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{gateway}}/api/v1/movimientos/itemInventario/{{id_items_inventario}}",
+              "host": [
+                "{{gateway}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "movimientos",
+                "itemInventario",
+                "{{id_items_inventario}}"
               ]
             }
           }

@@ -38,7 +38,7 @@ class UsuarioRemotoServiceTest {
     void obtenerPorRut_ok() {
         String json = """
                 {"rutUsuario":"12345678-5","emailCliente":"pedro@correo.cl","rol":"CLIENTE",
-                 "_links":{"self":{"href":"http://localhost:8081/api/v1/usuarios/12345678-5"}}}
+                 "_links":{"self":{"href":"http://localhost:9001/api/v1/usuarios/12345678-5"}}}
                 """;
         servidor.expect(requestTo(BASE + "/api/v1/usuarios/12345678-5"))
                 .andExpect(method(HttpMethod.GET))

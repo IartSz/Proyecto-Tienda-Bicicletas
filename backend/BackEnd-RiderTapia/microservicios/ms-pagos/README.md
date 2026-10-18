@@ -33,7 +33,7 @@ Un pedido puede tener varios pagos (por ejemplo, un WebPay rechazado y luego uno
 
 **Consume**:
 
-- `ms-pedidos` (puerto 8086): antes de guardar cualquier pago llama a `GET /api/v1/pedidos/{idPedido}`. Si el pedido no existe, no se guarda y responde 404. La URL se configura en `ms.pedidos.url`.
+- `ms-pedidos` (puerto 9006): antes de guardar cualquier pago llama a `GET /api/v1/pedidos/{idPedido}`. Si el pedido no existe, no se guarda y responde 404. La URL se configura en `ms.pedidos.url`.
 
 **Es consumido por**:
 
@@ -47,12 +47,12 @@ Para registrar pagos en local, `ms-pedidos` debe estar levantado.
 
 | Propiedad | Valor |
 |---|---|
-| Puerto | `8087` |
+| Puerto | `9007` |
 | Base de datos | `ridertapia_pagos` (MySQL, se crea sola con `createDatabaseIfNotExist=true`) |
 | Usuario / clave MySQL | `root` / vacío (ajustar en `application.properties`) |
-| URL ms-pedidos | `ms.pedidos.url=http://localhost:8086/api/v1/pedidos` |
-| Swagger UI | http://localhost:8087/doc/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8087/api-docs |
+| URL ms-pedidos | `ms.pedidos.url=http://localhost:9006/api/v1/pedidos` |
+| Swagger UI | http://localhost:9007/doc/swagger-ui.html |
+| OpenAPI JSON | http://localhost:9007/api-docs |
 
 Ejecutar:
 
@@ -138,10 +138,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   "ultimosDigitosTarjeta": "4417",
   "_links": {
     "self": {
-      "href": "http://localhost:8087/api/v1/pagos-webpay/1"
+      "href": "http://localhost:9007/api/v1/pagos-webpay/1"
     },
     "pagosWebpay": {
-      "href": "http://localhost:8087/api/v1/pagos-webpay"
+      "href": "http://localhost:9007/api/v1/pagos-webpay"
     }
   }
 }
@@ -173,10 +173,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   "medioPago": "EFECTIVO",
   "_links": {
     "self": {
-      "href": "http://localhost:8087/api/v1/pagos-presenciales/1"
+      "href": "http://localhost:9007/api/v1/pagos-presenciales/1"
     },
     "pagosPresenciales": {
-      "href": "http://localhost:8087/api/v1/pagos-presenciales"
+      "href": "http://localhost:9007/api/v1/pagos-presenciales"
     }
   }
 }
@@ -199,7 +199,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
         "ultimosDigitosTarjeta": "4417",
         "_links": {
           "self": {
-            "href": "http://localhost:8087/api/v1/pagos-webpay/1"
+            "href": "http://localhost:9007/api/v1/pagos-webpay/1"
           }
         }
       }
@@ -207,7 +207,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8087/api/v1/pagos-webpay"
+      "href": "http://localhost:9007/api/v1/pagos-webpay"
     }
   }
 }

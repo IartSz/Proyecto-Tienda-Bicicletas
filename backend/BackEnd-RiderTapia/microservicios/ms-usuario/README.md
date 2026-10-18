@@ -4,7 +4,7 @@ Microservicio de **cuentas de usuario** de *Rider Tapia Biker*: registro, inicio
 
 | | |
 |---|---|
-| Puerto | `8081` |
+| Puerto | `9001` |
 | Base de datos | `ridertapia_usuarios` (MySQL) |
 | Stack | Java 17 · Spring Boot 3.3.5 · Spring Data JPA · Spring HATEOAS · springdoc-openapi · Lombok |
 | Depende de | nadie |
@@ -27,7 +27,7 @@ mvn spring-boot:run
 
 La base de datos `ridertapia_usuarios` se crea sola la primera vez (`createDatabaseIfNotExist=true`) y las tablas se generan con JPA (`ddl-auto=update`).
 
-Documentación interactiva (Swagger): <http://localhost:8081/swagger-ui.html>
+Documentación interactiva (Swagger): <http://localhost:9001/swagger-ui.html>
 
 ## Estructura
 

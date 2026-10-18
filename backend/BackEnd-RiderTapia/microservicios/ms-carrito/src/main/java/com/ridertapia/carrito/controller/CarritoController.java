@@ -62,8 +62,11 @@ public class CarritoController {
             return ResponseEntity
                     .created(linkTo(methodOn(CarritoController.class).obtenerPorId(nuevo.getIdCarrito())).toUri())
                     .body(toModel(nuevo));
+        } catch (IllegalStateException e) {
+            // Algún producto no tiene stock suficiente en ms-inventario
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } catch (RuntimeException e) {
-            // El RUT no existe en ms-cliente
+            // El RUT no existe en ms-cliente o alguna variante no existe en ms-productos
             return ResponseEntity.notFound().build();
         }
     }

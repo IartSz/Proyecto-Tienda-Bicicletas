@@ -12,9 +12,9 @@ function Get-Codigo([string]$url) {
     }
 }
 
-# El gateway puede estar en el 8080 o en el 8090
+# El gateway puede estar en el 9000 o en el 9090
 $gateway = $null
-foreach ($p in 8080, 8090) {
+foreach ($p in 9000, 9090) {
     $c = Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
     if ($c -and (Get-Process -Id $c.OwningProcess -ErrorAction SilentlyContinue).ProcessName -eq 'java') {
         $gateway = "http://localhost:$p"
@@ -23,15 +23,17 @@ foreach ($p in 8080, 8090) {
 }
 
 $servicios = @(
-    @{ Nombre = 'ms-usuario';    Puerto = 8081; Ruta = '/api/v1/usuarios' },
-    @{ Nombre = 'ms-cliente';    Puerto = 8082; Ruta = '/api/v1/clientes' },
-    @{ Nombre = 'ms-soporte';    Puerto = 8083; Ruta = '/api/v1/contactos' },
-    @{ Nombre = 'ms-reportes';   Puerto = 8084; Ruta = '/api/v1/reportes' },
-    @{ Nombre = 'ms-productos';  Puerto = 8085; Ruta = '/api/v1/productos' },
-    @{ Nombre = 'ms-pedidos';    Puerto = 8086; Ruta = '/api/v1/pedidos' },
-    @{ Nombre = 'ms-pagos';      Puerto = 8087; Ruta = '/api/v1/pagos-webpay' },
-    @{ Nombre = 'ms-inventario'; Puerto = 8088; Ruta = '/api/v1/items-inventario' },
-    @{ Nombre = 'ms-carrito';    Puerto = 8089; Ruta = '/api/v1/carritos' }
+    @{ Nombre = 'ms-usuario';          Puerto = 9001; Ruta = '/api/v1/usuarios' },
+    @{ Nombre = 'ms-cliente';          Puerto = 9002; Ruta = '/api/v1/clientes' },
+    @{ Nombre = 'ms-soporte';          Puerto = 9003; Ruta = '/api/v1/contactos' },
+    @{ Nombre = 'ms-reportes';         Puerto = 9004; Ruta = '/api/v1/reportes' },
+    @{ Nombre = 'ms-productos';        Puerto = 9005; Ruta = '/api/v1/productos' },
+    @{ Nombre = 'ms-pedidos';          Puerto = 9006; Ruta = '/api/v1/pedidos' },
+    @{ Nombre = 'ms-pagos';            Puerto = 9007; Ruta = '/api/v1/pagos-webpay' },
+    @{ Nombre = 'ms-inventario';       Puerto = 9008; Ruta = '/api/v1/items-inventario' },
+    @{ Nombre = 'ms-carrito';          Puerto = 9009; Ruta = '/api/v1/carritos' },
+    @{ Nombre = 'ms-servicio-tecnico'; Puerto = 9015; Ruta = '/api/v1/ordenes-trabajo' },
+    @{ Nombre = 'ms-proveedores';      Puerto = 9011; Ruta = '/api/v1/proveedores' }
 )
 
 Write-Host ''
@@ -43,16 +45,16 @@ if (Test-Puerto 3306) {
 if ($gateway) {
     Write-Host "Gateway           OK en $gateway" -ForegroundColor Green
 } else {
-    Write-Host 'Gateway           APAGADO (no hay un servicio Java en el 8080 ni en el 8090)' -ForegroundColor Red
+    Write-Host 'Gateway           APAGADO (no hay un servicio Java en el 9000 ni en el 9090)' -ForegroundColor Red
 }
 Write-Host ''
-Write-Host ('{0,-14} {1,-7} {2,-9} {3,-9} {4}' -f 'Servicio', 'Puerto', 'Directo', 'Gateway', 'Estado')
-Write-Host ('-' * 60)
+Write-Host ('{0,-20} {1,-7} {2,-9} {3,-9} {4}' -f 'Servicio', 'Puerto', 'Directo', 'Gateway', 'Estado')
+Write-Host ('-' * 66)
 
 $malos = 0
 foreach ($s in $servicios) {
     if (-not (Test-Puerto $s.Puerto)) {
-        Write-Host ('{0,-14} {1,-7} {2,-9} {3,-9} {4}' -f $s.Nombre, $s.Puerto, '-', '-', 'APAGADO') -ForegroundColor Red
+        Write-Host ('{0,-20} {1,-7} {2,-9} {3,-9} {4}' -f $s.Nombre, $s.Puerto, '-', '-', 'APAGADO') -ForegroundColor Red
         $malos++
         continue
     }
@@ -66,7 +68,7 @@ foreach ($s in $servicios) {
     } else {
         $estado = 'ERROR (revisa su ventana)'; $color = 'Red'; $malos++
     }
-    Write-Host ('{0,-14} {1,-7} {2,-9} {3,-9} {4}' -f $s.Nombre, $s.Puerto, $directo, $porGateway, $estado) -ForegroundColor $color
+    Write-Host ('{0,-20} {1,-7} {2,-9} {3,-9} {4}' -f $s.Nombre, $s.Puerto, $directo, $porGateway, $estado) -ForegroundColor $color
 }
 
 Write-Host ''

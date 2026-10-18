@@ -1,6 +1,6 @@
-﻿# Detiene los procesos Java que escuchan en los puertos 8080-8090.
+﻿# Detiene los procesos Java que escuchan en los puertos de los microservicios (9000-9009, 9011, 9015) y 9090.
 
-$puertos = 8080..8090
+$puertos = @(9000..9009) + 9011 + 9015 + 9090
 $conexiones = Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
     Where-Object { $puertos -contains $_.LocalPort }
 

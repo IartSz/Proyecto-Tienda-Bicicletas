@@ -39,24 +39,24 @@ Relaciones dentro del microservicio:
 
 **Consume**:
 
-- `ms-cliente` (puerto 8082): `GET /api/v1/clientes/{rut}`. Al crear un pedido con `rutCliente`, valida que el cliente exista (si no, 404). Los pedidos de visitantes (sin RUT) no se validan. La URL se configura en `ms.clientes.url`.
+- `ms-cliente` (puerto 9002): `GET /api/v1/clientes/{rut}`. Al crear un pedido con `rutCliente`, valida que el cliente exista (si no, 404). Los pedidos de visitantes (sin RUT) no se validan. La URL se configura en `ms.clientes.url`.
 
 **Es consumido por**:
 
 - Frontend tienda: el checkout crea el pedido y su detalle; el cliente consulta su historial.
 - Panel administrador / vendedor: lista pedidos, cambia estados (queda en el historial), emite boleta o factura.
-- `ms-pagos` (puerto 8087): valida que el pedido exista antes de registrar un pago (`GET /api/v1/pedidos/{id}`).
-- `ms-reportes` (puerto 8084): lee pedidos y detalles para los reportes de venta y para emitir boletas y facturas.
+- `ms-pagos` (puerto 9007): valida que el pedido exista antes de registrar un pago (`GET /api/v1/pedidos/{id}`).
+- `ms-reportes` (puerto 9004): lee pedidos y detalles para los reportes de venta y para emitir boletas y facturas.
 
 ## Configuración
 
 | Propiedad | Valor |
 |---|---|
-| Puerto | `8086` |
+| Puerto | `9006` |
 | Base de datos | `ridertapia_pedidos` (MySQL, se crea sola con `createDatabaseIfNotExist=true`) |
 | Usuario / clave MySQL | `root` / vacío (ajustar en `application.properties`) |
-| Swagger UI | http://localhost:8086/doc/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8086/api-docs |
+| Swagger UI | http://localhost:9006/doc/swagger-ui.html |
+| OpenAPI JSON | http://localhost:9006/api-docs |
 
 Ejecutar:
 
@@ -189,10 +189,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   "datosVisitante": null,
   "_links": {
     "self": {
-      "href": "http://localhost:8086/api/v1/pedidos/1"
+      "href": "http://localhost:9006/api/v1/pedidos/1"
     },
     "pedidos": {
-      "href": "http://localhost:8086/api/v1/pedidos"
+      "href": "http://localhost:9006/api/v1/pedidos"
     }
   }
 }
@@ -241,10 +241,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8086/api/v1/detalles/1"
+      "href": "http://localhost:9006/api/v1/detalles/1"
     },
     "detalles": {
-      "href": "http://localhost:8086/api/v1/detalles"
+      "href": "http://localhost:9006/api/v1/detalles"
     }
   }
 }
@@ -273,7 +273,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
         "datosVisitante": null,
         "_links": {
           "self": {
-            "href": "http://localhost:8086/api/v1/pedidos/1"
+            "href": "http://localhost:9006/api/v1/pedidos/1"
           }
         }
       }
@@ -281,7 +281,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8086/api/v1/pedidos"
+      "href": "http://localhost:9006/api/v1/pedidos"
     }
   }
 }

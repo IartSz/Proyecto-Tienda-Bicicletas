@@ -30,17 +30,17 @@ Como el carrito queda guardado en base de datos, se mantiene aunque el cliente c
 | ItemInventario | Está en `ms-inventario`: el stock se consulta por HTTP |
 | Cliente, Pedido | Pertenecen a otros microservicios: el carrito guarda solo el RUT del cliente (`rutCliente`) |
 
-Relaciones dentro del microservicio: ItemCarrito → Carrito (muchos a uno).
+Relaciones dentro del microservicio: ItemCarrito → Carrito (muchos a uno). El carrito muestra sus ítems en `items` (uno a muchos).
 
 ## Rol en la arquitectura
 
 **Consume**:
 
-- `ms-productos` (puerto 8085):
+- `ms-productos` (puerto 9005):
   - `GET /api/v1/variantes/{id}`: al agregar un ítem valida que la variante exista (si no, 404).
   - `GET /api/v1/cupones/codigo/{codigo}`: para validar un cupón contra el carrito.
-- `ms-inventario` (puerto 8088): `GET /api/v1/items-inventario/idVariante/{idVariante}`. Al agregar o cambiar la cantidad de un ítem, si no hay stock suficiente responde **409 Conflict** (HU-19 y HU-20). También se usa para los avisos de stock.
-- `ms-cliente` (puerto 8082): `GET /api/v1/clientes/{rut}`. Al crear un carrito con `rutCliente`, valida que el cliente exista (si no, 404). Los carritos anónimos (sin RUT) no se validan.
+- `ms-inventario` (puerto 9008): `GET /api/v1/items-inventario/idVariante/{idVariante}`. Al agregar o cambiar la cantidad de un ítem, si no hay stock suficiente responde **409 Conflict** (HU-19 y HU-20). También se usa para los avisos de stock.
+- `ms-cliente` (puerto 9002): `GET /api/v1/clientes/{rut}`. Al crear un carrito con `rutCliente`, valida que el cliente exista (si no, 404). Los carritos anónimos (sin RUT) no se validan.
 
 **Es consumido por**:
 
@@ -53,15 +53,15 @@ Para agregar ítems en local, `ms-productos` y `ms-inventario` deben estar levan
 
 | Propiedad | Valor |
 |---|---|
-| Puerto | `8089` |
+| Puerto | `9009` |
 | Base de datos | `ridertapia_carrito` (MySQL, se crea sola con `createDatabaseIfNotExist=true`) |
 | Usuario / clave MySQL | `root` / vacío (ajustar en `application.properties`) |
-| URL variantes | `ms.productos.variantes-url=http://localhost:8085/api/v1/variantes` |
-| URL cupones | `ms.productos.cupones-url=http://localhost:8085/api/v1/cupones` |
-| URL inventario | `ms.inventario.url=http://localhost:8088/api/v1/items-inventario` |
-| URL clientes | `ms.clientes.url=http://localhost:8082/api/v1/clientes` |
-| Swagger UI | http://localhost:8089/doc/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8089/api-docs |
+| URL variantes | `ms.productos.variantes-url=http://localhost:9005/api/v1/variantes` |
+| URL cupones | `ms.productos.cupones-url=http://localhost:9005/api/v1/cupones` |
+| URL inventario | `ms.inventario.url=http://localhost:9008/api/v1/items-inventario` |
+| URL clientes | `ms.clientes.url=http://localhost:9002/api/v1/clientes` |
+| Swagger UI | http://localhost:9009/doc/swagger-ui.html |
+| OpenAPI JSON | http://localhost:9009/api-docs |
 
 Ejecutar:
 
@@ -80,7 +80,7 @@ Cada clase tiene su propio controller con el mismo patrón: listar, obtener por 
 | GET | `/api/v1/carritos` | Lista todos | 200 |
 | GET | `/api/v1/carritos/{id}` | Obtiene por id | 200 / 404 |
 | GET | `/api/v1/carritos/rutCliente/{rutCliente}` | Lista los carritos de ese RUT | 200 |
-| POST | `/api/v1/carritos` | Crea | 201 |
+| POST | `/api/v1/carritos` | Crea (opcionalmente con sus `items`) | 201 / 404 si el cliente o una variante no existe / 409 sin stock |
 | PUT | `/api/v1/carritos/{id}` | Actualiza | 200 / 404 |
 | DELETE | `/api/v1/carritos/{id}` | Elimina | 204 / 409 si está en uso |
 
@@ -97,7 +97,7 @@ Cada clase tiene su propio controller con el mismo patrón: listar, obtener por 
 
 ### Ejemplo: Carrito
 
-Entrada (POST / PUT). Las relaciones se envían solo con su id:
+Entrada (POST / PUT). En el POST, `items` es opcional: permite crear el carrito ya con sus productos. Antes de guardar se valida que cada variante exista (404) y tenga stock (409); si alguna falla no se guarda nada. En el PUT, `items` se ignora (los ítems se cambian en `/api/v1/items-carrito`):
 
 ```json
 {
@@ -109,11 +109,14 @@ Entrada (POST / PUT). Las relaciones se envían solo con su id:
   "subtotal": 899990,
   "descuento": 0,
   "total": 899990,
-  "idCupon": 2
+  "idCupon": 2,
+  "items": [
+    { "idVariante": 10, "cantidad": 1, "precioUnitario": 899990 }
+  ]
 }
 ```
 
-Respuesta HATEOAS (las relaciones vuelven completas):
+Respuesta HATEOAS. Incluye los productos del carrito con su cantidad; `idProducto` se consulta a ms-productos (`GET /api/v1/variantes/{id}`) y no se guarda (si ms-productos no responde, viene en `null`):
 
 ```json
 {
@@ -127,12 +130,22 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   "descuento": 0,
   "total": 899990,
   "idCupon": 2,
+  "items": [
+    {
+      "idItemCarrito": 1,
+      "idVariante": 10,
+      "cantidad": 1,
+      "precioUnitario": 899990,
+      "fechaAgregado": "2026-10-06T11:00:00",
+      "idProducto": 3
+    }
+  ],
   "_links": {
     "self": {
-      "href": "http://localhost:8089/api/v1/carritos/1"
+      "href": "http://localhost:9009/api/v1/carritos/1"
     },
     "carritos": {
-      "href": "http://localhost:8089/api/v1/carritos"
+      "href": "http://localhost:9009/api/v1/carritos"
     }
   }
 }
@@ -177,10 +190,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8089/api/v1/items-carrito/1"
+      "href": "http://localhost:9009/api/v1/items-carrito/1"
     },
     "itemsCarrito": {
-      "href": "http://localhost:8089/api/v1/items-carrito"
+      "href": "http://localhost:9009/api/v1/items-carrito"
     }
   }
 }
@@ -205,7 +218,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
         "idCupon": 2,
         "_links": {
           "self": {
-            "href": "http://localhost:8089/api/v1/carritos/1"
+            "href": "http://localhost:9009/api/v1/carritos/1"
           }
         }
       }
@@ -213,7 +226,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8089/api/v1/carritos"
+      "href": "http://localhost:9009/api/v1/carritos"
     }
   }
 }
@@ -264,8 +277,8 @@ Ejemplo de resumen:
   "cantidadItems": 3,
   "total": 979980,
   "_links": {
-    "self": { "href": "http://localhost:8089/api/v1/carritos/1/resumen" },
-    "carrito": { "href": "http://localhost:8089/api/v1/carritos/1" }
+    "self": { "href": "http://localhost:9009/api/v1/carritos/1/resumen" },
+    "carrito": { "href": "http://localhost:9009/api/v1/carritos/1" }
   }
 }
 ```
@@ -278,8 +291,8 @@ Ejemplo de validación de cupón:
   "mensaje": "El cupón está vencido",
   "montoDescuento": 0,
   "_links": {
-    "self": { "href": "http://localhost:8089/api/v1/carritos/1/cupon/RIDER10" },
-    "carrito": { "href": "http://localhost:8089/api/v1/carritos/1" }
+    "self": { "href": "http://localhost:9009/api/v1/carritos/1/cupon/RIDER10" },
+    "carrito": { "href": "http://localhost:9009/api/v1/carritos/1" }
   }
 }
 ```

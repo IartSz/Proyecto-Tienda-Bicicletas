@@ -4,7 +4,7 @@ Microservicio de **reportes de ventas** y **documentos de venta** de *Rider Tapi
 
 | | |
 |---|---|
-| Puerto | `8090` |
+| Puerto | `9090` |
 | Base de datos | `ridertapia_reportes` (MySQL) |
 | Stack | Java 17 · Spring Boot 3.3.5 · Spring Data JPA · Spring HATEOAS · springdoc-openapi · Lombok |
 | Depende de | servicio de **pedidos** (lee pedidos y sus detalles) |
@@ -30,13 +30,13 @@ mvn spring-boot:run
 
 Necesita el servicio de **pedidos** corriendo. Configura su dirección y los estados que cuentan como venta (deben coincidir con tu enum de estados de pedido):
 ```bash
-export PEDIDOS_SERVICE_URL=http://localhost:8085
+export PEDIDOS_SERVICE_URL=http://localhost:9005
 export ESTADOS_VENTA=PAGADO,ENTREGADO,COMPLETADO
 ```
 
 La base de datos `ridertapia_reportes` se crea sola la primera vez (`createDatabaseIfNotExist=true`) y las tablas se generan con JPA (`ddl-auto=update`).
 
-Documentación interactiva (Swagger): <http://localhost:8090/swagger-ui.html>
+Documentación interactiva (Swagger): <http://localhost:9090/swagger-ui.html>
 
 ## Estructura
 

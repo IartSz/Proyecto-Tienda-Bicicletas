@@ -2,6 +2,10 @@ package com.ridertapia.carrito.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,15 +14,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "items_carrito")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(onConstructor_ = @JsonCreator)
 public class ItemCarrito {
 
     @Id
@@ -39,5 +42,21 @@ public class ItemCarrito {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_carrito", nullable = false)
+    @JsonIgnoreProperties("items")
     private Carrito carrito;
+
+    // Producto al que pertenece la variante en ms-productos, solo para mostrar (no se guarda)
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long idProducto;
+
+    public ItemCarrito(Long idItemCarrito, Long idVariante, Integer cantidad, Integer precioUnitario,
+            LocalDateTime fechaAgregado, Carrito carrito) {
+        this.idItemCarrito = idItemCarrito;
+        this.idVariante = idVariante;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
+        this.fechaAgregado = fechaAgregado;
+        this.carrito = carrito;
+    }
 }

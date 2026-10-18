@@ -48,7 +48,7 @@ class ItemInventarioServiceTest {
     @InjectMocks
     private ItemInventarioService itemInventarioService;
 
-    private static final String VARIANTES_URL = "http://localhost:8085/api/v1/variantes";
+    private static final String VARIANTES_URL = "http://localhost:9005/api/v1/variantes";
 
     private ItemInventario itemInventario;
 

@@ -4,7 +4,7 @@ Microservicio de **perfiles de clientes** de *Rider Tapia Biker*: nombre, contac
 
 | | |
 |---|---|
-| Puerto | `8082` |
+| Puerto | `9002` |
 | Base de datos | `ridertapia_clientes` (MySQL) |
 | Stack | Java 17 · Spring Boot 3.3.5 · Spring Data JPA · Spring HATEOAS · springdoc-openapi · Lombok |
 | Depende de | `usuario-service` (valida que el RUT tenga cuenta) |
@@ -27,14 +27,14 @@ export DB_PASSWORD=tu_clave
 mvn spring-boot:run
 ```
 
-Antes de crear clientes debe estar corriendo **usuario-service** (por defecto en `http://localhost:8081`). Si está en otra dirección:
+Antes de crear clientes debe estar corriendo **usuario-service** (por defecto en `http://localhost:9001`). Si está en otra dirección:
 ```bash
-export USUARIO_SERVICE_URL=http://localhost:8081
+export USUARIO_SERVICE_URL=http://localhost:9001
 ```
 
 La base de datos `ridertapia_clientes` se crea sola la primera vez (`createDatabaseIfNotExist=true`) y las tablas se generan con JPA (`ddl-auto=update`).
 
-Documentación interactiva (Swagger): <http://localhost:8082/swagger-ui.html>
+Documentación interactiva (Swagger): <http://localhost:9002/swagger-ui.html>
 
 ## Estructura
 

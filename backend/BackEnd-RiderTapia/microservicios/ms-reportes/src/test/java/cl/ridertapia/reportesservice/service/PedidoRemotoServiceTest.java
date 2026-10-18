@@ -44,7 +44,7 @@ class PedidoRemotoServiceTest {
     private static final String PEDIDO_JSON = """
             {"idPedido":1,"numero":"P-0001","fechaCreacion":"2026-10-07T10:30:00","estado":"PAGADO","canal":"WEB",
              "subtotal":10000,"descuento":0,"total":10000,"rutCliente":"12345678-5","cuponAplicado":"X",
-             "_links":{"self":{"href":"http://localhost:8086/api/v1/pedidos/1"}}}
+             "_links":{"self":{"href":"http://localhost:9006/api/v1/pedidos/1"}}}
             """;
 
     @Test

@@ -42,7 +42,7 @@ import com.ridertapia.pedidos.repository.PedidoRepository;
 @ExtendWith(MockitoExtension.class)
 class PedidoServiceTest {
 
-    private static final String CLIENTES_URL = "http://localhost:8082/api/v1/clientes";
+    private static final String CLIENTES_URL = "http://localhost:9002/api/v1/clientes";
 
     @Mock
     private PedidoRepository pedidoRepository;

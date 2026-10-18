@@ -40,8 +40,8 @@ import com.ridertapia.carrito.repository.ItemCarritoRepository;
 @ExtendWith(MockitoExtension.class)
 class CarritoOperacionesServiceTest {
 
-    private static final String INVENTARIO_URL = "http://localhost:8088/api/v1/items-inventario";
-    private static final String CUPONES_URL = "http://localhost:8085/api/v1/cupones";
+    private static final String INVENTARIO_URL = "http://localhost:9008/api/v1/items-inventario";
+    private static final String CUPONES_URL = "http://localhost:9005/api/v1/cupones";
 
     @Mock
     private CarritoRepository carritoRepository;

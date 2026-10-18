@@ -39,7 +39,7 @@ import com.ridertapia.carrito.repository.CarritoRepository;
 @ExtendWith(MockitoExtension.class)
 class CarritoServiceTest {
 
-    private static final String CLIENTES_URL = "http://localhost:8082/api/v1/clientes";
+    private static final String CLIENTES_URL = "http://localhost:9002/api/v1/clientes";
 
     @Mock
     private CarritoRepository carritoRepository;

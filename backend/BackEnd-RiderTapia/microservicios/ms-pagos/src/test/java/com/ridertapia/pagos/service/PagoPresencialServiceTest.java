@@ -49,7 +49,7 @@ class PagoPresencialServiceTest {
     @InjectMocks
     private PagoPresencialService pagoPresencialService;
 
-    private static final String PEDIDOS_URL = "http://localhost:8086/api/v1/pedidos";
+    private static final String PEDIDOS_URL = "http://localhost:9006/api/v1/pedidos";
 
     private PagoPresencial pagoPresencial;
 

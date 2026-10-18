@@ -161,4 +161,118 @@ class ItemCarritoControllerIT {
         mockMvc.perform(get("/api/v1/items-carrito/" + guardado.getIdItemCarrito()))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void elCarritoMuestraSusProductosYCantidades() throws Exception {
+        when(restTemplate.getForObject(URI.create("http://localhost:9005/api/v1/variantes/10"), Map.class))
+                .thenReturn(Map.of("producto", Map.of("idProducto", 3)));
+        mockMvc.perform(post("/api/v1/items-carrito")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(nuevoItemCarrito(1))))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/api/v1/carritos/" + carrito.getIdCarrito()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items", hasSize(1)))
+                .andExpect(jsonPath("$.items[0].idVariante").value(10))
+                .andExpect(jsonPath("$.items[0].cantidad").value(1))
+                .andExpect(jsonPath("$.items[0].idProducto").value(3));
+    }
+
+    @Test
+    void crearCarritoConProductos() throws Exception {
+        when(restTemplate.getForObject(URI.create("http://localhost:9005/api/v1/variantes/11"), Map.class))
+                .thenReturn(Map.of("producto", Map.of("idProducto", 7)));
+        String cuerpo = """
+                {
+                  "rutCliente": "12345678-5",
+                  "fechaCreacion": "2026-10-06T11:00:00",
+                  "fechaActualizacion": "2026-10-06T11:00:00",
+                  "estado": "ACTIVO",
+                  "subtotal": 79990,
+                  "descuento": 0,
+                  "total": 79990,
+                  "items": [
+                    { "idVariante": 11, "cantidad": 2, "precioUnitario": 39995 }
+                  ]
+                }
+                """;
+
+        mockMvc.perform(post("/api/v1/carritos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(cuerpo))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.items", hasSize(1)))
+                .andExpect(jsonPath("$.items[0].idItemCarrito").exists())
+                .andExpect(jsonPath("$.items[0].cantidad").value(2))
+                .andExpect(jsonPath("$.items[0].idProducto").value(7));
+    }
+
+    @Test
+    void crearCarritoConProductoSinStockResponde409YNoGuarda() throws Exception {
+        when(restTemplate.getForObject(any(URI.class), eq(Map.class))).thenReturn(Map.of("stockDisponible", 1));
+        String cuerpo = """
+                {
+                  "fechaCreacion": "2026-10-06T11:00:00",
+                  "fechaActualizacion": "2026-10-06T11:00:00",
+                  "estado": "ACTIVO",
+                  "subtotal": 79990,
+                  "descuento": 0,
+                  "total": 79990,
+                  "items": [
+                    { "idVariante": 11, "cantidad": 2, "precioUnitario": 39995 }
+                  ]
+                }
+                """;
+
+        mockMvc.perform(post("/api/v1/carritos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(cuerpo))
+                .andExpect(status().isConflict());
+
+        mockMvc.perform(get("/api/v1/carritos"))
+                .andExpect(jsonPath("$._embedded.carritoList", hasSize(1)));
+    }
+
+
+    // Mismo orden que la colección de Postman: crear y actualizar un carrito antes de agregarle ítems
+    @Test
+    void agregarYActualizarItemDespuesDeCrearYActualizarCarrito() throws Exception {
+        String cuerpoCarrito = """
+                {
+                  "fechaCreacion": "2026-10-14T09:30:00",
+                  "fechaActualizacion": "2026-10-14T09:30:00",
+                  "estado": "ACTIVO",
+                  "subtotal": 0,
+                  "descuento": 0,
+                  "total": 0
+                }
+                """;
+        mockMvc.perform(post("/api/v1/carritos").contentType(MediaType.APPLICATION_JSON).content(cuerpoCarrito))
+                .andExpect(status().isCreated());
+        mockMvc.perform(put("/api/v1/carritos/" + carrito.getIdCarrito()).contentType(MediaType.APPLICATION_JSON).content(cuerpoCarrito))
+                .andExpect(status().isOk());
+
+        String cuerpoItem = """
+                {
+                  "idVariante": 10,
+                  "cantidad": %d,
+                  "precioUnitario": 749990,
+                  "fechaAgregado": "2026-10-14T09:30:00",
+                  "carrito": { "idCarrito": %d }
+                }
+                """;
+        String respuesta = mockMvc.perform(post("/api/v1/items-carrito")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(cuerpoItem.formatted(1, carrito.getIdCarrito())))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+        Number idItem = com.jayway.jsonpath.JsonPath.read(respuesta, "$.idItemCarrito");
+
+        mockMvc.perform(put("/api/v1/items-carrito/" + idItem)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(cuerpoItem.formatted(2, carrito.getIdCarrito())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.cantidad").value(2));
+    }
 }

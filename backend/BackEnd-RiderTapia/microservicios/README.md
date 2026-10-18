@@ -1,6 +1,6 @@
 # Rider Tapia Biker – Backend
 
-9 microservicios Spring Boot y un API Gateway.
+11 microservicios Spring Boot y un API Gateway.
 
 ## Requisitos
 
@@ -13,9 +13,9 @@ Las bases de datos se crean solas al iniciar. Usuario por defecto: `root` sin co
 
 | Acción | Archivo |
 |---|---|
-| Iniciar todo | `iniciar-todo.bat` |
-| Verificar estado | `verificar-todo.bat` |
-| Detener todo | `detener-todo.bat` |
+| Iniciar todo | `.\iniciar-todo.ps1` |
+| Verificar estado | `.\verificar-todo.ps1` |
+| Detener todo | `.\detener-todo.ps1` |
 
 Si el usuario `root` de MySQL tiene contraseña:
 
@@ -23,22 +23,24 @@ Si el usuario `root` de MySQL tiene contraseña:
 .\iniciar-todo.ps1 -DbPassword tuClave
 ```
 
-El gateway usa el puerto 8080. Si está ocupado, usa el 8090.
+El gateway usa el puerto 9000. Si está ocupado, usa el 9090.
 
 ## Puertos
 
 | Servicio | Puerto | Java |
 |---|---|---|
-| ms-gateway | 8080 / 8090 | 25 |
-| ms-usuario | 8081 | 21 |
-| ms-cliente | 8082 | 21 |
-| ms-soporte | 8083 | 21 |
-| ms-reportes | 8084 | 21 |
-| ms-productos | 8085 | 25 |
-| ms-pedidos | 8086 | 25 |
-| ms-pagos | 8087 | 25 |
-| ms-inventario | 8088 | 25 |
-| ms-carrito | 8089 | 25 |
+| ms-gateway | 9000 / 9090 | 25 |
+| ms-usuario | 9001 | 21 |
+| ms-cliente | 9002 | 21 |
+| ms-soporte | 9003 | 21 |
+| ms-reportes | 9004 | 21 |
+| ms-productos | 9005 | 25 |
+| ms-pedidos | 9006 | 25 |
+| ms-pagos | 9007 | 25 |
+| ms-inventario | 9008 | 25 |
+| ms-carrito | 9009 | 25 |
+| ms-servicio-tecnico | 9015 | 25 |
+| ms-proveedores | 9011 | 25 |
 
 ## Postman
 

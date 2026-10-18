@@ -1,8 +1,8 @@
 ﻿# Levanta los microservicios y el gateway en orden, cada uno en su propia ventana.
-# Uso: .\iniciar-todo.ps1 [-PuertoGateway 8090] [-DbUser root] [-DbPassword clave]
+# Uso: .\iniciar-todo.ps1 [-PuertoGateway 9090] [-DbUser root] [-DbPassword clave]
 
 param(
-    [int]$PuertoGateway = 8080,
+    [int]$PuertoGateway = 9000,
     [int]$SegundosEspera = 180,
     [string]$DbUser,
     [string]$DbPassword
@@ -66,33 +66,35 @@ if (-not (Test-Puerto 3306)) {
 if (Test-Puerto $PuertoGateway) {
     $dueno = Get-NetTCPConnection -LocalPort $PuertoGateway -State Listen | Select-Object -First 1
     $proceso = (Get-Process -Id $dueno.OwningProcess -ErrorAction SilentlyContinue).ProcessName
-    Write-Host "El puerto $PuertoGateway está ocupado por '$proceso'. El gateway usará el 8090." -ForegroundColor Yellow
-    $PuertoGateway = 8090
+    Write-Host "El puerto $PuertoGateway está ocupado por '$proceso'. El gateway usará el 9090." -ForegroundColor Yellow
+    $PuertoGateway = 9090
 }
 
 $servicios = @(
-    @{ Nombre = 'ms-usuario';    Puerto = 8081; Jdk = $jdk21 },
-    @{ Nombre = 'ms-cliente';    Puerto = 8082; Jdk = $jdk21 },
-    @{ Nombre = 'ms-productos';  Puerto = 8085; Jdk = $jdk25 },
-    @{ Nombre = 'ms-inventario'; Puerto = 8088; Jdk = $jdk25 },
-    @{ Nombre = 'ms-pedidos';    Puerto = 8086; Jdk = $jdk25 },
-    @{ Nombre = 'ms-pagos';      Puerto = 8087; Jdk = $jdk25 },
-    @{ Nombre = 'ms-carrito';    Puerto = 8089; Jdk = $jdk25 },
-    @{ Nombre = 'ms-soporte';    Puerto = 8083; Jdk = $jdk21 },
-    @{ Nombre = 'ms-reportes';   Puerto = 8084; Jdk = $jdk21 },
-    @{ Nombre = 'ms-gateway';    Puerto = $PuertoGateway; Jdk = $jdk25 }
+    @{ Nombre = 'ms-usuario';          Puerto = 9001; Jdk = $jdk21 },
+    @{ Nombre = 'ms-cliente';          Puerto = 9002; Jdk = $jdk21 },
+    @{ Nombre = 'ms-productos';        Puerto = 9005; Jdk = $jdk25 },
+    @{ Nombre = 'ms-inventario';       Puerto = 9008; Jdk = $jdk25 },
+    @{ Nombre = 'ms-pedidos';          Puerto = 9006; Jdk = $jdk25 },
+    @{ Nombre = 'ms-pagos';            Puerto = 9007; Jdk = $jdk25 },
+    @{ Nombre = 'ms-carrito';          Puerto = 9009; Jdk = $jdk25 },
+    @{ Nombre = 'ms-proveedores';      Puerto = 9011; Jdk = $jdk25 },
+    @{ Nombre = 'ms-servicio-tecnico'; Puerto = 9015; Jdk = $jdk25 },
+    @{ Nombre = 'ms-soporte';          Puerto = 9003; Jdk = $jdk21 },
+    @{ Nombre = 'ms-reportes';         Puerto = 9004; Jdk = $jdk21 },
+    @{ Nombre = 'ms-gateway';          Puerto = $PuertoGateway; Jdk = $jdk25 }
 )
 
 $yaCorriendo = 0
 foreach ($s in $servicios) {
     if (Test-Puerto $s.Puerto) {
-        Write-Host ("{0,-14} ya está corriendo en el puerto {1}" -f $s.Nombre, $s.Puerto) -ForegroundColor DarkGray
+        Write-Host ("{0,-20} ya está corriendo en el puerto {1}" -f $s.Nombre, $s.Puerto) -ForegroundColor DarkGray
         $yaCorriendo++
         continue
     }
 
     $argumentos = ''
-    if ($s.Nombre -eq 'ms-gateway' -and $s.Puerto -ne 8080) {
+    if ($s.Nombre -eq 'ms-gateway' -and $s.Puerto -ne 9000) {
         $argumentos = " '-Dspring-boot.run.arguments=--server.port=$($s.Puerto)'"
     }
 
@@ -100,7 +102,7 @@ foreach ($s in $servicios) {
                "`$env:JAVA_HOME = '$($s.Jdk)'; " +
                ".\mvnw.cmd spring-boot:run$argumentos"
 
-    Write-Host ("{0,-14} iniciando en el puerto {1}..." -f $s.Nombre, $s.Puerto) -NoNewline
+    Write-Host ("{0,-20} iniciando en el puerto {1}..." -f $s.Nombre, $s.Puerto) -NoNewline
     Start-Process powershell -WorkingDirectory (Join-Path $raiz $s.Nombre) `
         -ArgumentList '-NoExit', '-ExecutionPolicy', 'Bypass', '-Command', $comando
 

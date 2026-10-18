@@ -43,6 +43,28 @@ public class ItemCarritoService {
         return itemCarritoRepository.save(itemCarrito);
     }
 
+    // Revisa que la variante exista (RuntimeException) y que haya stock (IllegalStateException)
+    public void validarItem(ItemCarrito itemCarrito) {
+        if (!existeVariante(itemCarrito.getIdVariante())) {
+            throw new RuntimeException("Variante no encontrada con id: " + itemCarrito.getIdVariante());
+        }
+        validarStock(itemCarrito.getIdVariante(), itemCarrito.getCantidad());
+    }
+
+    // Consulta a ms-productos: GET /api/v1/variantes/{id}, para mostrar el id del producto.
+    // Si ms-productos no responde, el ítem se muestra igual sin ese dato
+    public void completarDatosProducto(ItemCarrito item) {
+        try {
+            Map<?, ?> variante = restTemplate.getForObject(URI.create(varianteUrl + "/" + item.getIdVariante()), Map.class);
+            if (variante != null && variante.get("producto") instanceof Map<?, ?> producto
+                    && producto.get("idProducto") != null) {
+                item.setIdProducto(((Number) producto.get("idProducto")).longValue());
+            }
+        } catch (RuntimeException e) {
+            // Sin datos del producto
+        }
+    }
+
     public List<ItemCarrito> listarItemsCarrito() {
         return itemCarritoRepository.findAll();
     }

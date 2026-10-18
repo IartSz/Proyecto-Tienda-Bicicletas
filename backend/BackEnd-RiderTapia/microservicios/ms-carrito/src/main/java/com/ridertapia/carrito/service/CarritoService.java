@@ -33,6 +33,9 @@ public class CarritoService {
     private ItemCarritoRepository itemCarritoRepository;
 
     @Autowired
+    private ItemCarritoService itemCarritoService;
+
+    @Autowired
     private RestTemplate restTemplate;
 
     @Value("${ms.inventario.url}")
@@ -44,21 +47,35 @@ public class CarritoService {
     @Value("${ms.clientes.url}")
     private String clientesUrl;
 
+    // El carrito se puede crear con sus productos en "items". Se validan todos antes de guardar nada
     public Carrito guardarCarrito(Carrito carrito) {
         validarCliente(carrito.getRutCliente());
-        return carritoRepository.save(carrito);
+        List<ItemCarrito> items = carrito.getItems() == null ? new ArrayList<>() : carrito.getItems();
+        for (ItemCarrito item : items) {
+            itemCarritoService.validarItem(item);
+        }
+        carrito.setItems(new ArrayList<>());
+        Carrito nuevo = carritoRepository.save(carrito);
+        for (ItemCarrito item : items) {
+            item.setCarrito(nuevo);
+            if (item.getFechaAgregado() == null) {
+                item.setFechaAgregado(nuevo.getFechaCreacion());
+            }
+            nuevo.getItems().add(itemCarritoRepository.save(item));
+        }
+        return completarItems(nuevo);
     }
 
     public List<Carrito> listarCarritos() {
-        return carritoRepository.findAll();
+        return carritoRepository.findAll().stream().map(this::completarItems).toList();
     }
 
     public Optional<Carrito> findById(Long id) {
-        return carritoRepository.findById(id);
+        return carritoRepository.findById(id).map(this::completarItems);
     }
 
     public List<Carrito> findByRutCliente(String rutCliente) {
-        return carritoRepository.findByRutCliente(rutCliente);
+        return carritoRepository.findByRutCliente(rutCliente).stream().map(this::completarItems).toList();
     }
 
     public Carrito actualizarCarrito(Long id, Carrito datos) {
@@ -73,7 +90,7 @@ public class CarritoService {
         carritoActual.setDescuento(datos.getDescuento());
         carritoActual.setTotal(datos.getTotal());
         carritoActual.setIdCupon(datos.getIdCupon());
-        return carritoRepository.save(carritoActual);
+        return completarItems(carritoRepository.save(carritoActual));
     }
 
     public void eliminarCarrito(Long id) {
@@ -148,6 +165,14 @@ public class CarritoService {
         } catch (HttpClientErrorException.NotFound e) {
             throw new RuntimeException("Cliente no encontrado con rut: " + rutCliente);
         }
+    }
+
+    // Agrega a cada ítem el id del producto desde ms-productos
+    private Carrito completarItems(Carrito carrito) {
+        if (carrito.getItems() != null) {
+            carrito.getItems().forEach(item -> itemCarritoService.completarDatosProducto(item));
+        }
+        return carrito;
     }
 
     private Carrito buscarCarrito(Long idCarrito) {

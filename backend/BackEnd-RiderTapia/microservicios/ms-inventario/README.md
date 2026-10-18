@@ -42,7 +42,7 @@ Relaciones dentro del microservicio:
 
 **Consume**:
 
-- `ms-productos` (puerto 8085): antes de crear un ItemInventario llama a `GET /api/v1/variantes/{idVariante}`. Si la variante no existe, no se guarda y responde 404. La URL se configura en `ms.productos.variantes-url`.
+- `ms-productos` (puerto 9005): antes de crear un ItemInventario llama a `GET /api/v1/variantes/{idVariante}`. Si la variante no existe, no se guarda y responde 404. La URL se configura en `ms.productos.variantes-url`.
 
 **Es consumido por**:
 
@@ -56,12 +56,12 @@ Para crear ítems en local, `ms-productos` debe estar levantado.
 
 | Propiedad | Valor |
 |---|---|
-| Puerto | `8088` |
+| Puerto | `9008` |
 | Base de datos | `ridertapia_inventario` (MySQL, se crea sola con `createDatabaseIfNotExist=true`) |
 | Usuario / clave MySQL | `root` / vacío (ajustar en `application.properties`) |
-| URL variantes | `ms.productos.variantes-url=http://localhost:8085/api/v1/variantes` |
-| Swagger UI | http://localhost:8088/doc/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8088/api-docs |
+| URL variantes | `ms.productos.variantes-url=http://localhost:9005/api/v1/variantes` |
+| Swagger UI | http://localhost:9008/doc/swagger-ui.html |
+| OpenAPI JSON | http://localhost:9008/api-docs |
 
 Ejecutar:
 
@@ -210,10 +210,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   ],
   "_links": {
     "self": {
-      "href": "http://localhost:8088/api/v1/items-inventario/1"
+      "href": "http://localhost:9008/api/v1/items-inventario/1"
     },
     "itemsInventario": {
-      "href": "http://localhost:8088/api/v1/items-inventario"
+      "href": "http://localhost:9008/api/v1/items-inventario"
     }
   }
 }
@@ -275,10 +275,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   "idProveedor": 1,
   "_links": {
     "self": {
-      "href": "http://localhost:8088/api/v1/ingresos/1"
+      "href": "http://localhost:9008/api/v1/ingresos/1"
     },
     "ingresos": {
-      "href": "http://localhost:8088/api/v1/ingresos"
+      "href": "http://localhost:9008/api/v1/ingresos"
     }
   }
 }
@@ -304,7 +304,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
         ],
         "_links": {
           "self": {
-            "href": "http://localhost:8088/api/v1/items-inventario/1"
+            "href": "http://localhost:9008/api/v1/items-inventario/1"
           }
         }
       }
@@ -312,7 +312,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8088/api/v1/items-inventario"
+      "href": "http://localhost:9008/api/v1/items-inventario"
     }
   }
 }

@@ -46,11 +46,11 @@ El **stock no vive aquí**: está en `ms-inventario`, asociado a cada variante.
 
 | Propiedad | Valor |
 |---|---|
-| Puerto | `8085` |
+| Puerto | `9005` |
 | Base de datos | `ridertapia_productos` (MySQL, se crea sola con `createDatabaseIfNotExist=true`) |
 | Usuario / clave MySQL | `root` / vacío (ajustar en `application.properties`) |
-| Swagger UI | http://localhost:8085/doc/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8085/api-docs |
+| Swagger UI | http://localhost:9005/doc/swagger-ui.html |
+| OpenAPI JSON | http://localhost:9005/api-docs |
 
 Ejecutar:
 
@@ -248,10 +248,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   ],
   "_links": {
     "self": {
-      "href": "http://localhost:8085/api/v1/productos/1"
+      "href": "http://localhost:9005/api/v1/productos/1"
     },
     "productos": {
-      "href": "http://localhost:8085/api/v1/productos"
+      "href": "http://localhost:9005/api/v1/productos"
     }
   }
 }
@@ -315,10 +315,10 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8085/api/v1/variantes/1"
+      "href": "http://localhost:9005/api/v1/variantes/1"
     },
     "variantes": {
-      "href": "http://localhost:8085/api/v1/variantes"
+      "href": "http://localhost:9005/api/v1/variantes"
     }
   }
 }
@@ -362,7 +362,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
         ],
         "_links": {
           "self": {
-            "href": "http://localhost:8085/api/v1/productos/1"
+            "href": "http://localhost:9005/api/v1/productos/1"
           }
         }
       }
@@ -370,7 +370,7 @@ Respuesta HATEOAS (las relaciones vuelven completas):
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8085/api/v1/productos"
+      "href": "http://localhost:9005/api/v1/productos"
     }
   }
 }

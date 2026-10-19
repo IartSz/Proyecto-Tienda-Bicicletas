@@ -2,6 +2,7 @@ package cl.ridertapia.reportesservice.service;
 
 import cl.ridertapia.reportesservice.dto.DetallePedidoDto;
 import cl.ridertapia.reportesservice.dto.PedidoDto;
+import cl.ridertapia.reportesservice.service.PedidoRemotoService;
 import cl.ridertapia.reportesservice.dto.DocumentoDto;
 import cl.ridertapia.reportesservice.exception.ApiException;
 import cl.ridertapia.reportesservice.model.DatosFactura;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DocumentoVentaService {
 
-
+    // El total del pedido ya incluye IVA: neto = total / 1,19 (IVA de Chile: 19%)
     private static final double FACTOR_IVA = 1.19;
 
     private final DocumentoVentaRepository documentoRepository;
@@ -73,8 +74,8 @@ public class DocumentoVentaService {
     }
 
     @Transactional(readOnly = true)
-    public List<DocumentoDto.Resumen> findByRutCliente(String rutCliente) {
-        return documentoRepository.findByRutCliente(rutCliente)
+    public List<DocumentoDto.Resumen> findByIdCliente(Long idCliente) {
+        return documentoRepository.findByIdCliente(idCliente)
                 .stream().map(DocumentoDto.Resumen::desde).toList();
     }
 
@@ -109,7 +110,7 @@ public class DocumentoVentaService {
                 .numero(numero)
                 .tipo(tipo)
                 .idPedido(idPedido)
-                .rutCliente(pedido.rutCliente())
+                .idCliente(pedido.idCliente())
                 .fechaEmision(LocalDateTime.now())
                 .neto(neto)
                 .iva(iva)

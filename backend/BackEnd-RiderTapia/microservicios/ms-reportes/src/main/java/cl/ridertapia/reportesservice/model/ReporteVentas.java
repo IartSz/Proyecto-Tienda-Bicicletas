@@ -13,14 +13,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data 
+/**
+ * Reporte de ventas de un período. Hay uno por tipo y rango de fechas:
+ * volver a generarlo lo recalcula en vez de duplicarlo.
+ */
 @Entity
 @Table(name = "reportes_ventas",
         uniqueConstraints = @UniqueConstraint(columnNames = {"tipo", "fecha_inicio", "fecha_fin"}))
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -11,13 +11,16 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data 
+/** Mensaje de contacto con la tienda. Puede enviarlo un cliente registrado o un visitante. */
 @Entity
 @Table(name = "contactos")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -1,5 +1,6 @@
 package cl.ridertapia.soporteservice.service;
 
+import cl.ridertapia.soporteservice.service.UsuarioRemotoService;
 import cl.ridertapia.soporteservice.dto.DevolucionDto;
 import cl.ridertapia.soporteservice.exception.ApiException;
 import cl.ridertapia.soporteservice.model.Devolucion;

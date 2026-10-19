@@ -7,6 +7,7 @@ import cl.ridertapia.reportesservice.dto.DocumentoDto;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
 
+/** Agrega los enlaces HATEOAS a las boletas y facturas. */
 @Component
 public class DocumentoModelAssembler {
 

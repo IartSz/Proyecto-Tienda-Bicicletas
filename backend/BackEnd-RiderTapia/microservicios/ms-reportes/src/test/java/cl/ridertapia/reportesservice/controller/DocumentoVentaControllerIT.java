@@ -31,6 +31,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+/**
+ * Prueba de integración: levanta toda la aplicación con H2 en memoria.
+ * Solo se simula PedidoRemotoService (otro microservicio). Estados de venta: PAGADO, ENTREGADO y COMPLETADO.
+ */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
@@ -62,9 +66,9 @@ class DocumentoVentaControllerIT {
     }
 
     /** Deja un pedido con una sola línea en el servicio de pedidos simulado. */
-    private void pedido(long id, String estado, int total, int descuento, String rutCliente) {
+    private void pedido(long id, String estado, int total, int descuento, Long idCliente) {
         PedidoDto pedido = new PedidoDto(id, "P-" + id, LocalDateTime.of(2026, 10, 7, 12, 0), estado, "WEB",
-                total + descuento, descuento, total, rutCliente);
+                total + descuento, descuento, total, idCliente);
         when(pedidoRemoto.obtenerPedido(id)).thenReturn(pedido);
         when(pedidoRemoto.listarDetallesPorPedido(id)).thenReturn(List.of(
                 new DetallePedidoDto(id, 100L, 1, total + descuento, total + descuento, pedido)));
@@ -81,7 +85,7 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testEmitirYObtenerBoleta() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
+        pedido(10, "PAGADO", 11900, 0, 42L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta")
                         .contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
@@ -89,7 +93,7 @@ class DocumentoVentaControllerIT {
                 .andExpect(jsonPath("$.documento.idDocumento").exists())
                 .andExpect(jsonPath("$.documento.tipo").value("BOLETA"))
                 .andExpect(jsonPath("$.documento.numero").value(1))
-                .andExpect(jsonPath("$.documento.rutCliente").value("12345678-5"))
+                .andExpect(jsonPath("$.documento.idCliente").value(42))
                 .andExpect(jsonPath("$.documento.neto").value(10000))
                 .andExpect(jsonPath("$.documento.iva").value(1900))
                 .andExpect(jsonPath("$.documento.total").value(11900))
@@ -122,9 +126,9 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testLaNumeracionEsCorrelativaPorTipo() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
-        pedido(11, "RETIRADO", 5950, 0, "11111111-1");
-        pedido(12, "EN_PREPARACION", 23800, 0, "10000013-K");
+        pedido(10, "PAGADO", 11900, 0, 42L);
+        pedido(11, "ENTREGADO", 5950, 0, 43L);
+        pedido(12, "COMPLETADO", 23800, 0, 44L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(jsonPath("$.documento.numero").value(1));
@@ -140,7 +144,7 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testEmitirYObtenerFactura() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
+        pedido(10, "PAGADO", 11900, 0, 42L);
 
         mockMvc.perform(post("/api/v1/documentos/factura")
                         .contentType(MediaType.APPLICATION_JSON).content(factura(10, "76543210-3")))
@@ -161,7 +165,7 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testPedidoConDescuentoGeneraLineaNegativa() throws Exception {
-        pedido(10, "PAGADO", 9000, 1000, "12345678-5");
+        pedido(10, "PAGADO", 9000, 1000, 42L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(status().isCreated())
@@ -173,7 +177,7 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testUnPedidoNoAdmiteDosDocumentos() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
+        pedido(10, "PAGADO", 11900, 0, 42L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(status().isCreated());
@@ -190,11 +194,11 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testNoSeEmiteDocumentoDePedidoSinPagar() throws Exception {
-        pedido(10, "PENDIENTE_PAGO", 11900, 0, "12345678-5");
+        pedido(10, "PENDIENTE", 11900, 0, 42L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.mensaje", containsString("PENDIENTE_PAGO")));
+                .andExpect(jsonPath("$.mensaje", containsString("PENDIENTE")));
 
         assertThat(documentoRepository.count()).isZero();
     }
@@ -221,7 +225,7 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testFacturaConRutDeEmpresaInvalido() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
+        pedido(10, "PAGADO", 11900, 0, 42L);
 
         // Formato correcto pero dígito verificador incorrecto
         mockMvc.perform(post("/api/v1/documentos/factura").contentType(MediaType.APPLICATION_JSON)
@@ -246,9 +250,9 @@ class DocumentoVentaControllerIT {
 
     @Test
     void testListarYFiltrarDocumentos() throws Exception {
-        pedido(10, "PAGADO", 11900, 0, "12345678-5");
-        pedido(11, "PAGADO", 5950, 0, "12345678-5");
-        pedido(12, "PAGADO", 23800, 0, "12342313-5");
+        pedido(10, "PAGADO", 11900, 0, 42L);
+        pedido(11, "PAGADO", 5950, 0, 42L);
+        pedido(12, "PAGADO", 23800, 0, 7L);
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)));
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(11)));
         mockMvc.perform(post("/api/v1/documentos/factura").contentType(MediaType.APPLICATION_JSON)
@@ -261,7 +265,7 @@ class DocumentoVentaControllerIT {
                 .andExpect(jsonPath("$._embedded.documentos[0].idPedido").value(12));
         mockMvc.perform(get("/api/v1/documentos/cliente/42"))
                 .andExpect(jsonPath("$._embedded.documentos", hasSize(2)))
-                .andExpect(jsonPath("$._embedded.documentos[0].rutCliente").value("12345678-5"));
+                .andExpect(jsonPath("$._embedded.documentos[0].idCliente").value(42));
         mockMvc.perform(get("/api/v1/documentos/cliente/999"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
@@ -285,7 +289,7 @@ class DocumentoVentaControllerIT {
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.documento.rutCliente").doesNotExist());
+                .andExpect(jsonPath("$.documento.idCliente").doesNotExist());
 
         DocumentoVenta enBd = documentoRepository.findByIdPedido(10L).orElseThrow();
         assertThat(enBd.getNeto() + enBd.getIva()).isEqualTo(enBd.getTotal());

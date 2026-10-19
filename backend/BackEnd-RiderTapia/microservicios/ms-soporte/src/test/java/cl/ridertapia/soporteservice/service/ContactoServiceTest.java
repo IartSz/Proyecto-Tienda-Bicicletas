@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import cl.ridertapia.soporteservice.service.UsuarioRemotoService;
 import cl.ridertapia.soporteservice.dto.ContactoDto;
 import cl.ridertapia.soporteservice.exception.ApiException;
 import cl.ridertapia.soporteservice.model.Contacto;

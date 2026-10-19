@@ -1,10 +1,12 @@
 package cl.ridertapia.soporteservice.controller;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -12,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import cl.ridertapia.soporteservice.service.UsuarioRemotoService;
 import cl.ridertapia.soporteservice.dto.UsuarioDto;
+import cl.ridertapia.soporteservice.exception.ApiException;
 import cl.ridertapia.soporteservice.model.*;
 import cl.ridertapia.soporteservice.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +27,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+/**
+ * Prueba de integración: controller + service + repository reales con H2 en memoria.
+ * Solo se simula usuario-service (otro microservicio).
+ */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase

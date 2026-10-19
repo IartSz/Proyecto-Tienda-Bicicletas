@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import cl.ridertapia.reportesservice.dto.DetallePedidoDto;
 import cl.ridertapia.reportesservice.dto.PedidoDto;
+import cl.ridertapia.reportesservice.service.PedidoRemotoService;
 import cl.ridertapia.reportesservice.dto.ReporteDto;
 import cl.ridertapia.reportesservice.exception.ApiException;
 import cl.ridertapia.reportesservice.model.ProductoMasVendido;
@@ -31,6 +32,7 @@ import org.springframework.http.HttpStatus;
 @ExtendWith(MockitoExtension.class)
 class ReporteVentasServiceTest {
 
+    // Miércoles 7 de octubre de 2026
     private static final LocalDate HOY = LocalDate.of(2026, 10, 7);
 
     @Mock
@@ -47,13 +49,13 @@ class ReporteVentasServiceTest {
     @BeforeEach
     void preparar() {
         service = new ReporteVentasService(reporteRepository, masVendidoRepository, pedidoRemoto,
-                new CriterioVenta("PAGADO,RETIRADO"), 10);
+                new CriterioVenta("PAGADO,ENTREGADO"), 10);
     }
 
     // ---------- helpers ----------
 
     private PedidoDto pedido(long id, LocalDate dia, String estado, int total) {
-        return new PedidoDto(id, "P-" + id, dia.atTime(12, 0), estado, "WEB", total, 0, total, "12345678-5");
+        return new PedidoDto(id, "P-" + id, dia.atTime(12, 0), estado, "WEB", total, 0, total, 1L);
     }
 
     private DetallePedidoDto detalle(PedidoDto pedido, long idVariante, int cantidad, int subtotal) {
@@ -92,8 +94,8 @@ class ReporteVentasServiceTest {
     @DisplayName("Diario: suma solo los pedidos del día que cuentan como venta")
     void diario_sumaSoloVentasDelDia() {
         PedidoDto p1 = pedido(1, HOY, "PAGADO", 10000);
-        PedidoDto p2 = pedido(2, HOY, "RETIRADO", 5000);
-        PedidoDto pendiente = pedido(3, HOY, "PENDIENTE_PAGO", 99999);
+        PedidoDto p2 = pedido(2, HOY, "ENTREGADO", 5000);
+        PedidoDto pendiente = pedido(3, HOY, "PENDIENTE", 99999);
         PedidoDto ayer = pedido(4, HOY.minusDays(1), "PAGADO", 7000);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(p1, p2, pendiente, ayer));
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of());
@@ -114,8 +116,8 @@ class ReporteVentasServiceTest {
     @DisplayName("Diario: el ranking agrupa por variante y ordena por unidades y luego por monto")
     void diario_rankingOrdenado() {
         PedidoDto p1 = pedido(1, HOY, "PAGADO", 10000);
-        PedidoDto p2 = pedido(2, HOY, "RETIRADO", 5000);
-        PedidoDto pendiente = pedido(3, HOY, "PENDIENTE_PAGO", 99999);
+        PedidoDto p2 = pedido(2, HOY, "ENTREGADO", 5000);
+        PedidoDto pendiente = pedido(3, HOY, "PENDIENTE", 99999);
         PedidoDto ayer = pedido(4, HOY.minusDays(1), "PAGADO", 7000);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(p1, p2, pendiente, ayer));
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of(
@@ -174,7 +176,7 @@ class ReporteVentasServiceTest {
     @Test
     @DisplayName("Diario: sin ventas deja total 0, ranking vacío y no pide los detalles")
     void diario_sinVentas() {
-        when(pedidoRemoto.listarPedidos()).thenReturn(List.of(pedido(1, HOY, "PENDIENTE_PAGO", 5000)));
+        when(pedidoRemoto.listarPedidos()).thenReturn(List.of(pedido(1, HOY, "PENDIENTE", 5000)));
         simularGuardado();
 
         ReporteDto.Detalle resultado = service.generarReporteDiario(HOY, null, null);
@@ -188,7 +190,7 @@ class ReporteVentasServiceTest {
     @Test
     @DisplayName("Diario: ignora pedidos sin fecha")
     void diario_pedidoSinFecha() {
-        PedidoDto sinFecha = new PedidoDto(1L, "P-1", null, "PAGADO", "WEB", 1000, 0, 1000, "12345678-5");
+        PedidoDto sinFecha = new PedidoDto(1L, "P-1", null, "PAGADO", "WEB", 1000, 0, 1000, 1L);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(sinFecha));
         simularGuardado();
 
@@ -266,7 +268,7 @@ class ReporteVentasServiceTest {
     void mensual() {
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(
                 pedido(1, LocalDate.of(2026, 2, 1), "PAGADO", 1000),
-                pedido(2, LocalDate.of(2026, 2, 28), "RETIRADO", 2000),
+                pedido(2, LocalDate.of(2026, 2, 28), "ENTREGADO", 2000),
                 pedido(3, LocalDate.of(2026, 3, 1), "PAGADO", 4000)));   // fuera
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of());
         simularGuardado();

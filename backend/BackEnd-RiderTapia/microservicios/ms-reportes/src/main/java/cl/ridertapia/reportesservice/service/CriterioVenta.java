@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
+/** Decide qué pedidos cuentan como venta según los estados configurados en application.properties. */
 @Component
 public class CriterioVenta {
 

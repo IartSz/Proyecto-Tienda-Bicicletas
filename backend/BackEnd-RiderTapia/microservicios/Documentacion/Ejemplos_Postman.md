@@ -2143,7 +2143,7 @@ Sin cuerpo:
 - `GET /api/v1/documentos/1` — Buscar por id
 - `GET /api/v1/documentos/pedido/1` — Por pedido
 - `GET /api/v1/documentos/buscar?tipo=FACTURA&numero=1` — Buscar por tipo y número
-- `GET /api/v1/documentos/cliente/12345678-5` — Por cliente
+- `GET /api/v1/documentos/cliente/1` — Por cliente
 
 ### Reportes
 

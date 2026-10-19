@@ -19,5 +19,5 @@ public interface DocumentoVentaRepository extends JpaRepository<DocumentoVenta, 
 
     List<DocumentoVenta> findByTipo(DocumentoVenta.Tipo tipo);
 
-    List<DocumentoVenta> findByRutCliente(String rutCliente);
+    List<DocumentoVenta> findByIdCliente(Long idCliente);
 }

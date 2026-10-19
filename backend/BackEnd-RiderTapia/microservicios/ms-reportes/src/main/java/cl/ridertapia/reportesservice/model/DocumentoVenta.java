@@ -47,8 +47,8 @@ public class DocumentoVenta {
     private Long idPedido;
 
     // Viene del pedido; puede ser nulo en ventas de visitantes
-    @Column(name = "rut_cliente", length = 12)
-    private String rutCliente;
+    @Column(name = "id_cliente")
+    private Long idCliente;
 
     @Column(nullable = false)
     private LocalDateTime fechaEmision;

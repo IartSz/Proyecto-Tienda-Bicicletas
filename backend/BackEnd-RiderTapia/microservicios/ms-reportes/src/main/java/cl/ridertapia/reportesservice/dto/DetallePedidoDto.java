@@ -2,6 +2,7 @@ package cl.ridertapia.reportesservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/** Línea de un pedido. El servicio de pedidos incluye el pedido completo dentro de cada detalle. */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DetallePedidoDto(
         Long idDetallePedido,

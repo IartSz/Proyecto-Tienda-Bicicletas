@@ -23,8 +23,8 @@ foreach ($p in 9000, 9090) {
 }
 
 $servicios = @(
-    @{ Nombre = 'ms-usuario';          Puerto = 9001; Ruta = '/api/v1/usuarios' },
-    @{ Nombre = 'ms-cliente';          Puerto = 9002; Ruta = '/api/v1/clientes' },
+    @{ Nombre = 'ms-usuario';          Puerto = 9001; Ruta = '/api/v1/usuarios'; Directa = '/api/usuarios' },
+    @{ Nombre = 'ms-cliente';          Puerto = 9002; Ruta = '/api/v1/clientes'; Directa = '/api/clientes' },
     @{ Nombre = 'ms-soporte';          Puerto = 9003; Ruta = '/api/v1/contactos' },
     @{ Nombre = 'ms-reportes';         Puerto = 9004; Ruta = '/api/v1/reportes' },
     @{ Nombre = 'ms-productos';        Puerto = 9005; Ruta = '/api/v1/productos' },
@@ -58,7 +58,8 @@ foreach ($s in $servicios) {
         $malos++
         continue
     }
-    $directo = Get-Codigo "http://localhost:$($s.Puerto)$($s.Ruta)"
+    $rutaDirecta = if ($s.Directa) { $s.Directa } else { $s.Ruta }
+    $directo = Get-Codigo "http://localhost:$($s.Puerto)$rutaDirecta"
     $porGateway = if ($gateway) { Get-Codigo "$gateway$($s.Ruta)" } else { '-' }
 
     if ($directo -eq 200 -and $porGateway -eq 200) {

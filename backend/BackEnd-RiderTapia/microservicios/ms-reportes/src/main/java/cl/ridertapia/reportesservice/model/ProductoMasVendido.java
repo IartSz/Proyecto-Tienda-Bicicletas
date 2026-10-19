@@ -8,14 +8,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+/**
+ * Una fila del ranking de más vendidos de un reporte.
+ * El servicio de pedidos guarda la variante del producto (idVariante), no el producto,
+ * así que el ranking es por variante.
+ */
 @Entity
 @Table(name = "productos_mas_vendidos")
-@Data 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

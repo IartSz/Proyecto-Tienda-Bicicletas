@@ -26,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
+/** Prueba la capa web (rutas, parámetros, errores y enlaces HATEOAS) con el servicio simulado. */
 @WebMvcTest(ReporteController.class)
 @Import(ReporteModelAssembler.class)
 class ReporteControllerTest {
@@ -69,7 +70,7 @@ class ReporteControllerTest {
                 .andExpect(jsonPath("$.masVendidos[0].posicion").value(1))
                 .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/reportes/1")))
                 .andExpect(jsonPath("$._links.masVendidos.href", endsWith("/api/v1/reportes/1/mas-vendidos")))
-                .andExpect(jsonPath("$._links.reportes.href",endsWith("/api/v1/reportes{?tipo}")));
+                .andExpect(jsonPath("$._links.reportes.href", endsWith("/api/v1/reportes{?tipo}")));
     }
 
     @Test

@@ -8,6 +8,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
+/** Convierte un ClienteResponse en un recurso HATEOAS con sus enlaces. */
 @Component
 public class ClienteModelAssembler implements RepresentationModelAssembler<ClienteResponse, EntityModel<ClienteResponse>> {
 

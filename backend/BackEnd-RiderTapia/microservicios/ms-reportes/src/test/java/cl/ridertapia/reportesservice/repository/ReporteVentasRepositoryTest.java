@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+/** Usa una base H2 en memoria (reemplaza a MySQL solo durante la prueba). */
 @DataJpaTest
 class ReporteVentasRepositoryTest {
 
@@ -50,10 +51,10 @@ class ReporteVentasRepositoryTest {
     @Test
     @DisplayName("Lista todos del más reciente al más antiguo")
     void findAllOrdenado() {
-        assertThat(repository.findAllByOrderByFechaInicioDesc()).hasSize(3);
+        // El mensual empieza el día 1 del mes, por eso queda último
         assertThat(repository.findAllByOrderByFechaInicioDesc())
-        .extracting(ReporteVentas::getFechaInicio)
-        .containsExactly(DIA, DIA.minusDays(1), DIA.withDayOfMonth(1));
+                .extracting(ReporteVentas::getFechaInicio)
+                .containsExactly(DIA, DIA.minusDays(1), DIA.withDayOfMonth(1));
     }
 
     @Test

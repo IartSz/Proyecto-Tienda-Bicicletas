@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +27,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+/**
+ * Prueba de integración: controller + service + repository reales con H2 en memoria.
+ * Solo se simula usuario-service (otro microservicio).
+ */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
@@ -56,12 +60,12 @@ class ResenaControllerIT {
 
     @Test
     void testCrearYListarResenas() throws Exception {
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.estado").value("VISIBLE"))
                 .andExpect(jsonPath("$._links.self").exists());
 
-        mockMvc.perform(get("/api/v1/soporte/resenas"))
+        mockMvc.perform(get("/api/v1/resenas"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.resenas", hasSize(1)))
                 .andExpect(jsonPath("$._embedded.resenas[0].calificacion").value(5));
@@ -70,9 +74,9 @@ class ResenaControllerIT {
 
     @Test
     void testResenaDuplicadaDa409() throws Exception {
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
                 .andExpect(status().isCreated());
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 3)))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 3)))
                 .andExpect(status().isConflict());
         assertThat(resenaRepository.count()).isEqualTo(1);
     }
@@ -81,7 +85,7 @@ class ResenaControllerIT {
     void testUsuarioSinCuentaDa404() throws Exception {
         when(usuarioRemoto.obtenerPorRut("12345678-5")).thenThrow(ApiException.noEncontrado("No existe una cuenta"));
 
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(String.format(BODY, 5)))
                 .andExpect(status().isNotFound());
         assertThat(resenaRepository.count()).isZero();
     }
@@ -93,25 +97,25 @@ class ResenaControllerIT {
         Long oculta = resenaRepository.save(Resena.builder().rutUsuario("11111111-1").idProducto(100L).calificacion(1)
                 .fecha(java.time.LocalDateTime.now()).estado(Resena.Estado.VISIBLE).build()).getIdResena();
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/producto/100/resumen"))
+        mockMvc.perform(get("/api/v1/resenas/producto/100/resumen"))
                 .andExpect(jsonPath("$.promedio").value(3.0))
                 .andExpect(jsonPath("$.totalResenas").value(2));
 
-        mockMvc.perform(patch("/api/v1/soporte/resenas/" + oculta + "/ocultar"))
+        mockMvc.perform(patch("/api/v1/resenas/" + oculta + "/ocultar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("OCULTA"))
                 .andExpect(jsonPath("$._links.ocultar").doesNotExist());
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/producto/100"))
+        mockMvc.perform(get("/api/v1/resenas/producto/100"))
                 .andExpect(jsonPath("$._embedded.resenas", hasSize(1)));
-        mockMvc.perform(get("/api/v1/soporte/resenas/producto/100/resumen"))
+        mockMvc.perform(get("/api/v1/resenas/producto/100/resumen"))
                 .andExpect(jsonPath("$.promedio").value(5.0))
                 .andExpect(jsonPath("$.totalResenas").value(1));
     }
 
     @Test
     void testResenaInexistenteDa404() throws Exception {
-        mockMvc.perform(get("/api/v1/soporte/resenas/999"))
+        mockMvc.perform(get("/api/v1/resenas/999"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.mensaje", containsString("999")));
     }

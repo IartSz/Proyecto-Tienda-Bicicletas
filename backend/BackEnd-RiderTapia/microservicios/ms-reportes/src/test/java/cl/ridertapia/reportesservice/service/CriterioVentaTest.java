@@ -10,12 +10,12 @@ class CriterioVentaTest {
     @Test
     @DisplayName("Reconoce los estados configurados sin importar mayúsculas ni espacios")
     void esVenta() {
-        CriterioVenta criterio = new CriterioVenta(" pagado , Retirado ,, EN_PREPARACION ");
+        CriterioVenta criterio = new CriterioVenta(" pagado , Entregado ,, COMPLETADO ");
 
         assertThat(criterio.esVenta("PAGADO")).isTrue();
-        assertThat(criterio.esVenta("retirado")).isTrue();
-        assertThat(criterio.esVenta("  En_Preparacion ")).isTrue();
-        assertThat(criterio.estados()).containsExactlyInAnyOrder("PAGADO", "RETIRADO", "EN_PREPARACION");
+        assertThat(criterio.esVenta("entregado")).isTrue();
+        assertThat(criterio.esVenta("  Completado ")).isTrue();
+        assertThat(criterio.estados()).containsExactlyInAnyOrder("PAGADO", "ENTREGADO", "COMPLETADO");
     }
 
     @Test
@@ -23,7 +23,7 @@ class CriterioVentaTest {
     void noEsVenta() {
         CriterioVenta criterio = new CriterioVenta("PAGADO");
 
-        assertThat(criterio.esVenta("PENDIENTE_PAGO")).isFalse();
+        assertThat(criterio.esVenta("PENDIENTE")).isFalse();
         assertThat(criterio.esVenta("")).isFalse();
         assertThat(criterio.esVenta(null)).isFalse();
     }

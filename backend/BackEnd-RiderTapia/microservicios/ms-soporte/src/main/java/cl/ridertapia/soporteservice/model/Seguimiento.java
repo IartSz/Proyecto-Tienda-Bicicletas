@@ -11,13 +11,16 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
+/** Registro interno del contacto de la tienda con el cliente después de una compra. */
 @Entity
 @Table(name = "seguimientos")
-@Data 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

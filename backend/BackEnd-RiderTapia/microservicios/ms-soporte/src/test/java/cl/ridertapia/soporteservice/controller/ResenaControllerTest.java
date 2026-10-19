@@ -4,10 +4,12 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,6 +18,7 @@ import cl.ridertapia.soporteservice.dto.*;
 import cl.ridertapia.soporteservice.exception.ApiException;
 import cl.ridertapia.soporteservice.model.*;
 import cl.ridertapia.soporteservice.service.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -49,11 +52,11 @@ class ResenaControllerTest {
     void crear() throws Exception {
         when(resenaService.guardarResena(any())).thenReturn(resena(Resena.Estado.VISIBLE));
 
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(BODY))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(BODY))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", endsWith("/api/v1/soporte/resenas/1")))
+                .andExpect(header().string("Location", endsWith("/api/v1/resenas/1")))
                 .andExpect(jsonPath("$.idResena").value(1))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/soporte/resenas/1")))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/resenas/1")))
                 .andExpect(jsonPath("$._links.ocultar").exists());
     }
 
@@ -62,7 +65,7 @@ class ResenaControllerTest {
     void crear_invalida() throws Exception {
         String body = BODY.replace("\"calificacion\":5", "\"calificacion\":9");
 
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(body))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensaje", containsString("calificacion")));
     }
@@ -72,7 +75,7 @@ class ResenaControllerTest {
     void crear_duplicada() throws Exception {
         when(resenaService.guardarResena(any())).thenThrow(ApiException.conflicto("Ya reseñaste este producto"));
 
-        mockMvc.perform(post("/api/v1/soporte/resenas").contentType(MediaType.APPLICATION_JSON).content(BODY))
+        mockMvc.perform(post("/api/v1/resenas").contentType(MediaType.APPLICATION_JSON).content(BODY))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status").value(409))
                 .andExpect(jsonPath("$.mensaje").value("Ya reseñaste este producto"));
@@ -83,11 +86,11 @@ class ResenaControllerTest {
     void listar() throws Exception {
         when(resenaService.listarResenas()).thenReturn(List.of(resena(Resena.Estado.VISIBLE)));
 
-        mockMvc.perform(get("/api/v1/soporte/resenas"))
+        mockMvc.perform(get("/api/v1/resenas"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.resenas", hasSize(1)))
-                .andExpect(jsonPath("$._embedded.resenas[0]._links.self.href", endsWith("/api/v1/soporte/resenas/1")))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/soporte/resenas")));
+                .andExpect(jsonPath("$._embedded.resenas[0]._links.self.href", endsWith("/api/v1/resenas/1")))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/resenas")));
     }
 
     @Test
@@ -95,7 +98,7 @@ class ResenaControllerTest {
     void obtener_oculta() throws Exception {
         when(resenaService.findById(1L)).thenReturn(resena(Resena.Estado.OCULTA));
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/1"))
+        mockMvc.perform(get("/api/v1/resenas/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("OCULTA"))
                 .andExpect(jsonPath("$._links.ocultar").doesNotExist())
@@ -107,7 +110,7 @@ class ResenaControllerTest {
     void obtener_noExiste() throws Exception {
         when(resenaService.findById(9L)).thenThrow(ApiException.noEncontrado("No existe la reseña 9"));
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/9"))
+        mockMvc.perform(get("/api/v1/resenas/9"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.mensaje").value("No existe la reseña 9"));
     }
@@ -115,7 +118,7 @@ class ResenaControllerTest {
     @Test
     @DisplayName("GET /resenas/{id}: un id que no es número responde 400")
     void obtener_idInvalido() throws Exception {
-        mockMvc.perform(get("/api/v1/soporte/resenas/abc")).andExpect(status().isBadRequest());
+        mockMvc.perform(get("/api/v1/resenas/abc")).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -123,7 +126,7 @@ class ResenaControllerTest {
     void porProducto_vacia() throws Exception {
         when(resenaService.findByProducto(100L)).thenReturn(List.of());
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/producto/100"))
+        mockMvc.perform(get("/api/v1/resenas/producto/100"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist())
                 .andExpect(jsonPath("$._links.self").exists())
@@ -135,7 +138,7 @@ class ResenaControllerTest {
     void resumen() throws Exception {
         when(resenaService.resumenProducto(100L)).thenReturn(new ResenaDto.Resumen(100L, 4.5, 2));
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/producto/100/resumen"))
+        mockMvc.perform(get("/api/v1/resenas/producto/100/resumen"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.promedio").value(4.5))
                 .andExpect(jsonPath("$.totalResenas").value(2))
@@ -147,7 +150,7 @@ class ResenaControllerTest {
     void porUsuario() throws Exception {
         when(resenaService.findByRutUsuario("12345678-5")).thenReturn(List.of(resena(Resena.Estado.VISIBLE)));
 
-        mockMvc.perform(get("/api/v1/soporte/resenas/usuario/12345678-5"))
+        mockMvc.perform(get("/api/v1/resenas/usuario/12345678-5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.resenas", hasSize(1)));
     }
@@ -157,7 +160,7 @@ class ResenaControllerTest {
     void ocultar() throws Exception {
         when(resenaService.ocultarResena(1L)).thenReturn(resena(Resena.Estado.OCULTA));
 
-        mockMvc.perform(patch("/api/v1/soporte/resenas/1/ocultar"))
+        mockMvc.perform(patch("/api/v1/resenas/1/ocultar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.estado").value("OCULTA"));
     }

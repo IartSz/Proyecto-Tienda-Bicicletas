@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+/** Prueba la capa web (rutas, validación, errores y enlaces HATEOAS) con el servicio simulado. */
 @WebMvcTest(DocumentoVentaController.class)
 @Import(DocumentoModelAssembler.class)
 class DocumentoVentaControllerTest {
@@ -41,7 +42,7 @@ class DocumentoVentaControllerTest {
     private DocumentoVentaService documentoService;
 
     private DocumentoDto.Resumen resumen(DocumentoVenta.Tipo tipo) {
-        return new DocumentoDto.Resumen(1L, 1L, tipo, 10L, "12345678-5",
+        return new DocumentoDto.Resumen(1L, 1L, tipo, 10L, 42L,
                 LocalDateTime.of(2026, 10, 7, 12, 0), 10000, 1900, 11900);
     }
 
@@ -257,23 +258,23 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/cliente/{rutCliente} → documentos del cliente")
-    void findByRutCliente() throws Exception {
-        when(documentoService.findByRutCliente("12345678-5")).thenReturn(List.of(resumen(DocumentoVenta.Tipo.BOLETA)));
+    @DisplayName("GET /api/v1/documentos/cliente/{idCliente} → documentos del cliente")
+    void findByIdCliente() throws Exception {
+        when(documentoService.findByIdCliente(42L)).thenReturn(List.of(resumen(DocumentoVenta.Tipo.BOLETA)));
 
-        mockMvc.perform(get("/api/v1/documentos/cliente/{rutCliente}", "12345678-5"))
+        mockMvc.perform(get("/api/v1/documentos/cliente/{idCliente}", 42))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.documentos", hasSize(1)))
-                .andExpect(jsonPath("$._embedded.documentos[0].rutCliente").value("12345678-5"))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/documentos/cliente/12345678-5")));
+                .andExpect(jsonPath("$._embedded.documentos[0].idCliente").value(42))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/documentos/cliente/42")));
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/cliente/{rutCliente} sin documentos → 200 sin _embedded")
-    void findByRutCliente_vacio() throws Exception {
-        when(documentoService.findByRutCliente("12342313-5")).thenReturn(List.of());
+    @DisplayName("GET /api/v1/documentos/cliente/{idCliente} sin documentos → 200 sin _embedded")
+    void findByIdCliente_vacio() throws Exception {
+        when(documentoService.findByIdCliente(7L)).thenReturn(List.of());
 
-        mockMvc.perform(get("/api/v1/documentos/cliente/{rutCliente}", "12342313-5"))
+        mockMvc.perform(get("/api/v1/documentos/cliente/{idCliente}", 7))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
     }

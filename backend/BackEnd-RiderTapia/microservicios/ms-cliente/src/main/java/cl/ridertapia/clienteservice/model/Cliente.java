@@ -6,13 +6,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data 
+/**
+ * Datos personales y de despacho del cliente.
+ * El identificador es el mismo RUT de la cuenta en usuario-service (relación 1 a 1).
+ */
 @Entity
 @Table(name = "clientes")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

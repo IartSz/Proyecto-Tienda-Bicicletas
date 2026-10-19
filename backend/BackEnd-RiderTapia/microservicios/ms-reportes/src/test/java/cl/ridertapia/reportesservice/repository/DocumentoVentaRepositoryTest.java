@@ -26,16 +26,16 @@ class DocumentoVentaRepositoryTest {
     @Autowired
     private DatosFacturaRepository datosFacturaRepository;
 
-    private DocumentoVenta documento(DocumentoVenta.Tipo tipo, long numero, long idPedido, String rutCliente) {
-        return DocumentoVenta.builder().tipo(tipo).numero(numero).idPedido(idPedido).rutCliente(rutCliente)
+    private DocumentoVenta documento(DocumentoVenta.Tipo tipo, long numero, long idPedido, Long idCliente) {
+        return DocumentoVenta.builder().tipo(tipo).numero(numero).idPedido(idPedido).idCliente(idCliente)
                 .fechaEmision(LocalDateTime.now()).neto(10000).iva(1900).total(11900).build();
     }
 
     @BeforeEach
     void preparar() {
-        documentoRepository.save(documento(DocumentoVenta.Tipo.BOLETA, 1, 10, "12345678-5"));
-        documentoRepository.save(documento(DocumentoVenta.Tipo.BOLETA, 2, 11, "12345678-5"));
-        documentoRepository.save(documento(DocumentoVenta.Tipo.FACTURA, 1, 12, "12342313-5"));
+        documentoRepository.save(documento(DocumentoVenta.Tipo.BOLETA, 1, 10, 42L));
+        documentoRepository.save(documento(DocumentoVenta.Tipo.BOLETA, 2, 11, 42L));
+        documentoRepository.save(documento(DocumentoVenta.Tipo.FACTURA, 1, 12, 7L));
     }
 
     @Test
@@ -65,11 +65,11 @@ class DocumentoVentaRepositoryTest {
     }
 
     @Test
-    @DisplayName("findByTipo y findByRutCliente")
+    @DisplayName("findByTipo y findByIdCliente")
     void listados() {
         assertThat(documentoRepository.findByTipo(DocumentoVenta.Tipo.BOLETA)).hasSize(2);
-        assertThat(documentoRepository.findByRutCliente("12345678-5")).hasSize(2);
-        assertThat(documentoRepository.findByRutCliente("99999999-9")).isEmpty();
+        assertThat(documentoRepository.findByIdCliente(42L)).hasSize(2);
+        assertThat(documentoRepository.findByIdCliente(99L)).isEmpty();
     }
 
     @Test

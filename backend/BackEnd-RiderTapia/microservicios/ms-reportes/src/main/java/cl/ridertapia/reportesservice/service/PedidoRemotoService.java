@@ -16,7 +16,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
-
+/**
+ * Consulta al servicio de pedidos por HTTP.
+ * Ese servicio responde con Spring HATEOAS: las listas llegan dentro de "_embedded" y cada
+ * elemento trae "_links". Por eso las listas se leen como JSON genérico y se extraen a mano.
+ */
 @Service
 public class PedidoRemotoService {
 

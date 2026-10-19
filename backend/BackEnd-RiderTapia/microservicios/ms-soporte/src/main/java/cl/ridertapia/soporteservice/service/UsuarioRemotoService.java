@@ -10,10 +10,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+/** Consulta a usuario-service (por HTTP) para comprobar que existe la cuenta de un RUT. */
 @Service
 public class UsuarioRemotoService {
 
-    public static final String RUTA_USUARIO = "/api/v1/usuarios/{rut}";
+    /** Ruta de la cuenta en usuario-service. Si allá cambia (por ejemplo a /api/v1/usuarios), se cambia solo aquí. */
+    public static final String RUTA_USUARIO = "/api/usuarios/{rut}";
 
     private final RestClient restClient;
 
@@ -26,6 +28,7 @@ public class UsuarioRemotoService {
         this.restClient = RestClient.builder().baseUrl(baseUrl).requestFactory(factory).build();
     }
 
+    /** Constructor para las pruebas: recibe un RestClient ya armado (por ejemplo, uno simulado). */
     UsuarioRemotoService(RestClient restClient) {
         this.restClient = restClient;
     }

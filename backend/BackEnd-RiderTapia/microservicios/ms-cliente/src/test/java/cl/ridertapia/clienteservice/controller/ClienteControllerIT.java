@@ -28,7 +28,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+/**
+ * Prueba de integración: levanta toda la aplicación (controller + service + repository) con H2 en memoria.
+ * Solo se simula UsuarioRemotoService, porque usuario-service es otro microservicio que no está corriendo en la prueba.
+ */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
@@ -57,7 +60,7 @@ class ClienteControllerIT {
                 .thenReturn(new UsuarioDto("12345678-5", "juan.perez@example.com", "CLIENTE"));
         ClienteRequest cliente = new ClienteRequest("12345678-5", "Juan", "Perez", "+56912345678", "Calle 1", "Concepción");
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cliente)))
                 .andExpect(status().isCreated())
@@ -65,7 +68,7 @@ class ClienteControllerIT {
                 .andExpect(jsonPath("$.nombre").value("Juan"))
                 .andExpect(jsonPath("$._links").exists());
 
-        mockMvc.perform(get("/api/v1/clientes"))
+        mockMvc.perform(get("/api/clientes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.clientes", hasSize(1)))
                 .andExpect(jsonPath("$._embedded.clientes[0].nombre").value("Juan"))
@@ -83,7 +86,7 @@ class ClienteControllerIT {
         clienteRepository.save(Cliente.builder().rutUsuario("11111111-1").nombre("Maria").apellido("Gomez")
                 .comuna("Talcahuano").build());
 
-        mockMvc.perform(get("/api/v1/clientes/11111111-1"))
+        mockMvc.perform(get("/api/clientes/11111111-1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre").value("Maria"))
                 .andExpect(jsonPath("$.comuna").value("Talcahuano"))
@@ -92,7 +95,7 @@ class ClienteControllerIT {
 
     @Test
     void testObtenerClienteInexistente() throws Exception {
-        mockMvc.perform(get("/api/v1/clientes/12345678-5"))
+        mockMvc.perform(get("/api/clientes/12345678-5"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.mensaje", containsString("12345678-5")));
@@ -104,11 +107,11 @@ class ClienteControllerIT {
         clienteRepository.save(Cliente.builder().rutUsuario("11111111-1").nombre("Ana").apellido("Pedraza").build());
         clienteRepository.save(Cliente.builder().rutUsuario("12342313-5").nombre("Luis").apellido("Rojas").build());
 
-        mockMvc.perform(get("/api/v1/clientes/buscar").param("nombre", "ped"))
+        mockMvc.perform(get("/api/clientes/buscar").param("nombre", "ped"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.clientes", hasSize(2)));
 
-        mockMvc.perform(get("/api/v1/clientes/buscar").param("nombre", "zzz"))
+        mockMvc.perform(get("/api/clientes/buscar").param("nombre", "zzz"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
     }
@@ -121,7 +124,7 @@ class ClienteControllerIT {
         ClienteUpdateRequest actualizado =
                 new ClienteUpdateRequest("Carlos", "Lopez", "+56922222222", "Nueva calle 9", "Hualpén");
 
-        mockMvc.perform(put("/api/v1/clientes/12342313-5")
+        mockMvc.perform(put("/api/clientes/12342313-5")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(actualizado)))
                 .andExpect(status().isOk())
@@ -141,10 +144,10 @@ class ClienteControllerIT {
         String json = objectMapper.writeValueAsString(
                 new ClienteRequest("12345678-5", "Juan", "Perez", null, null, null));
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.mensaje", containsString("12345678-5")));
 
@@ -158,7 +161,7 @@ class ClienteControllerIT {
         String json = objectMapper.writeValueAsString(
                 new ClienteRequest("12345678-5", "Juan", "Perez", null, null, null));
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensaje", containsString("rol CLIENTE")));
 
@@ -172,7 +175,7 @@ class ClienteControllerIT {
         String json = objectMapper.writeValueAsString(
                 new ClienteRequest("12345678-5", "Juan", "Perez", null, null, null));
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isNotFound());
 
         assertThat(clienteRepository.count()).isZero();
@@ -185,7 +188,7 @@ class ClienteControllerIT {
         String json = objectMapper.writeValueAsString(
                 new ClienteRequest("12345678-5", "Juan", "Perez", null, null, null));
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isServiceUnavailable());
 
         assertThat(clienteRepository.count()).isZero();
@@ -195,7 +198,7 @@ class ClienteControllerIT {
     void testCrearClienteConDatosInvalidos() throws Exception {
         String json = objectMapper.writeValueAsString(new ClienteRequest("123", "", "", "abc", null, null));
 
-        mockMvc.perform(post("/api/v1/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/clientes").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensaje", containsString("rutUsuario")));
     }

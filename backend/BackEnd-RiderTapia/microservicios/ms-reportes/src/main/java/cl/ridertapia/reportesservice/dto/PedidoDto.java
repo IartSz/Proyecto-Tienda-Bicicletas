@@ -3,6 +3,10 @@ package cl.ridertapia.reportesservice.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
+/**
+ * Lo que reportes-service necesita de un pedido del servicio de pedidos.
+ * Se ignoran los demás campos (cupón, empleado, datos del visitante, enlaces HATEOAS, etc.).
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PedidoDto(
         Long idPedido,
@@ -13,6 +17,6 @@ public record PedidoDto(
         Integer subtotal,
         Integer descuento,
         Integer total,
-        String rutCliente
+        Long idCliente
 ) {
 }

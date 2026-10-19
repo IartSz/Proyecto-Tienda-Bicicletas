@@ -61,7 +61,7 @@ public final class DocumentoDto {
             Long numero,
             DocumentoVenta.Tipo tipo,
             Long idPedido,
-            String rutCliente,
+            Long idCliente,
             LocalDateTime fechaEmision,
             Integer neto,
             Integer iva,
@@ -69,7 +69,7 @@ public final class DocumentoDto {
     ) {
         public static Resumen desde(DocumentoVenta d) {
             return new Resumen(d.getIdDocumento(), d.getNumero(), d.getTipo(), d.getIdPedido(),
-                    d.getRutCliente(), d.getFechaEmision(), d.getNeto(), d.getIva(), d.getTotal());
+                    d.getIdCliente(), d.getFechaEmision(), d.getNeto(), d.getIva(), d.getTotal());
         }
     }
 

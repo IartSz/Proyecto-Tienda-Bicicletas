@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestClient;
 
+/** Prueba el cliente HTTP contra un usuario-service simulado (no abre ningún puerto). */
 class UsuarioRemotoServiceTest {
 
     private static final String BASE = "http://usuario-service";
@@ -38,9 +39,9 @@ class UsuarioRemotoServiceTest {
     void obtenerPorRut_ok() {
         String json = """
                 {"rutUsuario":"12345678-5","emailCliente":"pedro@correo.cl","rol":"CLIENTE",
-                 "_links":{"self":{"href":"http://localhost:9001/api/v1/usuarios/12345678-5"}}}
+                 "_links":{"self":{"href":"http://localhost:8081/api/usuarios/12345678-5"}}}
                 """;
-        servidor.expect(requestTo(BASE + "/api/v1/usuarios/12345678-5"))
+        servidor.expect(requestTo(BASE + "/api/usuarios/12345678-5"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(json, MediaType.parseMediaType("application/hal+json")));
 
@@ -54,7 +55,7 @@ class UsuarioRemotoServiceTest {
     @Test
     @DisplayName("obtenerPorRut: 404 de usuario-service se traduce a noEncontrado")
     void obtenerPorRut_noExiste() {
-        servidor.expect(requestTo(BASE + "/api/v1/usuarios/12345678-5"))
+        servidor.expect(requestTo(BASE + "/api/usuarios/12345678-5"))
                 .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
         assertThatThrownBy(() -> usuarioRemoto.obtenerPorRut("12345678-5"))
@@ -65,7 +66,7 @@ class UsuarioRemotoServiceTest {
     @Test
     @DisplayName("obtenerPorRut: error 500 de usuario-service se traduce a 503")
     void obtenerPorRut_errorDelServidor() {
-        servidor.expect(requestTo(BASE + "/api/v1/usuarios/12345678-5"))
+        servidor.expect(requestTo(BASE + "/api/usuarios/12345678-5"))
                 .andRespond(withServerError());
 
         assertThatThrownBy(() -> usuarioRemoto.obtenerPorRut("12345678-5"))

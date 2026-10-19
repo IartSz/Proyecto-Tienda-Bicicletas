@@ -1,7 +1,8 @@
 {
   "info": {
+    "_postman_id": "4d200afb-7b1e-4aee-99ce-bf17cb0d5f3b",
     "name": "Rider Tapia Biker - API Gateway",
-    "description": "Rutas a través del gateway (variable 'gateway'). Ejecutar con Run collection.",
+    "description": "Prueba todos los microservicios a través del gateway (variable gateway, por defecto http://localhost:9000).\n\nUso: levantar todo con iniciar-todo.ps1 y ejecutar la colección completa con Run collection, en orden. Cada ejecución crea sus propios datos con un RUT y un sufijo nuevos, y la carpeta \"Z. Limpieza\" los borra al final.\n\nLos requests usan los ids que guardan los anteriores: para probar uno suelto, ejecutar antes los de su carpeta en orden.\n\nTres requests esperan un error a propósito y sus pruebas pasan: \"Crear con formato no permitido\" (400), \"Calificar otra vez (no se permite)\" (409) y \"Recibir más de lo pendiente\" (409).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -11,231 +12,235 @@
     },
     {
       "key": "rut",
-      "value": "12345678-5"
+      "value": ""
     },
     {
       "key": "sufijo",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_ajustes",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_alertas_stock",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_avisos_stock",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_bicicletas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_boletas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_calificaciones_servicio",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_cargas_masivas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_carritos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_categorias",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_cierres_caja",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_compatibilidades",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_contactos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_cupones",
-      "value": "1"
+      "value": ""
+    },
+    {
+      "key": "id_detalle_factura",
+      "value": ""
     },
     {
       "key": "id_detalles",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_detalles_conteo",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_detalles_orden_compra",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_detalles_recepcion",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_devoluciones",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_documentos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_errores_carga",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_especificaciones",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_facturas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_fotos_solicitud",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_garantias",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_historial_estados",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_imagenes",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_ingresos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_items_carrito",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_items_inventario",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_marcas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_movimientos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_notificaciones",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_ofertas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_ordenes_compra",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_ordenes_trabajo",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_pagos_presenciales",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_pagos_transferencia",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_pagos_webpay",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_pedido_factura",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_pedidos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_productos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_productos_proveedor",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_proveedores",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_recepciones_compra",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_reportes",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_repuestos_utilizados",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_resenas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_seguimientos",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_solicitudes_servicio",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_soporte_resenas",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_tipos_servicio",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_tomas_inventario",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_variantes",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "id_visitantes",
-      "value": "1"
+      "value": ""
     },
     {
       "key": "numero_factura",
-      "value": "1"
+      "value": ""
     }
   ],
   "item": [
@@ -247,17 +252,23 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "// RUT válido y sufijo únicos para esta ejecución",
-              "const cuerpo = String(10000000 + Math.floor(Math.random() * 9000000));",
-              "let suma = 0, factor = 2;",
-              "for (let i = cuerpo.length - 1; i >= 0; i--) {",
-              "    suma += Number(cuerpo[i]) * factor;",
-              "    factor = factor === 7 ? 2 : factor + 1;",
-              "}",
-              "const resto = 11 - (suma % 11);",
-              "const dv = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);",
-              "pm.collectionVariables.set('rut', cuerpo + '-' + dv);",
-              "pm.collectionVariables.set('sufijo', String(Date.now()).slice(-6));"
+              "// Cada ejecución parte con RUT y sufijo nuevos y sin ids de ejecuciones anteriores",
+              "const ids = [\"id_ajustes\", \"id_alertas_stock\", \"id_avisos_stock\", \"id_bicicletas\", \"id_boletas\", \"id_calificaciones_servicio\", \"id_cargas_masivas\", \"id_carritos\", \"id_categorias\", \"id_cierres_caja\", \"id_compatibilidades\", \"id_contactos\", \"id_cupones\", \"id_detalle_factura\", \"id_detalles\", \"id_detalles_conteo\", \"id_detalles_orden_compra\", \"id_detalles_recepcion\", \"id_devoluciones\", \"id_documentos\", \"id_errores_carga\", \"id_especificaciones\", \"id_facturas\", \"id_fotos_solicitud\", \"id_garantias\", \"id_historial_estados\", \"id_imagenes\", \"id_ingresos\", \"id_items_carrito\", \"id_items_inventario\", \"id_marcas\", \"id_movimientos\", \"id_notificaciones\", \"id_ofertas\", \"id_ordenes_compra\", \"id_ordenes_trabajo\", \"id_pagos_presenciales\", \"id_pagos_transferencia\", \"id_pagos_webpay\", \"id_pedido_factura\", \"id_pedidos\", \"id_productos\", \"id_productos_proveedor\", \"id_proveedores\", \"id_recepciones_compra\", \"id_reportes\", \"id_repuestos_utilizados\", \"id_resenas\", \"id_seguimientos\", \"id_solicitudes_servicio\", \"id_soporte_resenas\", \"id_tipos_servicio\", \"id_tomas_inventario\", \"id_variantes\", \"id_visitantes\", \"numero_factura\"];",
+              "ids.forEach(function (k) { pm.collectionVariables.set(k, ''); });",
+              "pm.collectionVariables.set('rut', '');",
+              "pm.collectionVariables.set('sufijo', '');",
+              "if (!pm.collectionVariables.get('rut') || !pm.collectionVariables.get('sufijo')) {",
+              "    const cuerpo = String(10000000 + Math.floor(Math.random() * 9000000));",
+              "    let suma = 0, factor = 2;",
+              "    for (let i = cuerpo.length - 1; i >= 0; i--) {",
+              "        suma += Number(cuerpo[i]) * factor;",
+              "        factor = factor === 7 ? 2 : factor + 1;",
+              "    }",
+              "    const resto = 11 - (suma % 11);",
+              "    const dv = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);",
+              "    pm.collectionVariables.set('rut', cuerpo + '-' + dv);",
+              "    pm.collectionVariables.set('sufijo', String(Date.now()).slice(-6));",
+              "}"
             ]
           }
         },
@@ -11750,7 +11761,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{gateway}}/api/v1/documentos/cliente/{{rut}}",
+                  "raw": "{{gateway}}/api/v1/documentos/cliente/1",
                   "host": [
                     "{{gateway}}"
                   ],
@@ -11759,7 +11770,7 @@
                     "v1",
                     "documentos",
                     "cliente",
-                    "{{rut}}"
+                    "1"
                   ]
                 }
               }
@@ -13665,6 +13676,29 @@
           }
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// RUT válido y sufijo únicos; se generan solos si todavía no existen",
+          "if (!pm.collectionVariables.get('rut') || !pm.collectionVariables.get('sufijo')) {",
+          "    const cuerpo = String(10000000 + Math.floor(Math.random() * 9000000));",
+          "    let suma = 0, factor = 2;",
+          "    for (let i = cuerpo.length - 1; i >= 0; i--) {",
+          "        suma += Number(cuerpo[i]) * factor;",
+          "        factor = factor === 7 ? 2 : factor + 1;",
+          "    }",
+          "    const resto = 11 - (suma % 11);",
+          "    const dv = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);",
+          "    pm.collectionVariables.set('rut', cuerpo + '-' + dv);",
+          "    pm.collectionVariables.set('sufijo', String(Date.now()).slice(-6));",
+          "}"
+        ]
+      }
     }
   ]
 }

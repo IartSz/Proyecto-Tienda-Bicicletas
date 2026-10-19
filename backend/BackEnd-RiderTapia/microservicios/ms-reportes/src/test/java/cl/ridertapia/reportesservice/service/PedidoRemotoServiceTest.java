@@ -43,8 +43,8 @@ class PedidoRemotoServiceTest {
 
     private static final String PEDIDO_JSON = """
             {"idPedido":1,"numero":"P-0001","fechaCreacion":"2026-10-07T10:30:00","estado":"PAGADO","canal":"WEB",
-             "subtotal":10000,"descuento":0,"total":10000,"rutCliente":"12345678-5","cuponAplicado":"X",
-             "_links":{"self":{"href":"http://localhost:9006/api/v1/pedidos/1"}}}
+             "subtotal":10000,"descuento":0,"total":10000,"idCliente":42,"cuponAplicado":"X",
+             "_links":{"self":{"href":"http://localhost:8085/api/v1/pedidos/1"}}}
             """;
 
     @Test
@@ -62,7 +62,7 @@ class PedidoRemotoServiceTest {
         assertThat(p.idPedido()).isEqualTo(1L);
         assertThat(p.estado()).isEqualTo("PAGADO");
         assertThat(p.total()).isEqualTo(10000);
-        assertThat(p.rutCliente()).isEqualTo("12345678-5");
+        assertThat(p.idCliente()).isEqualTo(42L);
         assertThat(p.fechaCreacion()).isEqualTo(LocalDateTime.of(2026, 10, 7, 10, 30));
         servidor.verify();
     }

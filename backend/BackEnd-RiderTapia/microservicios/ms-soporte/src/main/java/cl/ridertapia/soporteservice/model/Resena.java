@@ -12,15 +12,17 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data 
+/** Opinión de un cliente sobre un producto. Un cliente solo puede reseñar un producto una vez. */
 @Entity
 @Table(name = "resenas",
         uniqueConstraints = @UniqueConstraint(columnNames = {"rut_usuario", "id_producto"}))
-
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

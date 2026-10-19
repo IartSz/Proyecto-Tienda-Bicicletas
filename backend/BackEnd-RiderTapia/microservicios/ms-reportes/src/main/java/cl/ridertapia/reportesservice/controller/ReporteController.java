@@ -17,6 +17,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,12 +28,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/reportes")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*") // Solo para desarrollo
 @Tag(name = "Reportes de ventas", description = "Reportes diarios, semanales y mensuales con los productos más vendidos")
 public class ReporteController {
 
     private final ReporteVentasService reporteService;
     private final ReporteModelAssembler assembler;
 
+    // "fecha" va en formato 2026-10-07; si se omite se usa hoy. El período se calcula a partir de esa fecha.
 
     @Operation(summary = "Generar el reporte diario",
             description = "Suma las ventas del día indicado (hoy si no se envía fecha). "

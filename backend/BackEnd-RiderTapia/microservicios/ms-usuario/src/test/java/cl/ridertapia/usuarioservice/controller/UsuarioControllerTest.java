@@ -54,29 +54,29 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios → 201, Location y enlace self")
+    @DisplayName("POST /api/usuarios → 201, Location y enlace self")
     void guardarUsuario_ok() throws Exception {
         when(usuarioService.guardarUsuario(any(UsuarioRequest.class))).thenReturn(respuesta());
         UsuarioRequest request = new UsuarioRequest(RUT, EMAIL, "clave12345", null);
 
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", endsWith("/api/v1/usuarios/" + RUT)))
+                .andExpect(header().string("Location", endsWith("/api/usuarios/" + RUT)))
                 .andExpect(jsonPath("$.rutUsuario").value(RUT))
                 .andExpect(jsonPath("$.emailCliente").value(EMAIL))
                 .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/usuarios/" + RUT)))
-                .andExpect(jsonPath("$._links.usuarios.href", endsWith("/api/v1/usuarios")));
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/usuarios/" + RUT)))
+                .andExpect(jsonPath("$._links.usuarios.href", endsWith("/api/usuarios")));
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios con datos inválidos → 400 con el detalle de cada campo")
+    @DisplayName("POST /api/usuarios con datos inválidos → 400 con el detalle de cada campo")
     void guardarUsuario_validacion() throws Exception {
         UsuarioRequest request = new UsuarioRequest("123", "no-es-email", "corta", "SUPERADMIN");
 
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -88,13 +88,13 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios con RUT repetido → 409")
+    @DisplayName("POST /api/usuarios con RUT repetido → 409")
     void guardarUsuario_conflicto() throws Exception {
         when(usuarioService.guardarUsuario(any(UsuarioRequest.class)))
                 .thenThrow(ApiException.conflicto("Ya existe un usuario con el RUT " + RUT));
         UsuarioRequest request = new UsuarioRequest(RUT, EMAIL, "clave12345", null);
 
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isConflict())
@@ -102,61 +102,61 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/usuarios → colección HAL con enlaces por usuario")
+    @DisplayName("GET /api/usuarios → colección HAL con enlaces por usuario")
     void listarUsuarios() throws Exception {
         when(usuarioService.listarUsuarios()).thenReturn(List.of(
                 respuesta(), new UsuarioResponse("11111111-1", "ana@correo.cl", "ADMIN")));
 
-        mockMvc.perform(get("/api/v1/usuarios"))
+        mockMvc.perform(get("/api/usuarios"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.usuarios", hasSize(2)))
                 .andExpect(jsonPath("$._embedded.usuarios[0].rutUsuario").value(RUT))
                 .andExpect(jsonPath("$._embedded.usuarios[0]._links.self.href",
-                        endsWith("/api/v1/usuarios/" + RUT)))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/usuarios")));
+                        endsWith("/api/usuarios/" + RUT)))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/usuarios")));
     }
 
     @Test
-    @DisplayName("GET /api/v1/usuarios/{rut} → 200 con enlaces")
+    @DisplayName("GET /api/usuarios/{rut} → 200 con enlaces")
     void findByRut_ok() throws Exception {
         when(usuarioService.findByRut(RUT)).thenReturn(respuesta());
 
-        mockMvc.perform(get("/api/v1/usuarios/{rut}", RUT))
+        mockMvc.perform(get("/api/usuarios/{rut}", RUT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rol").value("CLIENTE"))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/usuarios/" + RUT)));
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/usuarios/" + RUT)));
     }
 
     @Test
-    @DisplayName("GET /api/v1/usuarios/{rut} inexistente → 404")
+    @DisplayName("GET /api/usuarios/{rut} inexistente → 404")
     void findByRut_noExiste() throws Exception {
         when(usuarioService.findByRut(RUT))
                 .thenThrow(ApiException.noEncontrado("No existe un usuario con el RUT " + RUT));
 
-        mockMvc.perform(get("/api/v1/usuarios/{rut}", RUT))
+        mockMvc.perform(get("/api/usuarios/{rut}", RUT))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.mensaje", containsString(RUT)));
     }
 
     @Test
-    @DisplayName("GET /api/v1/usuarios/buscar?email= → 200")
+    @DisplayName("GET /api/usuarios/buscar?email= → 200")
     void findByEmail() throws Exception {
         when(usuarioService.findByEmailCliente(EMAIL)).thenReturn(respuesta());
 
-        mockMvc.perform(get("/api/v1/usuarios/buscar").param("email", EMAIL))
+        mockMvc.perform(get("/api/usuarios/buscar").param("email", EMAIL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.emailCliente").value(EMAIL));
     }
 
     @Test
-    @DisplayName("PUT /api/v1/usuarios/{rut} → 200 con el usuario actualizado")
+    @DisplayName("PUT /api/usuarios/{rut} → 200 con el usuario actualizado")
     void actualizarUsuario_ok() throws Exception {
         when(usuarioService.actualizarUsuario(eq(RUT), any(UsuarioUpdateRequest.class)))
                 .thenReturn(new UsuarioResponse(RUT, "nuevo@correo.cl", "ADMIN"));
         UsuarioUpdateRequest request = new UsuarioUpdateRequest("nuevo@correo.cl", null, "ADMIN");
 
-        mockMvc.perform(put("/api/v1/usuarios/{rut}", RUT)
+        mockMvc.perform(put("/api/usuarios/{rut}", RUT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -165,11 +165,11 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/v1/usuarios/{rut} con email inválido → 400")
+    @DisplayName("PUT /api/usuarios/{rut} con email inválido → 400")
     void actualizarUsuario_validacion() throws Exception {
         UsuarioUpdateRequest request = new UsuarioUpdateRequest("malo", null, null);
 
-        mockMvc.perform(put("/api/v1/usuarios/{rut}", RUT)
+        mockMvc.perform(put("/api/usuarios/{rut}", RUT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -177,11 +177,11 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios/login correcto → 200")
+    @DisplayName("POST /api/usuarios/login correcto → 200")
     void login_ok() throws Exception {
         when(usuarioService.iniciarSesion(any(LoginRequest.class))).thenReturn(respuesta());
 
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest(EMAIL, "clave12345"))))
                 .andExpect(status().isOk())
@@ -190,12 +190,12 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios/login con credenciales malas → 401")
+    @DisplayName("POST /api/usuarios/login con credenciales malas → 401")
     void login_noAutorizado() throws Exception {
         when(usuarioService.iniciarSesion(any(LoginRequest.class)))
                 .thenThrow(ApiException.noAutorizado("Email o contraseña incorrectos"));
 
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest(EMAIL, "mala"))))
                 .andExpect(status().isUnauthorized())
@@ -203,20 +203,20 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios/login sin campos → 400")
+    @DisplayName("POST /api/usuarios/login sin campos → 400")
     void login_validacion() throws Exception {
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios/recuperar-password → 200 con mensaje")
+    @DisplayName("POST /api/usuarios/recuperar-password → 200 con mensaje")
     void recuperarPassword_ok() throws Exception {
         RecuperarPasswordRequest request = new RecuperarPasswordRequest(EMAIL, "nuevaClave123");
 
-        mockMvc.perform(post("/api/v1/usuarios/recuperar-password")
+        mockMvc.perform(post("/api/usuarios/recuperar-password")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -226,11 +226,11 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/usuarios/recuperar-password con clave corta → 400")
+    @DisplayName("POST /api/usuarios/recuperar-password con clave corta → 400")
     void recuperarPassword_validacion() throws Exception {
         RecuperarPasswordRequest request = new RecuperarPasswordRequest(EMAIL, "corta");
 
-        mockMvc.perform(post("/api/v1/usuarios/recuperar-password")
+        mockMvc.perform(post("/api/usuarios/recuperar-password")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())

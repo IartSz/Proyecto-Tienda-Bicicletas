@@ -7,6 +7,7 @@ import cl.ridertapia.reportesservice.dto.ReporteDto;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
 
+/** Agrega los enlaces HATEOAS a los reportes. */
 @Component
 public class ReporteModelAssembler {
 

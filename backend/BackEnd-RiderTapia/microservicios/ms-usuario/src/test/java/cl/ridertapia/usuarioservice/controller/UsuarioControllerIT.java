@@ -56,7 +56,7 @@ class UsuarioControllerIT {
     void testCrearYObtenerUsuario() throws Exception {
         UsuarioRequest usuario = new UsuarioRequest("12345678-5", "juan.perez@example.com", "password123", "CLIENTE");
 
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(usuario)))
                 .andExpect(status().isCreated())
@@ -66,7 +66,7 @@ class UsuarioControllerIT {
                 .andExpect(jsonPath("$.password").doesNotExist())
                 .andExpect(jsonPath("$._links").exists());
 
-        mockMvc.perform(get("/api/v1/usuarios"))
+        mockMvc.perform(get("/api/usuarios"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.usuarios", hasSize(1)))
                 .andExpect(jsonPath("$._embedded.usuarios[0].rutUsuario").value("12345678-5"))
@@ -86,20 +86,20 @@ class UsuarioControllerIT {
         usuarioRepository.save(Usuario.builder().rutUsuario("11111111-1").emailCliente("maria.gomez@example.com")
                 .password(passwordEncoder.encode("password123")).rol("ADMIN").build());
 
-        mockMvc.perform(get("/api/v1/usuarios/11111111-1"))
+        mockMvc.perform(get("/api/usuarios/11111111-1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.emailCliente").value("maria.gomez@example.com"))
                 .andExpect(jsonPath("$.rol").value("ADMIN"))
                 .andExpect(jsonPath("$._links.self").exists());
 
-        mockMvc.perform(get("/api/v1/usuarios/buscar").param("email", "MARIA.GOMEZ@example.com"))
+        mockMvc.perform(get("/api/usuarios/buscar").param("email", "MARIA.GOMEZ@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rutUsuario").value("11111111-1"));
     }
 
     @Test
     void testObtenerUsuarioInexistente() throws Exception {
-        mockMvc.perform(get("/api/v1/usuarios/12345678-5"))
+        mockMvc.perform(get("/api/usuarios/12345678-5"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.mensaje", containsString("12345678-5")));
@@ -112,7 +112,7 @@ class UsuarioControllerIT {
 
         UsuarioUpdateRequest actualizado = new UsuarioUpdateRequest("carlos.lopez@example.com", "password423", "ADMIN");
 
-        mockMvc.perform(put("/api/v1/usuarios/12342313-5")
+        mockMvc.perform(put("/api/usuarios/12342313-5")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(actualizado)))
                 .andExpect(status().isOk())
@@ -130,10 +130,10 @@ class UsuarioControllerIT {
         UsuarioRequest usuario = new UsuarioRequest("12345678-5", "juan.perez@example.com", "password123", null);
         String json = objectMapper.writeValueAsString(usuario);
 
-        mockMvc.perform(post("/api/v1/usuarios").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/usuarios").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(post("/api/v1/usuarios").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/api/usuarios").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.mensaje", containsString("12345678-5")));
 
@@ -144,7 +144,7 @@ class UsuarioControllerIT {
     void testCrearUsuarioConRutInvalido() throws Exception {
         UsuarioRequest usuario = new UsuarioRequest("12345678-9", "juan.perez@example.com", "password123", null);
 
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(usuario)))
                 .andExpect(status().isBadRequest())
@@ -155,20 +155,20 @@ class UsuarioControllerIT {
 
     @Test
     void testIniciarSesion() throws Exception {
-        mockMvc.perform(post("/api/v1/usuarios")
+        mockMvc.perform(post("/api/usuarios")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 new UsuarioRequest("12345678-5", "juan.perez@example.com", "password123", null))))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "password123"))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rutUsuario").value("12345678-5"))
                 .andExpect(jsonPath("$._links").exists());
 
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "incorrecta"))))
                 .andExpect(status().isUnauthorized())
@@ -180,7 +180,7 @@ class UsuarioControllerIT {
         usuarioRepository.save(Usuario.builder().rutUsuario("12345678-5").emailCliente("juan.perez@example.com")
                 .password(passwordEncoder.encode("password123")).rol("CLIENTE").build());
 
-        mockMvc.perform(post("/api/v1/usuarios/recuperar-password")
+        mockMvc.perform(post("/api/usuarios/recuperar-password")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 new RecuperarPasswordRequest("juan.perez@example.com", "claveNueva123"))))
@@ -188,11 +188,11 @@ class UsuarioControllerIT {
                 .andExpect(jsonPath("$.mensaje").value("Contraseña actualizada correctamente"));
 
         // La clave nueva funciona y la anterior ya no
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "claveNueva123"))))
                 .andExpect(status().isOk());
-        mockMvc.perform(post("/api/v1/usuarios/login")
+        mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "password123"))))
                 .andExpect(status().isUnauthorized());

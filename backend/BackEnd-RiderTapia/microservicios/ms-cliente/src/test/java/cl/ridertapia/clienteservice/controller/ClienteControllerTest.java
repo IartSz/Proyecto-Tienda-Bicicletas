@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+/** Prueba la capa web (rutas, validación, errores y enlaces HATEOAS) con el servicio simulado. */
 @WebMvcTest(ClienteController.class)
 @Import(ClienteModelAssembler.class)
 class ClienteControllerTest {
@@ -54,27 +54,27 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/clientes → 201, Location y enlace self")
+    @DisplayName("POST /api/clientes → 201, Location y enlace self")
     void guardarCliente_ok() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class))).thenReturn(respuesta());
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request())))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("Location", endsWith("/api/v1/clientes/" + RUT)))
+                .andExpect(header().string("Location", endsWith("/api/clientes/" + RUT)))
                 .andExpect(jsonPath("$.rutUsuario").value(RUT))
                 .andExpect(jsonPath("$.nombre").value("Pedro"))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/clientes/" + RUT)))
-                .andExpect(jsonPath("$._links.clientes.href", endsWith("/api/v1/clientes")));
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/clientes/" + RUT)))
+                .andExpect(jsonPath("$._links.clientes.href", endsWith("/api/clientes")));
     }
 
     @Test
-    @DisplayName("POST /api/v1/clientes con datos inválidos → 400 con el detalle de cada campo")
+    @DisplayName("POST /api/clientes con datos inválidos → 400 con el detalle de cada campo")
     void guardarCliente_validacion() throws Exception {
         ClienteRequest invalido = new ClienteRequest("123", "", " ", "abc", null, null);
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalido)))
                 .andExpect(status().isBadRequest())
@@ -86,12 +86,12 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/clientes con perfil existente → 409")
+    @DisplayName("POST /api/clientes con perfil existente → 409")
     void guardarCliente_conflicto() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.conflicto("Ya existe un perfil de cliente con el RUT " + RUT));
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request())))
                 .andExpect(status().isConflict())
@@ -99,95 +99,95 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/clientes sin cuenta de usuario → 404")
+    @DisplayName("POST /api/clientes sin cuenta de usuario → 404")
     void guardarCliente_sinCuenta() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.noEncontrado("No existe una cuenta de usuario con el RUT " + RUT));
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request())))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    @DisplayName("POST /api/v1/clientes con usuario-service caído → 503")
+    @DisplayName("POST /api/clientes con usuario-service caído → 503")
     void guardarCliente_servicioNoDisponible() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.servicioNoDisponible("usuario-service no disponible"));
 
-        mockMvc.perform(post("/api/v1/clientes")
+        mockMvc.perform(post("/api/clientes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request())))
                 .andExpect(status().isServiceUnavailable());
     }
 
     @Test
-    @DisplayName("GET /api/v1/clientes → colección HAL con enlaces por cliente")
+    @DisplayName("GET /api/clientes → colección HAL con enlaces por cliente")
     void listarClientes() throws Exception {
         when(clienteService.listarClientes()).thenReturn(List.of(
                 respuesta(), new ClienteResponse("11111111-1", "Ana", "Pérez", null, null, null)));
 
-        mockMvc.perform(get("/api/v1/clientes"))
+        mockMvc.perform(get("/api/clientes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.clientes", hasSize(2)))
                 .andExpect(jsonPath("$._embedded.clientes[0].nombre").value("Pedro"))
-                .andExpect(jsonPath("$._embedded.clientes[0]._links.self.href", endsWith("/api/v1/clientes/" + RUT)))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/clientes")));
+                .andExpect(jsonPath("$._embedded.clientes[0]._links.self.href", endsWith("/api/clientes/" + RUT)))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/clientes")));
     }
 
     @Test
-    @DisplayName("GET /api/v1/clientes/{rut} → 200 con enlaces")
+    @DisplayName("GET /api/clientes/{rut} → 200 con enlaces")
     void findByRut_ok() throws Exception {
         when(clienteService.findByRut(RUT)).thenReturn(respuesta());
 
-        mockMvc.perform(get("/api/v1/clientes/{rut}", RUT))
+        mockMvc.perform(get("/api/clientes/{rut}", RUT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comuna").value("Concepción"))
-                .andExpect(jsonPath("$._links.self.href", endsWith("/api/v1/clientes/" + RUT)));
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/clientes/" + RUT)));
     }
 
     @Test
-    @DisplayName("GET /api/v1/clientes/{rut} inexistente → 404")
+    @DisplayName("GET /api/clientes/{rut} inexistente → 404")
     void findByRut_noExiste() throws Exception {
         when(clienteService.findByRut(RUT))
                 .thenThrow(ApiException.noEncontrado("No existe un cliente con el RUT " + RUT));
 
-        mockMvc.perform(get("/api/v1/clientes/{rut}", RUT))
+        mockMvc.perform(get("/api/clientes/{rut}", RUT))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.mensaje", containsString(RUT)));
     }
 
     @Test
-    @DisplayName("GET /api/v1/clientes/buscar?nombre= → colección con las coincidencias")
+    @DisplayName("GET /api/clientes/buscar?nombre= → colección con las coincidencias")
     void buscarPorNombre() throws Exception {
         when(clienteService.buscarPorNombre("ped")).thenReturn(List.of(respuesta()));
 
-        mockMvc.perform(get("/api/v1/clientes/buscar").param("nombre", "ped"))
+        mockMvc.perform(get("/api/clientes/buscar").param("nombre", "ped"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.clientes", hasSize(1)))
                 .andExpect(jsonPath("$._embedded.clientes[0].rutUsuario").value(RUT));
     }
 
     @Test
-    @DisplayName("GET /api/v1/clientes/buscar sin coincidencias → 200 sin _embedded")
+    @DisplayName("GET /api/clientes/buscar sin coincidencias → 200 sin _embedded")
     void buscarPorNombre_vacio() throws Exception {
         when(clienteService.buscarPorNombre("zzz")).thenReturn(List.of());
 
-        mockMvc.perform(get("/api/v1/clientes/buscar").param("nombre", "zzz"))
+        mockMvc.perform(get("/api/clientes/buscar").param("nombre", "zzz"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
     }
 
     @Test
-    @DisplayName("PUT /api/v1/clientes/{rut} → 200 con el cliente actualizado")
+    @DisplayName("PUT /api/clientes/{rut} → 200 con el cliente actualizado")
     void actualizarDatos_ok() throws Exception {
         when(clienteService.actualizarDatos(eq(RUT), any(ClienteUpdateRequest.class)))
                 .thenReturn(new ClienteResponse(RUT, "Pedro Pablo", "Suárez", null, "Otra calle 45", "Talcahuano"));
         ClienteUpdateRequest cuerpo = new ClienteUpdateRequest("Pedro Pablo", "Suárez", null, "Otra calle 45", "Talcahuano");
 
-        mockMvc.perform(put("/api/v1/clientes/{rut}", RUT)
+        mockMvc.perform(put("/api/clientes/{rut}", RUT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cuerpo)))
                 .andExpect(status().isOk())
@@ -197,11 +197,11 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/v1/clientes/{rut} con nombre vacío → 400")
+    @DisplayName("PUT /api/clientes/{rut} con nombre vacío → 400")
     void actualizarDatos_validacion() throws Exception {
         ClienteUpdateRequest cuerpo = new ClienteUpdateRequest("", "Suárez", null, null, null);
 
-        mockMvc.perform(put("/api/v1/clientes/{rut}", RUT)
+        mockMvc.perform(put("/api/clientes/{rut}", RUT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cuerpo)))
                 .andExpect(status().isBadRequest())

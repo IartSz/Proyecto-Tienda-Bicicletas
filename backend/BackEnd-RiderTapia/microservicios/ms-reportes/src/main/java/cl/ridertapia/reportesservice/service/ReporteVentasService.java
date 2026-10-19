@@ -2,6 +2,7 @@ package cl.ridertapia.reportesservice.service;
 
 import cl.ridertapia.reportesservice.dto.DetallePedidoDto;
 import cl.ridertapia.reportesservice.dto.PedidoDto;
+import cl.ridertapia.reportesservice.service.PedidoRemotoService;
 import cl.ridertapia.reportesservice.dto.ReporteDto;
 import cl.ridertapia.reportesservice.exception.ApiException;
 import cl.ridertapia.reportesservice.model.ProductoMasVendido;

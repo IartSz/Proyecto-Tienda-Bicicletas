@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import cl.ridertapia.reportesservice.dto.DetallePedidoDto;
 import cl.ridertapia.reportesservice.dto.PedidoDto;
+import cl.ridertapia.reportesservice.service.PedidoRemotoService;
 import cl.ridertapia.reportesservice.dto.DocumentoDto;
 import cl.ridertapia.reportesservice.exception.ApiException;
 import cl.ridertapia.reportesservice.model.DatosFactura;
@@ -49,14 +50,14 @@ class DocumentoVentaServiceTest {
     @BeforeEach
     void preparar() {
         service = new DocumentoVentaService(documentoRepository, detalleRepository, datosFacturaRepository,
-                pedidoRemoto, new CriterioVenta("PAGADO,RETIRADO"));
+                pedidoRemoto, new CriterioVenta("PAGADO,ENTREGADO"));
     }
 
     // ---------- helpers ----------
 
     private PedidoDto pedido(String estado, Integer total, Integer descuento) {
         return new PedidoDto(1L, "P-1", LocalDateTime.of(2026, 10, 7, 12, 0), estado, "WEB",
-                total, descuento, total, "12345678-5");
+                total, descuento, total, 42L);
     }
 
     private DetallePedidoDto linea(long idVariante, int cantidad, int precio) {
@@ -98,7 +99,7 @@ class DocumentoVentaServiceTest {
         assertThat(detalle.documento().tipo()).isEqualTo(DocumentoVenta.Tipo.BOLETA);
         assertThat(detalle.documento().numero()).isEqualTo(1L);
         assertThat(detalle.documento().idPedido()).isEqualTo(1L);
-        assertThat(detalle.documento().rutCliente()).isEqualTo("12345678-5");
+        assertThat(detalle.documento().idCliente()).isEqualTo(42L);
         assertThat(detalle.documento().total()).isEqualTo(11900);
         assertThat(detalle.documento().neto()).isEqualTo(10000);
         assertThat(detalle.documento().iva()).isEqualTo(1900);
@@ -154,7 +155,7 @@ class DocumentoVentaServiceTest {
     @DisplayName("Boleta: el número es correlativo dentro de su tipo")
     void boleta_correlativo() {
         when(documentoRepository.existsByIdPedido(1L)).thenReturn(false);
-        when(pedidoRemoto.obtenerPedido(1L)).thenReturn(pedido("RETIRADO", 5000, 0));
+        when(pedidoRemoto.obtenerPedido(1L)).thenReturn(pedido("ENTREGADO", 5000, 0));
         when(pedidoRemoto.listarDetallesPorPedido(1L)).thenReturn(List.of(linea(100, 1, 5000)));
         when(documentoRepository.findTopByTipoOrderByNumeroDesc(DocumentoVenta.Tipo.BOLETA))
                 .thenReturn(Optional.of(DocumentoVenta.builder().numero(7L).build()));
@@ -178,11 +179,11 @@ class DocumentoVentaServiceTest {
     @DisplayName("Boleta: 400 si el pedido no está en un estado de venta")
     void boleta_pedidoSinPagar() {
         when(documentoRepository.existsByIdPedido(1L)).thenReturn(false);
-        when(pedidoRemoto.obtenerPedido(1L)).thenReturn(pedido("PENDIENTE_PAGO", 5000, 0));
+        when(pedidoRemoto.obtenerPedido(1L)).thenReturn(pedido("PENDIENTE", 5000, 0));
 
         assertThatThrownBy(() -> service.emitirBoleta(new DocumentoDto.EmitirBoleta(1L)))
                 .satisfies(ex -> assertEstado(ex, HttpStatus.BAD_REQUEST))
-                .hasMessageContaining("PENDIENTE_PAGO");
+                .hasMessageContaining("PENDIENTE");
         verify(documentoRepository, never()).save(any());
     }
 
@@ -271,7 +272,7 @@ class DocumentoVentaServiceTest {
 
     private DocumentoVenta documento() {
         return DocumentoVenta.builder().idDocumento(1L).numero(3L).tipo(DocumentoVenta.Tipo.FACTURA).idPedido(1L)
-                .rutCliente("12345678-5").fechaEmision(LocalDateTime.of(2026, 10, 7, 12, 0)).neto(10000).iva(1900).total(11900)
+                .idCliente(42L).fechaEmision(LocalDateTime.of(2026, 10, 7, 12, 0)).neto(10000).iva(1900).total(11900)
                 .build();
     }
 
@@ -328,14 +329,14 @@ class DocumentoVentaServiceTest {
     }
 
     @Test
-    @DisplayName("listarDocumentos: sin tipo trae todos y con tipo filtra; findByRutCliente lista los del cliente")
+    @DisplayName("listarDocumentos: sin tipo trae todos y con tipo filtra; findByIdCliente lista los del cliente")
     void listados() {
         when(documentoRepository.findAll()).thenReturn(List.of(documento()));
         when(documentoRepository.findByTipo(DocumentoVenta.Tipo.BOLETA)).thenReturn(List.of());
-        when(documentoRepository.findByRutCliente("12345678-5")).thenReturn(List.of(documento()));
+        when(documentoRepository.findByIdCliente(42L)).thenReturn(List.of(documento()));
 
         assertThat(service.listarDocumentos(null)).hasSize(1);
         assertThat(service.listarDocumentos(DocumentoVenta.Tipo.BOLETA)).isEmpty();
-        assertThat(service.findByRutCliente("12345678-5")).extracting(DocumentoDto.Resumen::rutCliente).containsExactly("12345678-5");
+        assertThat(service.findByIdCliente(42L)).extracting(DocumentoDto.Resumen::idCliente).containsExactly(42L);
     }
 }

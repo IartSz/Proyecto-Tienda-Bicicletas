@@ -7,6 +7,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import cl.ridertapia.soporteservice.service.UsuarioRemotoService;
 import cl.ridertapia.soporteservice.dto.UsuarioDto;
 import cl.ridertapia.soporteservice.dto.ResenaDto;
 import cl.ridertapia.soporteservice.exception.ApiException;

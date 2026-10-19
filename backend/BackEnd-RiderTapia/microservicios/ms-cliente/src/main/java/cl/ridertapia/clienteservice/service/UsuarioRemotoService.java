@@ -15,7 +15,7 @@ import org.springframework.web.client.RestClientException;
 public class UsuarioRemotoService {
 
     /** Ruta de la cuenta en usuario-service. Si allá cambia (por ejemplo a /api/v1/usuarios), se cambia solo aquí. */
-    public static final String RUTA_USUARIO = "/api/v1/usuarios/{rut}";
+    public static final String RUTA_USUARIO = "/api/usuarios/{rut}";
 
     private final RestClient restClient;
 

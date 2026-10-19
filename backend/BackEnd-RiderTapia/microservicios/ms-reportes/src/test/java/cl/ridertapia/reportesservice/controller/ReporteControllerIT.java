@@ -26,7 +26,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+/**
+ * Prueba de integración: levanta toda la aplicación (controller + service + repository) con H2 en memoria.
+ * Solo se simula PedidoRemotoService, porque el servicio de pedidos es otro microservicio que no corre en la prueba.
+ * Los estados que cuentan como venta son los de application.properties (PAGADO, ENTREGADO, COMPLETADO).
+ */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
@@ -53,10 +57,10 @@ class ReporteControllerIT {
         reporteRepository.deleteAll();
 
         // Miércoles 7 de octubre de 2026: dos ventas, un pedido pendiente y una venta de otro día
-        p1 = new PedidoDto(1L, "P-1", LocalDateTime.of(2026, 10, 7, 10, 0), "PAGADO", "WEB", 10000, 0, 10000, "12345678-5");
-        p2 = new PedidoDto(2L, "P-2", LocalDateTime.of(2026, 10, 7, 15, 0), "RETIRADO", "WEB", 5000, 0, 5000, "11111111-1");
-        PedidoDto pendiente = new PedidoDto(3L, "P-3", LocalDateTime.of(2026, 10, 7, 16, 0), "PENDIENTE_PAGO", "WEB", 99999, 0, 99999, "10000013-K");
-        PedidoDto ayer = new PedidoDto(4L, "P-4", LocalDateTime.of(2026, 10, 6, 10, 0), "PAGADO", "WEB", 7000, 0, 7000, "12345678-5");
+        p1 = new PedidoDto(1L, "P-1", LocalDateTime.of(2026, 10, 7, 10, 0), "PAGADO", "WEB", 10000, 0, 10000, 1L);
+        p2 = new PedidoDto(2L, "P-2", LocalDateTime.of(2026, 10, 7, 15, 0), "ENTREGADO", "WEB", 5000, 0, 5000, 2L);
+        PedidoDto pendiente = new PedidoDto(3L, "P-3", LocalDateTime.of(2026, 10, 7, 16, 0), "PENDIENTE", "WEB", 99999, 0, 99999, 3L);
+        PedidoDto ayer = new PedidoDto(4L, "P-4", LocalDateTime.of(2026, 10, 6, 10, 0), "PAGADO", "WEB", 7000, 0, 7000, 1L);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(p1, p2, pendiente, ayer));
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of(
                 new DetallePedidoDto(1L, 100L, 2, 3000, 6000, p1),
@@ -128,7 +132,7 @@ class ReporteControllerIT {
                 .andExpect(status().isCreated());
 
         // Llega una venta más y se vuelve a generar el mismo día
-        PedidoDto nueva = new PedidoDto(5L, "P-5", LocalDateTime.of(2026, 10, 7, 18, 0), "PAGADO", "WEB", 2000, 0, 2000, "12342313-5");
+        PedidoDto nueva = new PedidoDto(5L, "P-5", LocalDateTime.of(2026, 10, 7, 18, 0), "PAGADO", "WEB", 2000, 0, 2000, 4L);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(p1, p2, nueva));
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of(
                 new DetallePedidoDto(1L, 100L, 2, 3000, 6000, p1),
@@ -148,8 +152,8 @@ class ReporteControllerIT {
 
     @Test
     void testReporteSemanal() throws Exception {
-        PedidoDto lunes = new PedidoDto(6L, "P-6", LocalDateTime.of(2026, 10, 5, 9, 0), "EN_PREPARACION", "WEB", 1000, 0, 1000, "12345678-5");
-        PedidoDto domingoAnterior = new PedidoDto(7L, "P-7", LocalDateTime.of(2026, 10, 4, 9, 0), "PAGADO", "WEB", 8000, 0, 8000, "12345678-5");
+        PedidoDto lunes = new PedidoDto(6L, "P-6", LocalDateTime.of(2026, 10, 5, 9, 0), "COMPLETADO", "WEB", 1000, 0, 1000, 1L);
+        PedidoDto domingoAnterior = new PedidoDto(7L, "P-7", LocalDateTime.of(2026, 10, 4, 9, 0), "PAGADO", "WEB", 8000, 0, 8000, 1L);
         when(pedidoRemoto.listarPedidos()).thenReturn(List.of(p1, p2, lunes, domingoAnterior));
         when(pedidoRemoto.listarDetalles()).thenReturn(List.of());
 

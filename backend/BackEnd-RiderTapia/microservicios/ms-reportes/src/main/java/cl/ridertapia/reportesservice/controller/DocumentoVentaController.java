@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/documentos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*") // Solo para desarrollo
 @Tag(name = "Boletas y facturas", description = "Emisión y consulta de documentos de venta")
 public class DocumentoVentaController {
 
@@ -101,15 +103,15 @@ public class DocumentoVentaController {
     }
 
     @Operation(summary = "Listar los documentos de un cliente",
-            description = "El RUT del cliente es el mismo que guarda el servicio de pedidos (ej: 12345678-5).")
+            description = "El idCliente es el que usa el servicio de pedidos.")
     @ApiResponse(responseCode = "200", description = "Documentos del cliente (puede ser una lista vacía)")
-    @GetMapping("/cliente/{rutCliente}")
-    public CollectionModel<EntityModel<DocumentoDto.Resumen>> findByRutCliente(@PathVariable String rutCliente) {
-        List<EntityModel<DocumentoDto.Resumen>> documentos = documentoService.findByRutCliente(rutCliente).stream()
+    @GetMapping("/cliente/{idCliente}")
+    public CollectionModel<EntityModel<DocumentoDto.Resumen>> findByIdCliente(@PathVariable Long idCliente) {
+        List<EntityModel<DocumentoDto.Resumen>> documentos = documentoService.findByIdCliente(idCliente).stream()
                 .map(assembler::resumen)
                 .toList();
         return CollectionModel.of(documentos,
-                linkTo(methodOn(DocumentoVentaController.class).findByRutCliente(rutCliente)).withSelfRel());
+                linkTo(methodOn(DocumentoVentaController.class).findByIdCliente(idCliente)).withSelfRel());
     }
 
     private ResponseEntity<EntityModel<DocumentoDto.Detalle>> creado(DocumentoDto.Detalle detalle) {

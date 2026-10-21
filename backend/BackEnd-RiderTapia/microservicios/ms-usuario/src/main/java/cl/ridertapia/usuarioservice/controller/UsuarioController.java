@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/usuarios")
+@RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*") // Solo para desarrollo: el front en HTML/JS corre en otro puerto
 @Tag(name = "Usuarios", description = "Gestión de cuentas de acceso (clientes y personal interno)")

@@ -1,4 +1,10 @@
-import { Link, NavLink } from 'react-router';
+import { useEffect } from 'react';
+import { Link, NavLink, useLocation } from 'react-router';
+import { Collapse } from 'bootstrap';
+
+interface NavbarProps {
+  cantidadCarrito: number;
+}
 
 interface EnlaceMenu {
     texto: string;
@@ -58,7 +64,15 @@ const ENLACES: EnlaceMenu[] = [
   { texto: 'Contacto', ruta: '/politicas/contacto' }
 ];
 
-const Navbar = () => {
+const Navbar = ({ cantidadCarrito }: NavbarProps) => {
+  const { pathname, hash } = useLocation();
+
+  // Cierra el menu movil al cambiar de pagina
+  useEffect(() => {
+    const menu = document.getElementById('navMenu');
+    if (menu) Collapse.getInstance(menu)?.hide();
+  }, [pathname, hash]);
+
   return (
     <header>
       <div className="topbar py-1">
@@ -82,6 +96,9 @@ const Navbar = () => {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <Link className="nav-link" to="/#destacados">Destacados⚡️</Link>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/ofertas">Ofertas</NavLink>
               </li>
               {GRUPOS.map((grupo) => (
                 <li className="nav-item dropdown" key={grupo.titulo}>
@@ -109,7 +126,7 @@ const Navbar = () => {
                 <Link to="/carrito" className="position-relative" title="Carrito">
                   <i className="bi bi-cart3"></i>
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style={{ fontSize: '.55rem' }}>
-                    0
+                    {cantidadCarrito}
                   </span>
                 </Link>
               </div>

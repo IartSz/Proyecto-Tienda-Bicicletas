@@ -227,3 +227,7 @@ export const buscarCategoriaPorSlug = (slug: string): Categoria | undefined =>
 // Categorías que dependen de un grupo del menú
 export const subcategoriasDe = (slugPadre: string): Categoria[] =>
   categorias.filter((c) => c.categoriaPadre?.slug === slugPadre);
+
+// Categorias que pueden tener productos (sin subcategorias)
+export const categoriasConProductos = (): Categoria[] =>
+  categorias.filter((c) => subcategoriasDe(c.slug ?? '').length === 0);

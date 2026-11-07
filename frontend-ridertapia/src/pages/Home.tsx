@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router';
 import { Carousel } from 'bootstrap';
-import { productos } from '../data/productos';
-import { formatoCLP } from '../utils/formato';
+import CategoryGrid, { type ItemCategoria } from '../components/CategoryGrid';
+import ProductList from '../components/ProductList';
+import useProductos from '../hooks/useProductos';
 
 interface Slide {
     subtitulo: string;
@@ -13,13 +14,6 @@ interface Slide {
 
 }
 
-interface TarjetaCategoria {
-    titulo: string;
-    icono: string;
-    fondo: string;
-    ruta: string;
-}
-
 const SLIDES: Slide[] = [
   { subtitulo: 'TODO LO QUE NECESITAS PARA TI Y TU BICI', titulo: ['¡Equípate y conquista', 'el camino!'], icono: 'bi-bicycle', fondo: 'linear-gradient(135deg,#2b2b2b,#555)', ruta: '/categoria/indumentaria' },
   { subtitulo: 'QUE LA NOCHE NO PARE LA RUTA', titulo: ['Luces para hacer', 'de día'], icono: 'bi-lightbulb', fondo: 'linear-gradient(135deg,#1a1a2e,#3a3a5c)', ruta: '/categoria/luces' },
@@ -28,21 +22,22 @@ const SLIDES: Slide[] = [
   { subtitulo: 'ACCESORIOS QUE TE LLEVAN MÁS LEJOS', titulo: ['¡Poder y estilo', 'a tu bici!'], icono: 'bi-backpack2', fondo: 'linear-gradient(135deg,#3a2a1a,#6b4c2f)', ruta: '/categoria/accesorios' }
 ];
 
-const CATEGORIAS_INICIO: TarjetaCategoria[] = [
+const CATEGORIAS_INICIO: ItemCategoria[] = [
   { titulo: 'Indumentaria', icono: 'bi-person-arms-up', fondo: 'linear-gradient(135deg,#333,#666)', ruta: '/categoria/indumentaria' },
   { titulo: 'Accesorios', icono: 'bi-backpack2', fondo: 'linear-gradient(135deg,#2c3e50,#4a6580)', ruta: '/categoria/accesorios' },
   { titulo: 'Componentes', icono: 'bi-gear-wide-connected', fondo: 'linear-gradient(135deg,#26313a,#4c5c66)', ruta: '/categoria/componentes' },
   { titulo: 'Mantenimiento', icono: 'bi-tools', fondo: 'linear-gradient(135deg,#3a2f1f,#6b5a3a)', ruta: '/categoria/mantenimiento' }
 ];
 
-// Productos destacados 
-const destacados = productos
-    .filter((p) => p.destacado && p.estado === 'PUBLICADO')
-    .sort((a, b) => (a.ordenDestacado ?? 0) - (b.ordenDestacado ?? 0));
-
 const Home = () => {
     const carruselRef = useRef<HTMLDivElement>(null);
     const {hash} = useLocation();
+    const { productos } = useProductos();
+
+    // Productos destacados
+    const destacados = productos
+        .filter((p) => p.destacado && p.estado === 'PUBLICADO')
+        .sort((a, b) => (a.ordenDestacado ?? 0) - (b.ordenDestacado ?? 0));
 
 // Activa el avance automatico del carrusel
 useEffect(() => {
@@ -97,16 +92,7 @@ useEffect(() => {
         <div className="container">
           <p className="section-eyebrow text-center mb-1">Explora por</p>
           <h2 className="section-title text-center mb-4">Categorías</h2>
-          <div className="row g-3">
-            {CATEGORIAS_INICIO.map((cat) => (
-              <div className="col-6 col-md-3" key={cat.ruta}>
-                <Link to={cat.ruta} className="cat-card d-block" style={{ background: cat.fondo }}>
-                  <i className={`bi ${cat.icono}`}></i>
-                  <span>{cat.titulo}</span>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <CategoryGrid items={CATEGORIAS_INICIO} />
         </div>
       </section>
 
@@ -134,39 +120,7 @@ useEffect(() => {
         <div className="container">
           <p className="section-eyebrow text-center mb-1">Lo más pedido</p>
           <h2 className="section-title text-center mb-4">Productos destacados</h2>
-          <div className="row g-4">
-            {destacados.map((producto) => (
-              <div className="col-6 col-md-4 col-lg-3" key={producto.idProducto}>
-                <Link to={`/producto/${producto.idProducto}`} className="text-decoration-none text-reset d-block h-100">
-                  <div className="product-card h-100 bg-white position-relative">
-                    {producto.stockDisponible !== undefined && producto.stockDisponible <= 0 ? (
-                      <span className="badge bg-secondary position-absolute m-2" style={{ zIndex: 1 }}>AGOTADO</span>
-                    ) : producto.precioOferta !== undefined ? (
-                      <span className="badge badge-offer position-absolute m-2" style={{ zIndex: 1 }}>OFERTA</span>
-                    ) : null}
-                    <div className="product-thumb" style={{ height: '220px', padding: '10px' }}>
-                      <img src={producto.imagenPrincipal} alt={producto.nombre} style={{ width: '100%', height: '200px', objectFit: 'contain' }} />
-                    </div>
-                    <div className="p-3">
-                      <small className="text-muted text-uppercase" style={{ fontSize: '.7rem', letterSpacing: '1px' }}>
-                        {producto.marca.nombre} · {producto.subtipo}
-                      </small>
-                      <h6 className="mb-1 mt-1">{producto.nombre}</h6>
-                      {producto.precioOferta !== undefined && (
-                        <span className="price-old">{formatoCLP(producto.precioNormal)}</span>
-                      )}
-                      <span className="price-new">{formatoCLP(producto.precioOferta ?? producto.precioNormal)}</span>
-                      {producto.variantes && (
-                        <div className="mt-2" style={{ fontSize: '.8rem' }}>
-                          {producto.variantes.nombre}: {producto.variantes.valores.map((v) => v.valor).join(' · ')}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <ProductList productos={destacados} mensajeVacio="No hay productos destacados." />
         </div>
       </section>
     </>

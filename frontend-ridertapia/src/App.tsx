@@ -24,6 +24,7 @@ import Politica from './pages/Politica';
 import NotFound from './pages/NotFound';
 import RutaCliente from './components/RutaCliente';
 import RutaAdmin from './components/RutaAdmin';
+import RestaurarScroll from './components/RestaurarScroll';
 import { CarritoProvider } from './context/CarritoContext';
 import { SesionProvider } from './context/SesionContext';
 
@@ -31,6 +32,7 @@ const App = () => {
   return (
     <SesionProvider>
       <CarritoProvider>
+        <RestaurarScroll />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />

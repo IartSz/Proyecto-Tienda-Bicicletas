@@ -110,17 +110,23 @@ export const PedidoApiService: ServicioPedidos = {
       throw new Error('Hay productos sin variante en el carrito. Vuelve a agregarlos.');
     }
 
+    // Las cuentas viven en el navegador y ms-cliente no las conoce: con rutCliente el backend
+    // respondia 404. Todo pedido se registra con los datos del comprador (visitante) y sin RUT.
+    const cliente = pedido.cliente;
+    const comprador = pedido.datosVisitante
+      ?? (cliente ? { nombre: `${cliente.nombre} ${cliente.apellido}`.trim(), correo: cliente.email, telefono: cliente.telefono } : null);
+
     let visitante: { idDatosVisitante: number } | null = null;
-    if (!pedido.rutCliente && pedido.datosVisitante) {
+    if (comprador) {
       const { data } = await apiClient.post<DatosVisitanteApi>('/visitantes', {
-        nombre: pedido.datosVisitante.nombre,
-        correo: pedido.datosVisitante.correo,
-        telefono: pedido.datosVisitante.telefono
+        nombre: comprador.nombre,
+        correo: comprador.correo,
+        telefono: comprador.telefono
       });
       visitante = { idDatosVisitante: data.idDatosVisitante };
     }
 
-    const { data } = await apiClient.post<PedidoApi>('/pedidos', cuerpoPedido(pedido, visitante));
+    const { data } = await apiClient.post<PedidoApi>('/pedidos', cuerpoPedido({ ...pedido, rutCliente: null }, visitante));
     const idPedido = data.idPedido;
 
     for (const item of items) {
@@ -145,7 +151,7 @@ export const PedidoApiService: ServicioPedidos = {
     return {
       ...pedido,
       idPedido,
-      datosVisitante: pedido.datosVisitante && visitante ? { ...pedido.datosVisitante, idDatosVisitante: visitante.idDatosVisitante } : pedido.datosVisitante
+      datosVisitante: comprador && visitante ? { ...comprador, idDatosVisitante: visitante.idDatosVisitante } : pedido.datosVisitante
     };
   },
 

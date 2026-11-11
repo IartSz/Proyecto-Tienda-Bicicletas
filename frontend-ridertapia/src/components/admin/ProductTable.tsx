@@ -8,6 +8,8 @@ interface ProductTableProps {
   productos: Producto[];
   onEditar: (producto: Producto) => void;
   onCambiarEstado: (producto: Producto) => void;
+  // Solo para productos dados de baja
+  onEliminar?: (producto: Producto) => void;
 }
 
 const ETIQUETAS = {
@@ -29,7 +31,7 @@ const Miniatura = ({ producto }: { producto: Producto }) => {
   );
 };
 
-const ProductTable = ({ productos, onEditar, onCambiarEstado }: ProductTableProps) => {
+const ProductTable = ({ productos, onEditar, onCambiarEstado, onEliminar }: ProductTableProps) => {
   return (
     <div className="table-responsive">
       <table className="table adm-table">
@@ -85,9 +87,16 @@ const ProductTable = ({ productos, onEditar, onCambiarEstado }: ProductTableProp
                 <td>
                   <div className="actions">
                     {inactivo ? (
-                      <button className="btn-icon" type="button" title="Reactivar" aria-label="Reactivar" onClick={() => onCambiarEstado(producto)}>
-                        <i className="bi bi-arrow-counterclockwise"></i>
-                      </button>
+                      <>
+                        <button className="btn-icon" type="button" title="Reactivar" aria-label="Reactivar" onClick={() => onCambiarEstado(producto)}>
+                          <i className="bi bi-arrow-counterclockwise"></i>
+                        </button>
+                        {onEliminar && (
+                          <button className="btn-icon danger" type="button" title="Eliminar" aria-label="Eliminar" onClick={() => onEliminar(producto)}>
+                            <i className="bi bi-trash"></i>
+                          </button>
+                        )}
+                      </>
                     ) : (
                       <>
                         <Link className="btn-icon" to={`/producto/${producto.idProducto}`} target="_blank" title="Ver en tienda" aria-label="Ver en tienda">

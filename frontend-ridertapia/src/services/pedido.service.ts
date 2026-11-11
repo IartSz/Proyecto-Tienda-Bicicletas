@@ -2,9 +2,19 @@ import type { DatosComprador, EstadoPedido, MedioPago, Pedido, PedidoPayload } f
 import type { ItemCarrito } from '../models/ItemCarrito';
 import ProductoService from './producto.service';
 import { calcularTotales } from './carrito.service';
+import { USAR_API } from '../api/cliente';
+import PedidoApiService from '../api/pedido.api';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local (sin backend)
 const CLAVE = 'pedidos';
+
+export interface ServicioPedidos {
+  listar(): Promise<Pedido[]>;
+  obtener(id: number): Promise<Pedido>;
+  crear(pedido: PedidoPayload): Promise<Pedido>;
+  actualizar(id: number, pedido: PedidoPayload): Promise<Pedido>;
+  eliminar(id: number): Promise<void>;
+}
 
 const leer = (): Pedido[] => {
   try {
@@ -55,7 +65,7 @@ export const armarPedido = (items: ItemCarrito[], cliente: DatosComprador, medio
   };
 };
 
-export const PedidoService = {
+const PedidoLocalService: ServicioPedidos = {
   async listar(): Promise<Pedido[]> {
     return leer();
   },
@@ -95,5 +105,8 @@ export const PedidoService = {
     guardar(leer().filter((p) => p.idPedido !== id));
   }
 };
+
+// VITE_USAR_API=true usa el backend; si no, localStorage
+export const PedidoService: ServicioPedidos = USAR_API ? PedidoApiService : PedidoLocalService;
 
 export default PedidoService;

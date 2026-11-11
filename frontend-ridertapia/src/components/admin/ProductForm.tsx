@@ -16,7 +16,7 @@ type TipoVariante = '' | 'Talla' | 'Medida' | 'Color';
 interface ProductFormState {
   nombre: string;
   sku: string;
-  idCategoria: string;
+  categoria: string; // nombre: los ids cambian entre local y backend
   marca: string;
   subtipo: string;
   proveedor: string;
@@ -36,7 +36,7 @@ type Errores = Partial<Record<keyof ProductFormState, string>>;
 const initialState: ProductFormState = {
   nombre: '',
   sku: '',
-  idCategoria: '',
+  categoria: '',
   marca: '',
   subtipo: '',
   proveedor: '',
@@ -58,7 +58,7 @@ const aTipoVariante = (nombre: string): TipoVariante =>
 
 // Prefijo del SKU: el que ya usa la categoria o 3 letras del nombre
 const siguienteSku = (categoria: Categoria, lista: Producto[]): string => {
-  const existente = lista.find((p) => p.categoria.idCategoria === categoria.idCategoria && p.sku);
+  const existente = lista.find((p) => p.categoria.nombre === categoria.nombre && p.sku);
   const prefijo = existente?.sku?.split('-')[0] ?? (slugify(categoria.nombre).replace(/-/g, '').slice(0, 3).toUpperCase() || 'PRD');
   let max = 0;
   lista.forEach((p) => {
@@ -127,9 +127,10 @@ const validar = (form: ProductFormState, isEdit: boolean, lista: Producto[], idA
   if (!form.nombre.trim()) errores.nombre = 'Ingresa el nombre.';
   if (!sku) errores.sku = 'Ingresa un código.';
   else if (lista.some((p) => p.sku === sku && p.idProducto !== idActual)) errores.sku = 'Ese código ya existe.';
-  if (!form.idCategoria) errores.idCategoria = 'Elige una categoría.';
+  if (!form.categoria) errores.categoria = 'Elige una categoría.';
   if (!form.marca.trim()) errores.marca = 'Ingresa la marca.';
-  if (!form.proveedor.trim()) errores.proveedor = 'Ingresa el proveedor.';
+  // El backend no guarda el proveedor: solo se exige al crear
+  if (!isEdit && !form.proveedor.trim()) errores.proveedor = 'Ingresa el proveedor.';
   if (!Number.isInteger(precio) || precio <= 0) errores.precio = 'Precio mayor a 0.';
   if (form.oferta && (!Number.isInteger(oferta) || oferta <= 0 || oferta >= precio)) errores.oferta = 'Debe ser menor al precio.';
   if (!isEdit && (form.stock === '' || !Number.isInteger(Number(form.stock)) || Number(form.stock) < 0)) errores.stock = '0 o más.';
@@ -146,7 +147,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const [existentes, setExistentes] = useState<Producto[]>([]);
   const [errores, setErrores] = useState<Errores>({});
   const [errorImagen, setErrorImagen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -171,7 +172,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
         setForm({
           nombre: data.nombre,
           sku: data.sku ?? '',
-          idCategoria: String(data.categoria.idCategoria),
+          categoria: data.categoria.nombre,
           marca: data.marca.nombre,
           subtipo: data.subtipo ?? '',
           proveedor: data.proveedor ?? '',
@@ -201,8 +202,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setForm((prev) => {
       const siguiente: ProductFormState = { ...prev, [name]: value };
       // Sugiere el codigo al elegir categoria (solo al crear)
-      if (name === 'idCategoria' && !isEdit) {
-        const categoria = CATEGORIAS.find((c) => String(c.idCategoria) === value);
+      if (name === 'categoria' && !isEdit) {
+        const categoria = CATEGORIAS.find((c) => c.nombre === value);
         if (categoria) siguiente.sku = siguienteSku(categoria, existentes);
       }
       if (name === 'tipoVariante' && !value) siguiente.valores = '';
@@ -221,7 +222,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setErrores(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0) return;
 
-    const categoria = CATEGORIAS.find((c) => String(c.idCategoria) === form.idCategoria);
+    const categoria = CATEGORIAS.find((c) => c.nombre === form.categoria);
     if (!categoria) {
       setError('Elige una categoría.');
       return;
@@ -289,6 +290,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       {status && <div className="alert alert-success py-2">{status}</div>}
 
       <form onSubmit={(event) => void handleSubmit(event)} noValidate aria-label={title}>
+        {/* Bloqueado mientras carga: el SKU sugerido necesita la lista completa */}
+        <fieldset disabled={loading}>
         <div className="row g-3">
           <div className="col-md-8">
             <label className="form-label" htmlFor="nombre">Nombre</label>
@@ -301,14 +304,14 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             <div className="invalid-feedback">{errores.sku}</div>
           </div>
           <div className="col-md-4">
-            <label className="form-label" htmlFor="idCategoria">Categoría</label>
-            <select id="idCategoria" name="idCategoria" className={clase('idCategoria', 'form-select')} value={form.idCategoria} onChange={handleChange}>
+            <label className="form-label" htmlFor="categoria">Categoría</label>
+            <select id="categoria" name="categoria" className={clase('categoria', 'form-select')} value={form.categoria} onChange={handleChange}>
               <option value="">Elige una categoría</option>
               {CATEGORIAS.map((c) => (
-                <option key={c.idCategoria} value={c.idCategoria}>{c.nombre}</option>
+                <option key={c.idCategoria} value={c.nombre}>{c.nombre}</option>
               ))}
             </select>
-            <div className="invalid-feedback">{errores.idCategoria}</div>
+            <div className="invalid-feedback">{errores.categoria}</div>
           </div>
           <div className="col-md-4">
             <label className="form-label" htmlFor="marca">Marca</label>
@@ -400,11 +403,12 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             </div>
           </div>
         </div>
+        </fieldset>
 
         <div className="d-flex justify-content-end gap-2 mt-4">
           <Link to="/admin/productos" className="btn btn-outline-light">Cancelar</Link>
           <button type="submit" className="btn btn-brand" disabled={loading}>
-            {loading ? 'Guardando...' : isEdit ? 'Actualizar' : 'Guardar producto'}
+            {loading ? 'Procesando...' : isEdit ? 'Actualizar' : 'Guardar producto'}
           </button>
         </div>
       </form>

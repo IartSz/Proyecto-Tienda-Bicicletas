@@ -1,8 +1,18 @@
 import type { Producto, ProductoPayload } from '../models/Producto';
 import { productos as productosIniciales } from '../data/productos';
+import { USAR_API } from '../api/cliente';
+import ProductoApiService from '../api/producto.api';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local (sin backend)
 const CLAVE = 'productos';
+
+export interface ServicioProductos {
+  listar(): Promise<Producto[]>;
+  obtener(id: number): Promise<Producto>;
+  crear(producto: ProductoPayload): Promise<Producto>;
+  actualizar(id: number, producto: ProductoPayload): Promise<Producto>;
+  eliminar(id: number): Promise<void>;
+}
 
 export type EstadoStock = 'ok' | 'bajo' | 'cero';
 
@@ -33,7 +43,7 @@ export const estadoStock = (producto: Producto): EstadoStock => {
   return 'ok';
 };
 
-export const ProductoService = {
+const ProductoLocalService: ServicioProductos = {
   async listar(): Promise<Producto[]> {
     return leer();
   },
@@ -66,5 +76,8 @@ export const ProductoService = {
     guardar(leer().filter((p) => p.idProducto !== id));
   }
 };
+
+// VITE_USAR_API=true usa el backend; si no, localStorage
+export const ProductoService: ServicioProductos = USAR_API ? ProductoApiService : ProductoLocalService;
 
 export default ProductoService;

@@ -13,7 +13,7 @@ type FiltroEstado = 'activo' | 'baja' | '';
 
 interface Filtros {
   buscar: string;
-  idCategoria: string;
+  categoria: string; // nombre de la categoria
   stock: EstadoStock | '';
   estado: FiltroEstado;
 }
@@ -23,7 +23,7 @@ interface Aviso {
   tipo: 'success' | 'warning' | 'danger';
 }
 
-const filtrosIniciales: Filtros = { buscar: '', idCategoria: '', stock: '', estado: 'activo' };
+const filtrosIniciales: Filtros = { buscar: '', categoria: '', stock: '', estado: 'activo' };
 
 const Productos = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Productos = () => {
   const texto = filtros.buscar.trim().toLowerCase();
   const filtrados = productos.filter((p) =>
     (!texto || [p.nombre, p.sku ?? '', p.marca.nombre].join(' ').toLowerCase().includes(texto)) &&
-    (!filtros.idCategoria || String(p.categoria.idCategoria) === filtros.idCategoria) &&
+    (!filtros.categoria || p.categoria.nombre === filtros.categoria) &&
     (!filtros.stock || estadoStock(p) === filtros.stock) &&
     (filtros.estado === '' || (filtros.estado === 'activo' ? p.estado !== 'OCULTO' : p.estado === 'OCULTO'))
   );
@@ -77,6 +77,19 @@ const Productos = () => {
     }
   };
 
+  // Borrado definitivo (DELETE)
+  const handleEliminar = async (producto: Producto) => {
+    if (!window.confirm(`¿Eliminar definitivamente "${producto.nombre}"? Esta acción no se puede deshacer.`)) return;
+    try {
+      await ProductoService.eliminar(producto.idProducto);
+      setAviso({ texto: `${producto.nombre} eliminado.`, tipo: 'warning' });
+      await recargar();
+    } catch (err) {
+      console.error(err);
+      setAviso({ texto: 'No se pudo eliminar el producto.', tipo: 'danger' });
+    }
+  };
+
   return (
     <>
       {aviso && <div className={`alert alert-${aviso.tipo} py-2`}>{aviso.texto}</div>}
@@ -86,10 +99,10 @@ const Productos = () => {
           <i className="bi bi-search"></i>
           <input name="buscar" type="search" className="form-control" placeholder="Buscar por nombre, código o marca" aria-label="Buscar producto" value={filtros.buscar} onChange={handleFiltro} />
         </div>
-        <select name="idCategoria" className="form-select" aria-label="Filtrar por categoría" value={filtros.idCategoria} onChange={handleFiltro}>
+        <select name="categoria" className="form-select" aria-label="Filtrar por categoría" value={filtros.categoria} onChange={handleFiltro}>
           <option value="">Todas las categorías</option>
           {CATEGORIAS.map((c) => (
-            <option key={c.idCategoria} value={c.idCategoria}>{c.nombre}</option>
+            <option key={c.idCategoria} value={c.nombre}>{c.nombre}</option>
           ))}
         </select>
         <select name="stock" className="form-select" aria-label="Filtrar por stock" value={filtros.stock} onChange={handleFiltro}>
@@ -111,7 +124,7 @@ const Productos = () => {
       <div className="panel panel-flush">
         {loading && productos.length === 0
           ? <p className="text-center text-muted py-4 mb-0">Cargando productos...</p>
-          : <ProductTable productos={visibles} onEditar={handleEditar} onCambiarEstado={(p) => void handleCambiarEstado(p)} />}
+          : <ProductTable productos={visibles} onEditar={handleEditar} onCambiarEstado={(p) => void handleCambiarEstado(p)} onEliminar={(p) => void handleEliminar(p)} />}
       </div>
 
       <div className="d-flex flex-wrap justify-content-between align-items-center mt-2">

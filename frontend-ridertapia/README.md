@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# Rider Tapia Biker — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA de la tienda hecha con React + TypeScript + Vite (SWC), Bootstrap y React Router.
+Se conecta al backend de microservicios a través del gateway (`http://localhost:9000`).
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 20 o superior
+- El backend levantado (ver `backend/BackEnd-RiderTapia/microservicios/README.md`)
 
-## React Compiler
+## Ejecutar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```powershell
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Se abre en `http://localhost:5173`. No hace falta crear `.env`: por defecto usa el backend.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Configuración (opcional)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Copiar `.env.example` como `.env` para cambiar algo:
 
-```
+| Variable | Por defecto | Uso |
+|---|---|---|
+| `VITE_API_BASE_URL` | `http://localhost:9000` | Dirección del gateway |
+| `VITE_USAR_API` | `true` | `false` para trabajar sin backend (datos locales en el navegador) |
+
+Después de cambiar `.env`, reiniciar `npm run dev`.
+
+## Datos
+
+La base de datos se llena sola: al arrancar, `ms-productos` y `ms-inventario` cargan el catálogo
+(23 categorías, 105 productos con sus tallas, ofertas e imágenes, y el stock) si sus tablas están vacías.
+Si ya hay datos, no se toca nada.
+
+Para volver al catálogo inicial: detener el backend, borrar las bases `ridertapia_productos`
+y `ridertapia_inventario` en phpMyAdmin y volver a iniciarlo.
+
+## Scripts
+
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Revisa TypeScript y genera `dist/` |
+| `npm run lint` | ESLint |
+| `npx tsx scripts/cargar-catalogo.ts` | Carga el catálogo por la API (opcional, solo si la base está vacía) |
+
+## Estructura de `src/`
+
+- `api/`: cliente Axios, lectura de respuestas HATEOAS y conversión de datos del backend
+- `services/`: un servicio por entidad (`listar`, `obtener`, `crear`, `actualizar`, `eliminar`)
+- `models/`: interfaces con los mismos nombres de campo que las entidades Java
+- `hooks/`, `context/`, `components/`, `layouts/`, `pages/`, `utils/`, `styles/`
+- `data/`: catálogo inicial (también se usa en modo sin backend)

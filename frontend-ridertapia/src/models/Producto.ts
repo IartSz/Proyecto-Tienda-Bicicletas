@@ -17,6 +17,7 @@ export interface ValorVariante {
     valor: string;
     detalle: string;
     disponible: boolean;
+    idVariante?: number; // id en el backend
 }
 
 export interface Variantes {
@@ -50,6 +51,7 @@ export interface Producto {
   proveedor?: string;
   especificaciones?: EspecificacionTecnica[];
   variantes?: Variantes;
+  idVariante?: number; // variante unica (sin tallas)
 }
 
 export type ProductoPayload = Omit<Producto, 'idProducto'>;

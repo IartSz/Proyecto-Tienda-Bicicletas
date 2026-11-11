@@ -52,6 +52,8 @@ export const CarritoProvider = ({ children }: CarritoProviderProps) => {
       idProducto: producto.idProducto,
       cantidad,
       precioUnitario: producto.precioOferta ?? producto.precioNormal,
+      // Id de la variante en el backend (lo pide el detalle del pedido)
+      idVariante: producto.variantes?.valores.find((v) => v.valor === variante)?.idVariante ?? producto.idVariante,
       nombre: producto.nombre,
       variante,
       imagen: producto.imagenPrincipal

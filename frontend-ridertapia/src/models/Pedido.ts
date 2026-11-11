@@ -9,7 +9,7 @@ export type EstadoPedido =
   | 'CANCELADO'
   | 'ANULADO';
 
-export type CanalVenta = 'WEB' | 'MOVIL' | 'TIENDA_FISICA';
+export type CanalVenta = 'WEB' | 'TIENDA';
 
 export type MedioPago = 'EFECTIVO' | 'TARJETA' | 'TRANSFERENCIA';
 
@@ -57,6 +57,7 @@ export interface Pedido {
   items?: ItemCarrito[];
   historial?: CambioEstado[];
   novedad?: boolean; // el cliente aún no ve el último cambio de estado
+  demo?: boolean; // pedido de ejemplo cargado desde el panel
 }
 
 export type PedidoPayload = Omit<Pedido, 'idPedido'>;

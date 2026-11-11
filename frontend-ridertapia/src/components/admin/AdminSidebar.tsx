@@ -2,6 +2,9 @@ import { useEffect, type MouseEvent } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 import { Offcanvas } from 'bootstrap';
 import useProductos from '../../hooks/useProductos';
+import usePedidos from '../../hooks/usePedidos';
+import useSesion from '../../hooks/useSesion';
+import { estaAbierto } from '../../utils/estadosPedido';
 
 interface EnlaceAdmin {
   texto: string;
@@ -25,13 +28,15 @@ const CLAVES_DATOS = ['productos', 'categorias', 'categoriasEliminadas', 'movimi
 const AdminSidebar = () => {
   const { pathname } = useLocation();
   const { productos, recargar } = useProductos();
+  const { pedidos } = usePedidos();
+  const { cerrarSesion } = useSesion();
 
   // Productos activos bajo el stock minimo
   const bajoMinimo = productos.filter(
     (p) => p.estado !== 'OCULTO' && (p.stockDisponible ?? 0) < (p.stockMinimo ?? 0)
   ).length;
-  // Pendiente: pedidos por atender
-  const pedidosPorAtender = 0;
+  // Pedidos que aun no se entregan ni se cierran
+  const pedidosPorAtender = pedidos.filter(estaAbierto).length;
 
   // Al cambiar de pagina: cierra el menu movil y actualiza los contadores
   useEffect(() => {
@@ -39,6 +44,12 @@ const AdminSidebar = () => {
     if (menu) Offcanvas.getInstance(menu)?.hide();
     void recargar();
   }, [pathname, recargar]);
+
+  // Al cerrar la sesion, RutaAdmin redirige a /login
+  const salir = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    cerrarSesion();
+  };
 
   const restablecerDatos = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -75,7 +86,7 @@ const AdminSidebar = () => {
       </nav>
       <div className="adm-sidebar-foot">
         <Link to="/"><i className="bi bi-shop"></i>Ver tienda</Link>
-        <Link to="/login"><i className="bi bi-box-arrow-left"></i>Cerrar sesión</Link>
+        <a href="#" onClick={salir}><i className="bi bi-box-arrow-left"></i>Cerrar sesión</a>
         <a href="#" onClick={restablecerDatos}><i className="bi bi-arrow-counterclockwise"></i>Restablecer datos</a>
       </div>
     </aside>

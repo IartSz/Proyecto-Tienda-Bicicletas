@@ -3,16 +3,20 @@ import { Link, useParams } from 'react-router';
 import CategoryGrid, { type ItemCategoria } from '../components/CategoryGrid';
 import ProductList from '../components/ProductList';
 import useProductos from '../hooks/useProductos';
+import useCategorias from '../hooks/useCategorias';
 import { buscarCategoriaPorSlug, subcategoriasDe } from '../data/categorias';
 
 const Categoria = () => {
   const { slug } = useParams<{ slug: string }>();
   const { productos, loading, error } = useProductos();
-  const categoria = slug ? buscarCategoriaPorSlug(slug) : undefined;
+  const { categorias, loading: cargandoCategorias } = useCategorias();
+  const categoria = slug ? buscarCategoriaPorSlug(slug, categorias) : undefined;
 
   useEffect(() => {
     if (categoria) document.title = `${categoria.nombre} - Rider Tapia`;
   }, [categoria]);
+
+  if (cargandoCategorias) return null;
 
   if (!slug || !categoria) {
     return (
@@ -25,7 +29,7 @@ const Categoria = () => {
   }
 
   // Si es un grupo, muestra los productos de todas sus subcategorias
-  const subcategorias = subcategoriasDe(slug);
+  const subcategorias = subcategoriasDe(slug, categorias);
   const botones: ItemCategoria[] = subcategorias.map((c) => ({ titulo: c.nombre, ruta: `/categoria/${c.slug ?? ''}` }));
 
   const lista = productos.filter(

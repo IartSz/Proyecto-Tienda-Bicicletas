@@ -3,8 +3,10 @@ export type Rol = 'CLIENTE' | 'ADMIN';
 export interface Usuario {
     rutUsuario: string;
     emailCliente: string;
-    password: string;
+    password: string; // se guarda con hash, nunca en texto plano
     rol: Rol;
+    // Solo frontend
+    fechaCreacion?: string;
 }
 
 export interface Cliente {

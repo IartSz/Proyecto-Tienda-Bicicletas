@@ -2,7 +2,9 @@ import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
 import CartSummary from '../components/CartSummary';
 import useCarrito from '../hooks/useCarrito';
+import useSesion from '../hooks/useSesion';
 import ProductoService from '../services/producto.service';
+import AuthService from '../services/auth.service';
 import PedidoService, { armarPedido } from '../services/pedido.service';
 import { validarStockCarrito } from '../services/carrito.service';
 import type { MedioPago, Pedido } from '../models/Pedido';
@@ -68,7 +70,17 @@ const validar = (form: CheckoutFormState): Errores => {
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, totales, vaciar } = useCarrito();
-  const [form, setForm] = useState<CheckoutFormState>(initialState);
+  const { sesion } = useSesion();
+  // Con sesion de cliente, el pedido queda a nombre de su cuenta
+  const cuenta = sesion?.rol === 'CLIENTE' ? sesion : null;
+  const [form, setForm] = useState<CheckoutFormState>(() => ({
+    ...initialState,
+    nombre: cuenta?.nombre ?? '',
+    apellido: cuenta?.apellido ?? '',
+    rut: cuenta?.rutUsuario ?? '',
+    email: cuenta?.emailCliente ?? '',
+    telefono: cuenta?.telefono ?? ''
+  }));
   const [intentado, setIntentado] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -105,6 +117,12 @@ const Checkout = () => {
         return;
       }
 
+      // Un cliente desactivado desde el panel no puede comprar
+      if (!(await AuthService.cuentaActiva(form.email))) {
+        setError(`La cuenta asociada a ${form.email.trim()} está desactivada. Contáctanos para más información.`);
+        return;
+      }
+
       const cliente = {
         nombre: form.nombre.trim(),
         apellido: form.apellido.trim(),
@@ -113,7 +131,7 @@ const Checkout = () => {
         telefono: form.telefono.trim()
       };
       // Los datos de tarjeta no se guardan
-      const pedido = await PedidoService.crear(armarPedido(items, cliente, form.medioPago));
+      const pedido = await PedidoService.crear(armarPedido(items, cliente, form.medioPago, cuenta ? cliente.rut : null));
       vaciar();
       setConfirmado(pedido);
       window.scrollTo(0, 0);
@@ -170,33 +188,43 @@ const Checkout = () => {
                 <hr className="my-2" />
                 <div className="small"><strong>Entrega:</strong> Retiro en tienda (Centro, Concepción)</div>
                 <div className="small"><strong>Pago:</strong> {confirmado.medioPago ? ETIQUETA_PAGO[confirmado.medioPago] : ''}</div>
-                <div className="small"><strong>Cliente:</strong> Invitado</div>
+                <div className="small"><strong>Cliente:</strong> {confirmado.rutCliente ? 'Cuenta registrada' : 'Invitado'}</div>
               </div>
               <div className="alert alert-secondary small text-start mb-4">
                 <i className="bi bi-info-circle me-1"></i>Esta es una <strong>compra simulada</strong>: no se realizó ningún cobro ni se envió ningún correo.
               </div>
-              <Link to="/" className="btn btn-brand">VOLVER A LA TIENDA</Link>
+              <div className="d-flex justify-content-center gap-2 flex-wrap">
+                <Link to="/" className="btn btn-brand">VOLVER A LA TIENDA</Link>
+                {confirmado.rutCliente && <Link to="/mis-pedidos" className="btn btn-dark">VER MIS PEDIDOS</Link>}
+              </div>
             </div>
           ) : (
             <form className="row g-4" noValidate onSubmit={(event) => void handleSubmit(event)} aria-label="Finalizar compra">
               <div className="col-lg-7">
                 <div className="bg-white rounded shadow-sm p-4 mb-4">
                   <h5 className="fw-bold mb-3"><span className="badge bg-dark me-2">1</span>¿Cómo quieres comprar?</h5>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <div className="border rounded p-3 h-100 border-dark">
-                        <div className="fw-semibold"><i className="bi bi-person-walking me-1"></i>Como invitado</div>
-                        <p className="small text-muted mb-0 mt-1">Compra rápido sin crear cuenta. Solo necesitamos tus datos de contacto.</p>
+                  {cuenta ? (
+                    <div className="border border-dark rounded p-3">
+                      <div className="fw-semibold"><i className="bi bi-person-check me-1"></i>Comprando como {cuenta.nombre} {cuenta.apellido}</div>
+                      <p className="small text-muted mb-0 mt-1">Completamos tus datos con tu cuenta. El pedido quedará en <Link to="/mis-pedidos">Mis pedidos</Link>.</p>
+                    </div>
+                  ) : (
+                    <div className="row g-3">
+                      <div className="col-md-6">
+                        <div className="border rounded p-3 h-100 border-dark">
+                          <div className="fw-semibold"><i className="bi bi-person-walking me-1"></i>Como invitado</div>
+                          <p className="small text-muted mb-0 mt-1">Compra rápido sin crear cuenta. Solo necesitamos tus datos de contacto.</p>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="border rounded p-3 h-100">
+                          <div className="fw-semibold"><i className="bi bi-person-circle me-1"></i>¿Ya tienes cuenta?</div>
+                          <p className="small text-muted mb-2 mt-1">Inicia sesión para completar tus datos más rápido (opcional).</p>
+                          <Link to="/login?volver=checkout" className="btn btn-dark btn-sm">INICIAR SESIÓN</Link>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="border rounded p-3 h-100">
-                        <div className="fw-semibold"><i className="bi bi-person-circle me-1"></i>¿Ya tienes cuenta?</div>
-                        <p className="small text-muted mb-2 mt-1">Inicia sesión para completar tus datos más rápido (opcional).</p>
-                        <Link to="/login?volver=checkout" className="btn btn-dark btn-sm">INICIAR SESIÓN</Link>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="bg-white rounded shadow-sm p-4 mb-4">
@@ -214,12 +242,12 @@ const Checkout = () => {
                     </div>
                     <div className="col-md-4">
                       <label className="form-label" htmlFor="rut">RUT</label>
-                      <input className={clase('rut')} id="rut" name="rut" maxLength={12} autoComplete="off" placeholder="12.345.678-5" value={form.rut} onChange={handleChange} />
+                      <input className={clase('rut')} id="rut" name="rut" maxLength={12} autoComplete="off" placeholder="12.345.678-5" value={form.rut} onChange={handleChange} readOnly={cuenta !== null} />
                       <div className="invalid-feedback">{errores.rut}</div>
                     </div>
                     <div className="col-md-4">
                       <label className="form-label" htmlFor="email">Correo electrónico</label>
-                      <input type="email" className={clase('email')} id="email" name="email" placeholder="tucorreo@ejemplo.com" value={form.email} onChange={handleChange} />
+                      <input type="email" className={clase('email')} id="email" name="email" placeholder="tucorreo@ejemplo.com" value={form.email} onChange={handleChange} readOnly={cuenta !== null} />
                       <div className="invalid-feedback">{errores.email}</div>
                     </div>
                     <div className="col-md-4">

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import AdminSidebar from '../components/admin/AdminSidebar';
+import useSesion from '../hooks/useSesion';
+import { iniciales } from '../utils/formato';
 
 const SECCIONES: Record<string, string> = {
   pedidos: 'Pedidos',
@@ -22,6 +24,7 @@ const tituloDe = (ruta: string): string => {
 const AdminLayout = () => {
   const { pathname } = useLocation();
   const titulo = tituloDe(pathname);
+  const { sesion } = useSesion();
 
   // Tema oscuro solo dentro del panel
   useEffect(() => {
@@ -47,8 +50,8 @@ const AdminLayout = () => {
           </button>
           <h1>{titulo}</h1>
           <div className="adm-user">
-            <div className="text-end"><strong>Administrador</strong><small>admin@ridertapia.cl</small></div>
-            <span className="adm-avatar" aria-hidden="true">AD</span>
+            <div className="text-end"><strong>{sesion ? `${sesion.nombre} ${sesion.apellido}` : 'Administrador'}</strong><small>{sesion?.emailCliente}</small></div>
+            <span className="adm-avatar" aria-hidden="true">{sesion ? iniciales(sesion.nombre, sesion.apellido) : 'AD'}</span>
           </div>
         </header>
         <div className="adm-content">

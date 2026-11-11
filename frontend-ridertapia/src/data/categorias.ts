@@ -221,13 +221,14 @@ export const categorias: Categoria[] = [
   }
 ];
 
-export const buscarCategoriaPorSlug = (slug: string): Categoria | undefined =>
-  categorias.find((c) => c.slug === slug);
+// Las funciones reciben la lista actual (la del servicio); sin ella usan los datos iniciales
+export const buscarCategoriaPorSlug = (slug: string, lista: Categoria[] = categorias): Categoria | undefined =>
+  lista.find((c) => c.slug === slug);
 
 // Categorías que dependen de un grupo del menú
-export const subcategoriasDe = (slugPadre: string): Categoria[] =>
-  categorias.filter((c) => c.categoriaPadre?.slug === slugPadre);
+export const subcategoriasDe = (slugPadre: string, lista: Categoria[] = categorias): Categoria[] =>
+  lista.filter((c) => c.categoriaPadre?.slug === slugPadre);
 
 // Categorias que pueden tener productos (sin subcategorias)
-export const categoriasConProductos = (): Categoria[] =>
-  categorias.filter((c) => subcategoriasDe(c.slug ?? '').length === 0);
+export const categoriasConProductos = (lista: Categoria[] = categorias): Categoria[] =>
+  lista.filter((c) => subcategoriasDe(c.slug ?? '', lista).length === 0);

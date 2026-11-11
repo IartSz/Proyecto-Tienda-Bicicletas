@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router';
 import type { Categoria } from '../../models/Categoria';
 import type { EspecificacionTecnica, Marca, Producto, ProductoPayload, Variantes } from '../../models/Producto';
 import ProductoService from '../../services/producto.service';
+import MovimientoService from '../../services/movimiento.service';
+import useCategorias from '../../hooks/useCategorias';
 import { categoriasConProductos } from '../../data/categorias';
 import { LIMITE_POR_COMPRA, marcas } from '../../data/productos';
 import { slugify } from '../../utils/formato';
@@ -50,8 +52,6 @@ const initialState: ProductFormState = {
   valores: '',
   imagen: ''
 };
-
-const CATEGORIAS = categoriasConProductos();
 
 const aTipoVariante = (nombre: string): TipoVariante =>
   nombre === 'Talla' || nombre === 'Color' ? nombre : 'Medida';
@@ -142,6 +142,8 @@ const validar = (form: ProductFormState, isEdit: boolean, lista: Producto[], idA
 const ProductForm = ({ mode }: ProductFormProps) => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const { categorias } = useCategorias();
+  const CATEGORIAS = categoriasConProductos(categorias);
   const [form, setForm] = useState<ProductFormState>(initialState);
   const [original, setOriginal] = useState<Producto | null>(null);
   const [existentes, setExistentes] = useState<Producto[]>([]);
@@ -263,7 +265,11 @@ const ProductForm = ({ mode }: ProductFormProps) => {
         await ProductoService.actualizar(original.idProducto, datosProducto);
         setStatus('Producto actualizado correctamente.');
       } else {
-        await ProductoService.crear(datosProducto);
+        const creado = await ProductoService.crear(datosProducto);
+        // El stock inicial queda como primer movimiento del inventario
+        if ((creado.stockDisponible ?? 0) > 0) {
+          await MovimientoService.registrar(creado, 'INGRESO', creado.stockDisponible ?? 0, 'admin', `Stock inicial · ${creado.proveedor ?? ''}`);
+        }
         setStatus('Producto creado correctamente.');
         setForm(initialState);
       }

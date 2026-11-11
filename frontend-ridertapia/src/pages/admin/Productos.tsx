@@ -2,12 +2,12 @@ import { useEffect, useState, type ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import ProductTable from '../../components/admin/ProductTable';
 import useProductos from '../../hooks/useProductos';
+import useCategorias from '../../hooks/useCategorias';
 import ProductoService, { estadoStock, type EstadoStock } from '../../services/producto.service';
 import { categoriasConProductos } from '../../data/categorias';
 import type { Producto } from '../../models/Producto';
 
 const POR_PAGINA = 10;
-const CATEGORIAS = categoriasConProductos();
 
 type FiltroEstado = 'activo' | 'baja' | '';
 
@@ -28,6 +28,8 @@ const filtrosIniciales: Filtros = { buscar: '', categoria: '', stock: '', estado
 const Productos = () => {
   const navigate = useNavigate();
   const { productos, loading, error, recargar } = useProductos();
+  const { categorias } = useCategorias();
+  const CATEGORIAS = categoriasConProductos(categorias);
   const [filtros, setFiltros] = useState<Filtros>(filtrosIniciales);
   const [pagina, setPagina] = useState<number>(1);
   const [aviso, setAviso] = useState<Aviso | null>(null);

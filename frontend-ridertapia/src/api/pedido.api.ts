@@ -1,7 +1,9 @@
-import type { CanalVenta, Pedido, PedidoPayload } from '../models/Pedido';
+import type { CanalVenta, EstadoPedido, Pedido, PedidoPayload } from '../models/Pedido';
+import { ESTADOS_FINALES, ESTADOS_PEDIDO, ESTADOS_QUE_DEVUELVEN } from '../utils/estadosPedido';
 import type { ItemCarrito } from '../models/ItemCarrito';
 import ProductoService from '../services/producto.service';
 import apiClient from './cliente';
+import type { ServicioPedidos } from '../services/pedido.service';
 import { obtenerLista } from './hal';
 import type { CanalVentaApi, DatosVisitanteApi, DetallePedidoApi, HistorialEstadoApi, PedidoApi } from './tipos';
 
@@ -9,9 +11,9 @@ import type { CanalVentaApi, DatosVisitanteApi, DetallePedidoApi, HistorialEstad
 
 const sinZona = (fecha: string): string => fecha.slice(0, 19);
 
-// El backend solo conoce WEB y TIENDA
-const aCanalApi = (canal: CanalVenta): CanalVentaApi => (canal === 'TIENDA_FISICA' ? 'TIENDA' : 'WEB');
-const aCanal = (canal: CanalVentaApi): CanalVenta => (canal === 'TIENDA' ? 'TIENDA_FISICA' : 'WEB');
+// El front y el backend usan los mismos canales: WEB y TIENDA
+const aCanalApi = (canal: CanalVenta): CanalVentaApi => canal;
+const aCanal = (canal: CanalVentaApi): CanalVenta => canal;
 
 const cuerpoPedido = (p: PedidoPayload, datosVisitante: { idDatosVisitante: number } | null) => ({
   numero: p.numero,
@@ -97,7 +99,7 @@ const registrarEstado = async (idPedido: number, anterior: Pedido['estado'] | nu
   });
 };
 
-export const PedidoApiService = {
+export const PedidoApiService: ServicioPedidos = {
   listar,
   obtener,
 
@@ -153,6 +155,44 @@ export const PedidoApiService = {
     await apiClient.put(`/pedidos/${id}`, cuerpoPedido(pedido, visitante));
     if (actual.data.estado !== pedido.estado) await registrarEstado(id, actual.data.estado, pedido.estado);
     return obtener(id);
+  },
+
+  // Cambia el estado (queda en el historial del backend). Si se cancela o anula, el stock vuelve.
+  async cambiarEstado(id: number, estado: EstadoPedido, nota: string): Promise<Pedido> {
+    const pedido = await obtener(id);
+    const texto = nota.trim();
+    if (ESTADOS_FINALES.includes(pedido.estado)) {
+      throw new Error(`El pedido ya está ${ESTADOS_PEDIDO[pedido.estado].etiqueta.toLowerCase()} y no se puede cambiar.`);
+    }
+    if (pedido.estado === estado && !texto) throw new Error('El pedido ya está en ese estado.');
+    if (estado === 'ANULADO' && !texto) throw new Error('Indica el motivo de la anulación.');
+
+    const devuelve = ESTADOS_QUE_DEVUELVEN.includes(estado);
+    const { idPedido: _id, ...payload } = pedido;
+    void _id;
+    const actualizado = await PedidoApiService.actualizar(id, {
+      ...payload,
+      estado,
+      motivoAnulacion: devuelve ? (texto || null) : pedido.motivoAnulacion
+    });
+
+    if (devuelve) {
+      const unidades = new Map<number, number>();
+      (pedido.items ?? []).forEach((i) => unidades.set(i.idProducto, (unidades.get(i.idProducto) ?? 0) + i.cantidad));
+      for (const [idProducto, cantidad] of unidades) {
+        const producto = await ProductoService.obtener(idProducto);
+        await ProductoService.actualizar(idProducto, { ...producto, stockDisponible: (producto.stockDisponible ?? 0) + cantidad });
+      }
+    }
+    return actualizado;
+  },
+
+  async agregarVarios(): Promise<void> {
+    throw new Error('Los pedidos de ejemplo solo están disponibles en modo local (VITE_USAR_API=false).');
+  },
+
+  async eliminarDemo(): Promise<void> {
+    // No hay pedidos de ejemplo en el backend
   },
 
   // Borra primero detalles e historial

@@ -1,0 +1,5187 @@
+{
+  "categorias": [
+    {
+      "clave": 1,
+      "nombre": "Indumentaria",
+      "descripcion": "Cascos, protecciones y ropa para salir a rodar.",
+      "activa": true,
+      "padre": null
+    },
+    {
+      "clave": 2,
+      "nombre": "Accesorios",
+      "descripcion": "Todo lo que le suma a tu bici y a tus salidas.",
+      "activa": true,
+      "padre": null
+    },
+    {
+      "clave": 3,
+      "nombre": "Componentes",
+      "descripcion": "Repuestos para mantener tu bici en marcha.",
+      "activa": true,
+      "padre": null
+    },
+    {
+      "clave": 4,
+      "nombre": "Ruedas",
+      "descripcion": "Neumáticos y cámaras para cada terreno.",
+      "activa": true,
+      "padre": null
+    },
+    {
+      "clave": 5,
+      "nombre": "Cascos",
+      "descripcion": "Protección para ciudad, trail y enduro.",
+      "activa": true,
+      "padre": 1
+    },
+    {
+      "clave": 6,
+      "nombre": "Rodilleras",
+      "descripcion": "Protege tus rodillas sin perder movilidad.",
+      "activa": true,
+      "padre": 1
+    },
+    {
+      "clave": 7,
+      "nombre": "Guantes",
+      "descripcion": "Agarre, tacto y protección para tus manos.",
+      "activa": true,
+      "padre": 1
+    },
+    {
+      "clave": 8,
+      "nombre": "Cortavientos",
+      "descripcion": "Livianos y plegables para cuando cambia el clima.",
+      "activa": true,
+      "padre": 1
+    },
+    {
+      "clave": 9,
+      "nombre": "Bombines",
+      "descripcion": "Para la casa, la mochila o la suspensión.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 10,
+      "nombre": "Botellas",
+      "descripcion": "Hidratación para cada salida.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 11,
+      "nombre": "Luces",
+      "descripcion": "Que la noche no pare la ruta.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 12,
+      "nombre": "Puños",
+      "descripcion": "Comodidad y control en el manubrio.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 13,
+      "nombre": "Sillines",
+      "descripcion": "Comodidad para ruta, trail o ciudad.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 14,
+      "nombre": "Tapabarros",
+      "descripcion": "Que el barro se quede en el camino.",
+      "activa": true,
+      "padre": 2
+    },
+    {
+      "clave": 15,
+      "nombre": "Transmisión",
+      "descripcion": "Cadenas, cassettes, mandos y cambios.",
+      "activa": true,
+      "padre": 3
+    },
+    {
+      "clave": 16,
+      "nombre": "Frenos",
+      "descripcion": "Frenos, pastillas y rotores.",
+      "activa": true,
+      "padre": 3
+    },
+    {
+      "clave": 17,
+      "nombre": "Mazas",
+      "descripcion": "Mazas delanteras y traseras.",
+      "activa": true,
+      "padre": 3
+    },
+    {
+      "clave": 18,
+      "nombre": "Pedales",
+      "descripcion": "Planos o de clip, para cada estilo.",
+      "activa": true,
+      "padre": 3
+    },
+    {
+      "clave": 19,
+      "nombre": "Manubrios",
+      "descripcion": "Control y posición sobre la bici.",
+      "activa": true,
+      "padre": 3
+    },
+    {
+      "clave": 20,
+      "nombre": "Neumáticos",
+      "descripcion": "Agarre y rendimiento para cada terreno.",
+      "activa": true,
+      "padre": 4
+    },
+    {
+      "clave": 21,
+      "nombre": "Cámaras",
+      "descripcion": "Cámaras de repuesto para todas las medidas.",
+      "activa": true,
+      "padre": 4
+    },
+    {
+      "clave": 22,
+      "nombre": "Suspensiones",
+      "descripcion": "Horquillas para XC, trail y enduro.",
+      "activa": true,
+      "padre": null
+    },
+    {
+      "clave": 23,
+      "nombre": "Mantenimiento",
+      "descripcion": "Mantenciones en nuestro taller.",
+      "activa": true,
+      "padre": null
+    }
+  ],
+  "marcas": [
+    {
+      "clave": 1,
+      "nombre": "Leatt",
+      "activa": true
+    },
+    {
+      "clave": 2,
+      "nombre": "Fox",
+      "activa": true
+    },
+    {
+      "clave": 3,
+      "nombre": "Bell",
+      "activa": true
+    },
+    {
+      "clave": 4,
+      "nombre": "Giro",
+      "activa": true
+    },
+    {
+      "clave": 5,
+      "nombre": "Alpinestars",
+      "activa": true
+    },
+    {
+      "clave": 6,
+      "nombre": "POC",
+      "activa": true
+    },
+    {
+      "clave": 7,
+      "nombre": "Gobik",
+      "activa": true
+    },
+    {
+      "clave": 8,
+      "nombre": "Bicycle Line",
+      "activa": true
+    },
+    {
+      "clave": 9,
+      "nombre": "Blackburn",
+      "activa": true
+    },
+    {
+      "clave": 10,
+      "nombre": "Oxford",
+      "activa": true
+    },
+    {
+      "clave": 11,
+      "nombre": "Zéfal",
+      "activa": true
+    },
+    {
+      "clave": 12,
+      "nombre": "Camelbak",
+      "activa": true
+    },
+    {
+      "clave": 13,
+      "nombre": "NiteRider",
+      "activa": true
+    },
+    {
+      "clave": 14,
+      "nombre": "Serfas",
+      "activa": true
+    },
+    {
+      "clave": 15,
+      "nombre": "ODI",
+      "activa": true
+    },
+    {
+      "clave": 16,
+      "nombre": "Ergon",
+      "activa": true
+    },
+    {
+      "clave": 17,
+      "nombre": "715 Industries",
+      "activa": true
+    },
+    {
+      "clave": 18,
+      "nombre": "Cannondale",
+      "activa": true
+    },
+    {
+      "clave": 19,
+      "nombre": "Peaty's",
+      "activa": true
+    },
+    {
+      "clave": 20,
+      "nombre": "Marsh Guard",
+      "activa": true
+    },
+    {
+      "clave": 21,
+      "nombre": "SRAM",
+      "activa": true
+    },
+    {
+      "clave": 22,
+      "nombre": "Shimano",
+      "activa": true
+    },
+    {
+      "clave": 23,
+      "nombre": "Magura",
+      "activa": true
+    },
+    {
+      "clave": 24,
+      "nombre": "Hope",
+      "activa": true
+    },
+    {
+      "clave": 25,
+      "nombre": "OneUp",
+      "activa": true
+    },
+    {
+      "clave": 26,
+      "nombre": "Deity",
+      "activa": true
+    },
+    {
+      "clave": 27,
+      "nombre": "HT Components",
+      "activa": true
+    },
+    {
+      "clave": 28,
+      "nombre": "Renthal",
+      "activa": true
+    },
+    {
+      "clave": 29,
+      "nombre": "Title",
+      "activa": true
+    },
+    {
+      "clave": 30,
+      "nombre": "Maxxis",
+      "activa": true
+    },
+    {
+      "clave": 31,
+      "nombre": "Schwalbe",
+      "activa": true
+    },
+    {
+      "clave": 32,
+      "nombre": "Continental",
+      "activa": true
+    },
+    {
+      "clave": 33,
+      "nombre": "Kenda",
+      "activa": true
+    },
+    {
+      "clave": 34,
+      "nombre": "Chaoyang",
+      "activa": true
+    },
+    {
+      "clave": 35,
+      "nombre": "Arisun",
+      "activa": true
+    },
+    {
+      "clave": 36,
+      "nombre": "RideNow",
+      "activa": true
+    },
+    {
+      "clave": 37,
+      "nombre": "RockShox",
+      "activa": true
+    },
+    {
+      "clave": 38,
+      "nombre": "Marzocchi",
+      "activa": true
+    },
+    {
+      "clave": 39,
+      "nombre": "Rider Tapia",
+      "activa": true
+    }
+  ],
+  "productos": [
+    {
+      "nombre": "Casco Leatt AllMtn 1.0 Titanium",
+      "descripcion": "El AllMtn 1.0 te da la protección de un full-face en las bajadas y la ventilación de un casco abierto en las subidas: la mentonera se saca en segundos. Acabado Titanium.",
+      "precioNormal": 109990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 1,
+      "imagen": "/img/productos/cascos/leatt-allmtn-10.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, All Mountain"
+        },
+        {
+          "nombre": "Mentonera",
+          "valor": "Desmontable"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "750 g"
+        },
+        {
+          "nombre": "Ventilaciones",
+          "valor": "16"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Titanium"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0001-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0001-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0001-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Fox Speedframe MIPS",
+      "descripcion": "Pensado para largas jornadas de trail: liviano, bien ventilado y con sistema MIPS que reduce las fuerzas de rotación en caso de impacto. Visera ajustable y ajuste trasero con rueda.",
+      "precioNormal": 89990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 2,
+      "imagen": "/img/productos/cascos/fox-speedframe-mips.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "380 g"
+        },
+        {
+          "nombre": "Ventilaciones",
+          "valor": "14"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0002-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0002-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0002-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Bell Super Air R MIPS",
+      "descripcion": "Uno de los convertibles más ventilados del mercado. Mentonera removible, MIPS, soporte para antiparras y montaje para cámara o luz.",
+      "precioNormal": 219990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 3,
+      "imagen": "/img/productos/cascos/bell-super-air-r.jpg",
+      "precioOferta": 179990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Descenso ligero"
+        },
+        {
+          "nombre": "Mentonera",
+          "valor": "Desmontable"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "800 g"
+        },
+        {
+          "nombre": "Ventilaciones",
+          "valor": "18"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Rojo / Gris"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0003-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0003-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0003-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Giro Register MIPS",
+      "descripcion": "Casco de talla única con ajuste por rueda. Cómodo, liviano y con MIPS, perfecto para moverse por la ciudad o salir al cerro.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 4,
+      "imagen": "/img/productos/cascos/giro-register-mips.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Urbano, MTB recreativo"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "320 g"
+        },
+        {
+          "nombre": "Ventilaciones",
+          "valor": "22"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Titanium mate"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0004-1",
+          "talla": "Única",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Fox Mainframe MIPS",
+      "descripcion": "Casco de trail con MIPS integrado al sistema de ajuste y mayor cobertura en la nuca. Espuma EPS moldeada para una buena ventilación y forro desmontable y lavable que evacúa la humedad.",
+      "precioNormal": 79990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 1,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 2,
+      "imagen": "/img/productos/cascos/fox-mainframe-mips.jpg",
+      "precioOferta": 59990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "390 g"
+        },
+        {
+          "nombre": "Forro",
+          "valor": "Desmontable y lavable"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Azul"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0005-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0005-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0005-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Bell 4Forty Air MIPS",
+      "descripcion": "Casco de trail con cobertura extendida, visera ajustable en tres posiciones compatible con antiparras y sistema Float Fit con MIPS. Hebilla magnética y puertos para guardar los lentes.",
+      "precioNormal": 99990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 3,
+      "imagen": "/img/productos/cascos/bell-4forty-air-mips.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Enduro"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí (Float Fit)"
+        },
+        {
+          "nombre": "Visera",
+          "valor": "Ajustable, 3 posiciones"
+        },
+        {
+          "nombre": "Hebilla",
+          "valor": "Magnética"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Verde"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0006-1",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0006-2",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "CAS-0006-3",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Integral Bell Sanction 2",
+      "descripcion": "Casco integral para bikepark, BMX y descenso con la protección de un modelo mucho más caro. 14 ventilaciones, relleno Ventilated DH Air y almohadillas de mejillas extraíbles y lavables.",
+      "precioNormal": 99990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 3,
+      "imagen": "/img/productos/cascos/bell-sanction-2.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Bikepark, BMX, Descenso"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Integral (full face)"
+        },
+        {
+          "nombre": "Ventilaciones",
+          "valor": "14"
+        },
+        {
+          "nombre": "Relleno",
+          "valor": "Ventilated DH Air"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro mate"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0007-1",
+          "talla": "XS/S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0007-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0007-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "CAS-0007-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Integral Fox Rampage Comp MIPS",
+      "descripcion": "Casco integral de descenso con calota liviana de fibra de vidrio y sistema MIPS. Visera totalmente regulable compatible con antiparras y forro transpirable, desmontable y lavable.",
+      "precioNormal": 299990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 2,
+      "imagen": "/img/productos/cascos/fox-rampage-comp.jpg",
+      "precioOferta": 224990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Descenso, Enduro, Bikepark"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Integral (full face)"
+        },
+        {
+          "nombre": "Calota",
+          "valor": "Fibra de vidrio"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Cierre",
+          "valor": "Doble anilla D"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "ASTM F1952 / CPSC / EN 1078"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro / Blanco"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0008-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "CAS-0008-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "CAS-0008-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "CAS-0008-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Casco Bell Avenue MIPS",
+      "descripcion": "Casco urbano y de ruta recreativa con MIPS integrado al ajuste Ergo Fit y construcción Fusion In-Mold. Una de las opciones más populares para el uso diario en la ciudad o la ciclovía.",
+      "precioNormal": 69990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 5,
+      "marca": 3,
+      "imagen": "/img/productos/cascos/bell-avenue-mips.jpg",
+      "precioOferta": 44990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Urbano, Ruta recreativa"
+        },
+        {
+          "nombre": "Sistema MIPS",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Construcción",
+          "valor": "Fusion In-Mold"
+        },
+        {
+          "nombre": "Ajuste",
+          "valor": "Ergo Fit"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1078 / CPSC"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Gris"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAS-0009-1",
+          "talla": "Única",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rodilleras Fox Launch D3O",
+      "descripcion": "Rodillera que combina protección y movilidad sobre la bici. Piezas de D3O extraíbles que absorben los impactos y diseño en malla y Ariaprene para una buena ventilación.",
+      "precioNormal": 99990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 2,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 6,
+      "marca": 2,
+      "imagen": "/img/productos/rodilleras/fox-launch-d3o.jpg",
+      "precioOferta": 69990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail, Bikepark"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "D3O extraíble"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Malla y Ariaprene"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1621-1 nivel 1"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "ROD-0001-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "ROD-0001-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "ROD-0001-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "ROD-0001-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rodilleras Fox Enduro D3O",
+      "descripcion": "Rodillera tipo manga, liviana y fresca para pedalear todo el día. Pieza de D3O extraíble para lavarla, malla elástica abierta y tratamiento antimicrobiano contra el mal olor.",
+      "precioNormal": 89990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 6,
+      "marca": 2,
+      "imagen": "/img/productos/rodilleras/fox-enduro-d3o.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "D3O extraíble"
+        },
+        {
+          "nombre": "Tratamiento",
+          "valor": "Antimicrobiano"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1621-1 nivel 1"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "ROD-0002-1",
+          "talla": "XS",
+          "color": null
+        },
+        {
+          "sku": "ROD-0002-2",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "ROD-0002-3",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "ROD-0002-4",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "ROD-0002-5",
+          "talla": "XL",
+          "color": null
+        },
+        {
+          "sku": "ROD-0002-6",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rodilleras Alpinestars Paragon Plus",
+      "descripcion": "Rodillera de manga con protector flexible y buena ventilación, pensada para trail y enduro a un precio accesible.",
+      "precioNormal": 54990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 6,
+      "marca": 5,
+      "imagen": "/img/productos/rodilleras/alpinestars-paragon-plus.jpg",
+      "precioOferta": 34990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Enduro"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Manga"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "CE nivel 1"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "ROD-0003-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "ROD-0003-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "ROD-0003-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rodilleras POC VPD System Lite",
+      "descripcion": "Moldeada en 3D y muy ventilada. El material VPD se endurece con el impacto y su exterior de baja fricción ayuda a deslizar en caso de caída.",
+      "precioNormal": 139990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 6,
+      "marca": 6,
+      "imagen": "/img/productos/rodilleras/poc-vpd-system-lite.jpg",
+      "precioOferta": 99990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "VPD (se endurece al impacto)"
+        },
+        {
+          "nombre": "Exterior",
+          "valor": "Baja fricción"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "EN 1621-1"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "ROD-0004-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "ROD-0004-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "ROD-0004-3",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rodilleras Leatt AirFlex Hybrid Pro",
+      "descripcion": "Rodillera súper delgada con gel de impacto AirFlex: suave y flexible, pero capaz de resistir golpes fuertes. Placa deslizante extra y acolchado lateral.",
+      "precioNormal": 147990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 6,
+      "marca": 1,
+      "imagen": "/img/productos/rodilleras/leatt-airflex-hybrid-pro.jpg",
+      "precioOferta": 119990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Descenso"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "Gel AirFlex + placa deslizante"
+        },
+        {
+          "nombre": "Certificación",
+          "valor": "CE EN 1621-1"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "ROD-0005-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "ROD-0005-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "ROD-0005-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "ROD-0005-4",
+          "talla": "XL",
+          "color": null
+        },
+        {
+          "sku": "ROD-0005-5",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Guantes Fox Ranger",
+      "descripcion": "Los guantes de MTB más vendidos de Fox: livianos, con buen agarre y compatibles con pantallas táctiles. Sirven para casi cualquier disciplina.",
+      "precioNormal": 26990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 7,
+      "marca": 2,
+      "imagen": "/img/productos/guantes/fox-ranger.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC, Enduro"
+        },
+        {
+          "nombre": "Pantalla táctil",
+          "valor": "Sí (índice y pulgar)"
+        },
+        {
+          "nombre": "Cierre",
+          "valor": "Puño elástico sin velcro"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Verde"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "GUA-0001-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "GUA-0001-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "GUA-0001-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "GUA-0001-4",
+          "talla": "XL",
+          "color": null
+        },
+        {
+          "sku": "GUA-0001-5",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Guantes Fox Defend D3O",
+      "descripcion": "Guante liviano de perfil bajo con protección D3O en los nudillos y materiales resistentes a la abrasión. Cierre de velcro para un ajuste a medida.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 7,
+      "marca": 2,
+      "imagen": "/img/productos/guantes/fox-defend-d3o.jpg",
+      "precioOferta": 37990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Descenso"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "Nudillos D3O Ghost"
+        },
+        {
+          "nombre": "Cierre",
+          "valor": "Velcro"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Gris"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "GUA-0002-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "GUA-0002-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "GUA-0002-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "GUA-0002-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Guantes Fox Flexair Ascent",
+      "descripcion": "Guante ligero y muy transpirable, con puño moldeado por compresión y palma de ante para un tacto excelente sobre el manubrio.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 7,
+      "marca": 2,
+      "imagen": "/img/productos/guantes/fox-flexair-ascent.jpg",
+      "precioOferta": 19990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Palma",
+          "valor": "Ante"
+        },
+        {
+          "nombre": "Pantalla táctil",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Rojo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "GUA-0003-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "GUA-0003-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "GUA-0003-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "GUA-0003-4",
+          "talla": "XL",
+          "color": null
+        },
+        {
+          "sku": "GUA-0003-5",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Guantes Fox Ranger Gel",
+      "descripcion": "La versión con gel del Ranger: zonas acolchadas en la palma que reducen la vibración en salidas largas. Compatible con pantallas táctiles.",
+      "precioNormal": 29990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 7,
+      "marca": 2,
+      "imagen": "/img/productos/guantes/fox-ranger-gel.jpg",
+      "precioOferta": 20990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Ruta, Urbano"
+        },
+        {
+          "nombre": "Palma",
+          "valor": "Acolchado de gel"
+        },
+        {
+          "nombre": "Pantalla táctil",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Morado"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "GUA-0004-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "GUA-0004-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "GUA-0004-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "GUA-0004-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Chaqueta Cortaviento Fox Ranger Wind",
+      "descripcion": "Chaqueta liviana estilo anorak con tejido elástico en cuatro direcciones y capucha que se adapta sobre la mayoría de los cascos. Se ve tan bien fuera de la bici como arriba.",
+      "precioNormal": 99990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 8,
+      "marca": 2,
+      "imagen": "/img/productos/cortavientos/fox-ranger-wind.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "MTB, Urbano"
+        },
+        {
+          "nombre": "Tejido",
+          "valor": "Elástico en 4 direcciones"
+        },
+        {
+          "nombre": "Capucha",
+          "valor": "Compatible con casco"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "COR-0001-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "COR-0001-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "COR-0001-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "COR-0001-4",
+          "talla": "XL",
+          "color": null
+        },
+        {
+          "sku": "COR-0001-5",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cortavientos Fox Ranger Wind Pullover",
+      "descripcion": "Cortavientos tipo pullover con capucha holgada, bolsillo canguro con cierre y cordón de ajuste. Se guarda dentro de su propio bolsillo.",
+      "precioNormal": 89990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 8,
+      "marca": 2,
+      "imagen": "/img/productos/cortavientos/fox-ranger-wind-pullover.jpg",
+      "precioOferta": 53990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "MTB, Trail"
+        },
+        {
+          "nombre": "Material",
+          "valor": "89% poliéster, 11% elastano"
+        },
+        {
+          "nombre": "Bolsillos",
+          "valor": "Canguro con cierre"
+        },
+        {
+          "nombre": "Plegable",
+          "valor": "Sí, en su bolsillo"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Burdeo / Café"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "COR-0002-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "COR-0002-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "COR-0002-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "COR-0002-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Chaleco Cortavientos Fox Ranger",
+      "descripcion": "Chaleco cortavientos liviano y plegable: se guarda en su propio bolsillo y apenas ocupa espacio en la riñonera. Ideal para las bajadas cuando cambia el clima.",
+      "precioNormal": 69990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 8,
+      "marca": 2,
+      "imagen": "/img/productos/cortavientos/fox-ranger-chaleco.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "MTB, Trail"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Sin mangas"
+        },
+        {
+          "nombre": "Plegable",
+          "valor": "Sí, en su bolsillo"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Rojo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "COR-0003-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "COR-0003-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "COR-0003-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "COR-0003-4",
+          "talla": "XXL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Chaqueta Impermeable Gobik Pluvia 2.0",
+      "descripcion": "Chaqueta ultraliviana para ruta con tejido Lightshell y membrana hidrofóbica que repele el viento y la lluvia ligera. Se pliega en su bolsillo interior.",
+      "precioNormal": 119990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 8,
+      "marca": 7,
+      "imagen": "/img/productos/cortavientos/gobik-pluvia-2.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Ruta, Gravel"
+        },
+        {
+          "nombre": "Tejido",
+          "valor": "Lightshell con membrana hidrofóbica"
+        },
+        {
+          "nombre": "Costuras",
+          "valor": "Selladas"
+        },
+        {
+          "nombre": "Plegable",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Naranjo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "COR-0004-1",
+          "talla": "XS",
+          "color": null
+        },
+        {
+          "sku": "COR-0004-2",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "COR-0004-3",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "COR-0004-4",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "COR-0004-5",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cortavientos Bicycle Line Stelvio Mujer",
+      "descripcion": "Cortavientos de mujer increíblemente liviano (35 g/m²), resistente al agua y fácil de guardar en el bolsillo del jersey. Con elementos reflectantes.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 8,
+      "marca": 8,
+      "imagen": "/img/productos/cortavientos/bicycle-line-stelvio.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Ruta"
+        },
+        {
+          "nombre": "Tejido",
+          "valor": "Cortavientos 35 g/m²"
+        },
+        {
+          "nombre": "Resistente al agua",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Reflectantes",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Blanco"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "COR-0005-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "COR-0005-2",
+          "talla": "M",
+          "color": null
+        },
+        {
+          "sku": "COR-0005-3",
+          "talla": "L",
+          "color": null
+        },
+        {
+          "sku": "COR-0005-4",
+          "talla": "XL",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Bombín Blackburn AirStik SL",
+      "descripcion": "Mini bombín de aluminio de solo 59 g que cabe en el bolsillo del jersey o junto al portabotella. Cabezal Presta a presión, fácil de usar.",
+      "precioNormal": 24990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 9,
+      "marca": 9,
+      "imagen": "/img/productos/bombines/blackburn-airstik-sl.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Mini bombín de mano"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Presta"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "59 g"
+        },
+        {
+          "nombre": "Incluye",
+          "valor": "Soporte para cuadro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOM-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Bombín de Pie Blackburn Core 2",
+      "descripcion": "Bombín de pie para el taller de la casa, con manómetro análogo grande en la base y cabezal que sirve para válvulas Presta y Schrader.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 9,
+      "marca": 9,
+      "imagen": "/img/productos/bombines/blackburn-core-2.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Bombín de pie"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Presta y Schrader"
+        },
+        {
+          "nombre": "Manómetro",
+          "valor": "Análogo"
+        },
+        {
+          "nombre": "Presión máx.",
+          "valor": "160 psi"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOM-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Bombín Eléctrico Oxford E-Pump Compact",
+      "descripcion": "Inflador eléctrico compacto con pantalla digital: eliges la presión y se detiene solo. Recargable por USB e ideal para llevar en la mochila.",
+      "precioNormal": 69990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 9,
+      "marca": 10,
+      "imagen": "/img/productos/bombines/oxford-e-pump.jpg",
+      "precioOferta": 59990,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Eléctrico recargable"
+        },
+        {
+          "nombre": "Presión máx.",
+          "valor": "120 psi"
+        },
+        {
+          "nombre": "Batería",
+          "valor": "500 mAh"
+        },
+        {
+          "nombre": "Pantalla",
+          "valor": "Digital"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Presta y Schrader (adaptadores)"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOM-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Bombín Zéfal Gravel Mini",
+      "descripcion": "Mini bombín pensado para neumáticos de gravel de 35 a 47 mm: buen equilibrio entre volumen de aire, presión y tamaño.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 9,
+      "marca": 11,
+      "imagen": "/img/productos/bombines/zefal-gravel-mini.jpg",
+      "precioOferta": 29990,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Mini bombín de mano"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Gravel (35–47 mm)"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Presta y Schrader"
+        },
+        {
+          "nombre": "Incluye",
+          "valor": "Soporte para cuadro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOM-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Bombín de Suspensión Fox HP 350 psi",
+      "descripcion": "Bombín de alta presión con manómetro análogo para regular horquillas y amortiguadores de aire. Conector largo para llegar fácil a la válvula.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 9,
+      "marca": 2,
+      "imagen": "/img/productos/bombines/fox-hp-350.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Alta presión (suspensión)"
+        },
+        {
+          "nombre": "Presión máx.",
+          "valor": "350 psi"
+        },
+        {
+          "nombre": "Manómetro",
+          "valor": "Análogo"
+        },
+        {
+          "nombre": "Conector",
+          "valor": "Largo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOM-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Botella Camelbak Podium 710 ml",
+      "descripcion": "La botella de referencia del ciclismo: cuerpo fácil de apretar para tomar más con menos esfuerzo, válvula autosellante y buen ajuste en el portabotella.",
+      "precioNormal": 14990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 7,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 10,
+      "marca": 12,
+      "imagen": "/img/productos/botellas/camelbak-podium-710.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Capacidad",
+          "valor": "710 ml"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Jet Valve autosellante"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Libre de BPA"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Gris"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOT-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Botella Térmica Camelbak Podium Chill 710 ml",
+      "descripcion": "Botella con aislación de doble pared que mantiene el agua fría el doble de tiempo que una botella normal. Tapa autosellante de alto flujo.",
+      "precioNormal": 19990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 10,
+      "marca": 12,
+      "imagen": "/img/productos/botellas/camelbak-podium-chill-710.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Capacidad",
+          "valor": "710 ml"
+        },
+        {
+          "nombre": "Aislación",
+          "valor": "Doble pared"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Autosellante de alto flujo"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Polipropileno TruTaste"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOT-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Botella Camelbak Podium Dirt Series 440 ml",
+      "descripcion": "Versión compacta para MTB con tapa antibarro que mantiene la válvula limpia en el cerro. Ideal para cuadros pequeños o doble suspensión.",
+      "precioNormal": 14990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 10,
+      "marca": 12,
+      "imagen": "/img/productos/botellas/camelbak-podium-dirt-440.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Capacidad",
+          "valor": "440 ml"
+        },
+        {
+          "nombre": "Tapa",
+          "valor": "Antibarro"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Jet Valve autosellante"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro camo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOT-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Botella Fox Base 650 ml",
+      "descripcion": "Botella simple y económica con tapón MoFlo que se abre con la boca mientras pedaleas y no gotea cuando está cerrado.",
+      "precioNormal": 5990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 10,
+      "marca": 2,
+      "imagen": "/img/productos/botellas/fox-base-22oz.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Capacidad",
+          "valor": "650 ml"
+        },
+        {
+          "nombre": "Tapón",
+          "valor": "MoFlo a prueba de fugas"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Libre de BPA"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "BOT-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Delantera NiteRider Lumina Micro 650",
+      "descripcion": "Luz delantera compacta de 650 lúmenes con 5 modos, incluido un modo caminata que dura hasta 20 horas. Ideal para salidas nocturnas en la ciudad o el cerro.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 13,
+      "imagen": "/img/productos/luces/niterider-lumina-micro-650.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "650 lúmenes"
+        },
+        {
+          "nombre": "Modos",
+          "valor": "5 (alto, medio, bajo, flash, caminata)"
+        },
+        {
+          "nombre": "Autonomía",
+          "valor": "1:30 h (alto) a 20 h (caminata)"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        },
+        {
+          "nombre": "Batería",
+          "valor": "Li-Ion"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "130 g"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Kit Luces Blackburn Dayblazer 400 + Click USB",
+      "descripcion": "Set simple y muy brillante: la delantera Dayblazer 400 tiene modo diurno BLITZ y buena visibilidad lateral, y la trasera Click USB entrega 20 lúmenes en un formato compacto.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 9,
+      "imagen": "/img/productos/luces/blackburn-dayblazer-400-click.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Dayblazer 400 + Click USB trasera"
+        },
+        {
+          "nombre": "Potencia",
+          "valor": "400 / 20 lúmenes"
+        },
+        {
+          "nombre": "Modo diurno",
+          "valor": "BLITZ"
+        },
+        {
+          "nombre": "Resistencia al agua",
+          "valor": "IP67"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        },
+        {
+          "nombre": "Norma",
+          "valor": "ANSI FL-1"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Kit Luces Blackburn Luminate 360",
+      "descripcion": "Visibilidad desde cualquier ángulo: delantera Dayblazer 550 con modo Blitz, trasera Grid y luces laterales Grid Side en color ámbar con tecnología COB.",
+      "precioNormal": 129990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 3,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 9,
+      "imagen": "/img/productos/luces/blackburn-luminate-360.jpg",
+      "precioOferta": 77990,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Dayblazer 550 + Grid trasera + 2 Grid Side"
+        },
+        {
+          "nombre": "Potencia delantera",
+          "valor": "550 lúmenes"
+        },
+        {
+          "nombre": "Tecnología",
+          "valor": "LED COB"
+        },
+        {
+          "nombre": "Luces laterales",
+          "valor": "Ámbar"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Delantera Blackburn Grid",
+      "descripcion": "Pequeña luz delantera con tecnología COB de brillo amplio y 4 modos. Perfecta para ser visto en la ciudad.",
+      "precioNormal": 24990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 9,
+      "imagen": "/img/productos/luces/blackburn-grid-delantera.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "110 lúmenes"
+        },
+        {
+          "nombre": "Modos",
+          "valor": "4"
+        },
+        {
+          "nombre": "Tecnología",
+          "valor": "LED COB"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Delantera Zéfal Supervision F800",
+      "descripcion": "Luz delantera de 800 lúmenes para rutas de noche en la ciudad o el cerro, con varios modos y carga USB.",
+      "precioNormal": 69990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 11,
+      "imagen": "/img/productos/luces/zefal-supervision-f800.jpg",
+      "precioOferta": 55990,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "800 lúmenes"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Manubrio"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Urbano, MTB"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Trasera Zéfal Supervision R150",
+      "descripcion": "Luz trasera muy potente para ser visto incluso de día, con varios modos y carga USB.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 11,
+      "imagen": "/img/productos/luces/zefal-supervision-r150.jpg",
+      "precioOferta": 31990,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "150 lúmenes"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Tija de sillín"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Ruta, Urbano"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0006",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Delantera Serfas True MTB 600",
+      "descripcion": "Luz delantera robusta de la serie True de Serfas, con haz amplio pensado para senderos y funciones inteligentes.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 14,
+      "imagen": "/img/productos/luces/serfas-true-mtb-600.jpg",
+      "precioOferta": 44990,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "600 lúmenes"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "MTB, senderos"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Manubrio"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0007",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Delantera Oxford Pro 850",
+      "descripcion": "850 lúmenes en una carcasa de aluminio resistente. Buena opción calidad/precio para ver y ser visto en la ciudad o en senderos oscuros.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 10,
+      "imagen": "/img/productos/luces/oxford-pro-850.jpg",
+      "precioOferta": 29990,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "850 lúmenes"
+        },
+        {
+          "nombre": "Carcasa",
+          "valor": "Aluminio"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB-C"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Manubrio"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0008",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Luz Trasera Oxford Pro 20",
+      "descripcion": "Luz trasera compacta de 20 lúmenes con carga USB-C y montaje de silicona para tija o mochila.",
+      "precioNormal": 14990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 11,
+      "marca": 10,
+      "imagen": "/img/productos/luces/oxford-pro-20-trasera.jpg",
+      "precioOferta": 8990,
+      "especificaciones": [
+        {
+          "nombre": "Potencia",
+          "valor": "20 lúmenes"
+        },
+        {
+          "nombre": "Carga",
+          "valor": "USB-C"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Elástico de silicona"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "LUZ-0009",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Puños ODI Elite Pro V2.1 Lock-On",
+      "descripcion": "Puños con acolchado donde más se necesita, sin sentirse voluminosos. Patrón half-waffle para más control y sistema Lock-On que no se gira.",
+      "precioNormal": 27990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 12,
+      "marca": 15,
+      "imagen": "/img/productos/punos/odi-elite-pro.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Enduro"
+        },
+        {
+          "nombre": "Fijación",
+          "valor": "Lock-On (1 abrazadera)"
+        },
+        {
+          "nombre": "Largo",
+          "valor": "130 mm"
+        },
+        {
+          "nombre": "Diseño",
+          "valor": "Half-waffle"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PUN-0001-1",
+          "talla": null,
+          "color": "Negro"
+        },
+        {
+          "sku": "PUN-0001-2",
+          "talla": null,
+          "color": "Rojo"
+        },
+        {
+          "sku": "PUN-0001-3",
+          "talla": null,
+          "color": "Verde"
+        }
+      ]
+    },
+    {
+      "nombre": "Puños ODI Reflex V2.1 Lock-On",
+      "descripcion": "Diseñados para reducir los impactos y vibraciones que llegan a las manos, para que aguantes más tiempo en las bajadas.",
+      "precioNormal": 27990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 12,
+      "marca": 15,
+      "imagen": "/img/productos/punos/odi-reflex.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Enduro"
+        },
+        {
+          "nombre": "Fijación",
+          "valor": "Lock-On"
+        },
+        {
+          "nombre": "Enfoque",
+          "valor": "Absorción de vibraciones"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PUN-0002-1",
+          "talla": null,
+          "color": "Negro"
+        },
+        {
+          "sku": "PUN-0002-2",
+          "talla": null,
+          "color": "Naranjo"
+        },
+        {
+          "sku": "PUN-0002-3",
+          "talla": null,
+          "color": "Gris"
+        }
+      ]
+    },
+    {
+      "nombre": "Puños Ergon GE1 Evo",
+      "descripcion": "Desarrollado para la Enduro World Series: forma ergonómica pensada para manubrios altos, con más comodidad y agarre en terreno técnico.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 12,
+      "marca": 16,
+      "imagen": "/img/productos/punos/ergon-ge1-evo.jpg",
+      "precioOferta": 34990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Fijación",
+          "valor": "Lock-On"
+        },
+        {
+          "nombre": "Forma",
+          "valor": "Ergonómica"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PUN-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Puños Ergon GD1 Evo",
+      "descripcion": "Puño de descenso desarrollado con Rémy Métailler y Vali Höll. Forma cónica que pide menos fuerza de agarre y zona del pulgar muy suave.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 12,
+      "marca": 16,
+      "imagen": "/img/productos/punos/ergon-gd1-evo.jpg",
+      "precioOferta": 34990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Descenso, Enduro"
+        },
+        {
+          "nombre": "Fijación",
+          "valor": "Lock-On"
+        },
+        {
+          "nombre": "Forma",
+          "valor": "Cónica"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PUN-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Puños Ergon GA3",
+      "descripcion": "Puño con mini ala que apoya la muñeca y alivia el dolor típico en salidas largas, sin perder control en el sendero.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 12,
+      "marca": 16,
+      "imagen": "/img/productos/punos/ergon-ga3.jpg",
+      "precioOferta": 34990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC, Paseo"
+        },
+        {
+          "nombre": "Fijación",
+          "valor": "Lock-On"
+        },
+        {
+          "nombre": "Forma",
+          "valor": "Mini ala de apoyo"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PUN-0005-1",
+          "talla": "S",
+          "color": null
+        },
+        {
+          "sku": "PUN-0005-2",
+          "talla": "L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Sillín Ergon SMC Hombre",
+      "descripcion": "Sillín cómodo y dinámico con espuma ortopédica más gruesa y canal de alivio que evita el entumecimiento en salidas largas.",
+      "precioNormal": 89990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 13,
+      "marca": 16,
+      "imagen": "/img/productos/sillines/ergon-smc.jpg",
+      "precioOferta": 69990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, All Mountain"
+        },
+        {
+          "nombre": "Relleno",
+          "valor": "Espuma ortopédica"
+        },
+        {
+          "nombre": "Canal de alivio",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Género",
+          "valor": "Hombre"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SIL-0001-1",
+          "talla": "S/M",
+          "color": null
+        },
+        {
+          "sku": "SIL-0001-2",
+          "talla": "M/L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Sillín Ergon SM Enduro Hombre Stealth",
+      "descripcion": "Desarrollado con pilotos de la Enduro World Series: forma que no se engancha al bajar detrás del sillín y comodidad para las subidas largas.",
+      "precioNormal": 89990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 13,
+      "marca": 16,
+      "imagen": "/img/productos/sillines/ergon-enduro-stealth.jpg",
+      "precioOferta": 79990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Canal de alivio",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Género",
+          "valor": "Hombre"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro (Stealth)"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SIL-0002-1",
+          "talla": "S/M",
+          "color": null
+        },
+        {
+          "sku": "SIL-0002-2",
+          "talla": "M/L",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Sillín 715 Cabra (GOAT)",
+      "descripcion": "Sillín de perfil clásico con la cola levemente elevada, que da un punto de apoyo extra para pedalear con más fuerza en salidas largas.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 13,
+      "marca": 17,
+      "imagen": "/img/productos/sillines/715-cabra.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "MTB, Trail"
+        },
+        {
+          "nombre": "Perfil",
+          "valor": "Cola levemente elevada"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SIL-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Sillín Cannondale Scoop Steel Radius",
+      "descripcion": "Sillín premiado por su construcción de tres partes, que equilibra comodidad y rendimiento para distintos tipos de ciclistas.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 13,
+      "marca": 18,
+      "imagen": "/img/productos/sillines/cannondale-scoop-steel.jpg",
+      "precioOferta": 29990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Ruta, MTB"
+        },
+        {
+          "nombre": "Rieles",
+          "valor": "Acero"
+        },
+        {
+          "nombre": "Perfil",
+          "valor": "Radius (curvo)"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SIL-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Sillín Serfas Exerciser Lycra",
+      "descripcion": "Sillín ancho de confort con capa superior de gel, espuma progresiva y ranura de alivio. Ideal para bicicleta estática, paseo o ciudad.",
+      "precioNormal": 29990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 13,
+      "marca": 14,
+      "imagen": "/img/productos/sillines/serfas-exerciser.jpg",
+      "precioOferta": 24990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Urbano, Paseo, Estática"
+        },
+        {
+          "nombre": "Relleno",
+          "valor": "Gel + espuma progresiva"
+        },
+        {
+          "nombre": "Cubierta",
+          "valor": "Lycra"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SIL-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Tapabarro Peaty's MarshGuard Repeat Crown",
+      "descripcion": "Tapabarro delantero de plástico 100% reciclado con tinta de alta duración. Talla única compatible con las horquillas actuales de las principales marcas.",
+      "precioNormal": 25990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 14,
+      "marca": 19,
+      "imagen": "/img/productos/tapabarros/peatys-repeat-crown.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantero (horquilla)"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Plástico reciclado"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Bridas"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TAP-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Tapabarro Fox 36/38 XL",
+      "descripcion": "Tapabarro XL de protección total contra el barro para horquillas Fox 36 y 38 Float, modelos 2021 en adelante. Se atornilla directo a la horquilla.",
+      "precioNormal": 39990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 14,
+      "marca": 2,
+      "imagen": "/img/productos/tapabarros/fox-tapabarro-36-38.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantero"
+        },
+        {
+          "nombre": "Compatibilidad",
+          "valor": "Fox 36 y 38 (2021+)"
+        },
+        {
+          "nombre": "Tamaño",
+          "valor": "XL"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Atornillado"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TAP-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Juego de Tapabarros Zéfal Shield G50",
+      "descripcion": "Juego de tapabarros envolventes para gravel y ciclismo urbano, que protegen de salpicaduras al rodar sobre suelo mojado.",
+      "precioNormal": 42990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 14,
+      "marca": 11,
+      "imagen": "/img/productos/tapabarros/zefal-shield-g50.jpg",
+      "precioOferta": 39990,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Delantero + trasero"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Gravel, Urbano"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Sin herramientas"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TAP-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Tapabarro de Sillín Zéfal Shield S20",
+      "descripcion": "Tapabarro trasero liviano y discreto que se fija en los rieles del sillín en segundos. Compatible con casi todos los sillines de MTB.",
+      "precioNormal": 7990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 14,
+      "marca": 11,
+      "imagen": "/img/productos/tapabarros/zefal-shield-s20.jpg",
+      "precioOferta": 6990,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Trasero"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Rieles del sillín"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "MTB"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TAP-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Tapabarro Marsh Guard Delantero",
+      "descripcion": "El clásico tapabarro delantero flexible que se fija con bridas a la horquilla. Evita que el barro te llegue a la cara.",
+      "precioNormal": 14990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 14,
+      "marca": 20,
+      "imagen": "/img/productos/tapabarros/marshguard-275.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantero (horquilla)"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "Bridas"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Polipropileno flexible"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TAP-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cadena SRAM GX Eagle 12v",
+      "descripcion": "Cadena de 12 velocidades para transmisiones Eagle, silenciosa y durable. Incluye PowerLock para instalarla y sacarla sin herramientas especiales.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 15,
+      "marca": 21,
+      "imagen": "/img/productos/transmision/sram-cadena-gx-eagle.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Velocidades",
+          "valor": "12"
+        },
+        {
+          "nombre": "Compatibilidad",
+          "valor": "SRAM Eagle"
+        },
+        {
+          "nombre": "Eslabones",
+          "valor": "126"
+        },
+        {
+          "nombre": "Unión",
+          "valor": "PowerLock"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Plata / Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TRA-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cadena Shimano XTR CN-M9100 12v",
+      "descripcion": "Cadena tope de línea de Shimano para transmisiones Hyperglide+ de 12 velocidades. Liviana, precisa y compatible con e-bikes.",
+      "precioNormal": 104390,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 15,
+      "marca": 22,
+      "imagen": "/img/productos/transmision/shimano-cadena-xtr-m9100.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Velocidades",
+          "valor": "12"
+        },
+        {
+          "nombre": "Línea",
+          "valor": "XTR"
+        },
+        {
+          "nombre": "Eslabones",
+          "valor": "126"
+        },
+        {
+          "nombre": "Unión",
+          "valor": "Quick-Link incluido"
+        },
+        {
+          "nombre": "Compatible e-bike",
+          "valor": "Sí"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TRA-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cassette Shimano 105 CS-R7000 11v",
+      "descripcion": "Cassette de 11 velocidades del grupo 105 R7000: la tecnología de Ultegra y Dura-Ace a un precio accesible para ruta.",
+      "precioNormal": 74990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 15,
+      "marca": 22,
+      "imagen": "/img/productos/transmision/shimano-105-r7000.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Velocidades",
+          "valor": "11"
+        },
+        {
+          "nombre": "Grupo",
+          "valor": "105 R7000"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Ruta"
+        },
+        {
+          "nombre": "Núcleo",
+          "valor": "Shimano HG"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TRA-0003-1",
+          "talla": "11-28T",
+          "color": null
+        },
+        {
+          "sku": "TRA-0003-2",
+          "talla": "11-32T",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Mando de Cambio SRAM SX Eagle 12v",
+      "descripcion": "Mando de cambio trasero tipo gatillo para transmisiones Eagle de 12 velocidades. Incluye abrazadera y cable.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 15,
+      "marca": 21,
+      "imagen": "/img/productos/transmision/sram-sx-eagle-shifter.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Velocidades",
+          "valor": "12"
+        },
+        {
+          "nombre": "Actuación",
+          "valor": "X-Actuation"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Gatillo"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "Incluida"
+        },
+        {
+          "nombre": "Cable",
+          "valor": "2200 mm"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TRA-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cambio Trasero SRAM NX 11v",
+      "descripcion": "Cambio trasero de caja larga para transmisiones 1x de 11 velocidades, con tecnología X-Horizon que reduce los cambios fantasma y el golpe de cadena.",
+      "precioNormal": 118990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 15,
+      "marca": 21,
+      "imagen": "/img/productos/transmision/sram-nx-cambio-11v.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Velocidades",
+          "valor": "11"
+        },
+        {
+          "nombre": "Actuación",
+          "valor": "X-Actuation"
+        },
+        {
+          "nombre": "Piñón máx.",
+          "valor": "42T"
+        },
+        {
+          "nombre": "Caja",
+          "valor": "Larga"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "TRA-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Freno Hidráulico Shimano MT200 Trasero",
+      "descripcion": "Freno de disco hidráulico completo (maneta, caliper y manguera) listo para instalar. La forma más simple de pasar a frenos hidráulicos.",
+      "precioNormal": 54990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 16,
+      "marca": 22,
+      "imagen": "/img/productos/frenos/shimano-mt200-trasero.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Trasero"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Hidráulico, 2 pistones"
+        },
+        {
+          "nombre": "Incluye",
+          "valor": "Maneta + caliper + manguera"
+        },
+        {
+          "nombre": "Rotor",
+          "valor": "No incluido"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "FRE-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Freno Magura MT5 Next 4 Pistones",
+      "descripcion": "Toda la potencia de un freno de 4 pistones Magura a un precio accesible. Mucho control para enduro y trail agresivo.",
+      "precioNormal": 169990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 6,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 16,
+      "marca": 23,
+      "imagen": "/img/productos/frenos/magura-mt5-next.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Hidráulico, 4 pistones"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Fluido",
+          "valor": "Aceite mineral Royal Blood"
+        },
+        {
+          "nombre": "Rotor",
+          "valor": "No incluido"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "FRE-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Freno SRAM DB6 Delantero",
+      "descripcion": "Freno potente de aceite mineral y bajo mantenimiento, con maneta Stealth que acerca la manguera al manubrio y se integra con los mandos Eagle (MatchMaker).",
+      "precioNormal": 131990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 16,
+      "marca": 21,
+      "imagen": "/img/productos/frenos/sram-db6-delantero.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantero"
+        },
+        {
+          "nombre": "Tipo",
+          "valor": "Hidráulico, 4 pistones"
+        },
+        {
+          "nombre": "Fluido",
+          "valor": "Aceite mineral"
+        },
+        {
+          "nombre": "Manguera",
+          "valor": "2000 mm"
+        },
+        {
+          "nombre": "Montaje",
+          "valor": "MatchMaker X"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "FRE-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Pastillas Shimano N03A Resina Ice-Tech",
+      "descripcion": "Pastillas de resina con aletas Ice-Tech que disipan el calor. Frenada progresiva y silenciosa para frenos Shimano de 4 pistones.",
+      "precioNormal": 34990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 16,
+      "marca": 22,
+      "imagen": "/img/productos/frenos/shimano-n03a.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Compuesto",
+          "valor": "Resina"
+        },
+        {
+          "nombre": "Disipador",
+          "valor": "Ice-Tech"
+        },
+        {
+          "nombre": "Compatibilidad",
+          "valor": "XTR M9120, XT M8120, SLX M7120"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "FRE-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Rotor Magura Storm CL Center Lock",
+      "descripcion": "Rotor de 2 piezas para mazas Center Lock: resiste altas temperaturas y trabaja perfecto con frenos Magura de 4 pistones. Incluye anillo de montaje.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 16,
+      "marca": 23,
+      "imagen": "/img/productos/frenos/magura-storm-cl.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Montaje",
+          "valor": "Center Lock"
+        },
+        {
+          "nombre": "Construcción",
+          "valor": "2 piezas"
+        },
+        {
+          "nombre": "Incluye",
+          "valor": "Lock ring"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "FRE-0005-1",
+          "talla": "160 mm",
+          "color": null
+        },
+        {
+          "sku": "FRE-0005-2",
+          "talla": "180 mm",
+          "color": null
+        },
+        {
+          "sku": "FRE-0005-3",
+          "talla": "203 mm",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Maza Trasera Shimano FH-MT410 12v",
+      "descripcion": "Maza trasera Deore de 12 velocidades para freno de disco, con eje pasante E-Thru y sellado de laberinto para una larga vida útil.",
+      "precioNormal": 62890,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 17,
+      "marca": 22,
+      "imagen": "/img/productos/mazas/shimano-fh-mt410.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Trasera"
+        },
+        {
+          "nombre": "Velocidades",
+          "valor": "12 (Micro Spline)"
+        },
+        {
+          "nombre": "Rayos",
+          "valor": "32"
+        },
+        {
+          "nombre": "Disco",
+          "valor": "Center Lock"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "12 x 142 mm E-Thru"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAZ-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Maza Delantera Shimano Deore XT HB-M8010",
+      "descripcion": "Maza delantera XT con rodamientos de contacto angular y sellos de alta calidad. Liviana y durable en cualquier clima.",
+      "precioNormal": 83190,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 17,
+      "marca": 22,
+      "imagen": "/img/productos/mazas/shimano-xt-hb-m8010.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantera"
+        },
+        {
+          "nombre": "Rayos",
+          "valor": "32"
+        },
+        {
+          "nombre": "Disco",
+          "valor": "Center Lock"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "148 g"
+        },
+        {
+          "nombre": "Rodamientos",
+          "valor": "Contacto angular"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAZ-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Maza Delantera Hope Pro 5 Boost",
+      "descripcion": "La nueva generación de mazas Hope: cuerpo más rígido sin agregar peso y rodamientos más grandes. Fabricada en Inglaterra, fácil de mantener.",
+      "precioNormal": 154900,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 17,
+      "marca": 24,
+      "imagen": "/img/productos/mazas/hope-pro5-delantera.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Delantera"
+        },
+        {
+          "nombre": "Rayos",
+          "valor": "32"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "15 x 110 mm (Boost)"
+        },
+        {
+          "nombre": "Disco",
+          "valor": "6 pernos"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAZ-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Maza Trasera Hope Pro 5 Boost HG",
+      "descripcion": "Maza trasera Pro 5 con núcleo HG, el famoso sonido Hope y rodamientos más grandes que la Pro 4. Hecha para durar años.",
+      "precioNormal": 359900,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 17,
+      "marca": 24,
+      "imagen": "/img/productos/mazas/hope-pro5-trasera.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Trasera"
+        },
+        {
+          "nombre": "Rayos",
+          "valor": "32"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "12 x 148 mm (Boost)"
+        },
+        {
+          "nombre": "Núcleo",
+          "valor": "Shimano HG"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Azul"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAZ-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Maza Trasera 715 Industries Ultra XD",
+      "descripcion": "Maza premium con sistema de 6 trinquetes y 612 puntos de enganche: acople casi instantáneo de 0,55° para una respuesta inmediata al pedalear.",
+      "precioNormal": 189990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 17,
+      "marca": 17,
+      "imagen": "/img/productos/mazas/715-ultra-trasera.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Posición",
+          "valor": "Trasera"
+        },
+        {
+          "nombre": "Enganche",
+          "valor": "612 puntos (0,55°)"
+        },
+        {
+          "nombre": "Trinquetes",
+          "valor": "6"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "12 x 148 mm (Boost)"
+        },
+        {
+          "nombre": "Núcleo",
+          "valor": "SRAM XD"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAZ-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Pedales Planos OneUp Composite",
+      "descripcion": "Plataforma enorme de 115 x 105 mm con 10 pines de acero por lado y perfil convexo que se acomoda al arco del pie. Solo 355 g.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 4,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 18,
+      "marca": 25,
+      "imagen": "/img/productos/pedales/oneup-composite.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Plano"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Composite (nylon)"
+        },
+        {
+          "nombre": "Plataforma",
+          "valor": "115 x 105 mm"
+        },
+        {
+          "nombre": "Pines",
+          "valor": "10 por lado"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "355 g (par)"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PED-0001-1",
+          "talla": null,
+          "color": "Negro"
+        },
+        {
+          "sku": "PED-0001-2",
+          "talla": null,
+          "color": "Naranjo"
+        },
+        {
+          "sku": "PED-0001-3",
+          "talla": null,
+          "color": "Azul"
+        },
+        {
+          "sku": "PED-0001-4",
+          "talla": null,
+          "color": "Verde"
+        }
+      ]
+    },
+    {
+      "nombre": "Pedales Planos OneUp Aluminio",
+      "descripcion": "Pedales de aluminio ultradelgados que se enganchan menos en las piedras. Pines reemplazables y la misma plataforma grande de 115 x 105 mm.",
+      "precioNormal": 199990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 18,
+      "marca": 25,
+      "imagen": "/img/productos/pedales/oneup-aluminio.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Plano"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio"
+        },
+        {
+          "nombre": "Plataforma",
+          "valor": "115 x 105 mm"
+        },
+        {
+          "nombre": "Pines",
+          "valor": "10 por lado, reemplazables"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PED-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Pedales Planos Deity Black Kat",
+      "descripcion": "Pedal de aluminio 6061 con plataforma grande y cóncava, cuerpo delgado y rodamientos sellados de mayor tamaño para aguantar el descenso más extremo.",
+      "precioNormal": 139990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 18,
+      "marca": 26,
+      "imagen": "/img/productos/pedales/deity-black-kat.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Plano"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio 6061"
+        },
+        {
+          "nombre": "Forma",
+          "valor": "Cóncava"
+        },
+        {
+          "nombre": "Rodamientos",
+          "valor": "Doble sellado"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Plateado"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PED-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Pedales de Clip HT M2 XC",
+      "descripcion": "Pedal automático para cross country aprobado por Nino Schurter. Evacúa muy bien el barro y tiene tensión regulable en cada lado.",
+      "precioNormal": 119990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 18,
+      "marca": 27,
+      "imagen": "/img/productos/pedales/ht-m2.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Clip (automático)"
+        },
+        {
+          "nombre": "Uso",
+          "valor": "XC"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "305 g (par)"
+        },
+        {
+          "nombre": "Cuerpo",
+          "valor": "Aluminio CNC"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "Cromoly CNC"
+        },
+        {
+          "nombre": "Incluye",
+          "valor": "Calas"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PED-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Pedales Planos HT PA03A",
+      "descripcion": "Pedal plano de nylon reforzado, liviano y económico, con pines reemplazables y doble rodamiento sellado.",
+      "precioNormal": 69990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 18,
+      "marca": 27,
+      "imagen": "/img/productos/pedales/ht-pa03a.jpg",
+      "precioOferta": 27990,
+      "especificaciones": [
+        {
+          "nombre": "Tipo",
+          "valor": "Plano"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Nylon reforzado"
+        },
+        {
+          "nombre": "Plataforma",
+          "valor": "107 x 105 mm"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "345 g (par)"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "Cromoly CNC"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "PED-0005-1",
+          "talla": null,
+          "color": "Rojo"
+        },
+        {
+          "sku": "PED-0005-2",
+          "talla": null,
+          "color": "Morado"
+        },
+        {
+          "sku": "PED-0005-3",
+          "talla": null,
+          "color": "Naranjo"
+        }
+      ]
+    },
+    {
+      "nombre": "Manubrio 715 Industries Riser 35 mm",
+      "descripcion": "Manubrio de aluminio 6061 para descenso y enduro: rígido, liviano y resistente a los golpes en terreno técnico.",
+      "precioNormal": 54990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 19,
+      "marca": 17,
+      "imagen": "/img/productos/manubrios/715-riser-40.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Descenso, Enduro"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio 6061"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "35 mm"
+        },
+        {
+          "nombre": "Rise",
+          "valor": "40 mm"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAN-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Manubrio Deity Racepoint 35",
+      "descripcion": "Manubrio probado durante 12 a 24 meses con los riders más exigentes. Tecnología Gradient Butting para una flexión controlada.",
+      "precioNormal": 109990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 19,
+      "marca": 26,
+      "imagen": "/img/productos/manubrios/deity-racepoint-35.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio 7050"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "35 mm"
+        },
+        {
+          "nombre": "Rise",
+          "valor": "38 mm"
+        },
+        {
+          "nombre": "Ancho",
+          "valor": "810 mm (cortable)"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro (Stealth)"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAN-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Manubrio Renthal Fatbar Zero Rise",
+      "descripcion": "Manubrio plano con tecnología heredada del motocross: aluminio serie 7, liviano y durable. Marcas láser para centrarlo y cortarlo fácil.",
+      "precioNormal": 115990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 19,
+      "marca": 28,
+      "imagen": "/img/productos/manubrios/renthal-fatbar-zero.jpg",
+      "precioOferta": 93990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "XC, Trail"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio serie 7"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "31,8 mm"
+        },
+        {
+          "nombre": "Rise",
+          "valor": "0 mm"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Gris claro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAN-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Manubrio Title AH1 35",
+      "descripcion": "Manubrio de aluminio de la marca de Olly Wilkins, pensado para trail y enduro. Disponible en dos alturas.",
+      "precioNormal": 109990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 19,
+      "marca": 29,
+      "imagen": "/img/productos/manubrios/title-ah1-35.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, Enduro"
+        },
+        {
+          "nombre": "Material",
+          "valor": "Aluminio"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "35 mm"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Gris"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAN-0004-1",
+          "talla": "38 mm",
+          "color": null
+        },
+        {
+          "sku": "MAN-0004-2",
+          "talla": "50 mm",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Manubrio ODI Flight Control Stealth 800 mm",
+      "descripcion": "Manubrio con patrón de flexión pensado para trabajar con los puños ODI: reduce la vibración, el bombeo de antebrazos y la fatiga de manos.",
+      "precioNormal": 119990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 19,
+      "marca": 15,
+      "imagen": "/img/productos/manubrios/odi-flight-800.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail"
+        },
+        {
+          "nombre": "Abrazadera",
+          "valor": "35 mm"
+        },
+        {
+          "nombre": "Ancho",
+          "valor": "800 mm"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MAN-0005-1",
+          "talla": "25 mm",
+          "color": null
+        },
+        {
+          "sku": "MAN-0005-2",
+          "talla": "38 mm",
+          "color": null
+        },
+        {
+          "sku": "MAN-0005-3",
+          "talla": "50 mm",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Maxxis Minion DHF 3C EXO TR",
+      "descripcion": "El delantero de referencia para enduro: tacos laterales agresivos para curvas con máximo agarre. Tubeless ready y protección EXO.",
+      "precioNormal": 44990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 30,
+      "imagen": "/img/productos/neumaticos/maxxis-minion-dhf.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Trail agresivo"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "3C MaxxTerra"
+        },
+        {
+          "nombre": "Carcasa",
+          "valor": "EXO (anti cortes)"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0001-1",
+          "talla": "27.5 x 2.5",
+          "color": null
+        },
+        {
+          "sku": "NEU-0001-2",
+          "talla": "29 x 2.5",
+          "color": null
+        },
+        {
+          "sku": "NEU-0001-3",
+          "talla": "29 x 2.6",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Maxxis Ardent EXO TR",
+      "descripcion": "Neumático rápido y versátil para trail, con buen rodado y agarre en terreno seco o suelto.",
+      "precioNormal": 34990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 30,
+      "imagen": "/img/productos/neumaticos/maxxis-ardent.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "Dual"
+        },
+        {
+          "nombre": "Carcasa",
+          "valor": "EXO"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0002-1",
+          "talla": "27.5 x 2.25",
+          "color": null
+        },
+        {
+          "sku": "NEU-0002-2",
+          "talla": "29 x 2.25",
+          "color": null
+        },
+        {
+          "sku": "NEU-0002-3",
+          "talla": "29 x 2.4",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Schwalbe Nobby Nic Addix",
+      "descripcion": "Todo terreno clásico de Schwalbe. Compuesto Addix con buen equilibrio entre agarre y duración.",
+      "precioNormal": 56990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 31,
+      "imagen": "/img/productos/neumaticos/schwalbe-nobby-nic.jpg",
+      "precioOferta": 49990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, All Mountain"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "Addix SpeedGrip"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TLE)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0003-1",
+          "talla": "27.5 x 2.35",
+          "color": null
+        },
+        {
+          "sku": "NEU-0003-2",
+          "talla": "29 x 2.35",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Continental Grand Prix 5000",
+      "descripcion": "Neumático de ruta de alto rendimiento: baja resistencia al rodado y buena protección contra pinchazos.",
+      "precioNormal": 54990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 32,
+      "imagen": "/img/productos/neumaticos/continental-gp5000.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Ruta, Competición"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "BlackChili"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "Vectran Breaker"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0004-1",
+          "talla": "700 x 25c",
+          "color": null
+        },
+        {
+          "sku": "NEU-0004-2",
+          "talla": "700 x 28c",
+          "color": null
+        },
+        {
+          "sku": "NEU-0004-3",
+          "talla": "700 x 32c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Continental Kryptotal-F Enduro",
+      "descripcion": "Neumático delantero para enduro y descenso: control, tracción y estabilidad en terreno técnico. Carcasa Enduro Casing y compuesto Super Soft para máximo agarre.",
+      "precioNormal": 109990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 5,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 32,
+      "imagen": "/img/productos/neumaticos/continental-kryptotal-f.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Enduro, Descenso"
+        },
+        {
+          "nombre": "Posición",
+          "valor": "Delantero"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "Super Soft"
+        },
+        {
+          "nombre": "Carcasa",
+          "valor": "Enduro Casing"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0005-1",
+          "talla": "27.5 x 2.4",
+          "color": null
+        },
+        {
+          "sku": "NEU-0005-2",
+          "talla": "29 x 2.4",
+          "color": null
+        },
+        {
+          "sku": "NEU-0005-3",
+          "talla": "29 x 2.6",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Continental Cross King ShieldWall",
+      "descripcion": "Neumático versátil para terreno mixto: rueda rápido en suelo compacto y mantiene el control en senderos y curvas. Protección ShieldWall contra cortes.",
+      "precioNormal": 44990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 32,
+      "imagen": "/img/productos/neumaticos/continental-cross-king.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Trail, XC"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "PureGrip"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "ShieldWall System"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0006-1",
+          "talla": "27.5 x 2.3",
+          "color": null
+        },
+        {
+          "sku": "NEU-0006-2",
+          "talla": "29 x 2.3",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Continental Race King ShieldWall",
+      "descripcion": "Pensado para la velocidad en terreno seco y compacto. Baja resistencia al rodado, carcasa ShieldWall y compuesto PureGrip.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 32,
+      "imagen": "/img/productos/neumaticos/continental-race-king.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "XC, Trail rápido"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "PureGrip"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "ShieldWall System"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0007-1",
+          "talla": "27.5 x 2.2",
+          "color": null
+        },
+        {
+          "sku": "NEU-0007-2",
+          "talla": "29 x 2.2",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Maxxis Ikon 3C MaxxSpeed EXO TR",
+      "descripcion": "Neumático liviano y de alto volumen para XC y maratón. Compuesto 3C MaxxSpeed para un rodado muy eficiente y protección EXO contra cortes.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 30,
+      "imagen": "/img/productos/neumaticos/maxxis-ikon.jpg",
+      "precioOferta": 35990,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "XC, Maratón"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "3C MaxxSpeed"
+        },
+        {
+          "nombre": "Carcasa",
+          "valor": "EXO"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0008-1",
+          "talla": "27.5 x 2.35",
+          "color": null
+        },
+        {
+          "sku": "NEU-0008-2",
+          "talla": "29 x 2.2",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Neumático Continental Terra Trail ShieldWall",
+      "descripcion": "Neumático de gravel para rutas exigentes y bikepacking: control y tracción en terreno mixto, con protección ShieldWall y compuesto PureGrip.",
+      "precioNormal": 49990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 20,
+      "marca": 32,
+      "imagen": "/img/productos/neumaticos/continental-terra-trail.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Uso",
+          "valor": "Gravel, Bikepacking"
+        },
+        {
+          "nombre": "Compuesto",
+          "valor": "PureGrip"
+        },
+        {
+          "nombre": "Protección",
+          "valor": "ShieldWall System"
+        },
+        {
+          "nombre": "Tubeless",
+          "valor": "Sí (TR)"
+        },
+        {
+          "nombre": "Talón",
+          "valor": "Plegable"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "NEU-0009-1",
+          "talla": "700 x 40c",
+          "color": null
+        },
+        {
+          "sku": "NEU-0009-2",
+          "talla": "700 x 45c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Maxxis Welter Weight",
+      "descripcion": "Cámara de butilo resistente para MTB, buena relación entre peso y durabilidad.",
+      "precioNormal": 7990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 30,
+      "imagen": "/img/productos/camaras/maxxis-welter-weight.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "48 mm"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "200 g"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0001-1",
+          "talla": "27.5 x 1.9–2.35",
+          "color": null
+        },
+        {
+          "sku": "CAM-0001-2",
+          "talla": "29 x 1.9–2.35",
+          "color": null
+        },
+        {
+          "sku": "CAM-0001-3",
+          "talla": "29 x 1.9–2.35 (S)",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Kenda Estándar",
+      "descripcion": "Cámara económica y confiable para uso diario.",
+      "precioNormal": 4990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 33,
+      "imagen": "/img/productos/camaras/kenda-26-schrader.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "35 mm"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0002-1",
+          "talla": "26 x 1.9–2.125",
+          "color": null
+        },
+        {
+          "sku": "CAM-0002-2",
+          "talla": "27.5 x 1.9–2.125",
+          "color": null
+        },
+        {
+          "sku": "CAM-0002-3",
+          "talla": "700 x 28–35c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Continental Race 28",
+      "descripcion": "Cámara liviana para bicicletas de ruta.",
+      "precioNormal": 8490,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 32,
+      "imagen": "/img/productos/camaras/continental-race-28.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "60 mm"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "100 g"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0003-1",
+          "talla": "700 x 20–25c",
+          "color": null
+        },
+        {
+          "sku": "CAM-0003-2",
+          "talla": "700 x 25–32c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Serfas MTB",
+      "descripcion": "Cámara de butilo para aros de MTB, disponible con válvula Presta o Schrader.",
+      "precioNormal": 5990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 14,
+      "imagen": "/img/productos/camaras/serfas-mtb.jpg",
+      "precioOferta": 5390,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "48 mm (Presta) / 33–60 mm (Schrader)"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0004-1",
+          "talla": "26 x 1.75–2.2",
+          "color": null
+        },
+        {
+          "sku": "CAM-0004-2",
+          "talla": "27.5 x 1.75–2.3",
+          "color": null
+        },
+        {
+          "sku": "CAM-0004-3",
+          "talla": "27.5 x 1.75–2.3 (S)",
+          "color": null
+        },
+        {
+          "sku": "CAM-0004-4",
+          "talla": "29 x 1.75–2.35",
+          "color": null
+        },
+        {
+          "sku": "CAM-0004-5",
+          "talla": "29 x 1.75–2.35 (S)",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Chaoyang 700 x 33/37c",
+      "descripcion": "Cámara de butilo para neumáticos 700c anchos, típicos de gravel, híbridas y bicis urbanas.",
+      "precioNormal": 5990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 34,
+      "imagen": "/img/productos/camaras/chaoyang-700-33-37.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "60 mm"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0005-1",
+          "talla": "700 x 33–37c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara Arisun 27.5\"",
+      "descripcion": "Cámara de butilo para aro 27.5\", confiable y económica para el uso diario en el cerro.",
+      "precioNormal": 5990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 35,
+      "imagen": "/img/productos/camaras/arisun-275.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "Butilo"
+        },
+        {
+          "nombre": "Largo válvula",
+          "valor": "33 mm"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0006-1",
+          "talla": "27.5 x 1.75–2.35",
+          "color": null
+        },
+        {
+          "sku": "CAM-0006-2",
+          "talla": "27.5 x 1.75–2.35 (S)",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Cámara RideNow TPU Gravel",
+      "descripcion": "Cámara de TPU ultraliviana para gravel: pesa unos 45 g y ocupa muy poco espacio en el bolso de sillín.",
+      "precioNormal": 14990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 21,
+      "marca": 36,
+      "imagen": "/img/productos/camaras/ridenow-tpu-gravel.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Material",
+          "valor": "TPU"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "45 g"
+        },
+        {
+          "nombre": "Válvula",
+          "valor": "Presta"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "CAM-0007-1",
+          "talla": "700 x 32–47c",
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Horquilla RockShox Recon Silver RL 29\"",
+      "descripcion": "El nuevo punto de referencia en calidad/precio: corona y botellas de la Reba con barras de acero de 32 mm y amortiguación Motion Control con bloqueo.",
+      "precioNormal": 511990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 22,
+      "marca": 37,
+      "imagen": "/img/productos/suspensiones/rockshox-recon-silver.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Aro",
+          "valor": "29\""
+        },
+        {
+          "nombre": "Recorrido",
+          "valor": "100 mm"
+        },
+        {
+          "nombre": "Barras",
+          "valor": "32 mm acero"
+        },
+        {
+          "nombre": "Amortiguación",
+          "valor": "Motion Control RL"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "15 x 110 mm (Boost)"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SUS-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Horquilla RockShox Judy Gold RL 27.5\"",
+      "descripcion": "Horquilla de aire para XC y All Mountain con amortiguación Motion Control, bloqueo en la corona y ajuste externo de rebote.",
+      "precioNormal": 511990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 22,
+      "marca": 37,
+      "imagen": "/img/productos/suspensiones/rockshox-judy-gold.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Aro",
+          "valor": "27.5\""
+        },
+        {
+          "nombre": "Recorrido",
+          "valor": "100 mm"
+        },
+        {
+          "nombre": "Resorte",
+          "valor": "Aire"
+        },
+        {
+          "nombre": "Amortiguación",
+          "valor": "Motion Control RL"
+        },
+        {
+          "nombre": "Offset",
+          "valor": "42 mm"
+        },
+        {
+          "nombre": "Freno",
+          "valor": "Post Mount 160 mm"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SUS-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Horquilla Fox 32 Float SC Performance 29\"",
+      "descripcion": "Horquilla Step-Cast superliviana (menos de 1.300 g) para maratón. Amortiguador GRIP SL y arco invertido, 40% más rígida que su antecesora. Con bloqueo remoto.",
+      "precioNormal": 1240000,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 22,
+      "marca": 2,
+      "imagen": "/img/productos/suspensiones/fox-32-float-sc.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Aro",
+          "valor": "29\""
+        },
+        {
+          "nombre": "Recorrido",
+          "valor": "100 mm"
+        },
+        {
+          "nombre": "Barras",
+          "valor": "32 mm"
+        },
+        {
+          "nombre": "Amortiguación",
+          "valor": "GRIP SL con remoto"
+        },
+        {
+          "nombre": "Peso aprox.",
+          "valor": "1.300 g"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro brillante"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SUS-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Horquilla RockShox Lyrik Ultimate 27.5\"",
+      "descripcion": "Horquilla de enduro con resorte DebonAir y amortiguador Charger 2.1 RC2. Sellos SKF de baja fricción para una sensación muy suave.",
+      "precioNormal": 1144990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 22,
+      "marca": 37,
+      "imagen": "/img/productos/suspensiones/rockshox-lyrik-ultimate.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Aro",
+          "valor": "27.5\""
+        },
+        {
+          "nombre": "Recorrido",
+          "valor": "160 mm"
+        },
+        {
+          "nombre": "Barras",
+          "valor": "35 mm"
+        },
+        {
+          "nombre": "Resorte",
+          "valor": "DebonAir"
+        },
+        {
+          "nombre": "Amortiguación",
+          "valor": "Charger 2.1 RC2"
+        },
+        {
+          "nombre": "Eje",
+          "valor": "15 x 110 mm (Boost)"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Rojo"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SUS-0004",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Horquilla Marzocchi Bomber Z1 29\"",
+      "descripcion": "La herencia freeride de Marzocchi: barras de 38 mm, amortiguador GRIP y chasis de la Super Z. Ideal para bicis de enduro o freeride.",
+      "precioNormal": 999990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 22,
+      "marca": 38,
+      "imagen": "/img/productos/suspensiones/marzocchi-bomber-z1.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Aro",
+          "valor": "29\""
+        },
+        {
+          "nombre": "Recorrido",
+          "valor": "170 mm"
+        },
+        {
+          "nombre": "Barras",
+          "valor": "38 mm"
+        },
+        {
+          "nombre": "Amortiguación",
+          "valor": "GRIP Sweep-Adj"
+        },
+        {
+          "nombre": "Offset",
+          "valor": "44 mm"
+        },
+        {
+          "nombre": "Apta e-bike",
+          "valor": "Sí"
+        },
+        {
+          "nombre": "Color",
+          "valor": "Negro"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "SUS-0005",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Mantención Básica",
+      "descripcion": "Una revisión general para que tu bici quede andando bien: ajustamos cambios y frenos, lubricamos la cadena y revisamos que todo esté firme.",
+      "precioNormal": 19990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 23,
+      "marca": 39,
+      "imagen": "/img/productos/mantenimiento/mantencion-basica.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Revisión general, ajuste de cambios, ajuste de frenos, lubricación de cadena, revisión de presión de neumáticos, apriete general de pernos, revisión visual de ruedas, dirección y transmisión."
+        },
+        {
+          "nombre": "Lugar",
+          "valor": "Taller Rider Tapia, Centro, Concepción"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MNT-0001",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Mantención Semi",
+      "descripcion": "Todo lo de la básica, más limpieza de la transmisión, una regulación más fina de cambios y frenos y el centrado básico de las ruedas.",
+      "precioNormal": 34990,
+      "estado": "PUBLICADO",
+      "destacado": false,
+      "ordenDestacado": null,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 23,
+      "marca": 39,
+      "imagen": "/img/productos/mantenimiento/mantencion-semi.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Todo lo de la básica + limpieza de transmisión, regulación más fina de cambios y frenos, centrado básico de ruedas, revisión de piñón, cadena y plato, ajuste de dirección, ajuste de caja motor, revisión de pastillas o zapatas de freno."
+        },
+        {
+          "nombre": "Lugar",
+          "valor": "Taller Rider Tapia, Centro, Concepción"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MNT-0002",
+          "talla": null,
+          "color": null
+        }
+      ]
+    },
+    {
+      "nombre": "Mantención Full",
+      "descripcion": "La mantención completa: desarmamos, limpiamos a fondo y dejamos tu bici como nueva, con diagnóstico completo del desgaste.",
+      "precioNormal": 59990,
+      "estado": "PUBLICADO",
+      "destacado": true,
+      "ordenDestacado": 8,
+      "limitePorCompra": 10,
+      "fechaCreacion": "2026-03-01T00:00:00",
+      "categoria": 23,
+      "marca": 39,
+      "imagen": "/img/productos/mantenimiento/mantencion-full.jpg",
+      "precioOferta": null,
+      "especificaciones": [
+        {
+          "nombre": "Incluye",
+          "valor": "Todo lo anterior + desarme, limpieza profunda y lubricación de transmisión, mantención de masas, dirección y motor, centrado completo de ruedas, purgado de frenos hidráulicos si aplica, revisión de suspensión si aplica, cambio o instalación de componentes menores, diagnóstico completo de desgaste."
+        },
+        {
+          "nombre": "Lugar",
+          "valor": "Taller Rider Tapia, Centro, Concepción"
+        }
+      ],
+      "variantes": [
+        {
+          "sku": "MNT-0003",
+          "talla": null,
+          "color": null
+        }
+      ]
+    }
+  ]
+}

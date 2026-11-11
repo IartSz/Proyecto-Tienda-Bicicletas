@@ -27,7 +27,7 @@ public class EspecificacionTecnica {
     @Column(nullable = false, length = 50)
     private String nombre;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 500)
     private String valor;
 
     @ManyToOne(optional = false)

@@ -27,7 +27,7 @@ public class VarianteProducto {
     @Column(nullable = false, length = 30, unique = true)
     private String sku;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 30)
     private String talla;
 
     @Column(nullable = true, length = 30)

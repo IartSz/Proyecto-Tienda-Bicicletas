@@ -9,6 +9,17 @@
 
 Las bases de datos se crean solas al iniciar. Usuario por defecto: `root` sin contraseña.
 
+## Datos iniciales
+
+Al arrancar, si sus tablas están vacías, `ms-productos` carga el catálogo de la tienda
+(`src/main/resources/datos/catalogo-inicial.json`: categorías, marcas, productos, imágenes,
+ofertas, especificaciones y variantes) y `ms-inventario` carga el stock de cada variante
+(`src/main/resources/datos/stock-inicial.json`, buscando cada variante por su SKU en `ms-productos`).
+Si ya hay datos, no se carga nada. Así todos los equipos parten con la misma base.
+
+Para volver al catálogo inicial: detener todo, borrar `ridertapia_productos` y `ridertapia_inventario`
+en MySQL e iniciar de nuevo.
+
 ## Ejecutar
 
 | Acción | Archivo |

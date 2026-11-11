@@ -1,0 +1,1047 @@
+[
+  {
+    "sku": "CAS-0001-1",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0001-2",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0001-3",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0002-1",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0002-2",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0002-3",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0003-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0003-2",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0003-3",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0004-1",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0005-1",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0005-2",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0005-3",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "CAS-0006-1",
+    "stockDisponible": 5,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0006-2",
+    "stockDisponible": 5,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0006-3",
+    "stockDisponible": 0,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAS-0007-1",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0007-2",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0007-3",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0007-4",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0008-1",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0008-2",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0008-3",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0008-4",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "CAS-0009-1",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "ROD-0001-1",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0001-2",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0001-3",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0001-4",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-1",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-2",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-3",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-4",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-5",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0002-6",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "ROD-0003-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0003-2",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0003-3",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0004-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0004-2",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0004-3",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0005-1",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0005-2",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0005-3",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0005-4",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "ROD-0005-5",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "GUA-0001-1",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "GUA-0001-2",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "GUA-0001-3",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "GUA-0001-4",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "GUA-0001-5",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "GUA-0002-1",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0002-2",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0002-3",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0002-4",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0003-1",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0003-2",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0003-3",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0003-4",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0003-5",
+    "stockDisponible": 0,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "GUA-0004-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "GUA-0004-2",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "GUA-0004-3",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "GUA-0004-4",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0001-1",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0001-2",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0001-3",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0001-4",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0001-5",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0002-1",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0002-2",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0002-3",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0002-4",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0003-1",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0003-2",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0003-3",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0003-4",
+    "stockDisponible": 3,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0004-1",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0004-2",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0004-3",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0004-4",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0004-5",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0005-1",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0005-2",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0005-3",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "COR-0005-4",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "BOM-0001",
+    "stockDisponible": 14,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "BOM-0002",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "BOM-0003",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "BOM-0004",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "BOM-0005",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "BOT-0001",
+    "stockDisponible": 18,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "BOT-0002",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "BOT-0003",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "BOT-0004",
+    "stockDisponible": 25,
+    "stockMinimo": 8
+  },
+  {
+    "sku": "LUZ-0001",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "LUZ-0002",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "LUZ-0003",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "LUZ-0004",
+    "stockDisponible": 15,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "LUZ-0005",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "LUZ-0006",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "LUZ-0007",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "LUZ-0008",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "LUZ-0009",
+    "stockDisponible": 20,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "PUN-0001-1",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0001-2",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0001-3",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0002-1",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0002-2",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0002-3",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PUN-0003",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PUN-0004",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "PUN-0005-1",
+    "stockDisponible": 0,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PUN-0005-2",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "SIL-0001-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "SIL-0001-2",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "SIL-0002-1",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "SIL-0002-2",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "SIL-0003",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "SIL-0004",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "SIL-0005",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "TAP-0001",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "TAP-0002",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "TAP-0003",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "TAP-0004",
+    "stockDisponible": 15,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "TAP-0005",
+    "stockDisponible": 11,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "TRA-0001",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "TRA-0002",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "TRA-0003-1",
+    "stockDisponible": 0,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "TRA-0003-2",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "TRA-0004",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "TRA-0005",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "FRE-0001",
+    "stockDisponible": 8,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "FRE-0002",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "FRE-0003",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "FRE-0004",
+    "stockDisponible": 15,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "FRE-0005-1",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "FRE-0005-2",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "FRE-0005-3",
+    "stockDisponible": 9,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "MAZ-0001",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAZ-0002",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAZ-0003",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "MAZ-0004",
+    "stockDisponible": 2,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "MAZ-0005",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "PED-0001-1",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PED-0001-2",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PED-0001-3",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PED-0001-4",
+    "stockDisponible": 10,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "PED-0002",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "PED-0003",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "PED-0004",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "PED-0005-1",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PED-0005-2",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "PED-0005-3",
+    "stockDisponible": 12,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "MAN-0001",
+    "stockDisponible": 6,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0002",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0003",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "MAN-0004-1",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0004-2",
+    "stockDisponible": 5,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0005-1",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0005-2",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "MAN-0005-3",
+    "stockDisponible": 4,
+    "stockMinimo": 2
+  },
+  {
+    "sku": "NEU-0001-1",
+    "stockDisponible": 2,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0001-2",
+    "stockDisponible": 2,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0001-3",
+    "stockDisponible": 0,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0002-1",
+    "stockDisponible": 11,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0002-2",
+    "stockDisponible": 11,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0002-3",
+    "stockDisponible": 11,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "NEU-0003-1",
+    "stockDisponible": 7,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0003-2",
+    "stockDisponible": 7,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0004-1",
+    "stockDisponible": 3,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0004-2",
+    "stockDisponible": 3,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0004-3",
+    "stockDisponible": 0,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0005-1",
+    "stockDisponible": 6,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "NEU-0005-2",
+    "stockDisponible": 6,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "NEU-0005-3",
+    "stockDisponible": 6,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "NEU-0006-1",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0006-2",
+    "stockDisponible": 10,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0007-1",
+    "stockDisponible": 8,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0007-2",
+    "stockDisponible": 8,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0008-1",
+    "stockDisponible": 9,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0008-2",
+    "stockDisponible": 9,
+    "stockMinimo": 4
+  },
+  {
+    "sku": "NEU-0009-1",
+    "stockDisponible": 5,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "NEU-0009-2",
+    "stockDisponible": 5,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "CAM-0001-1",
+    "stockDisponible": 30,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0001-2",
+    "stockDisponible": 30,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0001-3",
+    "stockDisponible": 30,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0002-1",
+    "stockDisponible": 40,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0002-2",
+    "stockDisponible": 40,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0002-3",
+    "stockDisponible": 0,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0003-1",
+    "stockDisponible": 16,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "CAM-0003-2",
+    "stockDisponible": 16,
+    "stockMinimo": 6
+  },
+  {
+    "sku": "CAM-0004-1",
+    "stockDisponible": 35,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0004-2",
+    "stockDisponible": 35,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0004-3",
+    "stockDisponible": 35,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0004-4",
+    "stockDisponible": 35,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0004-5",
+    "stockDisponible": 35,
+    "stockMinimo": 10
+  },
+  {
+    "sku": "CAM-0005-1",
+    "stockDisponible": 20,
+    "stockMinimo": 8
+  },
+  {
+    "sku": "CAM-0006-1",
+    "stockDisponible": 25,
+    "stockMinimo": 8
+  },
+  {
+    "sku": "CAM-0006-2",
+    "stockDisponible": 25,
+    "stockMinimo": 8
+  },
+  {
+    "sku": "CAM-0007-1",
+    "stockDisponible": 7,
+    "stockMinimo": 3
+  },
+  {
+    "sku": "SUS-0001",
+    "stockDisponible": 3,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "SUS-0002",
+    "stockDisponible": 2,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "SUS-0003",
+    "stockDisponible": 2,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "SUS-0004",
+    "stockDisponible": 2,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "SUS-0005",
+    "stockDisponible": 2,
+    "stockMinimo": 1
+  },
+  {
+    "sku": "MNT-0001",
+    "stockDisponible": 99,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "MNT-0002",
+    "stockDisponible": 99,
+    "stockMinimo": 5
+  },
+  {
+    "sku": "MNT-0003",
+    "stockDisponible": 99,
+    "stockMinimo": 5
+  }
+]

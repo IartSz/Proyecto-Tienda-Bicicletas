@@ -28,10 +28,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ridertapia.serviciotecnico.LimpiezaBaseDatos;
 import com.ridertapia.serviciotecnico.model.EstadoSolicitud;
 import com.ridertapia.serviciotecnico.model.NivelServicio;
 import com.ridertapia.serviciotecnico.model.SolicitudServicio;
@@ -45,13 +45,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class SolicitudServicioControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private SolicitudServicioRepository solicitudServicioRepository;
@@ -69,7 +67,6 @@ class SolicitudServicioControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
         tipoServicio = tipoServicioRepository.save(new TipoServicio(null, "Mantención básica", NivelServicio.BASICO, "Ajuste general y lubricación", "Ajuste de frenos y cambios, lubricación de cadena y revisión de presión", 25000, 1, true));
         when(restTemplate.getForEntity(any(URI.class), eq(String.class))).thenReturn(ResponseEntity.ok("{}"));
     }

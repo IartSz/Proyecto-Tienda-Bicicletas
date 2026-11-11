@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import useDatos from '../../hooks/useDatos';
 import useModal from '../../hooks/useModal';
 import useAviso from '../../hooks/useAviso';
+import { USAR_API } from '../../api/cliente';
 import ClienteService, { type ClienteResumen } from '../../services/cliente.service';
 import { EVENTO_PEDIDOS } from '../../services/pedido.service';
 import { fechaCorta, formatoCLP } from '../../utils/formato';
@@ -46,7 +47,7 @@ const Clientes = () => {
   const confirmar = async () => {
     if (!seleccion) return;
     try {
-      await ClienteService.cambiarEstado(seleccion.cliente.email, seleccion.cliente.nombre, seleccion.activar);
+      await ClienteService.cambiarEstado(seleccion.cliente.email, seleccion.cliente.nombre, seleccion.activar, seleccion.cliente.tipo === 'registrado' ? seleccion.cliente.rut : '');
       modal.ocultar();
       mostrar({ texto: seleccion.activar ? 'Cuenta activada.' : 'Cuenta desactivada.', tipo: seleccion.activar ? 'success' : 'warning' });
       await Promise.all([recargar(), recargarRegistro()]);
@@ -100,7 +101,9 @@ const Clientes = () => {
                       <td className="num">{formatoCLP(c.total)}</td>
                       <td>{c.activo ? <span className="tag tag-ok">Activa</span> : <span className="tag tag-off">Desactivada</span>}</td>
                       <td className="text-end">
-                        {c.activo
+                        {USAR_API && c.tipo === 'invitado'
+                          ? <span className="sub">Sin cuenta</span>
+                          : c.activo
                           ? <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => abrir(c, false)}>Desactivar</button>
                           : <button className="btn btn-sm btn-outline-light" type="button" onClick={() => abrir(c, true)}>Activar</button>}
                       </td>

@@ -1,4 +1,4 @@
-# Trazabilidad: criterio de aceptación → test (Sprints 9 y 10)
+# Trazabilidad: criterio de aceptación y su test (Sprints 9 y 10)
 
 Herramientas: Vitest + React Testing Library (entorno jsdom).
 Ejecutar: `npm test` (una vez) o `npm run test:watch` (modo vigilancia), dentro de `frontend-ridertapia`.
@@ -51,7 +51,7 @@ Cada test se llama `HU-n CAm: ...` según `Historias_de_Usuario_Gherkin.md`.
 | HU-5 | CA2 | Cuenta desactivada no inicia sesión | `HU-5 CA2: una cuenta desactivada no puede iniciar sesión` (`auth.service.test.ts`) | Negativo |
 | HU-8 | CA1 | Credenciales correctas inician sesión (servicio y pantalla) | `HU-8 CA1: con credenciales correctas…` (`auth.service.test.ts`, `Login.test.tsx`; mocks `useSesion`, `useNavigate`) | Positivo |
 | HU-8 | CA2 | Contraseña incorrecta, correo sin cuenta, datos inválidos | `HU-8 CA2: …` (`auth.service.test.ts`, `Login.test.tsx`) | Negativo |
-| HU-9 | CA1 / CA2 | Un solo login que detecta el rol (admin → panel, cliente → inicio); contraseña de admin incorrecta | `HU-9 CA1: …`, `HU-9 CA2: …` (`auth.service.test.ts`, `Login.test.tsx`) | Positivo / negativo |
+| HU-9 | CA1 / CA2 | Un solo login que detecta el rol (admin va al panel, cliente al inicio); contraseña de admin incorrecta | `HU-9 CA1: …`, `HU-9 CA2: …` (`auth.service.test.ts`, `Login.test.tsx`) | Positivo / negativo |
 | HU-17 | CA1 | Crear pedido descuenta stock | `HU-17 CA1: …descuenta del stock…` (`pedido.service.test.ts`; mock `InventarioService`) | Positivo |
 | HU-18 / HU-19 | CA1 / CA2 | Totales, número de pedido, estado inicial según medio de pago | `HU-18 CA1…`, `HU-19 CA1…`, `HU-19 CA2…` (`pedido.service.test.ts`, `estadosPedido.test.ts`) | Positivo |
 | HU-21 | CA1 / CA3 | Historial del cliente y lista vacía | `HU-21 CA1…`, `HU-21 CA3…` (`pedido.service.test.ts`) | Positivo / borde |

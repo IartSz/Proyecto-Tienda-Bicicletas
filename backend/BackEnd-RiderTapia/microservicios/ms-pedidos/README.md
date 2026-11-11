@@ -32,8 +32,8 @@ Rider Tapia trabaja solo con **retiro en tienda**, así que no hay despacho: el 
 
 Relaciones dentro del microservicio:
 
-- Pedido → DatosVisitante (opcional, para compras sin cuenta).
-- DetallePedido, HistorialEstadoPedido, Boleta, Factura y NotificacionPedido → Pedido (muchos a uno).
+- Pedido pertenece a DatosVisitante (opcional, para compras sin cuenta).
+- DetallePedido, HistorialEstadoPedido, Boleta, Factura y NotificacionPedido pertenecen a Pedido (muchos a uno).
 
 ## Rol en la arquitectura
 
@@ -397,7 +397,7 @@ Por cada clase hay tres archivos de test:
 | `<Clase>ControllerTest` | `@WebMvcTest` | Códigos HTTP, campos, enlaces HATEOAS, 404 y 409 |
 | `<Clase>ControllerIT` | Integración (`@SpringBootTest` + H2) | Crear + listar + búsqueda, actualizar, eliminar + 404 |
 
-Además, `PedidoApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto, primero los registros que dependen de otros.
+Además, `PedidoApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -417,7 +417,6 @@ ms-pedidos/
     └── test/
         ├── java/com/ridertapia/pedidos/
         │   ├── PedidoApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (<Clase>ControllerTest y <Clase>ControllerIT)
         │   └── service/      (<Clase>ServiceTest)
         └── resources/application-test.properties

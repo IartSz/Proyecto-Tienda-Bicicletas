@@ -1,15 +1,24 @@
-import type { CanalVenta, EstadoPedido, Pedido, PedidoPayload } from '../models/Pedido';
+import type { CanalVenta, DatosComprador, EstadoPedido, Pedido, PedidoPayload } from '../models/Pedido';
 import { ESTADOS_FINALES, ESTADOS_PEDIDO, ESTADOS_QUE_DEVUELVEN } from '../utils/estadosPedido';
 import type { ItemCarrito } from '../models/ItemCarrito';
 import ProductoService from '../services/producto.service';
-import apiClient from './cliente';
+import InventarioService from '../services/inventario.service';
 import type { ServicioPedidos } from '../services/pedido.service';
+import { formatearRut, rutApi } from '../utils/validaciones';
+import apiClient from './cliente';
 import { obtenerLista } from './hal';
-import type { CanalVentaApi, DatosVisitanteApi, DetallePedidoApi, HistorialEstadoApi, PedidoApi } from './tipos';
+import { eliminarPagos, mediosDePago, registrarPago, sincronizarPago } from './pago.api';
+import { cerrarCarrito } from './carrito.api';
+import type {
+  CanalVentaApi, ClienteApi, DatosVisitanteApi, DetallePedidoApi, HistorialEstadoApi, NotificacionApi, PedidoApi, UsuarioApi
+} from './tipos';
 
-// PedidoService contra ms-pedidos
+// PedidoService contra ms-pedidos (+ ms-pagos, ms-usuario y ms-cliente para leer)
+
+const TIPO_AVISO = 'CAMBIO_ESTADO';
 
 const sinZona = (fecha: string): string => fecha.slice(0, 19);
+const ahora = (): string => sinZona(new Date().toISOString());
 
 // El front y el backend usan los mismos canales: WEB y TIENDA
 const aCanalApi = (canal: CanalVenta): CanalVentaApi => canal;
@@ -25,22 +34,50 @@ const cuerpoPedido = (p: PedidoPayload, datosVisitante: { idDatosVisitante: numb
   descuento: p.descuento,
   total: p.total,
   motivoAnulacion: p.motivoAnulacion,
-  rutCliente: p.rutCliente,
+  rutCliente: p.rutCliente ? rutApi(p.rutCliente) : null,
   idCupon: p.idCupon,
   idEmpleado: p.idEmpleado,
   datosVisitante
 });
 
-// Junta pedido + detalles + historial en nuestro Pedido
+// Unidades por producto (el stock se repite en cada talla)
+const unidadesPorProducto = (items: ItemCarrito[]): Map<number, number> => {
+  const unidades = new Map<number, number>();
+  items.forEach((i) => unidades.set(i.idProducto, (unidades.get(i.idProducto) ?? 0) + i.cantidad));
+  return unidades;
+};
+
+// Comprador: de su cuenta (ms-cliente) o de DatosVisitante
+const comprador = (p: PedidoApi, usuarios: UsuarioApi[], clientes: ClienteApi[]): DatosComprador | undefined => {
+  if (p.rutCliente) {
+    const cliente = clientes.find((c) => c.rutUsuario === p.rutCliente);
+    const usuario = usuarios.find((u) => u.rutUsuario === p.rutCliente);
+    return {
+      nombre: cliente?.nombre ?? '',
+      apellido: cliente?.apellido ?? '',
+      rut: formatearRut(p.rutCliente),
+      email: usuario?.emailCliente ?? '',
+      telefono: cliente?.telefono ?? ''
+    };
+  }
+  const v = p.datosVisitante;
+  return v ? { nombre: v.nombre, apellido: '', rut: '', email: v.correo, telefono: v.telefono ?? '' } : undefined;
+};
+
+// Junta pedido + detalles + historial + pago + avisos en nuestro Pedido
 const listar = async (): Promise<Pedido[]> => {
-  const [pedidos, detalles, historial, productos] = await Promise.all([
+  const [pedidos, detalles, historial, productos, usuarios, clientes, medios, avisos] = await Promise.all([
     obtenerLista<PedidoApi>('/pedidos'),
     obtenerLista<DetallePedidoApi>('/detalles'),
     obtenerLista<HistorialEstadoApi>('/historial-estados'),
-    ProductoService.listar()
+    ProductoService.listar(),
+    obtenerLista<UsuarioApi>('/usuarios'),
+    obtenerLista<ClienteApi>('/clientes'),
+    mediosDePago(),
+    obtenerLista<NotificacionApi>('/notificaciones')
   ]);
 
-  // idVariante -> producto y talla, para mostrar el nombre
+  // Producto y talla de cada idVariante, para mostrar el nombre
   const porVariante = new Map<number, { idProducto: number; nombre: string; imagen?: string; variante?: string }>();
   productos.forEach((p) => {
     if (p.idVariante) porVariante.set(p.idVariante, { idProducto: p.idProducto, nombre: p.nombre, imagen: p.imagenPrincipal });
@@ -64,20 +101,19 @@ const listar = async (): Promise<Pedido[]> => {
           imagen: info?.imagen
         };
       });
-    const visitante = p.datosVisitante;
     return {
       ...p,
       canal: aCanal(p.canal),
-      datosVisitante: visitante,
+      rutCliente: p.rutCliente ? formatearRut(p.rutCliente) : null,
       envio: 0,
-      // Sin cuenta: el comprador sale de DatosVisitante
-      cliente: visitante
-        ? { nombre: visitante.nombre, apellido: '', rut: p.rutCliente ?? '', email: visitante.correo, telefono: visitante.telefono ?? '' }
-        : undefined,
+      cliente: comprador(p, usuarios, clientes),
+      medioPago: medios.get(p.idPedido),
       items,
       historial: historial
         .filter((h) => h.pedido.idPedido === p.idPedido)
-        .map((h) => ({ estado: h.estadoNuevo, fecha: h.fechaCambio, nota: '' }))
+        .sort((a, b) => a.fechaCambio.localeCompare(b.fechaCambio))
+        .map((h) => ({ estado: h.estadoNuevo, fecha: h.fechaCambio, nota: h.nota ?? '' })),
+      novedad: avisos.some((a) => a.pedido.idPedido === p.idPedido && a.tipo === TIPO_AVISO && !a.enviada)
     };
   });
 };
@@ -88,45 +124,65 @@ const obtener = async (id: number): Promise<Pedido> => {
   return pedido;
 };
 
-const registrarEstado = async (idPedido: number, anterior: Pedido['estado'] | null, nuevo: Pedido['estado']): Promise<void> => {
+const registrarEstado = async (idPedido: number, anterior: EstadoPedido | null, nuevo: EstadoPedido, nota: string): Promise<void> => {
   await apiClient.post('/historial-estados', {
     // El backend no acepta null: el primer registro repite el estado
     estadoAnterior: anterior ?? nuevo,
     estadoNuevo: nuevo,
-    fechaCambio: sinZona(new Date().toISOString()),
+    fechaCambio: ahora(),
     idEmpleado: null,
+    nota: nota || null,
     pedido: { idPedido }
   });
+};
+
+// El cliente vera el aviso en Mis pedidos hasta que lo abra
+const avisarCliente = async (pedido: Pedido): Promise<void> => {
+  await apiClient.post('/notificaciones', {
+    tipo: TIPO_AVISO,
+    destinatario: pedido.cliente?.email || pedido.datosVisitante?.correo || 'sin correo',
+    fechaEnvio: ahora(),
+    enviada: false,
+    pedido: { idPedido: pedido.idPedido }
+  });
+};
+
+const marcarAvisosVistos = async (idPedido: number): Promise<void> => {
+  const avisos = await obtenerLista<NotificacionApi>(`/notificaciones/pedido/${idPedido}`);
+  for (const { idNotificacionPedido, tipo, destinatario, fechaEnvio, enviada } of avisos) {
+    if (tipo !== TIPO_AVISO || enviada) continue;
+    await apiClient.put(`/notificaciones/${idNotificacionPedido}`, { tipo, destinatario, fechaEnvio, enviada: true, pedido: { idPedido } });
+  }
+};
+
+// Mantiene el visitante actual si el pedido ya tenia uno
+const visitanteDe = async (id: number): Promise<{ idDatosVisitante: number } | null> => {
+  const { data } = await apiClient.get<PedidoApi>(`/pedidos/${id}`);
+  return data.datosVisitante ? { idDatosVisitante: data.datosVisitante.idDatosVisitante } : null;
 };
 
 export const PedidoApiService: ServicioPedidos = {
   listar,
   obtener,
 
-  // Visitante -> pedido -> detalles -> historial -> stock
+  // Orden: visitante (solo invitados), pedido, detalles, historial, pago y stock
   async crear(pedido: PedidoPayload): Promise<Pedido> {
     const items = pedido.items ?? [];
     if (items.some((i) => !i.idVariante)) {
       throw new Error('Hay productos sin variante en el carrito. Vuelve a agregarlos.');
     }
 
-    // Las cuentas viven en el navegador y ms-cliente no las conoce: con rutCliente el backend
-    // respondia 404. Todo pedido se registra con los datos del comprador (visitante) y sin RUT.
-    const cliente = pedido.cliente;
-    const comprador = pedido.datosVisitante
-      ?? (cliente ? { nombre: `${cliente.nombre} ${cliente.apellido}`.trim(), correo: cliente.email, telefono: cliente.telefono } : null);
-
     let visitante: { idDatosVisitante: number } | null = null;
-    if (comprador) {
+    if (!pedido.rutCliente && pedido.datosVisitante) {
       const { data } = await apiClient.post<DatosVisitanteApi>('/visitantes', {
-        nombre: comprador.nombre,
-        correo: comprador.correo,
-        telefono: comprador.telefono
+        nombre: pedido.datosVisitante.nombre,
+        correo: pedido.datosVisitante.correo,
+        telefono: pedido.datosVisitante.telefono
       });
       visitante = { idDatosVisitante: data.idDatosVisitante };
     }
 
-    const { data } = await apiClient.post<PedidoApi>('/pedidos', cuerpoPedido({ ...pedido, rutCliente: null }, visitante));
+    const { data } = await apiClient.post<PedidoApi>('/pedidos', cuerpoPedido(pedido, visitante));
     const idPedido = data.idPedido;
 
     for (const item of items) {
@@ -138,32 +194,32 @@ export const PedidoApiService: ServicioPedidos = {
         pedido: { idPedido }
       });
     }
-    await registrarEstado(idPedido, null, pedido.estado);
+    await registrarEstado(idPedido, null, pedido.estado, pedido.historial?.[0]?.nota ?? '');
+    if (pedido.medioPago) await registrarPago(idPedido, pedido.medioPago, pedido.total, pedido.ultimosDigitosTarjeta);
 
-    // Descuenta stock (se repite en cada talla)
-    const unidades = new Map<number, number>();
-    items.forEach((i) => unidades.set(i.idProducto, (unidades.get(i.idProducto) ?? 0) + i.cantidad));
-    for (const [idProducto, cantidad] of unidades) {
-      const producto = await ProductoService.obtener(idProducto);
-      await ProductoService.actualizar(idProducto, { ...producto, stockDisponible: Math.max(0, (producto.stockDisponible ?? 0) - cantidad) });
+    for (const [idProducto, cantidad] of unidadesPorProducto(items)) {
+      await InventarioService.mover(idProducto, 'VENTA', -cantidad, 'Sistema', `Pedido ${pedido.numero}`);
     }
+    await cerrarCarrito();
 
     return {
       ...pedido,
       idPedido,
-      datosVisitante: comprador && visitante ? { ...comprador, idDatosVisitante: visitante.idDatosVisitante } : pedido.datosVisitante
+      datosVisitante: visitante && pedido.datosVisitante ? { ...pedido.datosVisitante, ...visitante } : pedido.datosVisitante
     };
   },
 
   async actualizar(id: number, pedido: PedidoPayload): Promise<Pedido> {
-    const actual = await apiClient.get<PedidoApi>(`/pedidos/${id}`);
-    const visitante = actual.data.datosVisitante ? { idDatosVisitante: actual.data.datosVisitante.idDatosVisitante } : null;
+    const { data: actual } = await apiClient.get<PedidoApi>(`/pedidos/${id}`);
+    const visitante = actual.datosVisitante ? { idDatosVisitante: actual.datosVisitante.idDatosVisitante } : null;
     await apiClient.put(`/pedidos/${id}`, cuerpoPedido(pedido, visitante));
-    if (actual.data.estado !== pedido.estado) await registrarEstado(id, actual.data.estado, pedido.estado);
+    if (actual.estado !== pedido.estado) await registrarEstado(id, actual.estado, pedido.estado, '');
+    // novedad false: el cliente ya vio los cambios
+    if (pedido.novedad === false) await marcarAvisosVistos(id);
     return obtener(id);
   },
 
-  // Cambia el estado (queda en el historial del backend). Si se cancela o anula, el stock vuelve.
+  // Cambia el estado con su nota, avisa al cliente y ajusta pago y stock
   async cambiarEstado(id: number, estado: EstadoPedido, nota: string): Promise<Pedido> {
     const pedido = await obtener(id);
     const texto = nota.trim();
@@ -174,23 +230,21 @@ export const PedidoApiService: ServicioPedidos = {
     if (estado === 'ANULADO' && !texto) throw new Error('Indica el motivo de la anulación.');
 
     const devuelve = ESTADOS_QUE_DEVUELVEN.includes(estado);
-    const { idPedido: _id, ...payload } = pedido;
-    void _id;
-    const actualizado = await PedidoApiService.actualizar(id, {
-      ...payload,
+    await apiClient.put(`/pedidos/${id}`, cuerpoPedido({
+      ...pedido,
       estado,
       motivoAnulacion: devuelve ? (texto || null) : pedido.motivoAnulacion
-    });
+    }, await visitanteDe(id)));
+    await registrarEstado(id, pedido.estado, estado, texto);
+    await avisarCliente(pedido);
+    await sincronizarPago(id, pedido.medioPago, estado);
 
     if (devuelve) {
-      const unidades = new Map<number, number>();
-      (pedido.items ?? []).forEach((i) => unidades.set(i.idProducto, (unidades.get(i.idProducto) ?? 0) + i.cantidad));
-      for (const [idProducto, cantidad] of unidades) {
-        const producto = await ProductoService.obtener(idProducto);
-        await ProductoService.actualizar(idProducto, { ...producto, stockDisponible: (producto.stockDisponible ?? 0) + cantidad });
+      for (const [idProducto, cantidad] of unidadesPorProducto(pedido.items ?? [])) {
+        await InventarioService.mover(idProducto, 'AJUSTE', cantidad, 'admin', `Cancelación pedido ${pedido.numero}`);
       }
     }
-    return actualizado;
+    return obtener(id);
   },
 
   async agregarVarios(): Promise<void> {
@@ -201,14 +255,17 @@ export const PedidoApiService: ServicioPedidos = {
     // No hay pedidos de ejemplo en el backend
   },
 
-  // Borra primero detalles e historial
+  // Borra primero lo que depende del pedido
   async eliminar(id: number): Promise<void> {
-    const [detalles, historial] = await Promise.all([
+    const [detalles, historial, avisos] = await Promise.all([
       obtenerLista<DetallePedidoApi>(`/detalles/pedido/${id}`),
-      obtenerLista<HistorialEstadoApi>(`/historial-estados/pedido/${id}`)
+      obtenerLista<HistorialEstadoApi>(`/historial-estados/pedido/${id}`),
+      obtenerLista<NotificacionApi>(`/notificaciones/pedido/${id}`)
     ]);
     for (const d of detalles) await apiClient.delete(`/detalles/${d.idDetallePedido}`);
     for (const h of historial) await apiClient.delete(`/historial-estados/${h.idHistorialEstadoPedido}`);
+    for (const a of avisos) await apiClient.delete(`/notificaciones/${a.idNotificacionPedido}`);
+    await eliminarPagos(id);
     await apiClient.delete(`/pedidos/${id}`);
   }
 };

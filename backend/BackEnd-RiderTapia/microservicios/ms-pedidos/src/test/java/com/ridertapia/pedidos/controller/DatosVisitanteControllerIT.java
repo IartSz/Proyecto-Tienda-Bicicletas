@@ -19,8 +19,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.pedidos.LimpiezaBaseDatos;
 import com.ridertapia.pedidos.model.DatosVisitante;
 
 import com.ridertapia.pedidos.repository.DatosVisitanteRepository;
@@ -31,13 +31,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class DatosVisitanteControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private DatosVisitanteRepository datosVisitanteRepository;
@@ -47,7 +45,6 @@ class DatosVisitanteControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
 
     }
 

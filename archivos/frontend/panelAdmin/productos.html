@@ -446,7 +446,7 @@
     imagenNueva = null; $("pImagen").value = ""; $("pRuta").value = ""; mostrarPreview(null);
   });
 
-  // Textos "Nombre: valor" -> objeto
+  // Textos "Nombre: valor" pasan a objeto
   function leerCaracteristicas() {
     const obj = {};
     $("pCaract").value.split("\n").forEach(linea => {

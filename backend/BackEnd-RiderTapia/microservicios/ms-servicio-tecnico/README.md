@@ -30,9 +30,9 @@ El cliente puede consultar el estado de su reparación **solo con su número de 
 
 Relaciones dentro del microservicio:
 
-- SolicitudServicio → TipoServicio, y FotoSolicitud → SolicitudServicio.
-- OrdenTrabajo → Bicicleta, TipoServicio y SolicitudServicio (opcional, si la orden viene de una solicitud web).
-- HistorialEstadoOrden, RepuestoUtilizado, NotificacionTaller y CalificacionServicio → OrdenTrabajo.
+- SolicitudServicio pertenece a TipoServicio, y FotoSolicitud pertenece a SolicitudServicio.
+- OrdenTrabajo pertenece a Bicicleta, TipoServicio y SolicitudServicio (opcional, si la orden viene de una solicitud web).
+- HistorialEstadoOrden, RepuestoUtilizado, NotificacionTaller y CalificacionServicio pertenecen a OrdenTrabajo.
 - Cada orden tiene como máximo una CalificacionServicio (`id_orden_trabajo` es único).
 
 ## Rol en la arquitectura
@@ -508,7 +508,7 @@ Por cada clase hay tres archivos de test:
 | `<Clase>ControllerTest` | `@WebMvcTest` | Códigos HTTP, campos, enlaces HATEOAS, 400, 404 y 409 |
 | `<Clase>ControllerIT` | Integración (`@SpringBootTest` + H2) | Crear + listar + búsqueda, actualizar, eliminar + 404; en las clases con reglas también el 400 o 409 correspondiente |
 
-Además, `ServicioTecnicoApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto, primero los registros que dependen de otros.
+Además, `ServicioTecnicoApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -528,7 +528,6 @@ ms-servicio-tecnico/
     └── test/
         ├── java/com/ridertapia/serviciotecnico/
         │   ├── ServicioTecnicoApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (<Clase>ControllerTest y <Clase>ControllerIT)
         │   └── service/      (<Clase>ServiceTest)
         └── resources/application-test.properties

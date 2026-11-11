@@ -22,7 +22,7 @@ it('HU-12 CA2: un producto sin stock no se puede agregar y el sistema informa', 
   expect(error).toBe('Este producto no tiene stock disponible.');  // 3. Verificar
 });
 ```
-El nombre dice la HU y el criterio, así se arma la tabla "CA → test" sin esfuerzo.
+El nombre dice la HU y el criterio, así se arma la tabla "CA y test" sin esfuerzo.
 
 ## 4. Qué es un mock (con un ejemplo real)
 
@@ -50,12 +50,12 @@ Otros mocks: `useSesion` y `useNavigate` en `Login.test.tsx` (la pantalla "recib
 ## 6. Guion de la demostración (≈ 5 min)
 
 1. **Ejecutar la suite:** `npm test`. Mostrar que termina en verde: 189 tests.
-2. **Explicar un test:** abrir `carrito.service.test.ts` → "HU-12 CA2". Leer Dado/Cuando/Entonces del documento de HU y mostrar que el test es lo mismo en código.
-3. **Mostrar un mock:** `pedido.service.test.ts` → "HU-22 CA1: cancelar devuelve las unidades al stock".
+2. **Explicar un test:** abrir `carrito.service.test.ts`, test "HU-12 CA2". Leer Dado/Cuando/Entonces del documento de HU y mostrar que el test es lo mismo en código.
+3. **Mostrar un mock:** `pedido.service.test.ts`, test "HU-22 CA1: cancelar devuelve las unidades al stock".
 4. **Prueba de componente:** `ProductCard.test.tsx` ("AGOTADO" deshabilita el botón) o `Login.test.tsx`.
 5. **Fallo controlado:** en `src/data/productos.ts` cambiar `LIMITE_POR_COMPRA` de 10 a 8 y correr `npm test`. Fallan los tests del límite de 10 y el mensaje dice la HU y el CA. Volver a 10.
 6. **Cobertura:** `npm run coverage` y abrir `coverage/index.html`. Mostrar la tabla (96,7 % de líneas, 84,2 % de ramas) y explicar qué falta (los `catch` de `localStorage`, algunas ramas y la interfaz, que casi no tiene tests).
-7. **Cerrar con la tabla CA → test** (`Trazabilidad_CA_Tests.md`) y los próximos pasos (sección 6 de `Cobertura_Testing.md`).
+7. **Cerrar con la tabla CA y test** (`Trazabilidad_CA_Tests.md`) y los próximos pasos (sección 6 de `Cobertura_Testing.md`).
 
 ## 7. Preguntas probables y respuestas
 

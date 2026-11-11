@@ -5,7 +5,7 @@ export interface Usuario {
     emailCliente: string;
     password: string; // se guarda con hash, nunca en texto plano
     rol: Rol;
-    // Solo frontend
+    activo?: boolean;
     fechaCreacion?: string;
 }
 

@@ -19,8 +19,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.proveedores.LimpiezaBaseDatos;
 import com.ridertapia.proveedores.model.EstadoOrdenCompra;
 import com.ridertapia.proveedores.model.OrdenCompra;
 import com.ridertapia.proveedores.model.Proveedor;
@@ -36,13 +36,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class RecepcionCompraControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private RecepcionCompraRepository recepcionCompraRepository;
@@ -61,7 +59,6 @@ class RecepcionCompraControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
         proveedor = proveedorRepository.save(new Proveedor(null, "76123456-7", "Distribuidora Andes Bike SpA", "Andes Bike", "Venta al por mayor de bicicletas y repuestos", "ventas@andesbike.cl", "223456789", "Av. Vicuña Mackenna 1234", "Santiago", "Carolina Muñoz", true));
         ordenCompra = ordenCompraRepository.save(new OrdenCompra(null, "OC-00001", LocalDateTime.of(2026, 10, 8, 9, 0), LocalDate.of(2026, 10, 15), EstadoOrdenCompra.ENVIADA, 1040000, 197600, 1237600, "Reposición de bicicletas Marlin 7", 1L, proveedor));
     }

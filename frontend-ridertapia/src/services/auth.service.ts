@@ -1,10 +1,14 @@
 import type { Cliente, RegistroPayload, Rol, Sesion, Usuario } from '../models/Usuario';
 import PedidoService from './pedido.service';
-import { formatearRut, limpiarRut } from '../utils/validaciones';
+import { CLAVE_MINIMA, formatearRut, limpiarRut } from '../utils/validaciones';
+import { USAR_API } from '../api/cliente';
+import AuthApiService from '../api/auth.api';
+import { CLAVE_SESION, guardarSesion, leerSesion, borrarSesion } from './sesion';
 
-// Por ahora en localStorage; luego se cambia por la API
+export { CLAVE_SESION, leerSesion };
+
+// Modo local (sin backend)
 const CLAVE_CUENTAS = 'usuarios';
-export const CLAVE_SESION = 'usuario';
 const CLAVE_ESTADOS = 'clientesEstado';
 
 // Cuenta de administrador de prueba (se crea sola la primera vez)
@@ -25,6 +29,19 @@ export interface ErrorAuth {
 export type ResultadoAuth = { ok: true; sesion: Sesion } | ErrorAuth;
 
 export type CambiosPerfil = Partial<Pick<Cliente, 'rutUsuario' | 'nombre' | 'apellido' | 'telefono'>>;
+
+export interface ServicioAuth {
+  listar(): Promise<Sesion[]>;
+  obtenerSesion(): Promise<Sesion | null>;
+  buscarPorCorreo(correo: string): Promise<Sesion | undefined>;
+  buscarPorRut(rut: string): Promise<Sesion | undefined>;
+  cuentaActiva(correo: string): Promise<boolean>;
+  registrar(datos: RegistroPayload): Promise<ResultadoAuth>;
+  iniciarSesion(correo: string, password: string, rol?: Rol): Promise<ResultadoAuth>;
+  cerrarSesion(): Promise<void>;
+  actualizarPerfil(correo: string, cambios: CambiosPerfil): Promise<ResultadoAuth>;
+  cambiarPassword(correo: string, actual: string, nueva: string): Promise<ResultadoAuth>;
+}
 
 // Hash simple para no guardar la contraseña en texto plano (solo simulacion, NO es seguro)
 export const hashClave = (texto: string): string => {
@@ -94,24 +111,6 @@ const aSesion = (cuenta: Cuenta): Sesion => ({
   fechaCreacion: cuenta.fechaCreacion
 });
 
-export const leerSesion = (): Sesion | null => {
-  try {
-    const dato: unknown = JSON.parse(localStorage.getItem(CLAVE_SESION) ?? 'null');
-    if (dato && typeof dato === 'object' && typeof (dato as Sesion).emailCliente === 'string') return dato as Sesion;
-    return null;
-  } catch {
-    return null;
-  }
-};
-
-const guardarSesion = (sesion: Sesion): void => {
-  try {
-    localStorage.setItem(CLAVE_SESION, JSON.stringify(sesion));
-  } catch {
-    // Sin acceso al almacenamiento
-  }
-};
-
 const normalizarCorreo = (correo: string): string => correo.trim().toLowerCase();
 
 const buscarCuenta = (correo: string): Cuenta | undefined =>
@@ -125,7 +124,7 @@ const buscarCuentaPorRut = (rut: string): Cuenta | undefined => {
 
 const falla = (campo: CampoAuth, error: string, noExiste = false): ErrorAuth => ({ ok: false, error, campo, noExiste });
 
-export const AuthService = {
+const AuthLocalService: ServicioAuth = {
   async listar(): Promise<Sesion[]> {
     return leerCuentas().map(aSesion);
   },
@@ -191,11 +190,7 @@ export const AuthService = {
   },
 
   async cerrarSesion(): Promise<void> {
-    try {
-      localStorage.removeItem(CLAVE_SESION);
-    } catch {
-      // Sin acceso al almacenamiento
-    }
+    borrarSesion();
   },
 
   // Actualiza los datos del perfil (y la sesion)
@@ -244,11 +239,14 @@ export const AuthService = {
     const indice = cuentas.findIndex((c) => c.emailCliente === email);
     if (indice === -1) return falla('emailCliente', 'No se encontró la cuenta.');
     if (cuentas[indice].password !== hashClave(actual)) return falla('password', 'La contraseña actual no es correcta.');
-    if (nueva.length < 6) return falla('password', 'La nueva contraseña debe tener al menos 6 caracteres.');
+    if (nueva.length < CLAVE_MINIMA) return falla('password', `La nueva contraseña debe tener al menos ${CLAVE_MINIMA} caracteres.`);
     cuentas[indice] = { ...cuentas[indice], password: hashClave(nueva) };
     guardarCuentas(cuentas);
     return { ok: true, sesion: aSesion(cuentas[indice]) };
   }
 };
+
+// VITE_USAR_API=true usa ms-usuario y ms-cliente; si no, localStorage
+export const AuthService: ServicioAuth = USAR_API ? AuthApiService : AuthLocalService;
 
 export default AuthService;

@@ -78,7 +78,7 @@ const leerEspecificaciones = (texto: string): EspecificacionTecnica[] =>
     })
     .filter((e): e is EspecificacionTecnica => e !== null && e.nombre !== '' && e.valor !== '');
 
-// "S, M, L*" -> valores; * = agotado
+// "S, M, L*" pasa a valores; * = agotado
 const leerVariantes = (tipo: TipoVariante, texto: string, anteriores?: Variantes): Variantes | undefined => {
   if (!tipo) return undefined;
   const previos = anteriores?.valores ?? [];

@@ -116,7 +116,7 @@ const Navbar = ({ cantidadCarrito }: NavbarProps) => {
     <header>
       <div className="topbar py-1">
         <div className="container d-flex justify-content-between align-items-center">
-          <div className="d-none d-md-block">📍 Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
+          <div className="d-none d-md-block"><i className="bi bi-geo-alt me-1"></i>Centro, Concepción · Lunes a domingo, 10:30 a 19:30 hrs</div>
           <div className="ms-auto">
             <a href="#" className="me-3"><i className="bi bi-facebook"></i></a>
             <a href="#" className="me-3"><i className="bi bi-instagram"></i></a>

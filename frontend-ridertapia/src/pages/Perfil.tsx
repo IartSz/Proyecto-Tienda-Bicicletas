@@ -6,7 +6,7 @@ import { pedidosDeCorreo } from '../services/pedido.service';
 import { esVenta } from '../utils/estadosPedido';
 import { formatoCLP, iniciales } from '../utils/formato';
 import {
-  errorNombre, errorRut, errorTelefono, formatearRut, limpiarNombre
+  CLAVE_MINIMA, errorNombre, errorRut, errorTelefono, formatearRut, limpiarNombre
 } from '../utils/validaciones';
 
 interface PerfilFormState {
@@ -102,7 +102,7 @@ const Perfil = () => {
     event.preventDefault();
     const errores: ErroresClave = {
       actual: clave.actual ? undefined : 'Ingresa tu contraseña actual.',
-      nueva: clave.nueva.length < 6 ? 'Mínimo 6 caracteres.' : undefined,
+      nueva: clave.nueva.length < CLAVE_MINIMA ? `Mínimo ${CLAVE_MINIMA} caracteres.` : undefined,
       nueva2: clave.nueva2 !== clave.nueva ? 'Las contraseñas no coinciden.' : undefined
     };
     if (Object.values(errores).some(Boolean)) {
@@ -165,7 +165,7 @@ const Perfil = () => {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label" htmlFor="rut">RUT</label>
-                    <input className={clasePerfil('rut')} id="rut" name="rut" maxLength={12} autoComplete="off" placeholder="12.345.678-5" value={form.rut} onChange={handlePerfilChange} />
+                    <input className={clasePerfil('rut')} id="rut" name="rut" maxLength={12} autoComplete="off" placeholder="12.345.678-5" value={form.rut} onChange={handlePerfilChange} readOnly />
                     <div className="invalid-feedback">{erroresPerfil.rut}</div>
                   </div>
                   <div className="col-md-6">

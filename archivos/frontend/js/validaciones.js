@@ -6,14 +6,14 @@
 
 /* ---------- RUT ---------- */
 
-// "12.345.678-k" -> "12345678K"  (la K solo puede ir al final)
+// "12.345.678-k" queda "12345678K"  (la K solo puede ir al final)
 function limpiarRut(rut) {
   let c = String(rut || "").toUpperCase().replace(/[^0-9K]/g, "");
   c = c.replace(/K(?=.)/g, "");          // quitar K que no estén al final
   return c.slice(0, 9);                  // máximo 8 dígitos + DV
 }
 
-// "123456785" -> "12.345.678-5"
+// "123456785" queda "12.345.678-5"
 function formatearRut(rut) {
   const c = limpiarRut(rut);
   if (c.length < 2) return c;

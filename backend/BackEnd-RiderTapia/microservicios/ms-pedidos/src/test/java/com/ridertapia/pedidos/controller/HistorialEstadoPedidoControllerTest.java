@@ -56,12 +56,12 @@ class HistorialEstadoPedidoControllerTest {
 
     @BeforeEach
     void setUp() {
-        historialEstadoPedido = new HistorialEstadoPedido(1L, EstadoPedido.PENDIENTE_PAGO, EstadoPedido.PAGADO, LocalDateTime.of(2026, 10, 6, 10, 0), 1L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        historialEstadoPedido = new HistorialEstadoPedido(1L, EstadoPedido.PENDIENTE_PAGO, EstadoPedido.PAGADO, LocalDateTime.of(2026, 10, 6, 10, 0), 1L, null, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
     }
 
     @Test
     void listarHistorialesEstadoPedido() throws Exception {
-        HistorialEstadoPedido otro = new HistorialEstadoPedido(2L, EstadoPedido.PAGADO, EstadoPedido.EN_PREPARACION, LocalDateTime.of(2026, 10, 6, 12, 0), 2L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        HistorialEstadoPedido otro = new HistorialEstadoPedido(2L, EstadoPedido.PAGADO, EstadoPedido.EN_PREPARACION, LocalDateTime.of(2026, 10, 6, 12, 0), 2L, null, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
         when(historialEstadoPedidoService.listarHistorialesEstadoPedido()).thenReturn(Arrays.asList(historialEstadoPedido, otro));
 
         mockMvc.perform(get("/api/v1/historial-estados"))
@@ -147,7 +147,7 @@ class HistorialEstadoPedidoControllerTest {
 
     @Test
     void actualizarHistorialEstadoPedidoExistente() throws Exception {
-        HistorialEstadoPedido actualizado = new HistorialEstadoPedido(1L, EstadoPedido.EN_PREPARACION, EstadoPedido.LISTO_PARA_RETIRO, LocalDateTime.of(2026, 10, 7, 9, 0), 3L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        HistorialEstadoPedido actualizado = new HistorialEstadoPedido(1L, EstadoPedido.EN_PREPARACION, EstadoPedido.LISTO_PARA_RETIRO, LocalDateTime.of(2026, 10, 7, 9, 0), 3L, null, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
         when(historialEstadoPedidoService.actualizarHistorialEstadoPedido(eq(1L), any(HistorialEstadoPedido.class))).thenReturn(actualizado);
 
         mockMvc.perform(put("/api/v1/historial-estados/1")

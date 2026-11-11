@@ -180,7 +180,7 @@
   ["fBuscar", "fMovTipo", "fMovDesde", "fMovHasta"].forEach(id => $(id).addEventListener("input", mostrarMovimientos));
 
   llenarProductos();
-  // inventario.html?producto=id  -> deja el producto elegido (viene desde Resumen)
+  // inventario.html?producto=id deja el producto elegido (viene desde Resumen)
   const pre = new URLSearchParams(location.search).get("producto");
   if (pre) { $("ingProducto").value = pre; $("ingProducto").dispatchEvent(new Event("change")); $("ingCantidad").focus(); }
   mostrarMovimientos();

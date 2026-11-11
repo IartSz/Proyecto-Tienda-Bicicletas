@@ -54,7 +54,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/clientes → 201, Location y enlace self")
+    @DisplayName("POST /api/clientes: 201, Location y enlace self")
     void guardarCliente_ok() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class))).thenReturn(respuesta());
 
@@ -70,7 +70,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/clientes con datos inválidos → 400 con el detalle de cada campo")
+    @DisplayName("POST /api/clientes con datos inválidos: 400 con el detalle de cada campo")
     void guardarCliente_validacion() throws Exception {
         ClienteRequest invalido = new ClienteRequest("123", "", " ", "abc", null, null);
 
@@ -86,7 +86,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/clientes con perfil existente → 409")
+    @DisplayName("POST /api/clientes con perfil existente: 409")
     void guardarCliente_conflicto() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.conflicto("Ya existe un perfil de cliente con el RUT " + RUT));
@@ -99,7 +99,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/clientes sin cuenta de usuario → 404")
+    @DisplayName("POST /api/clientes sin cuenta de usuario: 404")
     void guardarCliente_sinCuenta() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.noEncontrado("No existe una cuenta de usuario con el RUT " + RUT));
@@ -111,7 +111,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/clientes con usuario-service caído → 503")
+    @DisplayName("POST /api/clientes con usuario-service caído: 503")
     void guardarCliente_servicioNoDisponible() throws Exception {
         when(clienteService.guardarCliente(any(ClienteRequest.class)))
                 .thenThrow(ApiException.servicioNoDisponible("usuario-service no disponible"));
@@ -123,7 +123,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/clientes → colección HAL con enlaces por cliente")
+    @DisplayName("GET /api/clientes: colección HAL con enlaces por cliente")
     void listarClientes() throws Exception {
         when(clienteService.listarClientes()).thenReturn(List.of(
                 respuesta(), new ClienteResponse("11111111-1", "Ana", "Pérez", null, null, null)));
@@ -137,7 +137,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/clientes/{rut} → 200 con enlaces")
+    @DisplayName("GET /api/clientes/{rut}: 200 con enlaces")
     void findByRut_ok() throws Exception {
         when(clienteService.findByRut(RUT)).thenReturn(respuesta());
 
@@ -148,7 +148,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/clientes/{rut} inexistente → 404")
+    @DisplayName("GET /api/clientes/{rut} inexistente: 404")
     void findByRut_noExiste() throws Exception {
         when(clienteService.findByRut(RUT))
                 .thenThrow(ApiException.noEncontrado("No existe un cliente con el RUT " + RUT));
@@ -160,7 +160,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/clientes/buscar?nombre= → colección con las coincidencias")
+    @DisplayName("GET /api/clientes/buscar?nombre=: colección con las coincidencias")
     void buscarPorNombre() throws Exception {
         when(clienteService.buscarPorNombre("ped")).thenReturn(List.of(respuesta()));
 
@@ -171,7 +171,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/clientes/buscar sin coincidencias → 200 sin _embedded")
+    @DisplayName("GET /api/clientes/buscar sin coincidencias: 200 sin _embedded")
     void buscarPorNombre_vacio() throws Exception {
         when(clienteService.buscarPorNombre("zzz")).thenReturn(List.of());
 
@@ -181,7 +181,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/clientes/{rut} → 200 con el cliente actualizado")
+    @DisplayName("PUT /api/clientes/{rut}: 200 con el cliente actualizado")
     void actualizarDatos_ok() throws Exception {
         when(clienteService.actualizarDatos(eq(RUT), any(ClienteUpdateRequest.class)))
                 .thenReturn(new ClienteResponse(RUT, "Pedro Pablo", "Suárez", null, "Otra calle 45", "Talcahuano"));
@@ -197,7 +197,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/clientes/{rut} con nombre vacío → 400")
+    @DisplayName("PUT /api/clientes/{rut} con nombre vacío: 400")
     void actualizarDatos_validacion() throws Exception {
         ClienteUpdateRequest cuerpo = new ClienteUpdateRequest("", "Suárez", null, null, null);
 

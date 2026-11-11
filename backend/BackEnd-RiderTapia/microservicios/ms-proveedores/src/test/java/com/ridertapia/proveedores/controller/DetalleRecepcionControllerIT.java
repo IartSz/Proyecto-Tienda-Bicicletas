@@ -27,9 +27,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.ridertapia.proveedores.LimpiezaBaseDatos;
 import com.ridertapia.proveedores.model.DetalleOrdenCompra;
 import com.ridertapia.proveedores.model.DetalleRecepcion;
 import com.ridertapia.proveedores.model.EstadoOrdenCompra;
@@ -49,13 +49,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class DetalleRecepcionControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private DetalleRecepcionRepository detalleRecepcionRepository;
@@ -88,7 +86,6 @@ class DetalleRecepcionControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
         proveedor = proveedorRepository.save(new Proveedor(null, "76123456-7", "Distribuidora Andes Bike SpA", "Andes Bike", "Venta al por mayor de bicicletas y repuestos", "ventas@andesbike.cl", "223456789", "Av. Vicuña Mackenna 1234", "Santiago", "Carolina Muñoz", true));
         ordenCompra = ordenCompraRepository.save(new OrdenCompra(null, "OC-00001", LocalDateTime.of(2026, 10, 8, 9, 0), LocalDate.of(2026, 10, 15), EstadoOrdenCompra.ENVIADA, 1040000, 197600, 1237600, "Reposición de bicicletas Marlin 7", 1L, proveedor));
         recepcionCompra = recepcionCompraRepository.save(new RecepcionCompra(null, LocalDateTime.of(2026, 10, 15, 11, 0), TipoDocumentoRecepcion.FACTURA, "FAC-88123", "Llegó todo en buen estado", 2L, ordenCompra));

@@ -40,8 +40,8 @@ npm run coverage      # suite + informe de cobertura (texto en consola y HTML en
 | 2 | `HU-13 CA2: una cantidad mayor al stock no se permite e indica cuántas quedan` | HU-13 CA2 | Regla central del carrito | — |
 | 3 | `HU-1 CA2: un correo ya registrado no crea la cuenta` | HU-1 CA2 | Cuentas únicas | — |
 | 4 | `HU-9 CA1: un cliente no puede entrar al panel de administración` | HU-9 CA1 | Seguridad por rol | — |
-| 5 | `HU-17 CA1: descuenta del stock cada producto comprado` | HU-17 CA1 | Compra → inventario | `InventarioService` |
-| 6 | `HU-22 CA1: cancelar devuelve las unidades al stock` | HU-22 CA1 | Cancelación → inventario | `InventarioService` |
+| 5 | `HU-17 CA1: descuenta del stock cada producto comprado` | HU-17 CA1 | Compra e inventario | `InventarioService` |
+| 6 | `HU-22 CA1: cancelar devuelve las unidades al stock` | HU-22 CA1 | Cancelación e inventario | `InventarioService` |
 | 7 | `HU-22 CA2: un pedido ya retirado no se puede cancelar` | HU-22 CA2 | Estados finales | `InventarioService` |
 | 8 | `HU-3 CA1: los pedidos de la cuenta se actualizan con el nombre nuevo` | HU-3 CA1 | Consistencia entre servicios | `PedidoService` |
 | 9 | `HU-8 CA2: con una contraseña incorrecta muestra el error y no navega` | HU-8 CA2 | Flujo completo de la pantalla | `useSesion`, `useNavigate` |
@@ -51,9 +51,9 @@ npm run coverage      # suite + informe de cobertura (texto en consola y HTML en
 
 | Mock | Dónde | Para qué |
 |---|---|---|
-| `InventarioService.mover` → `vi.fn()` | `pedido.service.test.ts` | Probar la lógica de pedidos sin tocar productos reales y comprobar "se llamó con (producto, VENTA, −2)". |
-| `MovimientoService.registrar` → `vi.fn()` | `inventario.service.test.ts` | Comprobar que cada cambio de stock deja un movimiento, sin escribir historial. |
-| `PedidoService` → `{ listar, actualizar }` | `auth.service.test.ts`, `cliente.service.test.ts` | Controlar qué pedidos "existen" y comprobar que el perfil los actualiza. |
+| `InventarioService.mover` reemplazado por `vi.fn()` | `pedido.service.test.ts` | Probar la lógica de pedidos sin tocar productos reales y comprobar "se llamó con (producto, VENTA, −2)". |
+| `MovimientoService.registrar` reemplazado por `vi.fn()` | `inventario.service.test.ts` | Comprobar que cada cambio de stock deja un movimiento, sin escribir historial. |
+| `PedidoService` reemplazado por `{ listar, actualizar }` | `auth.service.test.ts`, `cliente.service.test.ts` | Controlar qué pedidos "existen" y comprobar que el perfil los actualiza. |
 | `useSesion` y `useNavigate` | `Login.test.tsx` | Probar la pantalla sin servicio real: cada test decide si el login "responde" bien o mal y se verifica a dónde navega. |
 | `onAgregar = vi.fn()` | `ProductCard.test.tsx` | Comprobar que el botón entrega el producto, sin carrito real. |
 | `localStorage` (de jsdom) | todos los servicios | Se limpia antes de cada test: pruebas aisladas y repetibles. |
@@ -99,7 +99,7 @@ npm run coverage      # suite + informe de cobertura (texto en consola y HTML en
 **Limitaciones honestas**
 - La cobertura alta mide qué líneas se ejecutaron, no que las verificaciones sean buenas. Por eso se prefirió probar mensajes y estados exactos, no solo "no falla".
 - Los servicios guardan en `localStorage` (no hay API aún), así que son pruebas de lógica, no de integración con el backend.
-- Las HU asociadas a algunos tests son interpretativas (por ejemplo tarjeta → HU-19), porque el documento de HU no define esos detalles.
+- Las HU asociadas a algunos tests son interpretativas (por ejemplo tarjeta con HU-19), porque el documento de HU no define esos detalles.
 
 **Próximos pasos**
 1. Tests de `Registro`, `Perfil` y `Checkout` (formularios con mocks de `useSesion`/`useCarrito`).

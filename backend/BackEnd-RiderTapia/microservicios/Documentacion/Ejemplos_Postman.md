@@ -1,6 +1,6 @@
 # Ejemplos para Postman
 
-Base URL: `http://localhost:9000` (o `http://localhost:9090`). Body: **raw → JSON**.
+Base URL: `http://localhost:9000` (o `http://localhost:9090`). Body: **raw**, tipo **JSON**.
 
 - Fechas: `"2026-10-07T10:00:00"` o `"2026-10-07"`.
 - Relaciones: se envía el id del recurso relacionado, por ejemplo `"producto": { "idProducto": 1 }`.

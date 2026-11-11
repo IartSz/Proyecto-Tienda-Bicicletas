@@ -103,7 +103,7 @@ useEffect(() => {
               <h2 className="mb-3">¡Hola Rider!</h2>
               <p className="mb-4" style={{ maxWidth: '520px', opacity: 0.9 }}>
                 Ven a nuestra tienda y taller, y deja tu bicicleta en manos expertas.
-                📍 Centro, Concepción. Te esperamos de lunes a domingo, de 10:30 a 19:30 hrs.
+                <i className="bi bi-geo-alt me-1"></i>Centro, Concepción. Te esperamos de lunes a domingo, de 10:30 a 19:30 hrs.
               </p>
               <a href="#" className="btn btn-whatsapp"><i className="bi bi-whatsapp me-2"></i>Enviar Mensaje</a>
             </div>

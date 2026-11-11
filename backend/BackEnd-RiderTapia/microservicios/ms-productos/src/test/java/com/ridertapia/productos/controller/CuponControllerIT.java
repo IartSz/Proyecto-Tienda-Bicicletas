@@ -19,8 +19,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.productos.LimpiezaBaseDatos;
 import com.ridertapia.productos.model.Cupon;
 import com.ridertapia.productos.model.TipoDescuento;
 import com.ridertapia.productos.repository.CuponRepository;
@@ -31,13 +31,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class CuponControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private CuponRepository cuponRepository;
@@ -47,7 +45,6 @@ class CuponControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
 
     }
 

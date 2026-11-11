@@ -1,5 +1,6 @@
 import type { EstadoPublicacion, Marca } from '../models/Producto';
 import type { EstadoPedido } from '../models/Pedido';
+import type { Rol } from '../models/Usuario';
 
 // Respuestas del backend tal como llegan (sin _links)
 
@@ -111,5 +112,54 @@ export interface HistorialEstadoApi {
   estadoAnterior: EstadoPedido | null;
   estadoNuevo: EstadoPedido;
   fechaCambio: string;
+  nota: string | null;
   pedido: { idPedido: number };
+}
+
+// Avisos al cliente de cambios en su pedido (enviada = ya lo vio)
+export interface NotificacionApi {
+  idNotificacionPedido: number;
+  tipo: string;
+  destinatario: string;
+  fechaEnvio: string;
+  enviada: boolean;
+  pedido: { idPedido: number };
+}
+
+/* ms-pagos */
+
+export type EstadoPagoApi = 'PENDIENTE' | 'APROBADO' | 'RECHAZADO' | 'REEMBOLSADO';
+
+export interface PagoApi {
+  idPago: number;
+  idPedido: number;
+  monto: number;
+  fecha: string;
+  estado: EstadoPagoApi;
+}
+
+/* ms-usuario y ms-cliente */
+
+export interface UsuarioApi {
+  rutUsuario: string;
+  emailCliente: string;
+  rol: Rol;
+  activo: boolean;
+  fechaCreacion: string | null;
+}
+
+export interface ClienteApi {
+  rutUsuario: string;
+  nombre: string;
+  apellido: string;
+  telefono: string | null;
+  direccion: string | null;
+  comuna: string | null;
+}
+
+export interface CambioEstadoApi {
+  idCambio: number;
+  rutUsuario: string;
+  activo: boolean;
+  fecha: string;
 }

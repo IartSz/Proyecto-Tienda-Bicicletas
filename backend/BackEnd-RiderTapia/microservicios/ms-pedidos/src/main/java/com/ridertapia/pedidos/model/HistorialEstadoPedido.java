@@ -41,6 +41,9 @@ public class HistorialEstadoPedido {
     @Column(nullable = true)
     private Long idEmpleado;
 
+    @Column(nullable = true, length = 255)
+    private String nota;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_pedido", nullable = false)
     private Pedido pedido;

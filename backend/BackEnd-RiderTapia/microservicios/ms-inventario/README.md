@@ -33,9 +33,9 @@ Hay **un ItemInventario por variante** (`idVariante` es único). Los datos del p
 
 Relaciones dentro del microservicio:
 
-- MovimientoInventario (y sus subclases), AlertaStock y DetalleConteo → ItemInventario.
-- DetalleConteo → TomaInventario, y AjusteInventario → TomaInventario (opcional, el ajuste que genera un conteo).
-- ErrorCargaMasiva → CargaMasiva.
+- MovimientoInventario (y sus subclases), AlertaStock y DetalleConteo pertenecen a ItemInventario.
+- DetalleConteo pertenece a TomaInventario, y AjusteInventario pertenece a TomaInventario (opcional, el ajuste que genera un conteo).
+- ErrorCargaMasiva pertenece a CargaMasiva.
 - ItemInventario guarda la lista de proveedores que lo abastecen (`idProveedores`).
 
 ## Rol en la arquitectura
@@ -435,7 +435,7 @@ Por cada clase hay tres archivos de test:
 | `<Clase>ControllerTest` | `@WebMvcTest` | Códigos HTTP, campos, enlaces HATEOAS, 404 y 409 |
 | `<Clase>ControllerIT` | Integración (`@SpringBootTest` + H2) | Crear + listar + búsqueda, actualizar, eliminar + 404 |
 
-Además, `InventarioApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto, primero los registros que dependen de otros.
+Además, `InventarioApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -455,7 +455,6 @@ ms-inventario/
     └── test/
         ├── java/com/ridertapia/inventario/
         │   ├── InventarioApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (<Clase>ControllerTest y <Clase>ControllerIT)
         │   └── service/      (<Clase>ServiceTest)
         └── resources/application-test.properties

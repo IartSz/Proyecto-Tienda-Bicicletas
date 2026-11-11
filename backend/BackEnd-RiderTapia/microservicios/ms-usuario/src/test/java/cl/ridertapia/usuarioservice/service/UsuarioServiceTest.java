@@ -68,7 +68,8 @@ class UsuarioServiceTest {
         verify(usuarioRepository).save(captor.capture());
         assertThat(captor.getValue().getPassword()).isEqualTo("hash");
         assertThat(captor.getValue().getEmailCliente()).isEqualTo(EMAIL);
-        assertThat(respuesta).isEqualTo(new UsuarioResponse(RUT, EMAIL, "CLIENTE"));
+        assertThat(captor.getValue().getFechaCreacion()).isNotNull();
+        assertThat(respuesta).isEqualTo(new UsuarioResponse(RUT, EMAIL, "CLIENTE", true, captor.getValue().getFechaCreacion()));
     }
 
     @Test
@@ -128,7 +129,7 @@ class UsuarioServiceTest {
 
         List<UsuarioResponse> lista = usuarioService.listarUsuarios();
 
-        assertThat(lista).containsExactly(new UsuarioResponse(RUT, EMAIL, "CLIENTE"));
+        assertThat(lista).containsExactly(new UsuarioResponse(RUT, EMAIL, "CLIENTE", true, null));
     }
 
     @Test
@@ -232,6 +233,19 @@ class UsuarioServiceTest {
         UsuarioResponse respuesta = usuarioService.iniciarSesion(new LoginRequest(EMAIL, "clave12345"));
 
         assertThat(respuesta.rutUsuario()).isEqualTo(RUT);
+    }
+
+    @Test
+    @DisplayName("iniciarSesion: cuenta desactivada devuelve 403")
+    void login_cuentaDesactivada() {
+        Usuario desactivado = usuarioGuardado();
+        desactivado.setActivo(false);
+        when(usuarioRepository.findByEmailCliente(EMAIL)).thenReturn(Optional.of(desactivado));
+        when(passwordEncoder.matches("clave12345", "hash")).thenReturn(true);
+        LoginRequest request = new LoginRequest(EMAIL, "clave12345");
+
+        assertThatThrownBy(() -> usuarioService.iniciarSesion(request))
+                .satisfies(ex -> assertEstado(ex, HttpStatus.FORBIDDEN));
     }
 
     @Test

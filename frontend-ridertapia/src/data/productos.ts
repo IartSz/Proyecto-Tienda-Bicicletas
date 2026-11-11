@@ -2,7 +2,7 @@ import type { Categoria } from '../models/Categoria';
 import type { Marca, Producto, Variantes } from '../models/Producto';
 import { buscarCategoriaPorSlug } from './categorias';
 
-// Datos locales; más adelante se reemplazan por la API de ms-productos
+// Catalogo del modo local; con backend lo carga ms-productos al arrancar
 
 const FECHA_CARGA = '2026-03-01T00:00:00';
 

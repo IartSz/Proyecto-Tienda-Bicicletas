@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-/** Consultas derivadas y restricciones de las 5 tablas, contra H2 en memoria. */
+/** Consultas derivadas y restricciones de las 5 tablas. */
 @DataJpaTest
 class SoporteRepositoriesTest {
 

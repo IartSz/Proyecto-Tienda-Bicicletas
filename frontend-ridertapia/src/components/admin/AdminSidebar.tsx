@@ -5,6 +5,7 @@ import useProductos from '../../hooks/useProductos';
 import usePedidos from '../../hooks/usePedidos';
 import useSesion from '../../hooks/useSesion';
 import { estaAbierto } from '../../utils/estadosPedido';
+import { USAR_API } from '../../api/cliente';
 
 interface EnlaceAdmin {
   texto: string;
@@ -87,7 +88,8 @@ const AdminSidebar = () => {
       <div className="adm-sidebar-foot">
         <Link to="/"><i className="bi bi-shop"></i>Ver tienda</Link>
         <a href="#" onClick={salir}><i className="bi bi-box-arrow-left"></i>Cerrar sesión</a>
-        <a href="#" onClick={restablecerDatos}><i className="bi bi-arrow-counterclockwise"></i>Restablecer datos</a>
+        {/* Solo borra datos del navegador: con backend no aplica */}
+        {!USAR_API && <a href="#" onClick={restablecerDatos}><i className="bi bi-arrow-counterclockwise"></i>Restablecer datos</a>}
       </div>
     </aside>
   );

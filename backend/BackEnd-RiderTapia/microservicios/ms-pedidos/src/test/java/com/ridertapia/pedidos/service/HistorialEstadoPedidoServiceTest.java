@@ -47,7 +47,7 @@ class HistorialEstadoPedidoServiceTest {
 
     @BeforeEach
     void setUp() {
-        historialEstadoPedido = new HistorialEstadoPedido(1L, EstadoPedido.PENDIENTE_PAGO, EstadoPedido.PAGADO, LocalDateTime.of(2026, 10, 6, 10, 0), 1L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        historialEstadoPedido = new HistorialEstadoPedido(1L, EstadoPedido.PENDIENTE_PAGO, EstadoPedido.PAGADO, LocalDateTime.of(2026, 10, 6, 10, 0), 1L, null, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
     }
 
     @Test
@@ -75,7 +75,7 @@ class HistorialEstadoPedidoServiceTest {
 
     @Test
     void listarHistorialesEstadoPedido() {
-        HistorialEstadoPedido otro = new HistorialEstadoPedido(2L, EstadoPedido.PAGADO, EstadoPedido.EN_PREPARACION, LocalDateTime.of(2026, 10, 6, 12, 0), 2L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        HistorialEstadoPedido otro = new HistorialEstadoPedido(2L, EstadoPedido.PAGADO, EstadoPedido.EN_PREPARACION, LocalDateTime.of(2026, 10, 6, 12, 0), 2L, null, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
         when(historialEstadoPedidoRepository.findAll()).thenReturn(Arrays.asList(historialEstadoPedido, otro));
 
         List<HistorialEstadoPedido> resultado = historialEstadoPedidoService.listarHistorialesEstadoPedido();
@@ -127,7 +127,7 @@ class HistorialEstadoPedidoServiceTest {
 
     @Test
     void actualizarHistorialEstadoPedidoExistente() {
-        HistorialEstadoPedido datos = new HistorialEstadoPedido(null, EstadoPedido.EN_PREPARACION, EstadoPedido.LISTO_PARA_RETIRO, LocalDateTime.of(2026, 10, 7, 9, 0), 3L, new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
+        HistorialEstadoPedido datos = new HistorialEstadoPedido(null, EstadoPedido.EN_PREPARACION, EstadoPedido.LISTO_PARA_RETIRO, LocalDateTime.of(2026, 10, 7, 9, 0), 3L, "Listo en tienda", new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null));
         when(historialEstadoPedidoRepository.findById(1L)).thenReturn(Optional.of(historialEstadoPedido));
         when(pedidoRepository.findById(1L)).thenReturn(Optional.of(new Pedido(1L, "PED-0001", LocalDateTime.of(2026, 10, 6, 10, 0), LocalDateTime.of(2026, 10, 7, 10, 0), EstadoPedido.PENDIENTE_PAGO, CanalVenta.WEB, 899990, 0, 899990, "No aplica", "12345678-5", 2L, 1L, null)));
         when(historialEstadoPedidoRepository.save(any(HistorialEstadoPedido.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -136,6 +136,7 @@ class HistorialEstadoPedidoServiceTest {
 
         assertEquals(1L, resultado.getIdHistorialEstadoPedido());
         assertEquals(EstadoPedido.LISTO_PARA_RETIRO, resultado.getEstadoNuevo());
+        assertEquals("Listo en tienda", resultado.getNota());
         verify(historialEstadoPedidoRepository, times(1)).findById(1L);
         verify(historialEstadoPedidoRepository, times(1)).save(historialEstadoPedido);
     }

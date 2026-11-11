@@ -197,9 +197,9 @@ describe('HU-3 Cambio de contraseña (perfil)', () => {
     expect(resultado).toMatchObject({ ok: false, error: 'La contraseña actual no es correcta.' });
   });
 
-  it('HU-3 CA1: la contraseña nueva debe tener al menos 6 caracteres', async () => {
+  it('HU-3 CA1: la contraseña nueva debe tener al menos 8 caracteres', async () => {
     const resultado = await AuthService.cambiarPassword(CORREO, 'secreto1', '123');
-    expect(resultado).toMatchObject({ ok: false, error: 'La nueva contraseña debe tener al menos 6 caracteres.' });
+    expect(resultado).toMatchObject({ ok: false, error: 'La nueva contraseña debe tener al menos 8 caracteres.' });
   });
 
   it('HU-1 CA1: el hash es siempre el mismo para el mismo texto y no es el texto', () => {

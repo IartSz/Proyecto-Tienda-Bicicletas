@@ -146,7 +146,7 @@ function registrarVenta(pedido) {
 
    ========================================================= */
 
-// 109990 -> "$109.990"
+// 109990 queda "$109.990"
 function formatoPrecio(n) {
   return "$" + n.toLocaleString("es-CL");
 }

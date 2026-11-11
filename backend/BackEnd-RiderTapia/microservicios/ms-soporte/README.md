@@ -15,8 +15,8 @@ Microservicio de **soporte y postventa** de *Rider Tapia Biker*: reseñas de pro
 |---|---|---|
 | **Reseña** | Opinión de un cliente sobre un producto | Calificación 1 a 5. Una por usuario y producto. Se puede ocultar; las ocultas no cuentan en el promedio |
 | **Garantía** | Garantía de un producto comprado | 12 meses por defecto (1 a 60). Una por producto de cada pedido. Si vence, pasa a `EXPIRADA` |
-| **Devolución** | Solicitud de devolución | Estados `SOLICITADA → APROBADA/RECHAZADA`, `APROBADA → COMPLETADA`. Rechazar exige explicar el motivo. No se acepta otra mientras haya una en curso |
-| **Contacto** | Mensaje de un cliente o visitante | El RUT es opcional. Estados `ABIERTO → RESPONDIDO` |
+| **Devolución** | Solicitud de devolución | Estados de `SOLICITADA` a `APROBADA` o `RECHAZADA`, y de `APROBADA` a `COMPLETADA`. Rechazar exige explicar el motivo. No se acepta otra mientras haya una en curso |
+| **Contacto** | Mensaje de un cliente o visitante | El RUT es opcional. Estados de `ABIERTO` a `RESPONDIDO` |
 | **Seguimiento** | Contacto posterior a la compra | Tipo `LLAMADA`, `CORREO` o `ENCUESTA`. Estados `PENDIENTE`, `REALIZADO`, `CANCELADO` |
 
 Los pedidos y productos (`idPedido`, `idProducto`) se guardan como número, sin clave foránea: viven en otros servicios.

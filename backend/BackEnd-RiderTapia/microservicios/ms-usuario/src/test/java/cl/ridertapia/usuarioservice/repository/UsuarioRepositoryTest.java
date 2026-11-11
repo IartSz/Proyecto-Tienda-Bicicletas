@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-/** Usa una base H2 en memoria (reemplaza a MySQL solo durante la prueba). */
 @DataJpaTest
 class UsuarioRepositoryTest {
 

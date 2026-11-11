@@ -205,7 +205,7 @@
     return `<span class="badge ${cfg.badge || "bg-secondary"}"><i class="bi ${cfg.icono || ""} me-1"></i>${e}</span>`;
   }
 
-  // Barra de avance: Pagado → En preparación → Enviado/Listo → Entregado
+  // Barra de avance: Pagado, En preparación, Enviado/Listo, Entregado
   function avance(p) {
     const e = estadoPedido(p);
     if (e === "Cancelado") return '<div class="alert alert-danger small mb-3"><i class="bi bi-x-circle me-1"></i>Este pedido fue cancelado.</div>';

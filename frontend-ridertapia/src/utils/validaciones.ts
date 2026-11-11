@@ -1,16 +1,25 @@
+// Largo minimo de contrasena (el backend exige 8)
+export const CLAVE_MINIMA = 8;
+
 /* RUT */
 
-// "12.345.678-k" -> "12345678K" (la K solo al final)
+// "12.345.678-k" queda "12345678K" (la K solo al final)
 export const limpiarRut = (rut: string): string =>
   rut.toUpperCase().replace(/[^0-9K]/g, '').replace(/K(?=.)/g, '').slice(0, 9);
 
-// "123456785" -> "12.345.678-5"
+// "123456785" queda "12.345.678-5"
 export const formatearRut = (rut: string): string => {
   const c = limpiarRut(rut);
   if (c.length < 2) return c;
   const cuerpo = c.slice(0, -1);
   const dv = c.slice(-1);
   return cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + dv;
+};
+
+// Formato del backend: "12.345.678-5" queda "12345678-5"
+export const rutApi = (rut: string): string => {
+  const c = limpiarRut(rut);
+  return c.length < 2 ? c : `${c.slice(0, -1)}-${c.slice(-1)}`;
 };
 
 // Modulo 11
@@ -73,13 +82,19 @@ export const errorTelefono = (telefono: string): string => {
   return '';
 };
 
+// Sin espacios ni guiones, como lo pide el backend
+export const telefonoApi = (telefono: string | null): string | null => {
+  const v = (telefono ?? '').replace(/[\s-]/g, '');
+  return v || null;
+};
+
 /* Tarjeta (pago simulado) */
 
-// "4111111111111111" -> "4111 1111 1111 1111"
+// "4111111111111111" queda "4111 1111 1111 1111"
 export const formatearTarjeta = (valor: string): string =>
   valor.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
 
-// "1228" -> "12/28"
+// "1228" queda "12/28"
 export const formatearVencimiento = (valor: string): string => {
   const v = valor.replace(/\D/g, '').slice(0, 4);
   return v.length > 2 ? `${v.slice(0, 2)}/${v.slice(2)}` : v;

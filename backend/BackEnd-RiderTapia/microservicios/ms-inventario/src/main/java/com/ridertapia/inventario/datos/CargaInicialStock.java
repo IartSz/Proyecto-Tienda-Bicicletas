@@ -98,7 +98,7 @@ public class CargaInicialStock implements CommandLineRunner {
         log.info("Stock inicial cargado: {} de {} variantes.", cargados, stock.size());
     }
 
-    // GET /api/v1/variantes de ms-productos (formato HATEOAS) -> sku: id
+    // GET /api/v1/variantes de ms-productos (formato HATEOAS), como mapa sku: id
     private Map<String, Long> leerVariantes() {
         Map<String, Long> resultado = new HashMap<>();
         try {

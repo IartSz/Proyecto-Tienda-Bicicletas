@@ -82,7 +82,7 @@ describe('HU-8 Iniciar sesión (pantalla de cliente)', () => {
     await userEvent.click(screen.getByRole('button', { name: 'INICIAR SESIÓN' }));
 
     expect(screen.getByText('Ingresa un correo válido.')).toBeInTheDocument();
-    expect(screen.getByText('Mínimo 6 caracteres.')).toBeInTheDocument();
+    expect(screen.getByText('Mínimo 8 caracteres.')).toBeInTheDocument();
     expect(iniciarSesion).not.toHaveBeenCalled();
   });
 });

@@ -29,10 +29,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ridertapia.carrito.LimpiezaBaseDatos;
 import com.ridertapia.carrito.model.Carrito;
 import com.ridertapia.carrito.model.ItemCarrito;
 import com.ridertapia.carrito.model.EstadoCarrito;
@@ -45,13 +45,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class ItemCarritoControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private ItemCarritoRepository itemCarritoRepository;
@@ -69,7 +67,6 @@ class ItemCarritoControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
         when(restTemplate.getForEntity(any(URI.class), eq(String.class))).thenReturn(ResponseEntity.ok("{}"));
         when(restTemplate.getForObject(any(URI.class), eq(Map.class))).thenReturn(Map.of("stockDisponible", 100));
         carrito = carritoRepository.save(new Carrito(null, "12345678-5", "tok-abc123", LocalDateTime.of(2026, 10, 6, 11, 0), LocalDateTime.of(2026, 10, 6, 11, 30), EstadoCarrito.ACTIVO, 899990, 0, 899990, 2L));

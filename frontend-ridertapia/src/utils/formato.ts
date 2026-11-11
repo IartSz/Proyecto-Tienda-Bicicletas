@@ -1,6 +1,6 @@
 export const formatoCLP = (monto: number): string => '$' + Math.round(monto).toLocaleString('es-CL');
 
-// "Casco Fox Speedframe" -> "casco-fox-speedframe"
+// "Casco Fox Speedframe" queda "casco-fox-speedframe"
 export const slugify = (texto: string): string =>
   texto
     .toLowerCase()
@@ -10,7 +10,7 @@ export const slugify = (texto: string): string =>
     .replace(/^-+|-+$/g, '')
     .slice(0, 60) || 'item';
 
-// "Camila" + "Rojas" -> "CR"
+// "Camila" + "Rojas" queda "CR"
 export const iniciales = (nombre: string, apellido: string): string =>
   ((nombre[0] ?? '') + (apellido[0] ?? '')).toUpperCase();
 

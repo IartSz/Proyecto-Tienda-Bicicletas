@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +18,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.inventario.LimpiezaBaseDatos;
 import com.ridertapia.inventario.model.TomaInventario;
 import com.ridertapia.inventario.model.EstadoToma;
 import com.ridertapia.inventario.repository.TomaInventarioRepository;
@@ -31,23 +30,16 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class TomaInventarioControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
-
-    @Autowired
     private TomaInventarioRepository tomaInventarioRepository;
 
     private final ObjectMapper objectMapper = JsonMapper.builder().build();
-
-    @BeforeEach
-    void prepararBase() {
-        limpiezaBaseDatos.limpiar();
-    }
 
     private TomaInventario nuevoTomaInventario(int variante) {
         return switch (variante) {

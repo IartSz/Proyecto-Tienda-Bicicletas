@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +18,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.pagos.LimpiezaBaseDatos;
 import com.ridertapia.pagos.model.CierreCaja;
 
 import com.ridertapia.pagos.repository.CierreCajaRepository;
@@ -31,23 +30,16 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class CierreCajaControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
-
-    @Autowired
     private CierreCajaRepository cierreCajaRepository;
 
     private final ObjectMapper objectMapper = JsonMapper.builder().build();
-
-    @BeforeEach
-    void prepararBase() {
-        limpiezaBaseDatos.limpiar();
-    }
 
     private CierreCaja nuevoCierreCaja(int variante) {
         return switch (variante) {

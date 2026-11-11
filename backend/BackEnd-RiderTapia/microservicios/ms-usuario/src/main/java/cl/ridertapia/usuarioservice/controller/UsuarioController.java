@@ -3,11 +3,14 @@ package cl.ridertapia.usuarioservice.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import cl.ridertapia.usuarioservice.dto.EstadoRequest;
 import cl.ridertapia.usuarioservice.dto.LoginRequest;
 import cl.ridertapia.usuarioservice.dto.RecuperarPasswordRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioResponse;
 import cl.ridertapia.usuarioservice.dto.UsuarioUpdateRequest;
+import cl.ridertapia.usuarioservice.model.CambioEstadoUsuario;
+import cl.ridertapia.usuarioservice.service.EstadoUsuarioService;
 import cl.ridertapia.usuarioservice.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,6 +25,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final EstadoUsuarioService estadoUsuarioService;
     private final UsuarioModelAssembler assembler;
 
     @Operation(summary = "Registrar un usuario nuevo",
@@ -91,16 +96,36 @@ public class UsuarioController {
         return assembler.toModel(usuarioService.actualizarUsuario(rut, request));
     }
 
+    @Operation(summary = "Activar o desactivar una cuenta",
+            description = "Una cuenta desactivada no puede iniciar sesión. Cada cambio queda en el registro.")
+    @ApiResponse(responseCode = "200", description = "Estado actualizado")
+    @ApiResponse(responseCode = "400", description = "Se intentó desactivar una cuenta de administrador")
+    @ApiResponse(responseCode = "404", description = "No existe un usuario con ese RUT")
+    @PatchMapping("/{rut}/estado")
+    public EntityModel<UsuarioResponse> cambiarEstado(@PathVariable String rut,
+                                                      @Valid @RequestBody EstadoRequest request) {
+        return assembler.toModel(estadoUsuarioService.cambiarEstado(rut, request.activo()));
+    }
+
+    @Operation(summary = "Registro de activaciones y desactivaciones", description = "Del más reciente al más antiguo.")
+    @ApiResponse(responseCode = "200", description = "Lista de cambios")
+    @GetMapping("/cambios-estado")
+    public CollectionModel<CambioEstadoUsuario> listarCambiosEstado() {
+        return CollectionModel.of(estadoUsuarioService.listarCambios(),
+                linkTo(methodOn(UsuarioController.class).listarCambiosEstado()).withSelfRel());
+    }
+
     @Operation(summary = "Iniciar sesión")
     @ApiResponse(responseCode = "200", description = "Credenciales correctas")
     @ApiResponse(responseCode = "401", description = "Email o contraseña incorrectos")
+    @ApiResponse(responseCode = "403", description = "La cuenta está desactivada")
     @PostMapping("/login")
     public EntityModel<UsuarioResponse> iniciarSesion(@Valid @RequestBody LoginRequest request) {
         return assembler.toModel(usuarioService.iniciarSesion(request));
     }
 
     @Operation(summary = "Recuperar contraseña",
-            description = "Versión académica simplificada: cambia la clave conociendo solo el email.")
+            description = "Cambia la clave conociendo solo el email.")
     @ApiResponse(responseCode = "200", description = "Contraseña actualizada")
     @ApiResponse(responseCode = "404", description = "No existe un usuario con ese email")
     @PostMapping("/recuperar-password")

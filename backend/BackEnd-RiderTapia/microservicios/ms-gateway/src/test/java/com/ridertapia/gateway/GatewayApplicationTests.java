@@ -28,6 +28,6 @@ class GatewayApplicationTests {
 
         assertNotNull(ids);
         assertEquals(List.of("ms-usuario", "ms-cliente", "ms-soporte", "ms-reportes", "ms-productos",
-                "ms-pedidos", "ms-pagos", "ms-inventario", "ms-carrito"), ids);
+                "ms-pedidos", "ms-pagos", "ms-inventario", "ms-carrito", "ms-servicio-tecnico", "ms-proveedores"), ids);
     }
 }

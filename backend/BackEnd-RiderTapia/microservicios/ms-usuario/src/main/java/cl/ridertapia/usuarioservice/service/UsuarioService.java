@@ -8,6 +8,7 @@ import cl.ridertapia.usuarioservice.dto.UsuarioUpdateRequest;
 import cl.ridertapia.usuarioservice.exception.ApiException;
 import cl.ridertapia.usuarioservice.model.Usuario;
 import cl.ridertapia.usuarioservice.repository.UsuarioRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,6 +52,7 @@ public class UsuarioService {
                 .emailCliente(email)
                 .password(passwordEncoder.encode(request.password()))
                 .rol(request.rol() == null ? Usuario.ROL_CLIENTE : request.rol())
+                .fechaCreacion(LocalDateTime.now())
                 .build();
         return UsuarioResponse.desde(usuarioRepository.save(usuario));
     }
@@ -99,11 +101,14 @@ public class UsuarioService {
         if (!passwordEncoder.matches(request.password(), usuario.getPassword())) {
             throw ApiException.noAutorizado("Email o contraseña incorrectos");
         }
+        if (!usuario.estaActivo()) {
+            throw ApiException.prohibido("La cuenta está desactivada");
+        }
         return UsuarioResponse.desde(usuario);
     }
 
     /**
-     * Versión simple para el proyecto académico: cambia la contraseña conociendo solo el email.
+     * Cambia la contraseña conociendo solo el email.
      * En producción esto debe hacerse con un token enviado por correo.
      */
     @Transactional

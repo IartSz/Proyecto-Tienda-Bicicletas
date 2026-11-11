@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import useSesion from '../hooks/useSesion';
-import { errorEmail } from '../utils/validaciones';
+import { CLAVE_MINIMA, errorEmail } from '../utils/validaciones';
 import { rutaVolver } from '../utils/volver';
 
 interface LoginFormState {
@@ -38,7 +38,7 @@ const Login = () => {
     event.preventDefault();
     const nuevos: ErroresLogin = {
       correo: errorEmail(form.correo) || undefined,
-      password: form.password.length < 6 ? 'Mínimo 6 caracteres.' : undefined
+      password: form.password.length < CLAVE_MINIMA ? `Mínimo ${CLAVE_MINIMA} caracteres.` : undefined
     };
     if (nuevos.correo || nuevos.password) {
       setErrores(nuevos);

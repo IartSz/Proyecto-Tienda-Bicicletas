@@ -6,6 +6,7 @@ import useMovimientos from '../../hooks/useMovimientos';
 import useAviso from '../../hooks/useAviso';
 import PedidoService from '../../services/pedido.service';
 import { generarVentasEjemplo } from '../../services/demo.service';
+import { USAR_API } from '../../api/cliente';
 import { ESTADOS_PEDIDO, esVenta } from '../../utils/estadosPedido';
 import { fechaCorta, fechaRelativa, formatoCLP } from '../../utils/formato';
 
@@ -55,13 +56,16 @@ const Resumen = () => {
     <>
       {aviso && <div className={`alert alert-${aviso.tipo} py-2`}>{aviso.texto}</div>}
 
-      <div className="d-flex flex-wrap gap-2 justify-content-end mb-3">
-        <button type="button" className="btn btn-sm btn-outline-light" onClick={() => void handleDemo()}>
-          {hayDemo
-            ? <><i className="bi bi-x-circle me-1"></i>Quitar ventas de ejemplo</>
-            : <><i className="bi bi-magic me-1"></i>Cargar ventas de ejemplo</>}
-        </button>
-      </div>
+      {/* Las ventas de ejemplo solo existen en modo local */}
+      {!USAR_API && (
+        <div className="d-flex flex-wrap gap-2 justify-content-end mb-3">
+          <button type="button" className="btn btn-sm btn-outline-light" onClick={() => void handleDemo()}>
+            {hayDemo
+              ? <><i className="bi bi-x-circle me-1"></i>Quitar ventas de ejemplo</>
+              : <><i className="bi bi-magic me-1"></i>Cargar ventas de ejemplo</>}
+          </button>
+        </div>
+      )}
 
       <div className="kpi-strip">
         <div className="kpi"><span className="kpi-label">Ventas del mes</span><strong>{formatoCLP(suma(delMes))}</strong><small>{variacion(suma(delMes), suma(mesAnterior))}</small></div>

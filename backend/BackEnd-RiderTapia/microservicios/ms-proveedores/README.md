@@ -30,9 +30,9 @@ Cuando llega la mercadería, cada producto recibido **suma stock en `ms-inventar
 
 Relaciones dentro del microservicio:
 
-- ProductoProveedor y OrdenCompra → Proveedor.
-- DetalleOrdenCompra y RecepcionCompra → OrdenCompra.
-- DetalleRecepcion → RecepcionCompra y DetalleOrdenCompra.
+- ProductoProveedor y OrdenCompra pertenecen a Proveedor.
+- DetalleOrdenCompra y RecepcionCompra pertenecen a OrdenCompra.
+- DetalleRecepcion pertenece a RecepcionCompra y DetalleOrdenCompra.
 - Un proveedor no puede tener dos veces la misma variante (`id_proveedor` + `id_variante` es único).
 
 ## Rol en la arquitectura
@@ -444,7 +444,7 @@ Por cada clase hay tres archivos de test:
 | `<Clase>ControllerTest` | `@WebMvcTest` | Códigos HTTP, campos, enlaces HATEOAS, 400, 404 y 409 |
 | `<Clase>ControllerIT` | Integración (`@SpringBootTest` + H2) | Crear + listar + búsqueda, actualizar, eliminar + 404; en las clases con reglas también el 400 o 409 correspondiente |
 
-Además, `ProveedoresApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto, primero los registros que dependen de otros.
+Además, `ProveedoresApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -464,7 +464,6 @@ ms-proveedores/
     └── test/
         ├── java/com/ridertapia/proveedores/
         │   ├── ProveedoresApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (<Clase>ControllerTest y <Clase>ControllerIT)
         │   └── service/      (<Clase>ServiceTest)
         └── resources/application-test.properties

@@ -4,8 +4,10 @@ import type { ReporteGuardado, ReporteGuardadoPayload } from '../models/Reporte'
 import { estadoStock } from './producto.service';
 import { diaLocal } from '../utils/formato';
 import { esVenta } from '../utils/estadosPedido';
+import { USAR_API } from '../api/cliente';
+import ReporteApiService from '../api/reporte.api';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local (sin backend)
 const CLAVE = 'reportesHistorial';
 const MAXIMO = 30;
 
@@ -100,7 +102,7 @@ const leerHistorial = (): ReporteGuardado[] => {
 };
 
 // Historial de reportes exportados
-export const ReporteService = {
+const ReporteLocalService = {
   async listar(): Promise<ReporteGuardado[]> {
     return leerHistorial();
   },
@@ -117,5 +119,8 @@ export const ReporteService = {
     return nuevo;
   }
 };
+
+// VITE_USAR_API=true usa ms-reportes; si no, localStorage
+export const ReporteService: typeof ReporteLocalService = USAR_API ? ReporteApiService : ReporteLocalService;
 
 export default ReporteService;

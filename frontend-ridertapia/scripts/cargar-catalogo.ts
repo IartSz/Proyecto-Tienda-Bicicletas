@@ -1,7 +1,5 @@
 /// <reference types="node" />
 // Carga el catalogo en el backend por la API (POST).
-// Ya no es necesario: ms-productos y ms-inventario lo cargan solos al arrancar.
-// Sirve para mostrar los POST o si se desactiva la carga automatica.
 // Uso: npx tsx scripts/cargar-catalogo.ts
 import axios from 'axios';
 import { categorias } from '../src/data/categorias';
@@ -17,7 +15,7 @@ const crear = async (ruta: string, cuerpo: object, campoId: string): Promise<num
   return id;
 };
 
-// Id local -> id del backend
+// Id local con su id del backend
 const idDe = (mapa: Map<number, number>, idLocal: number): number => {
   const id = mapa.get(idLocal);
   if (id === undefined) throw new Error(`Falta el id ${idLocal}`);

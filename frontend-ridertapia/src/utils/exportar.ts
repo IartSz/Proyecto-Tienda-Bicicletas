@@ -7,7 +7,7 @@ const ENTIDADES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt
 const escapar = (texto: string | number): string =>
   String(texto).replace(/[&<>"']/g, (c) => ENTIDADES[c] ?? c);
 
-// Filas -> texto CSV (separador ; para Excel en espanol)
+// Filas a texto CSV (separador ; para Excel en espanol)
 export const aCSV = (filas: CeldaReporte[][]): string =>
   filas.map((fila) => fila.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(';')).join('\r\n');
 

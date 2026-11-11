@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DevolucionService {
 
-    // Flujo permitido: SOLICITADA -> APROBADA o RECHAZADA, y APROBADA -> COMPLETADA
+    // Flujo permitido: de SOLICITADA a APROBADA o RECHAZADA, y de APROBADA a COMPLETADA
     private static final Map<Devolucion.Estado, Set<Devolucion.Estado>> TRANSICIONES = Map.of(
             Devolucion.Estado.SOLICITADA, Set.of(Devolucion.Estado.APROBADA, Devolucion.Estado.RECHAZADA),
             Devolucion.Estado.APROBADA, Set.of(Devolucion.Estado.COMPLETADA),

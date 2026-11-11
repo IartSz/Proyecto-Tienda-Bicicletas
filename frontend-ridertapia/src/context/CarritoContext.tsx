@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { ItemCarrito } from '../models/ItemCarrito';
 import type { Producto } from '../models/Producto';
 import * as carrito from '../services/carrito.service';
 import useProductos from '../hooks/useProductos';
 import { CarritoContext, type CarritoContextValue } from '../hooks/useCarrito';
+import { SesionContext } from '../hooks/useSesion';
+import { USAR_API } from '../api/cliente';
+import { olvidarCarrito, recuperarCarrito, sincronizarCarrito, type LineaCarritoApi } from '../api/carrito.api';
 
 const CLAVE = 'carrito';
 
@@ -19,6 +22,23 @@ const leerCarrito = (): ItemCarrito[] => {
   }
 };
 
+// Pasa las lineas guardadas en el backend a items de la pantalla
+const aItems = (lineas: LineaCarritoApi[], productos: Producto[]): ItemCarrito[] =>
+  lineas.flatMap((l) => {
+    const producto = productos.find((p) => p.idProducto === l.idProducto)
+      ?? productos.find((p) => p.idVariante === l.idVariante || p.variantes?.valores.some((v) => v.idVariante === l.idVariante));
+    if (!producto) return [];
+    return [{
+      idProducto: producto.idProducto,
+      cantidad: l.cantidad,
+      precioUnitario: l.precioUnitario,
+      idVariante: l.idVariante,
+      nombre: producto.nombre,
+      variante: producto.variantes?.valores.find((v) => v.idVariante === l.idVariante)?.valor,
+      imagen: producto.imagenPrincipal
+    }];
+  });
+
 interface CarritoProviderProps {
   children: ReactNode;
 }
@@ -26,6 +46,11 @@ interface CarritoProviderProps {
 export const CarritoProvider = ({ children }: CarritoProviderProps) => {
   const [items, setItems] = useState<ItemCarrito[]>(leerCarrito);
   const { productos } = useProductos();
+  const sesion = useContext(SesionContext)?.sesion;
+  const rutCliente = sesion?.rol === 'CLIENTE' ? sesion.rutUsuario : null;
+  const hayItems = useRef(items.length > 0);
+  const rutAnterior = useRef(rutCliente);
+  const recuperadoPara = useRef<string | null>(null);
 
   // Guarda cada cambio
   useEffect(() => {
@@ -35,6 +60,32 @@ export const CarritoProvider = ({ children }: CarritoProviderProps) => {
       // Sin acceso al almacenamiento
     }
   }, [items]);
+
+  useEffect(() => {
+    hayItems.current = items.length > 0;
+  }, [items]);
+
+  // Con backend: guarda una copia en ms-carrito (espera a que el usuario deje de tocar)
+  useEffect(() => {
+    if (!USAR_API) return;
+    const espera = window.setTimeout(() => void sincronizarCarrito(items, rutCliente), 600);
+    return () => window.clearTimeout(espera);
+  }, [items, rutCliente]);
+
+  // Al iniciar sesion con el carrito vacio, trae el que el cliente dejo guardado
+  useEffect(() => {
+    if (!USAR_API) return;
+    if (rutAnterior.current && !rutCliente) olvidarCarrito();
+    rutAnterior.current = rutCliente;
+    if (!rutCliente || hayItems.current || productos.length === 0 || recuperadoPara.current === rutCliente) return;
+    recuperadoPara.current = rutCliente;
+    recuperarCarrito(rutCliente)
+      .then((lineas) => {
+        const guardados = aItems(lineas, productos);
+        if (guardados.length > 0 && !hayItems.current) setItems(guardados);
+      })
+      .catch((err: unknown) => console.error(err));
+  }, [rutCliente, productos]);
 
   // Si el carrito cambia en otra pestana
   useEffect(() => {

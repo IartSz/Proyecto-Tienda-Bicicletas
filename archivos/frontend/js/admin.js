@@ -12,7 +12,7 @@ function esc(t) {
   return String(t ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-// "Casco Fox Speedframe" -> "casco-fox-speedframe"
+// "Casco Fox Speedframe" queda "casco-fox-speedframe"
 function slugify(t) {
   return String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "item";
@@ -105,7 +105,7 @@ function descargarArchivo(nombre, contenido, tipo) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
 }
 
-// filas = [["Col1","Col2"], [...]] -> texto CSV (separador ; para Excel en español)
+// filas = [["Col1","Col2"], [...]] pasa a texto CSV (separador ; para Excel en español)
 function aCSV(filas) {
   return filas.map(f => f.map(v => '"' + String(v ?? "").replace(/"/g, '""') + '"').join(";")).join("\r\n");
 }

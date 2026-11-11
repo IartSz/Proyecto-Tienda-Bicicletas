@@ -19,8 +19,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.inventario.LimpiezaBaseDatos;
 import com.ridertapia.inventario.model.CargaMasiva;
 import com.ridertapia.inventario.model.ErrorCargaMasiva;
 
@@ -33,13 +33,11 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class ErrorCargaMasivaControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
 
     @Autowired
     private ErrorCargaMasivaRepository errorCargaMasivaRepository;
@@ -53,7 +51,6 @@ class ErrorCargaMasivaControllerIT {
 
     @BeforeEach
     void prepararBase() {
-        limpiezaBaseDatos.limpiar();
         cargaMasiva = cargaMasivaRepository.save(new CargaMasiva(null, "productos_octubre.xlsx", LocalDateTime.of(2026, 10, 6, 9, 0), 120, 2, 1L));
     }
 

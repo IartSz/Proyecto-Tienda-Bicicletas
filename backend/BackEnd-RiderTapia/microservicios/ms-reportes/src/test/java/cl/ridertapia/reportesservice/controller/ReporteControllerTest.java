@@ -53,7 +53,7 @@ class ReporteControllerTest {
     // ---------- generar ----------
 
     @Test
-    @DisplayName("POST /api/v1/reportes/diario → 201, Location, reporte y enlaces")
+    @DisplayName("POST /api/v1/reportes/diario: 201, Location, reporte y enlaces")
     void generarDiario() throws Exception {
         when(reporteService.generarReporteDiario(FECHA, 5, "pedro")).thenReturn(detalle(ReporteVentas.Tipo.DIARIO));
 
@@ -74,7 +74,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/reportes/diario sin parámetros → el servicio recibe nulos (usa hoy y valores por defecto)")
+    @DisplayName("POST /api/v1/reportes/diario sin parámetros: el servicio recibe nulos (usa hoy y valores por defecto)")
     void generarDiario_sinParametros() throws Exception {
         when(reporteService.generarReporteDiario(isNull(), isNull(), isNull()))
                 .thenReturn(detalle(ReporteVentas.Tipo.DIARIO));
@@ -85,7 +85,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/reportes/semanal → 201")
+    @DisplayName("POST /api/v1/reportes/semanal: 201")
     void generarSemanal() throws Exception {
         when(reporteService.generarReporteSemanal(FECHA, null, null)).thenReturn(detalle(ReporteVentas.Tipo.SEMANAL));
 
@@ -95,7 +95,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/reportes/mensual → 201")
+    @DisplayName("POST /api/v1/reportes/mensual: 201")
     void generarMensual() throws Exception {
         when(reporteService.generarReporteMensual(FECHA, null, null)).thenReturn(detalle(ReporteVentas.Tipo.MENSUAL));
 
@@ -105,7 +105,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST con una fecha mal escrita → 400")
+    @DisplayName("POST con una fecha mal escrita: 400")
     void generar_fechaInvalida() throws Exception {
         mockMvc.perform(post("/api/v1/reportes/diario").param("fecha", "07-10-2026"))
                 .andExpect(status().isBadRequest())
@@ -113,7 +113,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST con 'top' inválido → 400 con el mensaje del servicio")
+    @DisplayName("POST con 'top' inválido: 400 con el mensaje del servicio")
     void generar_topInvalido() throws Exception {
         when(reporteService.generarReporteDiario(FECHA, 99, null))
                 .thenThrow(ApiException.solicitudInvalida("El parámetro 'top' debe estar entre 1 y 50"));
@@ -124,7 +124,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("POST con el servicio de pedidos caído → 503")
+    @DisplayName("POST con el servicio de pedidos caído: 503")
     void generar_pedidosCaido() throws Exception {
         when(reporteService.generarReporteDiario(FECHA, null, null))
                 .thenThrow(ApiException.servicioNoDisponible("No se pudo consultar el servicio de pedidos"));
@@ -136,7 +136,7 @@ class ReporteControllerTest {
     // ---------- consultar ----------
 
     @Test
-    @DisplayName("GET /api/v1/reportes → colección HAL con enlaces por reporte")
+    @DisplayName("GET /api/v1/reportes: colección HAL con enlaces por reporte")
     void listarReportes() throws Exception {
         when(reporteService.listarReportes(null)).thenReturn(List.of(
                 resumen(ReporteVentas.Tipo.DIARIO), resumen(ReporteVentas.Tipo.SEMANAL)));
@@ -151,7 +151,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes?tipo=SEMANAL → filtra por tipo")
+    @DisplayName("GET /api/v1/reportes?tipo=SEMANAL: filtra por tipo")
     void listarReportes_filtrado() throws Exception {
         when(reporteService.listarReportes(ReporteVentas.Tipo.SEMANAL))
                 .thenReturn(List.of(resumen(ReporteVentas.Tipo.SEMANAL)));
@@ -163,14 +163,14 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes?tipo=ANUAL → 400 (tipo no existe)")
+    @DisplayName("GET /api/v1/reportes?tipo=ANUAL: 400 (tipo no existe)")
     void listarReportes_tipoInvalido() throws Exception {
         mockMvc.perform(get("/api/v1/reportes").param("tipo", "ANUAL"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes sin reportes → 200 sin _embedded")
+    @DisplayName("GET /api/v1/reportes sin reportes: 200 sin _embedded")
     void listarReportes_vacio() throws Exception {
         when(reporteService.listarReportes(null)).thenReturn(List.of());
 
@@ -180,7 +180,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes/{id} → reporte con ranking y enlaces")
+    @DisplayName("GET /api/v1/reportes/{id}: reporte con ranking y enlaces")
     void findById() throws Exception {
         when(reporteService.findById(1L)).thenReturn(detalle(ReporteVentas.Tipo.DIARIO));
 
@@ -192,7 +192,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes/{id} inexistente → 404")
+    @DisplayName("GET /api/v1/reportes/{id} inexistente: 404")
     void findById_noExiste() throws Exception {
         when(reporteService.findById(99L)).thenThrow(ApiException.noEncontrado("No existe el reporte 99"));
 
@@ -203,13 +203,13 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes/{id} con un id que no es número → 400")
+    @DisplayName("GET /api/v1/reportes/{id} con un id que no es número: 400")
     void findById_idInvalido() throws Exception {
         mockMvc.perform(get("/api/v1/reportes/{id}", "abc")).andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes/{id}/mas-vendidos → solo el ranking")
+    @DisplayName("GET /api/v1/reportes/{id}/mas-vendidos: solo el ranking")
     void listarMasVendidos() throws Exception {
         when(reporteService.listarMasVendidos(1L)).thenReturn(detalle(ReporteVentas.Tipo.DIARIO).masVendidos());
 
@@ -223,7 +223,7 @@ class ReporteControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/reportes/{id}/mas-vendidos de un reporte inexistente → 404")
+    @DisplayName("GET /api/v1/reportes/{id}/mas-vendidos de un reporte inexistente: 404")
     void listarMasVendidos_noExiste() throws Exception {
         when(reporteService.listarMasVendidos(99L)).thenThrow(ApiException.noEncontrado("No existe el reporte 99"));
 

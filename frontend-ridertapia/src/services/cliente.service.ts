@@ -1,8 +1,11 @@
 import PedidoService from './pedido.service';
 import AuthService, { guardarEstadosCuenta, leerEstadosCuenta } from './auth.service';
 import { esVenta } from '../utils/estadosPedido';
+import { USAR_API } from '../api/cliente';
+import { cambiarEstadoCuenta, cambiosDeEstado } from '../api/auth.api';
+import { formatearRut } from '../utils/validaciones';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local: estados y registro en localStorage. Con backend: ms-usuario
 const CLAVE_REGISTRO = 'clientesLog';
 const MAXIMO_REGISTRO = 100;
 
@@ -38,6 +41,7 @@ export const ClienteService = {
   async listar(): Promise<ClienteResumen[]> {
     const estados = leerEstadosCuenta();
     const mapa = new Map<string, ClienteResumen>();
+    const inactivas = new Set<string>();
 
     const pedidos = (await PedidoService.listar()).filter(esVenta);
     for (const p of pedidos) {
@@ -63,15 +67,22 @@ export const ClienteService = {
       if (cuenta.telefono) c.telefono = cuenta.telefono;
       c.tipo = 'registrado';
       mapa.set(cuenta.emailCliente, c);
+      if (cuenta.activo === false) inactivas.add(cuenta.emailCliente);
     }
 
     return [...mapa.values()]
-      .map((c) => ({ ...c, activo: estados[c.email] !== 'inactivo' }))
+      .map((c) => ({ ...c, activo: USAR_API ? !inactivas.has(c.email) : estados[c.email] !== 'inactivo' }))
       .sort((a, b) => b.ultima.localeCompare(a.ultima));
   },
 
   // Un cliente desactivado no puede iniciar sesion ni comprar con ese correo
-  async cambiarEstado(email: string, nombre: string, activar: boolean): Promise<void> {
+  async cambiarEstado(email: string, nombre: string, activar: boolean, rut = ''): Promise<void> {
+    // En el backend el estado es de la cuenta y el cambio queda registrado alli
+    if (USAR_API) {
+      if (!rut) throw new Error('Solo las cuentas registradas se pueden desactivar.');
+      await cambiarEstadoCuenta(rut, activar);
+      return;
+    }
     const estados = leerEstadosCuenta();
     if (activar) delete estados[email];
     else estados[email] = 'inactivo';
@@ -86,7 +97,16 @@ export const ClienteService = {
   },
 
   async registro(): Promise<AccionCliente[]> {
-    return leerRegistro();
+    if (!USAR_API) return leerRegistro();
+    const [cambios, cuentas] = await Promise.all([cambiosDeEstado(), AuthService.listar()]);
+    return cambios.map((c) => {
+      const cuenta = cuentas.find((x) => x.rutUsuario === formatearRut(c.rutUsuario));
+      return {
+        accion: c.activo ? 'Cuenta activada' : 'Cuenta desactivada',
+        nombre: cuenta ? `${cuenta.nombre} ${cuenta.apellido}`.trim() || cuenta.emailCliente : formatearRut(c.rutUsuario),
+        fecha: c.fecha
+      };
+    });
   }
 };
 

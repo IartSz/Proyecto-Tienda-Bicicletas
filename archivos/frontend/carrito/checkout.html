@@ -393,11 +393,11 @@
     document.querySelectorAll(".campo-tarjeta").forEach(c => c.required = tarjeta);
   }));
 
-  // Formato automático: "4111111111111111" -> "4111 1111 1111 1111"
+  // Formato automático: "4111111111111111" queda "4111 1111 1111 1111"
   document.getElementById("numTarjeta").addEventListener("input", e => {
     e.target.value = e.target.value.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ");
   });
-  // "1228" -> "12/28"
+  // "1228" queda "12/28"
   document.getElementById("vencimiento").addEventListener("input", e => {
     let v = e.target.value.replace(/\D/g, "").slice(0, 4);
     if (v.length > 2) v = v.slice(0, 2) + "/" + v.slice(2);

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-/** Usa una base H2 en memoria (reemplaza a MySQL solo durante la prueba). */
 @DataJpaTest
 class ClienteRepositoryTest {
 

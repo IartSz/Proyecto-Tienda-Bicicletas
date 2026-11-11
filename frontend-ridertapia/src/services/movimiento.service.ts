@@ -1,7 +1,9 @@
 import type { MovimientoInventario, MovimientoPayload, TipoMovimiento } from '../models/Movimiento';
 import type { Producto } from '../models/Producto';
+import { USAR_API } from '../api/cliente';
+import MovimientoApiService from '../api/movimiento.api';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local (sin backend)
 const CLAVE = 'movimientos';
 const MAXIMO = 500;
 
@@ -22,7 +24,7 @@ const guardar = (lista: MovimientoInventario[]): void => {
   }
 };
 
-export const MovimientoService = {
+const MovimientoLocalService = {
   // Del mas reciente al mas antiguo
   async listar(): Promise<MovimientoInventario[]> {
     return leer();
@@ -34,7 +36,16 @@ export const MovimientoService = {
     const nuevo: MovimientoInventario = { ...movimiento, idMovimiento };
     guardar([nuevo, ...lista].slice(0, MAXIMO));
     return nuevo;
-  },
+  }
+};
+
+// VITE_USAR_API=true usa ms-inventario; si no, localStorage
+const servicio = USAR_API ? MovimientoApiService : MovimientoLocalService;
+
+export const MovimientoService = {
+  listar: (): Promise<MovimientoInventario[]> => servicio.listar(),
+
+  crear: (movimiento: MovimientoPayload): Promise<MovimientoInventario> => servicio.crear(movimiento),
 
   // Anota el movimiento de un producto que ya tiene su stock actualizado
   async registrar(producto: Producto, tipo: TipoMovimiento, cantidad: number, usuario: string, detalle: string): Promise<MovimientoInventario> {

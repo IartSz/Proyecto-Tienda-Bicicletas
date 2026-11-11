@@ -44,6 +44,7 @@ public class HistorialEstadoPedidoService {
         historialEstadoPedidoActual.setEstadoNuevo(datos.getEstadoNuevo());
         historialEstadoPedidoActual.setFechaCambio(datos.getFechaCambio());
         historialEstadoPedidoActual.setIdEmpleado(datos.getIdEmpleado());
+        historialEstadoPedidoActual.setNota(datos.getNota());
         historialEstadoPedidoActual.setPedido(resolverPedido(datos.getPedido()));
         return historialEstadoPedidoRepository.save(historialEstadoPedidoActual);
     }

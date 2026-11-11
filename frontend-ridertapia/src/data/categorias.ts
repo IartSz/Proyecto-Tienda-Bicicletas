@@ -1,6 +1,6 @@
 import type { Categoria } from '../models/Categoria';
 
-// Datos locales; más adelante se reemplazan por la API de ms-productos
+// Catalogo del modo local; con backend lo carga ms-productos al arrancar
 
 // Grupos del menú (categorías padre)
 const INDUMENTARIA: Categoria = {

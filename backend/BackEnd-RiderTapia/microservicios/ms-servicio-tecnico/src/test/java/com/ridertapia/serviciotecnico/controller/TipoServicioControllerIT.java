@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +15,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ridertapia.serviciotecnico.LimpiezaBaseDatos;
 import com.ridertapia.serviciotecnico.model.NivelServicio;
 import com.ridertapia.serviciotecnico.model.TipoServicio;
 import com.ridertapia.serviciotecnico.repository.TipoServicioRepository;
@@ -28,23 +27,16 @@ import tools.jackson.databind.json.JsonMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 class TipoServicioControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private LimpiezaBaseDatos limpiezaBaseDatos;
-
-    @Autowired
     private TipoServicioRepository tipoServicioRepository;
 
     private final ObjectMapper objectMapper = JsonMapper.builder().build();
-
-    @BeforeEach
-    void prepararBase() {
-        limpiezaBaseDatos.limpiar();
-    }
 
     private TipoServicio nuevoTipoServicio(int variante) {
         return switch (variante) {

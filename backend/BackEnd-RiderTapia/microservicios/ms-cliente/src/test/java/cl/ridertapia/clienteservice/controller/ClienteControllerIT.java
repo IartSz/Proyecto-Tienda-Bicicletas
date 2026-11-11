@@ -29,12 +29,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Prueba de integración: levanta toda la aplicación (controller + service + repository) con H2 en memoria.
+ * Prueba de integración: levanta toda la aplicación (controller + service + repository).
  * Solo se simula UsuarioRemotoService, porque usuario-service es otro microservicio que no está corriendo en la prueba.
  */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
+@AutoConfigureTestDatabase
 class ClienteControllerIT {
 
     @Autowired

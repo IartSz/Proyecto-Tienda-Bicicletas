@@ -28,7 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Prueba de integración: controller + service + repository reales con H2 en memoria.
+ * Prueba de integración: controller + service + repository reales.
  * Solo se simula usuario-service (otro microservicio).
  */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")

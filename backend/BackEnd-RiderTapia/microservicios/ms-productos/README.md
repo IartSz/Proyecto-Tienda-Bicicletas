@@ -26,9 +26,9 @@ Microservicio REST del **catálogo de productos** de Rider Tapia Biker (épica C
 
 Relaciones dentro del microservicio:
 
-- Producto → Categoria y Producto → Marca (muchos a uno).
-- Categoria → Categoria padre (subcategorías, opcional).
-- VarianteProducto, ImagenProducto, EspecificacionTecnica, Oferta, Resena y AvisoStock → Producto (muchos a uno).
+- Producto pertenece a Categoria y Producto pertenece a Marca (muchos a uno).
+- Categoria pertenece a una Categoria padre (subcategorías, opcional).
+- VarianteProducto, ImagenProducto, EspecificacionTecnica, Oferta, Resena y AvisoStock pertenecen a Producto (muchos a uno).
 - Producto ↔ Compatibilidad y Cupon ↔ Categoria (muchos a muchos).
 
 El **stock no vive aquí**: está en `ms-inventario`, asociado a cada variante.
@@ -518,7 +518,7 @@ Por cada clase hay tres archivos de test:
 | `<Clase>ControllerTest` | `@WebMvcTest` | Códigos HTTP, campos, enlaces HATEOAS, 404 y 409 |
 | `<Clase>ControllerIT` | Integración (`@SpringBootTest` + H2) | Crear + listar + búsqueda, actualizar, eliminar + 404 |
 
-Además, `ProductoApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto, primero los registros que dependen de otros.
+Además, `ProductoApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -538,7 +538,6 @@ ms-productos/
     └── test/
         ├── java/com/ridertapia/productos/
         │   ├── ProductoApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (<Clase>ControllerTest y <Clase>ControllerIT)
         │   └── service/      (<Clase>ServiceTest)
         └── resources/application-test.properties

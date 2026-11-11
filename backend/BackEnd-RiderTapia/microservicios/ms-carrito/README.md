@@ -30,7 +30,7 @@ Como el carrito queda guardado en base de datos, se mantiene aunque el cliente c
 | ItemInventario | Está en `ms-inventario`: el stock se consulta por HTTP |
 | Cliente, Pedido | Pertenecen a otros microservicios: el carrito guarda solo el RUT del cliente (`rutCliente`) |
 
-Relaciones dentro del microservicio: ItemCarrito → Carrito (muchos a uno). El carrito muestra sus ítems en `items` (uno a muchos).
+Relaciones dentro del microservicio: ItemCarrito pertenece a Carrito (muchos a uno). El carrito muestra sus ítems en `items` (uno a muchos).
 
 ## Rol en la arquitectura
 
@@ -317,7 +317,7 @@ Reporte de cobertura JaCoCo: `target/site/jacoco/index.html`
 | `CarritoOperacionesServiceTest` | Unitario (Mockito) | Resumen, avisos de stock y validación de cupón (válido, monto fijo, inexistente, inactivo, vencido, sin usos) |
 | `CarritoOperacionesControllerTest` | `@WebMvcTest` | Endpoints de resumen, avisos y cupón |
 
-Además, `CarritoApplicationTests` prueba la carga del contexto, y `LimpiezaBaseDatos` vacía las tablas antes de cada test de integración en el orden correcto.
+Además, `CarritoApplicationTests` prueba la carga del contexto, y cada test de integración usa `@Transactional`: lo que guarda en la base se revierte al terminar.
 
 ## Estructura del proyecto
 
@@ -338,7 +338,6 @@ ms-carrito/
     └── test/
         ├── java/com/ridertapia/carrito/
         │   ├── CarritoApplicationTests.java
-        │   ├── LimpiezaBaseDatos.java
         │   ├── controller/   (ControllerTest, ControllerIT y CarritoOperacionesControllerTest)
         │   └── service/      (ServiceTest y CarritoOperacionesServiceTest)
         └── resources/application-test.properties

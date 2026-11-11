@@ -1,10 +1,9 @@
-import type { Categoria } from '../models/Categoria';
 import type { Marca, Producto, ProductoPayload } from '../models/Producto';
 import apiClient from './cliente';
 import { obtenerLista } from './hal';
 import { crearMapper } from './producto.mapper';
 import type {
-  CategoriaApi, EspecificacionApi, ImagenApi, ItemInventarioApi, OfertaApi, ProductoApi, VarianteApi
+  EspecificacionApi, ImagenApi, ItemInventarioApi, OfertaApi, ProductoApi, VarianteApi
 } from './tipos';
 
 // ProductoService contra el backend: ms-productos + ms-inventario
@@ -15,13 +14,6 @@ const soloFecha = (d: Date): string => d.toISOString().slice(0, 10);
 const deProducto = <T extends { producto: { idProducto: number } }>(lista: T[], id: number): T[] =>
   lista.filter((x) => x.producto.idProducto === id);
 
-// Los ids locales no sirven en la BD: se buscan por nombre
-const resolverCategoria = async (categoria: Categoria): Promise<{ idCategoria: number }> => {
-  const lista = await obtenerLista<CategoriaApi>('/categorias');
-  const encontrada = lista.find((c) => c.nombre === categoria.nombre);
-  if (!encontrada) throw new Error(`La categoría "${categoria.nombre}" no existe en el backend.`);
-  return { idCategoria: encontrada.idCategoria };
-};
 
 // Usa la marca existente o la crea
 const resolverMarca = async (marca: Marca): Promise<{ idMarca: number }> => {
@@ -41,7 +33,7 @@ const cuerpoProducto = async (p: ProductoPayload) => ({
   ordenDestacado: p.ordenDestacado,
   limitePorCompra: p.limitePorCompra,
   fechaCreacion: sinZona(p.fechaCreacion),
-  categoria: await resolverCategoria(p.categoria),
+  categoria: { idCategoria: p.categoria.idCategoria },
   marca: await resolverMarca(p.marca),
   compatibilidades: []
 });

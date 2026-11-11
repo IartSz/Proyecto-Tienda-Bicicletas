@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,4 +43,14 @@ public class Usuario {
 
     @Column(nullable = false, length = 20)
     private String rol;
+
+    // Una cuenta desactivada no puede iniciar sesion. null cuenta como activa (filas anteriores)
+    @Builder.Default
+    private Boolean activo = true;
+
+    private LocalDateTime fechaCreacion;
+
+    public boolean estaActivo() {
+        return !Boolean.FALSE.equals(activo);
+    }
 }

@@ -4,16 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import cl.ridertapia.usuarioservice.dto.EstadoRequest;
 import cl.ridertapia.usuarioservice.dto.LoginRequest;
 import cl.ridertapia.usuarioservice.dto.RecuperarPasswordRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioUpdateRequest;
 import cl.ridertapia.usuarioservice.model.Usuario;
+import cl.ridertapia.usuarioservice.repository.CambioEstadoUsuarioRepository;
 import cl.ridertapia.usuarioservice.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +31,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Prueba de integración: levanta toda la aplicación (controller + service + repository)
- * con una base H2 en memoria, sin simular ninguna capa.
+ * Prueba de integración: levanta toda la aplicación (controller + service + repository), sin simular ninguna capa.
  */
-@SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
+@SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop", "ridertapia.carga-inicial=false"})
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
+@AutoConfigureTestDatabase
 class UsuarioControllerIT {
 
     @Autowired
@@ -45,10 +47,14 @@ class UsuarioControllerIT {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private CambioEstadoUsuarioRepository cambioEstadoUsuarioRepository;
+
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @BeforeEach
     void limpiar() {
+        cambioEstadoUsuarioRepository.deleteAll();
         usuarioRepository.deleteAll();
     }
 
@@ -196,5 +202,44 @@ class UsuarioControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "password123"))))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void testDesactivarCuenta() throws Exception {
+        usuarioRepository.save(Usuario.builder().rutUsuario("12345678-5").emailCliente("juan.perez@example.com")
+                .password(passwordEncoder.encode("password123")).rol("CLIENTE").build());
+        String login = objectMapper.writeValueAsString(new LoginRequest("juan.perez@example.com", "password123"));
+
+        mockMvc.perform(patch("/api/usuarios/12345678-5/estado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new EstadoRequest(false))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activo").value(false));
+
+        // Desactivada no entra; al reactivarla vuelve a entrar
+        mockMvc.perform(post("/api/usuarios/login").contentType(MediaType.APPLICATION_JSON).content(login))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(patch("/api/usuarios/12345678-5/estado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new EstadoRequest(true))))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/usuarios/login").contentType(MediaType.APPLICATION_JSON).content(login))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/usuarios/cambios-estado"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.cambios", hasSize(2)));
+    }
+
+    @Test
+    void testNoSePuedeDesactivarAdmin() throws Exception {
+        usuarioRepository.save(Usuario.builder().rutUsuario("11111111-1").emailCliente("admin@example.com")
+                .password(passwordEncoder.encode("password123")).rol("ADMIN").build());
+
+        mockMvc.perform(patch("/api/usuarios/11111111-1/estado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new EstadoRequest(false))))
+                .andExpect(status().isBadRequest());
     }
 }

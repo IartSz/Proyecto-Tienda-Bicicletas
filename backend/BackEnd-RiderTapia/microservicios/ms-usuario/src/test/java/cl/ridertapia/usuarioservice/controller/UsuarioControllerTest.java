@@ -8,19 +8,24 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import cl.ridertapia.usuarioservice.dto.EstadoRequest;
 import cl.ridertapia.usuarioservice.dto.LoginRequest;
 import cl.ridertapia.usuarioservice.dto.RecuperarPasswordRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioRequest;
 import cl.ridertapia.usuarioservice.dto.UsuarioResponse;
 import cl.ridertapia.usuarioservice.dto.UsuarioUpdateRequest;
 import cl.ridertapia.usuarioservice.exception.ApiException;
+import cl.ridertapia.usuarioservice.model.CambioEstadoUsuario;
+import cl.ridertapia.usuarioservice.service.EstadoUsuarioService;
 import cl.ridertapia.usuarioservice.service.UsuarioService;
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -49,12 +54,15 @@ class UsuarioControllerTest {
     @MockBean
     private UsuarioService usuarioService;
 
+    @MockBean
+    private EstadoUsuarioService estadoUsuarioService;
+
     private UsuarioResponse respuesta() {
-        return new UsuarioResponse(RUT, EMAIL, "CLIENTE");
+        return new UsuarioResponse(RUT, EMAIL, "CLIENTE", true, null);
     }
 
     @Test
-    @DisplayName("POST /api/usuarios → 201, Location y enlace self")
+    @DisplayName("POST /api/usuarios: 201, Location y enlace self")
     void guardarUsuario_ok() throws Exception {
         when(usuarioService.guardarUsuario(any(UsuarioRequest.class))).thenReturn(respuesta());
         UsuarioRequest request = new UsuarioRequest(RUT, EMAIL, "clave12345", null);
@@ -72,7 +80,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios con datos inválidos → 400 con el detalle de cada campo")
+    @DisplayName("POST /api/usuarios con datos inválidos: 400 con el detalle de cada campo")
     void guardarUsuario_validacion() throws Exception {
         UsuarioRequest request = new UsuarioRequest("123", "no-es-email", "corta", "SUPERADMIN");
 
@@ -88,7 +96,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios con RUT repetido → 409")
+    @DisplayName("POST /api/usuarios con RUT repetido: 409")
     void guardarUsuario_conflicto() throws Exception {
         when(usuarioService.guardarUsuario(any(UsuarioRequest.class)))
                 .thenThrow(ApiException.conflicto("Ya existe un usuario con el RUT " + RUT));
@@ -102,10 +110,10 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/usuarios → colección HAL con enlaces por usuario")
+    @DisplayName("GET /api/usuarios: colección HAL con enlaces por usuario")
     void listarUsuarios() throws Exception {
         when(usuarioService.listarUsuarios()).thenReturn(List.of(
-                respuesta(), new UsuarioResponse("11111111-1", "ana@correo.cl", "ADMIN")));
+                respuesta(), new UsuarioResponse("11111111-1", "ana@correo.cl", "ADMIN", true, null)));
 
         mockMvc.perform(get("/api/usuarios"))
                 .andExpect(status().isOk())
@@ -117,7 +125,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/usuarios/{rut} → 200 con enlaces")
+    @DisplayName("GET /api/usuarios/{rut}: 200 con enlaces")
     void findByRut_ok() throws Exception {
         when(usuarioService.findByRut(RUT)).thenReturn(respuesta());
 
@@ -128,7 +136,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/usuarios/{rut} inexistente → 404")
+    @DisplayName("GET /api/usuarios/{rut} inexistente: 404")
     void findByRut_noExiste() throws Exception {
         when(usuarioService.findByRut(RUT))
                 .thenThrow(ApiException.noEncontrado("No existe un usuario con el RUT " + RUT));
@@ -140,7 +148,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/usuarios/buscar?email= → 200")
+    @DisplayName("GET /api/usuarios/buscar?email=: 200")
     void findByEmail() throws Exception {
         when(usuarioService.findByEmailCliente(EMAIL)).thenReturn(respuesta());
 
@@ -150,10 +158,10 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/usuarios/{rut} → 200 con el usuario actualizado")
+    @DisplayName("PUT /api/usuarios/{rut}: 200 con el usuario actualizado")
     void actualizarUsuario_ok() throws Exception {
         when(usuarioService.actualizarUsuario(eq(RUT), any(UsuarioUpdateRequest.class)))
-                .thenReturn(new UsuarioResponse(RUT, "nuevo@correo.cl", "ADMIN"));
+                .thenReturn(new UsuarioResponse(RUT, "nuevo@correo.cl", "ADMIN", true, null));
         UsuarioUpdateRequest request = new UsuarioUpdateRequest("nuevo@correo.cl", null, "ADMIN");
 
         mockMvc.perform(put("/api/usuarios/{rut}", RUT)
@@ -165,7 +173,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/usuarios/{rut} con email inválido → 400")
+    @DisplayName("PUT /api/usuarios/{rut} con email inválido: 400")
     void actualizarUsuario_validacion() throws Exception {
         UsuarioUpdateRequest request = new UsuarioUpdateRequest("malo", null, null);
 
@@ -177,7 +185,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios/login correcto → 200")
+    @DisplayName("POST /api/usuarios/login correcto: 200")
     void login_ok() throws Exception {
         when(usuarioService.iniciarSesion(any(LoginRequest.class))).thenReturn(respuesta());
 
@@ -190,7 +198,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios/login con credenciales malas → 401")
+    @DisplayName("POST /api/usuarios/login con credenciales malas: 401")
     void login_noAutorizado() throws Exception {
         when(usuarioService.iniciarSesion(any(LoginRequest.class)))
                 .thenThrow(ApiException.noAutorizado("Email o contraseña incorrectos"));
@@ -203,7 +211,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios/login sin campos → 400")
+    @DisplayName("POST /api/usuarios/login sin campos: 400")
     void login_validacion() throws Exception {
         mockMvc.perform(post("/api/usuarios/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -212,7 +220,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios/recuperar-password → 200 con mensaje")
+    @DisplayName("POST /api/usuarios/recuperar-password: 200 con mensaje")
     void recuperarPassword_ok() throws Exception {
         RecuperarPasswordRequest request = new RecuperarPasswordRequest(EMAIL, "nuevaClave123");
 
@@ -226,7 +234,7 @@ class UsuarioControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/usuarios/recuperar-password con clave corta → 400")
+    @DisplayName("POST /api/usuarios/recuperar-password con clave corta: 400")
     void recuperarPassword_validacion() throws Exception {
         RecuperarPasswordRequest request = new RecuperarPasswordRequest(EMAIL, "corta");
 
@@ -235,5 +243,41 @@ class UsuarioControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.mensaje", containsString("nuevaPassword")));
+    }
+
+    @Test
+    @DisplayName("PATCH /api/usuarios/{rut}/estado: 200 con el estado nuevo")
+    void cambiarEstado_ok() throws Exception {
+        when(estadoUsuarioService.cambiarEstado(RUT, false))
+                .thenReturn(new UsuarioResponse(RUT, EMAIL, "CLIENTE", false, null));
+
+        mockMvc.perform(patch("/api/usuarios/" + RUT + "/estado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new EstadoRequest(false))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activo").value(false))
+                .andExpect(jsonPath("$._links.self.href", endsWith("/api/usuarios/" + RUT)));
+    }
+
+    @Test
+    @DisplayName("PATCH /api/usuarios/{rut}/estado sin 'activo': 400")
+    void cambiarEstado_validacion() throws Exception {
+        mockMvc.perform(patch("/api/usuarios/" + RUT + "/estado")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("GET /api/usuarios/cambios-estado: lista de cambios")
+    void listarCambiosEstado() throws Exception {
+        when(estadoUsuarioService.listarCambios()).thenReturn(List.of(
+                new CambioEstadoUsuario(1L, RUT, false, LocalDateTime.of(2026, 10, 7, 10, 0))));
+
+        mockMvc.perform(get("/api/usuarios/cambios-estado"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.cambios", hasSize(1)))
+                .andExpect(jsonPath("$._embedded.cambios[0].rutUsuario").value(RUT))
+                .andExpect(jsonPath("$._embedded.cambios[0].activo").value(false));
     }
 }

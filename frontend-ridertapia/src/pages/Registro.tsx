@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router';
 import useSesion from '../hooks/useSesion';
 import type { CampoAuth } from '../services/auth.service';
 import {
-  errorEmail, errorNombre, errorRut, formatearRut, limpiarNombre
+  CLAVE_MINIMA, errorEmail, errorNombre, errorRut, formatearRut, limpiarNombre
 } from '../utils/validaciones';
 import { rutaVolver } from '../utils/volver';
 
@@ -29,7 +29,7 @@ const initialState: RegistroFormState = {
   terminos: false
 };
 
-// Campo del servicio -> campo del formulario
+// Campo del servicio y su campo del formulario
 const CAMPO_FORM: Record<CampoAuth, keyof RegistroFormState> = {
   emailCliente: 'email',
   rutUsuario: 'rut',
@@ -42,7 +42,7 @@ const validar = (form: RegistroFormState): Errores => {
     apellido: errorNombre(form.apellido, 'apellido'),
     rut: errorRut(form.rut),
     email: errorEmail(form.email),
-    password: form.password.length < 6 ? 'Mínimo 6 caracteres.' : '',
+    password: form.password.length < CLAVE_MINIMA ? `Mínimo ${CLAVE_MINIMA} caracteres.` : '',
     password2: form.password2 === '' ? 'Repite tu contraseña.' : form.password !== form.password2 ? 'Las contraseñas no coinciden.' : '',
     terminos: form.terminos ? '' : 'Debes aceptar los términos.'
   };
@@ -162,7 +162,7 @@ const Registro = () => {
             <label htmlFor="password" className="form-label">Contraseña</label>
             <div className="input-group has-validation">
               <span className="input-group-text"><i className="bi bi-lock"></i></span>
-              <input type="password" className={clase('password')} id="password" name="password" placeholder="Mínimo 6 caracteres" value={form.password} onChange={handleChange} />
+              <input type="password" className={clase('password')} id="password" name="password" placeholder={`Mínimo ${CLAVE_MINIMA} caracteres`} value={form.password} onChange={handleChange} />
               <div className="invalid-feedback">{errores.password}</div>
             </div>
           </div>

@@ -130,8 +130,11 @@ const Checkout = () => {
         email: form.email.trim(),
         telefono: form.telefono.trim()
       };
-      // Los datos de tarjeta no se guardan
-      const pedido = await PedidoService.crear(armarPedido(items, cliente, form.medioPago, cuenta ? cliente.rut : null));
+      // De la tarjeta solo se guardan los 4 ultimos digitos
+      const pedido = await PedidoService.crear({
+        ...armarPedido(items, cliente, form.medioPago, cuenta ? cliente.rut : null),
+        ultimosDigitosTarjeta: form.medioPago === 'TARJETA' ? form.numTarjeta.replace(/\D/g, '').slice(-4) : undefined
+      });
       vaciar();
       setConfirmado(pedido);
       window.scrollTo(0, 0);

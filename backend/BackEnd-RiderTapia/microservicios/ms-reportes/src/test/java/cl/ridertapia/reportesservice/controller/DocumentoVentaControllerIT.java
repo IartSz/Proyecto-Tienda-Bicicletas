@@ -32,12 +32,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Prueba de integración: levanta toda la aplicación con H2 en memoria.
- * Solo se simula PedidoRemotoService (otro microservicio). Estados de venta: PAGADO, ENTREGADO y COMPLETADO.
+ * Prueba de integración: levanta toda la aplicación.
+ * Solo se simula PedidoRemotoService (otro microservicio). Estados de venta: PAGADO, EN_PREPARACION, LISTO_PARA_RETIRO y RETIRADO.
  */
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase // reemplaza MySQL por H2 solo en esta prueba
+@AutoConfigureTestDatabase
 class DocumentoVentaControllerIT {
 
     @Autowired
@@ -127,8 +127,8 @@ class DocumentoVentaControllerIT {
     @Test
     void testLaNumeracionEsCorrelativaPorTipo() throws Exception {
         pedido(10, "PAGADO", 11900, 0, 42L);
-        pedido(11, "ENTREGADO", 5950, 0, 43L);
-        pedido(12, "COMPLETADO", 23800, 0, 44L);
+        pedido(11, "RETIRADO", 5950, 0, 43L);
+        pedido(12, "EN_PREPARACION", 23800, 0, 44L);
 
         mockMvc.perform(post("/api/v1/documentos/boleta").contentType(MediaType.APPLICATION_JSON).content(boleta(10)))
                 .andExpect(jsonPath("$.documento.numero").value(1));

@@ -13,8 +13,7 @@ const Recuperar = () => {
     setEnviado(false);
   };
 
-  // Simulado: no se envia ningun correo. Cuando exista el backend,
-  // aqui se pide el enlace de recuperacion al servicio de usuarios.
+  // Simulado: aun no hay servicio de correo para enviar el enlace de recuperacion
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const mensaje = errorEmail(email);

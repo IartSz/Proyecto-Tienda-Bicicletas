@@ -54,6 +54,7 @@ export interface Pedido {
   envio?: number; // siempre 0: solo retiro en tienda
   cliente?: DatosComprador;
   medioPago?: MedioPago;
+  ultimosDigitosTarjeta?: string; // solo los 4 ultimos, nunca la tarjeta completa
   items?: ItemCarrito[];
   historial?: CambioEstado[];
   novedad?: boolean; // el cliente aún no ve el último cambio de estado

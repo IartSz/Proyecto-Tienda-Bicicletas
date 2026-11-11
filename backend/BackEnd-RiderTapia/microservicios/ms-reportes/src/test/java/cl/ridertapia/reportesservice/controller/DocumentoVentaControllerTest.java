@@ -64,7 +64,7 @@ class DocumentoVentaControllerTest {
     // ---------- emitir ----------
 
     @Test
-    @DisplayName("POST /api/v1/documentos/boleta → 201, Location, montos y enlaces")
+    @DisplayName("POST /api/v1/documentos/boleta: 201, Location, montos y enlaces")
     void emitirBoleta() throws Exception {
         when(documentoService.emitirBoleta(any(DocumentoDto.EmitirBoleta.class))).thenReturn(boleta());
 
@@ -85,7 +85,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/boleta sin idPedido → 400")
+    @DisplayName("POST /api/v1/documentos/boleta sin idPedido: 400")
     void emitirBoleta_validacion() throws Exception {
         mockMvc.perform(post("/api/v1/documentos/boleta")
                         .contentType(MediaType.APPLICATION_JSON).content("{}"))
@@ -94,7 +94,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/boleta de un pedido ya facturado → 409")
+    @DisplayName("POST /api/v1/documentos/boleta de un pedido ya facturado: 409")
     void emitirBoleta_conflicto() throws Exception {
         when(documentoService.emitirBoleta(any(DocumentoDto.EmitirBoleta.class)))
                 .thenThrow(ApiException.conflicto("El pedido 10 ya tiene un documento emitido"));
@@ -105,7 +105,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/boleta de un pedido inexistente → 404")
+    @DisplayName("POST /api/v1/documentos/boleta de un pedido inexistente: 404")
     void emitirBoleta_pedidoInexistente() throws Exception {
         when(documentoService.emitirBoleta(any(DocumentoDto.EmitirBoleta.class)))
                 .thenThrow(ApiException.noEncontrado("No existe el pedido 10"));
@@ -116,7 +116,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/boleta de un pedido sin pagar → 400")
+    @DisplayName("POST /api/v1/documentos/boleta de un pedido sin pagar: 400")
     void emitirBoleta_pedidoSinPagar() throws Exception {
         when(documentoService.emitirBoleta(any(DocumentoDto.EmitirBoleta.class)))
                 .thenThrow(ApiException.solicitudInvalida("Solo se emiten documentos de pedidos pagados"));
@@ -127,7 +127,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/factura → 201 con los datos de la empresa")
+    @DisplayName("POST /api/v1/documentos/factura: 201 con los datos de la empresa")
     void emitirFactura() throws Exception {
         when(documentoService.emitirFactura(any(DocumentoDto.EmitirFactura.class))).thenReturn(factura());
         DocumentoDto.EmitirFactura cuerpo = new DocumentoDto.EmitirFactura(
@@ -143,7 +143,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/documentos/factura con datos inválidos → 400 con el detalle de cada campo")
+    @DisplayName("POST /api/v1/documentos/factura con datos inválidos: 400 con el detalle de cada campo")
     void emitirFactura_validacion() throws Exception {
         DocumentoDto.EmitirFactura invalida = new DocumentoDto.EmitirFactura(null, "123", "", " ", null);
 
@@ -158,7 +158,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("POST con un cuerpo que no es JSON válido → 400")
+    @DisplayName("POST con un cuerpo que no es JSON válido: 400")
     void emitir_jsonInvalido() throws Exception {
         mockMvc.perform(post("/api/v1/documentos/boleta")
                         .contentType(MediaType.APPLICATION_JSON).content("{ no es json"))
@@ -168,7 +168,7 @@ class DocumentoVentaControllerTest {
     // ---------- consultar ----------
 
     @Test
-    @DisplayName("GET /api/v1/documentos → colección HAL")
+    @DisplayName("GET /api/v1/documentos: colección HAL")
     void listarDocumentos() throws Exception {
         when(documentoService.listarDocumentos(null)).thenReturn(List.of(
                 resumen(DocumentoVenta.Tipo.BOLETA), resumen(DocumentoVenta.Tipo.FACTURA)));
@@ -182,7 +182,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos?tipo=FACTURA → filtra por tipo")
+    @DisplayName("GET /api/v1/documentos?tipo=FACTURA: filtra por tipo")
     void listarDocumentos_filtrado() throws Exception {
         when(documentoService.listarDocumentos(DocumentoVenta.Tipo.FACTURA))
                 .thenReturn(List.of(resumen(DocumentoVenta.Tipo.FACTURA)));
@@ -193,13 +193,13 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos?tipo=NOTA → 400 (tipo no existe)")
+    @DisplayName("GET /api/v1/documentos?tipo=NOTA: 400 (tipo no existe)")
     void listarDocumentos_tipoInvalido() throws Exception {
         mockMvc.perform(get("/api/v1/documentos").param("tipo", "NOTA")).andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/{id} → documento completo")
+    @DisplayName("GET /api/v1/documentos/{id}: documento completo")
     void findById() throws Exception {
         when(documentoService.findById(1L)).thenReturn(factura());
 
@@ -211,7 +211,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/{id} inexistente → 404")
+    @DisplayName("GET /api/v1/documentos/{id} inexistente: 404")
     void findById_noExiste() throws Exception {
         when(documentoService.findById(99L)).thenThrow(ApiException.noEncontrado("No existe el documento 99"));
 
@@ -221,7 +221,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/pedido/{idPedido} → documento del pedido")
+    @DisplayName("GET /api/v1/documentos/pedido/{idPedido}: documento del pedido")
     void findByPedido() throws Exception {
         when(documentoService.findByPedido(10L)).thenReturn(boleta());
 
@@ -231,7 +231,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/pedido/{idPedido} sin documento → 404")
+    @DisplayName("GET /api/v1/documentos/pedido/{idPedido} sin documento: 404")
     void findByPedido_noExiste() throws Exception {
         when(documentoService.findByPedido(10L))
                 .thenThrow(ApiException.noEncontrado("El pedido 10 no tiene documento emitido"));
@@ -240,7 +240,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/buscar?tipo=&numero= → busca por tipo y número")
+    @DisplayName("GET /api/v1/documentos/buscar?tipo=&numero=: busca por tipo y número")
     void findByNumero() throws Exception {
         when(documentoService.findByNumero(DocumentoVenta.Tipo.BOLETA, 1L)).thenReturn(boleta());
 
@@ -250,7 +250,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/buscar sin parámetros o con tipo inválido → 400")
+    @DisplayName("GET /api/v1/documentos/buscar sin parámetros o con tipo inválido: 400")
     void findByNumero_parametrosInvalidos() throws Exception {
         mockMvc.perform(get("/api/v1/documentos/buscar").param("numero", "1")).andExpect(status().isBadRequest());
         mockMvc.perform(get("/api/v1/documentos/buscar").param("tipo", "NOTA").param("numero", "1"))
@@ -258,7 +258,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/cliente/{idCliente} → documentos del cliente")
+    @DisplayName("GET /api/v1/documentos/cliente/{idCliente}: documentos del cliente")
     void findByIdCliente() throws Exception {
         when(documentoService.findByIdCliente(42L)).thenReturn(List.of(resumen(DocumentoVenta.Tipo.BOLETA)));
 
@@ -270,7 +270,7 @@ class DocumentoVentaControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/documentos/cliente/{idCliente} sin documentos → 200 sin _embedded")
+    @DisplayName("GET /api/v1/documentos/cliente/{idCliente} sin documentos: 200 sin _embedded")
     void findByIdCliente_vacio() throws Exception {
         when(documentoService.findByIdCliente(7L)).thenReturn(List.of());
 

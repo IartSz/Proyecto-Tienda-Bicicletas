@@ -1,8 +1,10 @@
 import type { Categoria, CategoriaPayload } from '../models/Categoria';
 import { categorias as categoriasIniciales } from '../data/categorias';
 import ProductoService from './producto.service';
+import { USAR_API } from '../api/cliente';
+import CategoriaApiService from '../api/categoria.api';
 
-// Por ahora en localStorage; luego se cambia por la API
+// Modo local (sin backend)
 const CLAVE = 'categorias';
 
 const leer = (): Categoria[] => {
@@ -22,7 +24,7 @@ const guardar = (lista: Categoria[]): void => {
   }
 };
 
-// Slug libre a partir del nombre ("Cascos" -> "cascos", y "cascos-2" si ya existe)
+// Slug libre a partir del nombre ("Cascos" queda "cascos", o "cascos-2" si ya existe)
 export const slugLibre = (base: string, lista: Categoria[], excepto?: number): string => {
   let slug = base;
   let n = 2;
@@ -30,7 +32,7 @@ export const slugLibre = (base: string, lista: Categoria[], excepto?: number): s
   return slug;
 };
 
-export const CategoriaService = {
+const CategoriaLocalService = {
   async listar(): Promise<Categoria[]> {
     return leer();
   },
@@ -86,5 +88,8 @@ export const CategoriaService = {
     guardar(lista.filter((c) => c.idCategoria !== id));
   }
 };
+
+// VITE_USAR_API=true usa ms-productos; si no, localStorage
+export const CategoriaService: typeof CategoriaLocalService = USAR_API ? CategoriaApiService : CategoriaLocalService;
 
 export default CategoriaService;

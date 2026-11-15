@@ -12,9 +12,27 @@ export interface ServicioProductos {
   crear(producto: ProductoPayload): Promise<Producto>;
   actualizar(id: number, producto: ProductoPayload): Promise<Producto>;
   eliminar(id: number): Promise<void>;
+  subirImagen(archivo: File): Promise<string>;
 }
 
 export type EstadoStock = 'ok' | 'bajo' | 'cero';
+
+export const TIPOS_IMAGEN = ['image/jpeg', 'image/png', 'image/webp'];
+export const TAMANO_MAXIMO_IMAGEN = 2 * 1024 * 1024;
+
+export const errorImagen = (archivo: File): string => {
+  if (!TIPOS_IMAGEN.includes(archivo.type)) return 'Formato no permitido. Usa JPG, PNG o WEBP.';
+  if (archivo.size > TAMANO_MAXIMO_IMAGEN) return 'La imagen supera los 2 MB.';
+  return '';
+};
+
+const leerComoDataUrl = (archivo: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const lector = new FileReader();
+    lector.onload = () => resolve(String(lector.result));
+    lector.onerror = () => reject(new Error('No se pudo leer la imagen.'));
+    lector.readAsDataURL(archivo);
+  });
 
 const leer = (): Producto[] => {
   try {
@@ -74,6 +92,13 @@ const ProductoLocalService: ServicioProductos = {
 
   async eliminar(id: number): Promise<void> {
     guardar(leer().filter((p) => p.idProducto !== id));
+  },
+
+  // Sin backend la imagen queda dentro del producto
+  async subirImagen(archivo: File): Promise<string> {
+    const error = errorImagen(archivo);
+    if (error) throw new Error(error);
+    return leerComoDataUrl(archivo);
   }
 };
 

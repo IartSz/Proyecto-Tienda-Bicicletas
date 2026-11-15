@@ -1,11 +1,13 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import useDatos from '../../hooks/useDatos';
 import useModal from '../../hooks/useModal';
 import useAviso from '../../hooks/useAviso';
 import { USAR_API } from '../../api/cliente';
 import ClienteService, { type ClienteResumen } from '../../services/cliente.service';
+import AuthService from '../../services/auth.service';
 import { EVENTO_PEDIDOS } from '../../services/pedido.service';
 import { fechaCorta, formatoCLP } from '../../utils/formato';
+import { errorEmail, errorNombre, errorTelefono, limpiarNombre } from '../../utils/validaciones';
 
 interface Filtros {
   buscar: string;
@@ -13,16 +15,36 @@ interface Filtros {
   estado: '' | 'activo' | 'inactivo';
 }
 
+interface EdicionFormState {
+  nombre: string;
+  apellido: string;
+  email: string;
+  telefono: string;
+}
+
+type ErroresEdicion = Partial<Record<keyof EdicionFormState, string>>;
+
+const edicionInicial: EdicionFormState = { nombre: '', apellido: '', email: '', telefono: '' };
+
 const soloRut = (texto: string): string => texto.toLowerCase().replace(/[^0-9k]/g, '');
+
+// El telefono es opcional
+const errorTelefonoOpcional = (telefono: string): string => (telefono.trim() ? errorTelefono(telefono) : '');
 
 const Clientes = () => {
   const { datos: clientes, loading, error, recargar } = useDatos<ClienteResumen[]>(ClienteService.listar, [], EVENTO_PEDIDOS);
   const { datos: registro, recargar: recargarRegistro } = useDatos(ClienteService.registro, []);
   const { aviso, mostrar } = useAviso();
   const modal = useModal('modalCuenta');
+  const modalEdicion = useModal('modalEditarCliente');
   const [filtros, setFiltros] = useState<Filtros>({ buscar: '', tipo: '', estado: '' });
   // Cliente al que se le cambia el estado de la cuenta
   const [seleccion, setSeleccion] = useState<{ cliente: ClienteResumen; activar: boolean } | null>(null);
+  // Cliente que se esta editando
+  const [editando, setEditando] = useState<ClienteResumen | null>(null);
+  const [edicion, setEdicion] = useState<EdicionFormState>(edicionInicial);
+  const [erroresEdicion, setErroresEdicion] = useState<ErroresEdicion>({});
+  const [guardando, setGuardando] = useState<boolean>(false);
 
   const handleFiltro = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -56,6 +78,69 @@ const Clientes = () => {
       mostrar({ texto: 'No se pudo cambiar el estado de la cuenta.', tipo: 'danger' });
     }
   };
+
+  // Precarga los datos actuales de la cuenta
+  const abrirEdicion = async (cliente: ClienteResumen) => {
+    try {
+      const cuenta = await AuthService.buscarPorCorreo(cliente.email);
+      if (!cuenta) {
+        mostrar({ texto: 'No se encontró la cuenta del cliente.', tipo: 'danger' });
+        return;
+      }
+      setEditando(cliente);
+      setEdicion({ nombre: cuenta.nombre, apellido: cuenta.apellido, email: cuenta.emailCliente, telefono: cuenta.telefono ?? '' });
+      setErroresEdicion({});
+      modalEdicion.mostrar();
+    } catch (err) {
+      console.error(err);
+      mostrar({ texto: 'No se pudieron cargar los datos del cliente.', tipo: 'danger' });
+    }
+  };
+
+  const handleEdicion = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const valor = name === 'nombre' || name === 'apellido' ? limpiarNombre(value) : value;
+    setEdicion((prev) => ({ ...prev, [name]: valor }));
+    setErroresEdicion((prev) => ({ ...prev, [name]: undefined }));
+  };
+
+  const guardarEdicion = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!editando) return;
+    const errores: ErroresEdicion = {
+      nombre: errorNombre(edicion.nombre, 'nombre') || undefined,
+      apellido: errorNombre(edicion.apellido, 'apellido') || undefined,
+      email: errorEmail(edicion.email) || undefined,
+      telefono: errorTelefonoOpcional(edicion.telefono) || undefined
+    };
+    if (Object.values(errores).some(Boolean)) {
+      setErroresEdicion(errores);
+      return;
+    }
+    setGuardando(true);
+    try {
+      const resultado = await ClienteService.actualizar(editando.email, {
+        nombre: edicion.nombre,
+        apellido: edicion.apellido,
+        emailCliente: edicion.email,
+        telefono: edicion.telefono
+      });
+      if (!resultado.ok) {
+        setErroresEdicion(resultado.campo === 'emailCliente' ? { email: resultado.error } : { nombre: resultado.error });
+        return;
+      }
+      modalEdicion.ocultar();
+      mostrar({ texto: 'Datos del cliente actualizados.', tipo: 'success' });
+      await Promise.all([recargar(), recargarRegistro()]);
+    } catch (err) {
+      console.error(err);
+      setErroresEdicion({ nombre: 'No se pudieron guardar los cambios.' });
+    } finally {
+      setGuardando(false);
+    }
+  };
+
+  const claseEdicion = (campo: keyof EdicionFormState): string => (erroresEdicion[campo] ? 'form-control is-invalid' : 'form-control');
 
   return (
     <>
@@ -100,7 +185,12 @@ const Clientes = () => {
                       <td className="num">{c.pedidos}</td>
                       <td className="num">{formatoCLP(c.total)}</td>
                       <td>{c.activo ? <span className="tag tag-ok">Activa</span> : <span className="tag tag-off">Desactivada</span>}</td>
-                      <td className="text-end">
+                      <td className="text-end text-nowrap">
+                        {c.tipo === 'registrado' && (
+                          <button className="btn btn-sm btn-outline-light me-2" type="button" onClick={() => void abrirEdicion(c)}>
+                            <i className="bi bi-pencil"></i> Editar
+                          </button>
+                        )}
                         {USAR_API && c.tipo === 'invitado'
                           ? <span className="sub">Sin cuenta</span>
                           : c.activo
@@ -126,6 +216,51 @@ const Clientes = () => {
               ))}
             </ul>
           </div>
+        </div>
+      </div>
+
+      {/* Editar datos */}
+      <div className="modal fade" id="modalEditarCliente" tabIndex={-1} aria-labelledby="modalEditarClienteTitulo" aria-hidden="true">
+        <div className="modal-dialog">
+          <form className="modal-content" onSubmit={(event) => void guardarEdicion(event)} noValidate>
+            <div className="modal-header">
+              <h2 className="modal-title" id="modalEditarClienteTitulo">Editar cliente</h2>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div className="modal-body">
+              <div className="row g-3">
+                <div className="col-12">
+                  <label className="form-label" htmlFor="editarRut">RUT</label>
+                  <input id="editarRut" className="form-control" value={editando?.rut ?? ''} disabled />
+                  <div className="form-text">El RUT de la cuenta no se puede cambiar.</div>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="editarNombre">Nombre</label>
+                  <input id="editarNombre" name="nombre" className={claseEdicion('nombre')} maxLength={40} value={edicion.nombre} onChange={handleEdicion} />
+                  <div className="invalid-feedback">{erroresEdicion.nombre}</div>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="editarApellido">Apellido</label>
+                  <input id="editarApellido" name="apellido" className={claseEdicion('apellido')} maxLength={40} value={edicion.apellido} onChange={handleEdicion} />
+                  <div className="invalid-feedback">{erroresEdicion.apellido}</div>
+                </div>
+                <div className="col-12">
+                  <label className="form-label" htmlFor="editarEmail">Correo</label>
+                  <input id="editarEmail" name="email" type="email" className={claseEdicion('email')} maxLength={80} value={edicion.email} onChange={handleEdicion} />
+                  <div className="invalid-feedback">{erroresEdicion.email}</div>
+                </div>
+                <div className="col-12">
+                  <label className="form-label" htmlFor="editarTelefono">Teléfono</label>
+                  <input id="editarTelefono" name="telefono" className={claseEdicion('telefono')} placeholder="+56 9 1234 5678" value={edicion.telefono} onChange={handleEdicion} />
+                  <div className="invalid-feedback">{erroresEdicion.telefono}</div>
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-outline-light" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" className="btn btn-brand" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+            </div>
+          </form>
         </div>
       </div>
 

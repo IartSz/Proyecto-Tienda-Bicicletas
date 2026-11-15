@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import type { Categoria } from '../../models/Categoria';
 import type { EspecificacionTecnica, Marca, Producto, ProductoPayload, Variantes } from '../../models/Producto';
-import ProductoService from '../../services/producto.service';
+import ProductoService, { TIPOS_IMAGEN, errorImagen as validarImagen } from '../../services/producto.service';
 import MovimientoService from '../../services/movimiento.service';
 import useCategorias from '../../hooks/useCategorias';
 import { categoriasConProductos } from '../../data/categorias';
@@ -149,6 +149,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const [existentes, setExistentes] = useState<Producto[]>([]);
   const [errores, setErrores] = useState<Errores>({});
   const [errorImagen, setErrorImagen] = useState<boolean>(false);
+  const [subiendo, setSubiendo] = useState<boolean>(false);
+  const [errorSubida, setErrorSubida] = useState<string | null>(null);
+  const archivoRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -211,7 +214,33 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       if (name === 'tipoVariante' && !value) siguiente.valores = '';
       return siguiente;
     });
-    if (name === 'imagen') setErrorImagen(false);
+    if (name === 'imagen') {
+      setErrorImagen(false);
+      setErrorSubida(null);
+    }
+  };
+
+  const handleArchivo = async (event: ChangeEvent<HTMLInputElement>) => {
+    const archivo = event.target.files?.[0];
+    event.target.value = '';
+    if (!archivo) return;
+    const error = validarImagen(archivo);
+    if (error) {
+      setErrorSubida(error);
+      return;
+    }
+    setSubiendo(true);
+    setErrorSubida(null);
+    try {
+      const url = await ProductoService.subirImagen(archivo);
+      setForm((prev) => ({ ...prev, imagen: url }));
+      setErrorImagen(false);
+    } catch (err) {
+      console.error(err);
+      setErrorSubida('No se pudo subir la imagen.');
+    } finally {
+      setSubiendo(false);
+    }
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -396,8 +425,15 @@ const ProductForm = ({ mode }: ProductFormProps) => {
           </div>
           <div className="col-md-8">
             <label className="form-label" htmlFor="imagen">Imagen</label>
-            <input id="imagen" name="imagen" className="form-control" placeholder="/img/productos/cascos/mi-producto.jpg" value={form.imagen} onChange={handleChange} />
-            <div className="form-text">Ruta de una imagen dentro de public/img.</div>
+            <div className="input-group has-validation">
+              <input id="imagen" name="imagen" className={errorSubida ? 'form-control is-invalid' : 'form-control'} placeholder="/img/productos/cascos/mi-producto.jpg" value={form.imagen} onChange={handleChange} />
+              <button type="button" className="btn btn-outline-light" onClick={() => archivoRef.current?.click()} disabled={subiendo}>
+                <i className="bi bi-upload"></i> {subiendo ? 'Subiendo...' : 'Subir imagen'}
+              </button>
+              <div className="invalid-feedback">{errorSubida}</div>
+            </div>
+            <input ref={archivoRef} type="file" accept={TIPOS_IMAGEN.join(',')} className="d-none" onChange={(event) => void handleArchivo(event)} />
+            <div className="form-text">Sube una imagen (JPG, PNG o WEBP, máx. 2 MB) o escribe su ruta.</div>
           </div>
           <div className="col-md-4 d-flex align-items-end">
             <div className="border rounded w-100 d-flex align-items-center justify-content-center" style={{ height: '120px', overflow: 'hidden' }}>
@@ -413,7 +449,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
 
         <div className="d-flex justify-content-end gap-2 mt-4">
           <Link to="/admin/productos" className="btn btn-outline-light">Cancelar</Link>
-          <button type="submit" className="btn btn-brand" disabled={loading}>
+          <button type="submit" className="btn btn-brand" disabled={loading || subiendo}>
             {loading ? 'Procesando...' : isEdit ? 'Actualizar' : 'Guardar producto'}
           </button>
         </div>

@@ -181,6 +181,16 @@ export const ProductoApiService = {
     return obtener(id);
   },
 
+  // Guarda el archivo en ms-productos y devuelve su url
+  async subirImagen(archivo: File): Promise<string> {
+    const datos = new FormData();
+    datos.append('archivo', archivo);
+    const { data } = await apiClient.post<{ url: string }>('/imagenes/archivos', datos, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return data.url;
+  },
+
   // Borra primero lo que depende del producto
   async eliminar(id: number): Promise<void> {
     const [imagenes, ofertas, especificaciones, variantes, inventario] = await Promise.all([

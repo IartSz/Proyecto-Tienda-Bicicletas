@@ -28,7 +28,7 @@ export interface ErrorAuth {
 
 export type ResultadoAuth = { ok: true; sesion: Sesion } | ErrorAuth;
 
-export type CambiosPerfil = Partial<Pick<Cliente, 'rutUsuario' | 'nombre' | 'apellido' | 'telefono'>>;
+export type CambiosPerfil = Partial<Pick<Cliente, 'rutUsuario' | 'nombre' | 'apellido' | 'telefono'> & Pick<Usuario, 'emailCliente'>>;
 
 export interface ServicioAuth {
   listar(): Promise<Sesion[]>;
@@ -206,9 +206,15 @@ const AuthLocalService: ServicioAuth = {
       if (otra && otra.emailCliente !== email) return falla('rutUsuario', 'Ese RUT pertenece a otra cuenta.');
     }
 
+    const nuevoEmail = cambios.emailCliente ? normalizarCorreo(cambios.emailCliente) : email;
+    if (nuevoEmail !== email && cuentas.some((c) => c.emailCliente === nuevoEmail)) {
+      return falla('emailCliente', 'Ya existe una cuenta con ese correo.');
+    }
+
     const cuenta: Cuenta = {
       ...actual,
       rutUsuario: cambios.rutUsuario ? formatearRut(cambios.rutUsuario) : actual.rutUsuario,
+      emailCliente: nuevoEmail,
       nombre: cambios.nombre?.trim() || actual.nombre,
       apellido: cambios.apellido?.trim() || actual.apellido,
       telefono: cambios.telefono === undefined ? actual.telefono : (cambios.telefono?.trim() || null)
@@ -216,17 +222,27 @@ const AuthLocalService: ServicioAuth = {
     cuentas[indice] = cuenta;
     guardarCuentas(cuentas);
 
+    // El estado de la cuenta sigue al correo nuevo
+    if (nuevoEmail !== email) {
+      const estados = leerEstadosCuenta();
+      if (estados[email]) {
+        estados[nuevoEmail] = estados[email];
+        delete estados[email];
+        guardarEstadosCuenta(estados);
+      }
+    }
+
     const sesion = aSesion(cuenta);
     if (leerSesion()?.emailCliente === email) guardarSesion(sesion);
 
-    // Los pedidos de la cuenta muestran el nombre y RUT actuales (los ve el panel)
+    // Los pedidos de la cuenta muestran el nombre, correo y RUT actuales (los ve el panel)
     const pedidos = await PedidoService.listar();
     for (const pedido of pedidos) {
       const comprador = pedido.cliente;
       if (!comprador || comprador.email.toLowerCase() !== email) continue;
       await PedidoService.actualizar(pedido.idPedido, {
         ...pedido,
-        cliente: { ...comprador, nombre: cuenta.nombre, apellido: cuenta.apellido, rut: cuenta.rutUsuario },
+        cliente: { ...comprador, nombre: cuenta.nombre, apellido: cuenta.apellido, rut: cuenta.rutUsuario, email: cuenta.emailCliente },
         rutCliente: pedido.rutCliente ? cuenta.rutUsuario : null
       });
     }

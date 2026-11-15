@@ -10,8 +10,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +28,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,6 +40,7 @@ import com.ridertapia.productos.model.ImagenProducto;
 import com.ridertapia.productos.model.Marca;
 import com.ridertapia.productos.model.Producto;
 import com.ridertapia.productos.model.EstadoPublicacion;
+import com.ridertapia.productos.service.ArchivoImagenService;
 import com.ridertapia.productos.service.ImagenProductoService;
 
 import tools.jackson.databind.ObjectMapper;
@@ -50,6 +55,9 @@ class ImagenProductoControllerTest {
 
     @MockitoBean
     private ImagenProductoService imagenProductoService;
+
+    @MockitoBean
+    private ArchivoImagenService archivoImagenService;
 
     private final ObjectMapper objectMapper = JsonMapper.builder().build();
 
@@ -178,5 +186,43 @@ class ImagenProductoControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(imagenProductoService, times(1)).eliminarImagenProducto(1L);
+    }
+
+    @Test
+    void subirArchivo() throws Exception {
+        MockMultipartFile archivo = new MockMultipartFile("archivo", "casco.jpg", "image/jpeg", new byte[] { 1, 2, 3 });
+        when(archivoImagenService.guardar(any())).thenReturn("http://localhost:9000/api/v1/imagenes/archivos/abc.jpg");
+
+        mockMvc.perform(multipart("/api/v1/imagenes/archivos").file(archivo))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.url").value("http://localhost:9000/api/v1/imagenes/archivos/abc.jpg"));
+    }
+
+    @Test
+    void subirArchivoFormatoInvalido() throws Exception {
+        MockMultipartFile archivo = new MockMultipartFile("archivo", "nota.txt", "text/plain", new byte[] { 1 });
+        when(archivoImagenService.guardar(any())).thenThrow(new IllegalArgumentException("Formato no permitido. Usa JPG, PNG o WEBP."));
+
+        mockMvc.perform(multipart("/api/v1/imagenes/archivos").file(archivo))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensaje").value("Formato no permitido. Usa JPG, PNG o WEBP."));
+    }
+
+    @Test
+    void obtenerArchivoExistente() throws Exception {
+        when(archivoImagenService.cargar("abc.jpg")).thenReturn(Optional.of(new ByteArrayResource(new byte[] { 1, 2, 3 })));
+        when(archivoImagenService.tipoDe("abc.jpg")).thenReturn("image/jpeg");
+
+        mockMvc.perform(get("/api/v1/imagenes/archivos/abc.jpg"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("image/jpeg"));
+    }
+
+    @Test
+    void obtenerArchivoNoExistente() throws Exception {
+        when(archivoImagenService.cargar("nada.jpg")).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/v1/imagenes/archivos/nada.jpg"))
+                .andExpect(status().isNotFound());
     }
 }

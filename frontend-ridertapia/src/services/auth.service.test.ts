@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import AuthService, { ADMIN_PRUEBA, hashClave, leerSesion, type ResultadoAuth } from './auth.service';
+import AuthService, { ADMIN_PRUEBA, hashClave, leerEstadosCuenta, leerSesion, type ResultadoAuth } from './auth.service';
 import PedidoService from './pedido.service';
 import { COMPRADOR, crearPedido } from '../test/fixtures';
 
@@ -173,6 +173,29 @@ describe('HU-3 Actualizar perfil', () => {
     await AuthService.registrar({ ...DATOS, emailCliente: 'otra@correo.cl', rutUsuario: '9.999.999-9' });
     const resultado = await AuthService.actualizarPerfil('otra@correo.cl', { rutUsuario: '12.345.678-5' });
     expect(resultado).toMatchObject({ ok: false, campo: 'rutUsuario', error: 'Ese RUT pertenece a otra cuenta.' });
+  });
+
+  it('HU-3 CA1: cambiar el correo mueve la cuenta, su estado y sus pedidos al correo nuevo', async () => {
+    await AuthService.registrar(DATOS);
+    await AuthService.cerrarSesion();
+    localStorage.setItem('clientesEstado', JSON.stringify({ [CORREO]: 'inactivo' }));
+    listarPedidos.mockResolvedValue([crearPedido({ idPedido: 3 })]);
+
+    const sesion = sesionDe(await AuthService.actualizarPerfil(CORREO, { emailCliente: 'Camila.Nueva@Correo.cl' }));
+
+    expect(sesion.emailCliente).toBe('camila.nueva@correo.cl');
+    expect(await AuthService.buscarPorCorreo(CORREO)).toBeUndefined();
+    expect(leerEstadosCuenta()).toEqual({ 'camila.nueva@correo.cl': 'inactivo' });
+    expect(actualizarPedido).toHaveBeenCalledWith(3, expect.objectContaining({
+      cliente: expect.objectContaining({ email: 'camila.nueva@correo.cl' })
+    }));
+  });
+
+  it('HU-3 CA2: no deja usar un correo que pertenece a otra cuenta', async () => {
+    await AuthService.registrar(DATOS);
+    await AuthService.registrar({ ...DATOS, emailCliente: 'otra@correo.cl', rutUsuario: '9.999.999-9' });
+    const resultado = await AuthService.actualizarPerfil('otra@correo.cl', { emailCliente: CORREO });
+    expect(resultado).toMatchObject({ ok: false, campo: 'emailCliente', error: 'Ya existe una cuenta con ese correo.' });
   });
 
   it('HU-3 CA2: actualizar una cuenta que no existe informa el error', async () => {

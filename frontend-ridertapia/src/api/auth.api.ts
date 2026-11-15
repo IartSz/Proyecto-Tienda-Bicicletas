@@ -152,6 +152,20 @@ const AuthApiService: ServicioAuth = {
       return falla('rutUsuario', 'El RUT de la cuenta no se puede cambiar.');
     }
 
+    // El correo es de la cuenta (ms-usuario)
+    let usuario = u;
+    const nuevoEmail = cambios.emailCliente?.trim().toLowerCase();
+    if (nuevoEmail && nuevoEmail !== u.emailCliente) {
+      try {
+        const { data } = await apiClient.put<UsuarioApi>(`/usuarios/${u.rutUsuario}`, { emailCliente: nuevoEmail });
+        usuario = data;
+      } catch (err) {
+        if (estadoHttp(err) === 409) return falla('emailCliente', 'Ya existe una cuenta con ese correo.');
+        if (estadoHttp(err) === 400) return falla('emailCliente', mensajeHttp(err) || 'Correo inválido.');
+        throw err;
+      }
+    }
+
     const actual = await clientePorRut(u.rutUsuario);
     const cuerpo = {
       nombre: cambios.nombre?.trim() || actual?.nombre || '',
@@ -164,7 +178,7 @@ const AuthApiService: ServicioAuth = {
       ? await apiClient.put<ClienteApi>(`/clientes/${u.rutUsuario}`, cuerpo)
       : await apiClient.post<ClienteApi>('/clientes', { rutUsuario: u.rutUsuario, ...cuerpo });
 
-    const sesion = aSesion(u, cliente);
+    const sesion = aSesion(usuario, cliente);
     if (leerSesion()?.emailCliente === u.emailCliente) guardarSesion(sesion);
     return { ok: true, sesion };
   },

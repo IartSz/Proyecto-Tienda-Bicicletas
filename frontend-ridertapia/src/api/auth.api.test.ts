@@ -74,6 +74,25 @@ describe('AuthApiService (modo backend)', () => {
     expect(put).not.toHaveBeenCalled();
   });
 
+  it('actualizarPerfil: un correo nuevo se guarda en ms-usuario', async () => {
+    get.mockImplementation(async (url: string) => ({ data: url.startsWith('/clientes') ? CLIENTE : USUARIO }));
+    put.mockImplementation(async (url: string) => ({ data: url.startsWith('/usuarios') ? { ...USUARIO, emailCliente: 'nueva@correo.cl' } : CLIENTE }));
+
+    const resultado = await AuthApiService.actualizarPerfil(USUARIO.emailCliente, { emailCliente: 'Nueva@Correo.cl' });
+
+    expect(put).toHaveBeenCalledWith('/usuarios/12345678-5', { emailCliente: 'nueva@correo.cl' });
+    expect(resultado).toMatchObject({ ok: true, sesion: { emailCliente: 'nueva@correo.cl' } });
+  });
+
+  it('actualizarPerfil: un correo ya usado (409) se informa en el campo correo', async () => {
+    get.mockResolvedValue({ data: USUARIO });
+    put.mockRejectedValue(errorHttp(409, 'Ya existe un usuario con el email nueva@correo.cl'));
+
+    const resultado = await AuthApiService.actualizarPerfil(USUARIO.emailCliente, { emailCliente: 'nueva@correo.cl' });
+
+    expect(resultado).toMatchObject({ ok: false, campo: 'emailCliente', error: 'Ya existe una cuenta con ese correo.' });
+  });
+
   it('actualizarPerfil: envía el teléfono sin espacios y conserva dirección y comuna', async () => {
     get.mockImplementation(async (url: string) => ({ data: url.startsWith('/clientes') ? { ...CLIENTE, comuna: 'Concepción' } : USUARIO }));
     put.mockResolvedValue({ data: CLIENTE });

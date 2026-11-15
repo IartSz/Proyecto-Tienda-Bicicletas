@@ -3,10 +3,14 @@ package com.ridertapia.productos.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.core.io.Resource;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ridertapia.productos.model.ImagenProducto;
+import com.ridertapia.productos.service.ArchivoImagenService;
 import com.ridertapia.productos.service.ImagenProductoService;
 
 @RestController
@@ -26,6 +33,9 @@ public class ImagenProductoController {
 
     @Autowired
     private ImagenProductoService imagenProductoService;
+
+    @Autowired
+    private ArchivoImagenService archivoImagenService;
 
     @GetMapping
     public ResponseEntity<CollectionModel<EntityModel<ImagenProducto>>> listarImagenesProducto() {
@@ -76,6 +86,26 @@ public class ImagenProductoController {
     public ResponseEntity<Void> eliminarImagenProducto(@PathVariable Long id) {
         imagenProductoService.eliminarImagenProducto(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/archivos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, String>> subirArchivo(@RequestParam("archivo") MultipartFile archivo) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("url", archivoImagenService.guardar(archivo)));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("mensaje", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.internalServerError().body(Map.of("mensaje", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/archivos/{nombre}")
+    public ResponseEntity<Resource> obtenerArchivo(@PathVariable String nombre) {
+        return archivoImagenService.cargar(nombre)
+                .map(archivo -> ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(archivoImagenService.tipoDe(nombre)))
+                        .body(archivo))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private List<EntityModel<ImagenProducto>> toModelList(List<ImagenProducto> lista) {

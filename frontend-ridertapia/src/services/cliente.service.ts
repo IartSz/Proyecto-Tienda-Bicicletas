@@ -1,5 +1,5 @@
 import PedidoService from './pedido.service';
-import AuthService, { guardarEstadosCuenta, leerEstadosCuenta } from './auth.service';
+import AuthService, { guardarEstadosCuenta, leerEstadosCuenta, type CambiosPerfil, type ResultadoAuth } from './auth.service';
 import { esVenta } from '../utils/estadosPedido';
 import { USAR_API } from '../api/cliente';
 import { cambiarEstadoCuenta, cambiosDeEstado } from '../api/auth.api';
@@ -33,6 +33,15 @@ const leerRegistro = (): AccionCliente[] => {
     return guardado ? (JSON.parse(guardado) as AccionCliente[]) : [];
   } catch {
     return [];
+  }
+};
+
+const agregarRegistro = (accion: string, nombre: string): void => {
+  const registro = [{ accion, nombre, fecha: new Date().toISOString() }, ...leerRegistro()];
+  try {
+    localStorage.setItem(CLAVE_REGISTRO, JSON.stringify(registro.slice(0, MAXIMO_REGISTRO)));
+  } catch {
+    throw new Error('No se pudo guardar el registro de acciones.');
   }
 };
 
@@ -87,13 +96,16 @@ export const ClienteService = {
     if (activar) delete estados[email];
     else estados[email] = 'inactivo';
     guardarEstadosCuenta(estados);
+    agregarRegistro(activar ? 'Cuenta activada' : 'Cuenta desactivada', nombre);
+  },
 
-    const registro = [{ accion: activar ? 'Cuenta activada' : 'Cuenta desactivada', nombre, fecha: new Date().toISOString() }, ...leerRegistro()];
-    try {
-      localStorage.setItem(CLAVE_REGISTRO, JSON.stringify(registro.slice(0, MAXIMO_REGISTRO)));
-    } catch {
-      throw new Error('No se pudo guardar el registro de acciones.');
+  // Datos de una cuenta registrada; el RUT no se cambia
+  async actualizar(email: string, cambios: CambiosPerfil): Promise<ResultadoAuth> {
+    const resultado = await AuthService.actualizarPerfil(email, cambios);
+    if (resultado.ok && !USAR_API) {
+      agregarRegistro('Datos actualizados', `${resultado.sesion.nombre} ${resultado.sesion.apellido}`.trim());
     }
+    return resultado;
   },
 
   async registro(): Promise<AccionCliente[]> {

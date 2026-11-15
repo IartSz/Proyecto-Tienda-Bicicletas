@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import ProductoService, { estadoStock, precioActual } from './producto.service';
+import ProductoService, { errorImagen, estadoStock, precioActual } from './producto.service';
 import { crearProducto } from '../test/fixtures';
 
 beforeEach(() => {
@@ -53,5 +53,20 @@ describe('HU-34 / HU-35 Agregar y eliminar productos del inventario', () => {
 
   it('HU-28 CA1: obtener un producto inexistente informa el error', async () => {
     await expect(ProductoService.obtener(99)).rejects.toThrow('Producto no encontrado.');
+  });
+});
+
+describe('HU-34 Imagen del producto', () => {
+  it('HU-34 CA1: sin backend la imagen subida queda como data URL', async () => {
+    const archivo = new File([new Uint8Array([1, 2, 3])], 'casco.png', { type: 'image/png' });
+    expect(await ProductoService.subirImagen(archivo)).toMatch(/^data:image\/png;base64,/);
+  });
+
+  it('HU-34 CA2: rechaza formatos no permitidos y archivos de más de 2 MB', async () => {
+    const texto = new File(['hola'], 'nota.txt', { type: 'text/plain' });
+    const grande = new File([new Uint8Array(2 * 1024 * 1024 + 1)], 'grande.jpg', { type: 'image/jpeg' });
+    expect(errorImagen(texto)).toBe('Formato no permitido. Usa JPG, PNG o WEBP.');
+    expect(errorImagen(grande)).toBe('La imagen supera los 2 MB.');
+    await expect(ProductoService.subirImagen(texto)).rejects.toThrow('Formato no permitido');
   });
 });

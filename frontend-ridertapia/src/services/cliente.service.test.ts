@@ -83,3 +83,21 @@ describe('HU-5 / HU-21 Listado de clientes', () => {
     expect((await ClienteService.listar()).map((c) => c.email)).toEqual(['camila@correo.cl', 'ivo@correo.cl']);
   });
 });
+
+describe('HU-3 Editar datos del cliente desde el panel', () => {
+  it('HU-3 CA1: guarda los datos nuevos y queda en el registro de acciones', async () => {
+    await AuthService.registrar({ nombre: 'Camila', apellido: 'Rojas', rutUsuario: '12.345.678-5', emailCliente: 'camila@correo.cl', password: 'secreto1' });
+    const resultado = await ClienteService.actualizar('camila@correo.cl', { nombre: 'Camila Andrea', emailCliente: 'camila.rojas@correo.cl', telefono: '+56 9 2222 3333' });
+
+    expect(resultado).toMatchObject({ ok: true, sesion: { nombre: 'Camila Andrea', emailCliente: 'camila.rojas@correo.cl' } });
+    const [camila] = await ClienteService.listar();
+    expect(camila).toMatchObject({ email: 'camila.rojas@correo.cl', nombre: 'Camila Andrea Rojas', telefono: '+56 9 2222 3333' });
+    expect((await ClienteService.registro())[0]).toMatchObject({ accion: 'Datos actualizados', nombre: 'Camila Andrea Rojas' });
+  });
+
+  it('HU-3 CA2: si falla no deja registro', async () => {
+    const resultado = await ClienteService.actualizar('nadie@correo.cl', { nombre: 'Nadie' });
+    expect(resultado).toMatchObject({ ok: false });
+    expect(await ClienteService.registro()).toHaveLength(0);
+  });
+});
